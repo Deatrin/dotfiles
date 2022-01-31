@@ -86,7 +86,7 @@ plugins=(
     iterm2
     systemadmin
     # vagrant
-    vscode
+    # vscode
     k
     zsh-autosuggestions
     zsh-completions
