@@ -128,7 +128,8 @@ gpgconf --launch gpg-agent
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias cdg="cd Documents/GitHub"
+alias cdg="cd /Users/ajennex/Documents/Repos"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+export PATH="/usr/local/sbin:$PATH"
