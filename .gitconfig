@@ -7,3 +7,7 @@
 	name = Deatrin
 	email = jennexa@gmail.com
 	signingkey = 0x44D2585E28D0E1FA
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
