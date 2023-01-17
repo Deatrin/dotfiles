@@ -30,3 +30,8 @@
     url = "https://github.com/zsh-users/zsh-history-substring-search/archive/master.tar.gz"
     exact = true
     stripComponents = 1
+# [".oh-my-zsh/custom/plugins/k"]
+#     type = "archive"
+#     url = "https://github.com/supercrabtree/k/archive/master.tar.gz"
+#     exact = true
+#     stripComponents = 1

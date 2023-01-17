@@ -78,15 +78,23 @@ DISABLE_AUTO_UPDATE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  1password
+  ansible
+  brew
   docker
   git
+  # k
+  kubectl
+  macos
+  systemadmin
+  vscode
   zsh-autosuggestions
   zsh-completions
   zsh-history-substring-search
   zsh-syntax-highlighting
 )
 
-  fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
