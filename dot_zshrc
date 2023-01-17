@@ -130,7 +130,7 @@ export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
-alias cdg="cd /Users/ajennex/Documents/Repos"
+source ~/.zsh_aliases
 
 export PYENV_ROOT="$HOME/.pyenv" 
 export PATH="$PYENV_ROOT/bin:$PATH" 
