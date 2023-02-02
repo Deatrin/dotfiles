@@ -144,3 +144,4 @@ export SOPS_AGE_RECIPIENTS=age1v09mkp029zh56sx54kefh2m9059t5fuwt0hfzpgmwn3whrurc
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+export PATH="/usr/local/sbin:$PATH"
