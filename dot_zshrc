@@ -82,7 +82,7 @@ plugins=(
   ansible
   brew
   docker
-  git
+  # git
   # k
   kubectl
   macos
