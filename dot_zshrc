@@ -139,7 +139,7 @@ eval "$(pyenv init -)"
 
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
-export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/key.txt
+export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
 export SOPS_AGE_RECIPIENTS=age1v09mkp029zh56sx54kefh2m9059t5fuwt0hfzpgmwn3whrurca0shnvr0p
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
