@@ -137,6 +137,10 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)" 
 eval "$(pyenv init -)"
 
+eval "$(direnv hook zsh)"
+
+function gam() { "/Users/ajennex/bin/gam/gam" "$@" ; }
+
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
