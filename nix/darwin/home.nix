@@ -24,7 +24,11 @@
         # changes in each release.
         home.stateVersion = "24.05";
         programs = {
+            # fzf = import ../home/fzf.nix {inherit pkgs;};
+            git = import ../home/git.nix { inherit config pkgs; };
+            # oh-my-posh = import ../home/oh-my-posh.nix {inherit pkgs;};
             tmux = import ../home/tmux.nix {inherit pkgs;};
+            # zsh = import ../home/zsh.nix {inherit config pkgs;};
         };
 
     }
