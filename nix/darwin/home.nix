@@ -12,6 +12,7 @@
         # paths it should manage.
         home.username = "ajennex";
         home.homeDirectory = "/Users/ajennex";
+        xdg.enable = true;
 
         # This value determines the Home Manager release that your
         # configuration is compatible with. This helps avoid breakage
@@ -24,6 +25,7 @@
         home.stateVersion = "24.05";
         programs = {
             tmux = import ../home/tmux.nix {inherit pkgs;};
+            alacritty = import ./alacritty.nix {inherit config pkgs meta;};
         };
 
     }
