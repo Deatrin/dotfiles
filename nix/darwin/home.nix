@@ -25,7 +25,6 @@
         home.stateVersion = "24.05";
         programs = {
             tmux = import ../home/tmux.nix {inherit pkgs;};
-            alacritty = import ./alacritty.nix {inherit config pkgs meta;};
         };
 
     }
