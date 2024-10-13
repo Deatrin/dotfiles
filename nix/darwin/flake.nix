@@ -25,7 +25,7 @@
         };
       };
       username = "ajennex";
-      configuration = { pkgs, config, ... }: {
+      configuration = { pkgs, lib, config, ... }: {
         
         nixpkgs.config.allowUnfree = true;
 
