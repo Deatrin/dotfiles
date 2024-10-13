@@ -11,7 +11,7 @@
         x = 4;
         y = 8;
       };
-      decorations = "Transparent";
+      decorations = "Buttonless";
       opacity = 0.5;
       blur = true;
       startup_mode = "Maximized";
@@ -38,7 +38,7 @@
     };
 
     cursor = {
-      style = "Block";
+      style = "Underline";
     };
 
     env = {
