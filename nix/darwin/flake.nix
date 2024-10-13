@@ -73,6 +73,7 @@
             "serial"
             "wifi-explorer-pro"
             "vlc"
+            "vmware-fusion"
           ];
           masApps = {
             "1 Password 7" = 1333542190;
