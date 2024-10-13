@@ -56,7 +56,7 @@
         homebrew = {
           enable = true;
           brews = [
-            "mas"
+            # "mas"
             "wireshark"
           ];
           casks = [
@@ -75,12 +75,12 @@
             "vlc"
             "vmware-fusion"
           ];
-          masApps = {
-            "1 Password 7" = 1333542190;
-            "Spark Classic" = 1176895641;
-            "Termius" = 1176074088;
-            "Yoink" = 457622435;
-          };
+          # masApps = {
+          #   "1 Password 7" = 1333542190;
+          #   "Spark Classic" = 1176895641;
+          #   "Termius" = 1176074088;
+          #   "Yoink" = 457622435;
+          # };
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
           onActivation.upgrade = true;
