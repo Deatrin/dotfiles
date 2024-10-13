@@ -69,6 +69,7 @@
             "mixed-in-key"
             "raindropio"
             "rectangle-pro"
+            "remote-desktop-manager"
             "serial"
             "wifi-explorer-pro"
             "vlc"
