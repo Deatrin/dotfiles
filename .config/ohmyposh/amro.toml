@@ -34,7 +34,7 @@ type = "prompt"
 [transient_prompt]
   foreground = "#0CA0D8"
   background = "transparent"
-  template = " {{ .UserName }} on"
+  template = "Last: "
 
 [[blocks]]
 alignment = "left"
