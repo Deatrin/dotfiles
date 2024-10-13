@@ -31,6 +31,10 @@ type = "prompt"
     [blocks.segments.properties]
     fetch_stash_count = true
     fetch_upstream_icon = true
+[transient_prompt]
+  foreground = "#0CA0D8"
+  background = "transparent"
+  template = " {{ .UserName }} on"
 
 [[blocks]]
 alignment = "left"
