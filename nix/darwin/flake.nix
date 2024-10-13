@@ -30,7 +30,6 @@
         
         nixpkgs.config.allowUnfree = true;
         nixpkgs.overlays = [
-        # inputs.templ.overlays.default
         add-unstable-packages
       ];
 
@@ -56,14 +55,20 @@
         homebrew = {
           enable = true;
           brews = [
-            # "mas"
+            "k9s"
+            "mas"
             "wireshark"
           ];
           casks = [
             "airtool"
+            "bartender"
             "brave-browser"
+            "displaylink"
+            "dropbox"
+            "flux"
             "github"
             "jetbrains-toolbox"
+            "lens"
             "logseq"
             "rekordbox"
             "mixed-in-key"
@@ -74,13 +79,15 @@
             "wifi-explorer-pro"
             "vlc"
             "vmware-fusion"
+            "yubico-yubikey-manager"
           ];
-          # masApps = {
-          #   "1 Password 7" = 1333542190;
-          #   "Spark Classic" = 1176895641;
-          #   "Termius" = 1176074088;
-          #   "Yoink" = 457622435;
-          # };
+          masApps = {
+            "1 Password 7" = 1333542190;
+            "Spark Classic" = 1176895641;
+            "Termius" = 1176074088;
+            "Yoink" = 457622435;
+            "Yubico Authenticator" =1497506650;
+          };
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
           onActivation.upgrade = true;
