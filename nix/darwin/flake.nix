@@ -14,26 +14,32 @@
   outputs = { 
     self, 
     nix-darwin, 
-    nixpkgs, 
+    nixpkgs,
+    nixpkgs-unstable,
     nix-homebrew, 
     home-manager,
     ...
     } @ inputs: let
       add-unstable-packages = final: _prev: {
         unstable = import inputs.nixpkgs-unstable {
-          system = "aarch64-darwin";
+          system = "x86_64-darwin";
         };
       };
       username = "ajennex";
       configuration = { pkgs, lib, config, ... }: {
         
         nixpkgs.config.allowUnfree = true;
+        nixpkgs.overlays = [
+        # inputs.templ.overlays.default
+        add-unstable-packages
+      ];
 
         # Application install section
         # List packages installed in system profile. To search by name, run:
         # $ nix-env -qaP | grep wget
         environment.systemPackages = [
           pkgs.alacritty
+          pkgs.alacritty-theme
           pkgs.archi
           pkgs.discord
           pkgs.eza
@@ -56,6 +62,7 @@
           casks = [
             "airtool"
             "brave-browser"
+            "github"
             "jetbrains-toolbox"
             "logseq"
             "rekordbox"

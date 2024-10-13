@@ -20,7 +20,7 @@
     };
 
     import = [
-      pkgs.alacritty-theme.tokyo-night
+      "${pkgs.alacritty-theme}/tokyo-night.toml"
     ];
 
     font = let
@@ -29,7 +29,7 @@
         inherit style;
       };
     in {
-      size = 16;
+      size = 12;
       normal = jetbrainsMono "Regular";
       bold = jetbrainsMono "Bold";
       italic = jetbrainsMono "Italic";
