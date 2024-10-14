@@ -63,7 +63,7 @@
             "airtool"
             "bartender"
             "brave-browser"
-            "displaylink"
+            # "displaylink"
             "dropbox"
             "flux"
             "github"
