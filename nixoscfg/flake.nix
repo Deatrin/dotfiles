@@ -33,16 +33,16 @@
         forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       overlays = import ./overlays { inherit inputs; };
       nixosConfigurations = {
-        your-host = nixpkgs.lib.nixosSystem {
+        razerback = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/your-host ];
+          modules = [ ./hosts/razerback ];
         };
       };
       homeConfigurations = {
-        "your-name@your-host" = home-manager.lib.homeManagerConfiguration {
+        "deatrin@razerback" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/your-name/your-host.nix ];
+          modules = [ ./home/deatrin/razerback.nix ];
         };
       };
     };
