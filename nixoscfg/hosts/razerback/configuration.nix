@@ -82,6 +82,7 @@
     enable = true;
     xwayland.enable = true;
   };
+  programs.zsh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -98,3 +99,5 @@
   system.stateVersion = "24.05"; # Did you read the comment?
 
 }
+
+https://www.youtube.com/watch?v=Ik-LMvja4sA
