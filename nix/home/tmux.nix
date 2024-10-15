@@ -79,7 +79,9 @@ in {
     bind -n M-H previous-window
     bind -n M-L next-window
 
-    set -g @tokyo-night-tmux_window_id_style hsquare
+    set -g @tokyo-night-tmux_window_id_style digital
+    set -g @tokyo-night-tmux_pane_id_style hsquare
+    set -g @tokyo-night-tmux_zoom_id_style dsquare
 
     run-shell ${tokyo-night}/share/tmux-plugins/tokyo-night/tokyo-night.tmux
 
