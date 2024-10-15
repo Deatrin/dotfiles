@@ -33,7 +33,8 @@ in {
   terminal = "screen-256color";
 
   plugins = with pkgs.tmuxPlugins; [
-    tokyo-night
+    # tokyo-night
+    dracula
     yank
     sensible
     vim-tmux-navigator
