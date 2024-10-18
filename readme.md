@@ -1,6 +1,7 @@
 # Setup
 
 - First sign into Appstore for MAS to work
+- Open a terminal
 - Start by downloading nix be using the following command
 
   ``` shell
