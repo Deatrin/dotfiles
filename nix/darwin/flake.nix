@@ -44,6 +44,7 @@
           pkgs.eza
           pkgs.git
           pkgs.mkalias
+          pkgs.neofetch
           pkgs.obsidian
           pkgs.raycast
           pkgs.spotify

@@ -32,12 +32,7 @@ in {
     oh-my-posh = import ../home/oh-my-posh.nix {inherit pkgs;};
     neovim = import ../home/neovim.nix {inherit config pkgs;};
     tmux = import ../home/tmux.nix {inherit pkgs;};
+    zoxide = (import ../home/zoxide.nix { inherit config pkgs; });
     zsh = import ../home/zsh.nix {inherit config pkgs lib;};
   };
-
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    options = ["--cmd cd"];
-};
 }
