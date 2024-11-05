@@ -3,7 +3,7 @@
   ...
 }: {
   enable = true;
-  package = pkgs.unstable.alacritty;
+  # package = pkgs.unstable.alacritty;
 
   settings = {
     window = {
