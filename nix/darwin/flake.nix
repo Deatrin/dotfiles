@@ -44,7 +44,6 @@
           pkgs.eza
           pkgs.git
           pkgs.mkalias
-          pkgs.neovim
           pkgs.obsidian
           pkgs.raycast
           pkgs.spotify
@@ -57,6 +56,7 @@
           brews = [
             "k9s"
             "mas"
+            "neovim"
             "wireshark"
           ];
           casks = [
