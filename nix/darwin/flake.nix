@@ -45,6 +45,7 @@
           pkgs.git
           pkgs.mkalias
           pkgs.neofetch
+          pkgs.nixd
           pkgs.obsidian
           pkgs.raycast
           pkgs.spotify
@@ -198,7 +199,7 @@
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."intel" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."main" = nix-darwin.lib.darwinSystem {
       modules = [ 
       configuration
       nix-homebrew.darwinModules.nix-homebrew
