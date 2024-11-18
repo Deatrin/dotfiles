@@ -44,10 +44,12 @@
           pkgs.discord
           pkgs.eza
           pkgs.git
+          pkgs.gnupg
           pkgs.mkalias
           pkgs.neofetch
           pkgs.nixd
           pkgs.obsidian
+          pkgs.pinentry_mac
           pkgs.raycast
           pkgs.spotify
           pkgs.tmux
@@ -60,7 +62,6 @@
             "k9s"
             "mas"
             "neovim"
-            "pinentry-mac"
             "wireshark"
           ];
           casks = [

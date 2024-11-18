@@ -29,6 +29,7 @@ in {
     alacritty = import ../home/alacritty.nix {inherit pkgs;};
     fzf = import ../home/fzf.nix {inherit pkgs;};
     git = import ../home/git.nix { inherit config pkgs; };
+    gpg = import ../home/gpg.nix { inherit pkgs; };
     oh-my-posh = import ../home/oh-my-posh.nix {inherit pkgs;};
     neovim = import ../home/neovim.nix {inherit config pkgs;};
     tmux = import ../home/tmux.nix {inherit pkgs;};
