@@ -2,6 +2,6 @@
   enable = true;
 
   publicKeys = [
-    {source = ../../keys/gpg-0x80015B87EFAB63A4-2021-10-18.asc;}
+    {source = ../../keys/AA7FEB9A60111FBC-2024-10-18.asc;}
   ];
 }

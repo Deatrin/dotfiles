@@ -60,6 +60,7 @@
             "k9s"
             "mas"
             "neovim"
+            "pinentry-mac"
             "wireshark"
           ];
           casks = [
@@ -89,7 +90,7 @@
             "Spark Classic" = 1176895641;
             "Termius" = 1176074088;
             "Yoink" = 457622435;
-            "Yubico Authenticator" =1497506650;
+            "Yubico Authenticator" = 1497506650;
           };
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
