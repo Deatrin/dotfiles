@@ -23,6 +23,7 @@
       add-unstable-packages = final: _prev: {
         unstable = import inputs.nixpkgs-unstable {
           system = "x86_64-darwin";
+          # system = "aarch64-darwin"
         };
       };
       username = "ajennex";
@@ -197,6 +198,7 @@
 
         # The platform the configuration will be used on.
         nixpkgs.hostPlatform = "x86_64-darwin";
+        # nixpkgs.hostPlatform = "aarch64-darwin";
       };
   in
   {
