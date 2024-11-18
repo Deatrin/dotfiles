@@ -15,6 +15,7 @@ in {
   xdg.enable = true;
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/Users/ajennex/Development/dotfiles/.config/nvim";
+  xdg.configFile.gpg-agent.source = mkOutOfStoreSymlink "/Users/ajennex/Development/dotfiles/.config/gpg-agent/gpg-agent.conf";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -25,6 +26,11 @@ in {
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "24.05";
+
+  services = {
+    gpg-agent = import ../home/gpg-agent.nix { inherit pkgs; };
+  };
+
   programs = {
     alacritty = import ../home/alacritty.nix {inherit pkgs;};
     fzf = import ../home/fzf.nix {inherit pkgs;};
