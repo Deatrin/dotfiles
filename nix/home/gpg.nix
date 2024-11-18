@@ -6,5 +6,6 @@
   ];
   scdaemonSettings = {
     disable-ccid = true;
+    # reader-port = "Yubico Yubikey";
   };
 }

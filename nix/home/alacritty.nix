@@ -11,10 +11,10 @@
         x = 4;
         y = 8;
       };
-      decorations = "Buttonless";
+      decorations = "Full";
       opacity = 0.5;
       blur = true;
-      startup_mode = "Maximized";
+      startup_mode = "Windowed";
       title = "Alacritty";
       dynamic_title = true;
       decorations_theme_variant = "None";
