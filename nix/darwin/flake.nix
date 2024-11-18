@@ -39,6 +39,7 @@
         environment.systemPackages = [
           pkgs.alacritty
           pkgs.alacritty-theme
+          pkgs.alejandra
           pkgs.archi
           pkgs.discord
           pkgs.eza
