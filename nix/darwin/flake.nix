@@ -51,7 +51,6 @@
           pkgs.nixd
           pkgs.obsidian
           pkgs.pinentry_mac
-          pkgs.raycast
           pkgs.spotify
           pkgs.tmux
           pkgs.vscode
@@ -72,12 +71,14 @@
             "bartender"
             "brave-browser"
             "displaylink"
+            "docker"
             "dropbox"
             "flux"
             "github"
             "jetbrains-toolbox"
             "lens"
             "logseq"
+            "raycast"
             "rekordbox"
             "mixed-in-key"
             "raindropio"
