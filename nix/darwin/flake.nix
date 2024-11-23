@@ -66,6 +66,7 @@
             "wireshark"
           ];
           casks = [
+            "1password"
             "1password-cli"
             "airtool"
             "bartender"
@@ -89,7 +90,6 @@
             "yubico-yubikey-manager"
           ];
           masApps = {
-            "1 Password 7" = 1333542190;
             "Spark Classic" = 1176895641;
             "Termius" = 1176074088;
             "Yoink" = 457622435;
