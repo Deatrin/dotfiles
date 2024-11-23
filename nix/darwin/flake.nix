@@ -66,6 +66,7 @@
             "wireshark"
           ];
           casks = [
+            "1password-cli"
             "airtool"
             "bartender"
             "brave-browser"
