@@ -63,7 +63,7 @@
       homebrew = {
         enable = true;
         brews = [
-          "cloudflared"
+          # "cloudflared" # Only really needed when we need to create new tunnels for kube
           "k9s"
           "mas"
           "neovim"
