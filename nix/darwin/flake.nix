@@ -64,6 +64,8 @@
         enable = true;
         brews = [
           # "cloudflared" # Only really needed when we need to create new tunnels for kube
+          "direnv"
+          "go-task"
           "k9s"
           "mas"
           "neovim"
