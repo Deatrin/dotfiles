@@ -63,6 +63,7 @@
       homebrew = {
         enable = true;
         brews = [
+          "cloudflared"
           "k9s"
           "mas"
           "neovim"
