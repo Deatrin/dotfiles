@@ -74,6 +74,7 @@
       "kubectx"
       "command-not-found"
       "helm"
+      "direnv"
     ];
   };
   plugins = [
