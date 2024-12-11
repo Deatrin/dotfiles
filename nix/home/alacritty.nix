@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   enable = true;
   # package = pkgs.unstable.alacritty;
 
@@ -20,7 +17,7 @@
       decorations_theme_variant = "None";
     };
 
-    import = [
+    general.import = [
       "${pkgs.alacritty-theme}/tokyo-night.toml"
     ];
 
@@ -45,6 +42,6 @@
       TERM = "xterm-256color";
     };
 
-    live_config_reload = true;
+    general.live_config_reload = true;
   };
 }

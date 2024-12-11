@@ -100,6 +100,7 @@
         ];
         masApps = {
           "Spark Classic" = 1176895641;
+          "TickTick" = 966085870;
           "Termius" = 1176074088;
           "Yoink" = 457622435;
           "Yubico Authenticator" = 1497506650;
