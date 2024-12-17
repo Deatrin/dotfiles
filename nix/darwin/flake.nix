@@ -57,7 +57,7 @@
         pkgs.obsidian
         pkgs.pinentry_mac
         pkgs.spotify
-        pkgs.tmux
+        pkgs.unstable.tmux
         pkgs.vscode
       ];
 
@@ -145,6 +145,7 @@
         dock.show-recents = false;
         dock.showhidden = true;
         dock.persistent-apps = [
+          "/Applications/TickTick.app"
           "/Applications/Spark.app"
           "/System/Applications/Messages.app"
           "/Applications/Google Chrome.app"
