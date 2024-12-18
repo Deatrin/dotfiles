@@ -161,6 +161,7 @@
           "/Applications/Serial.app"
           "${pkgs.vscode}/Applications/Visual Studio Code.app"
           "${pkgs.alacritty}/Applications/Alacritty.app"
+          "/Applications/Docker.app/Contents/MacOS/Docker Desktop.app"
           "/System/Applications/System Settings.app"
         ];
 
