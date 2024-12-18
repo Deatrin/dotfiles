@@ -1,0 +1,3 @@
+{
+  imports = [ ./deatrin.nix ];
+}
