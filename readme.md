@@ -1,28 +1,21 @@
-# Setup
+# Fresh Install
 
-- First sign into Appstore for MAS to work
-- Start by downloading nix be using the following command
-- comment or uncomment lines 26 and 201 as needed depending on processor type
+starting on a fesh machine booted to nixOS live image
 
-  ``` shell
-  sh <(curl -L https://nixos.org/nix/install)
-  ```
+boot into the installer and connect to internet
 
-- Create Development Folder
+clone this repo
 
-``` shell
-mkdir ~/Development
+create secret at /tmp/secret.key
+
+```shell
+echo 'my-secret' > /tmp/secret.key
 ```
 
-- Download config from github
+```shell
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/razerback/disko-config.nix
+```
 
-  ``` shell
-  nix-shell -p git --run 'git clone https://github.com/Deatrin/dotfiles.git ./Development/dotfiles
-  ```
-
-- cd down to the darwin folder
-- Run the config with nix
-
-  ``` shell
-  nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#intel
-  ```
+```shell
+sudo nixos-install --flake .#MACHINE_NAME
+```

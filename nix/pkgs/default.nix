@@ -1,7 +1,5 @@
-pkgs: {
-  gptscript = pkgs.callPackage ./gptscript {};
-  banana-cursor-dreams = pkgs.callPackage ./banana-cursor-dreams {};
-  avc12-4k-capture = pkgs.callPackage ./avmvc12 {};
-  wl-screenrec = pkgs.callPackage ./wl-screenrec {};
+{pkgs, ...}: {
+  # Define your custom packages here
+  #  my-package = pkgs.callPackage ./my-package {};
   # example = pkgs.callPackage ./example { };
 }

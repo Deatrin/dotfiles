@@ -1,7 +1,7 @@
-{ 
+{
   config,
   pkgs,
-  lib, 
+  lib,
   ...
 }: let
   inherit (config.lib.file) mkOutOfStoreSymlink;
@@ -28,14 +28,14 @@ in {
   home.stateVersion = "24.05";
 
   programs = {
-    alacritty = import ../home/alacritty.nix {inherit pkgs;};
-    fzf = import ../home/fzf.nix {inherit pkgs;};
-    git = import ../home/git.nix { inherit config pkgs; };
-    gpg = import ../home/gpg.nix { inherit pkgs; };
-    oh-my-posh = import ../home/oh-my-posh.nix {inherit pkgs;};
-    neovim = import ../home/neovim.nix {inherit config pkgs;};
-    tmux = import ../home/tmux.nix {inherit pkgs;};
-    zoxide = (import ../home/zoxide.nix { inherit config pkgs; });
-    zsh = import ../home/zsh.nix {inherit config pkgs lib;};
+    alacritty = import ../home/darwin/alacritty.nix {inherit pkgs;};
+    fzf = import ../home/darwin/fzf.nix {inherit pkgs;};
+    git = import ../home/darwin/git.nix {inherit config pkgs;};
+    gpg = import ../home/darwin/gpg.nix {inherit pkgs;};
+    oh-my-posh = import ../home/darwin/oh-my-posh.nix {inherit pkgs;};
+    neovim = import ../home/darwin/neovim.nix {inherit config pkgs;};
+    tmux = import ../home/darwin/tmux.nix {inherit pkgs;};
+    zoxide = import ../home/darwin/zoxide.nix {inherit config pkgs;};
+    zsh = import ../home/darwin/zsh.nix {inherit config pkgs lib;};
   };
 }
