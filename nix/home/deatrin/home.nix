@@ -5,12 +5,17 @@
   config,
   lib,
   pkgs,
+  meta,
   ...
-}: {
+}: let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = lib.mkDefault "deatrin";
   home.homeDirectory = lib.mkDefault "/home/${config.home.username}";
+
+  xdg.enable = true;
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/home/deatrin/development/dotfiles/.config/nvim";
 
   # This value determines the Home Manager release that your configuration is
