@@ -4,7 +4,6 @@
     ./neofetch.nix
     ./ohmyposh.nix
     ./tmux.nix
-    ./yubikey-gpg.nix
     ./zsh.nix
   ];
   programs.zoxide = {
@@ -30,11 +29,13 @@
     distrobox
     # eww
     fd
+    gnupg
     htop
     httpie
     hyprpaper
     jq
     libsForQt5.qtstyleplugins
+    neovim
     nwg-look
     pamixer
     pavucontrol
@@ -46,6 +47,7 @@
     tldr
     usbutils
     xdg-utils
+    yubikey-personalization
     zip
   ];
 }

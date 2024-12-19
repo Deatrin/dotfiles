@@ -3,8 +3,8 @@
   pkgs,
   ...
 }: {
-  # enable = true;
-  defaultEditor = true;
+  enable = true;
+  #  defaultEditor = true;
   viAlias = true;
   vimAlias = true;
 }

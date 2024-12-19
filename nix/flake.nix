@@ -31,7 +31,6 @@
     self,
     agenix,
     disko,
-    dotfiles,
     home-manager,
     nixpkgs,
     ...
