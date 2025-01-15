@@ -12,6 +12,8 @@
     lt = "eza --tree --level=2 --long --icons --git";
     ltree = "eza --tree --level=2 --icons --git";
     clean = "clear";
+    ".." = "cd ..";
+    "..." = "cd ../..";
   };
   initExtra = ''
     ZSH_DISABLE_COMPFIX=true
