@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./ohmyposh.nix
     ./zsh.nix
   ];
   programs.zoxide = {
