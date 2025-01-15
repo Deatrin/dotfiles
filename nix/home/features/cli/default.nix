@@ -24,6 +24,7 @@
     htop
     httpie
     jq
+    oh-my-posh
     procs
     ripgrep
     tldr
