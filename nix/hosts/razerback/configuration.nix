@@ -8,7 +8,6 @@
 }: {
   imports = [
     # Include the results of the hardware scan.
-    ./disko-config.nix
     ./hardware-configuration.nix
   ];
 
@@ -17,6 +16,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "razerback"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -45,14 +49,6 @@
     variant = "";
   };
 
-  # # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.deatrin = {
-  #   isNormalUser = true;
-  #   description = "Deatrin";
-  #   extraGroups = [ "networkmanager" "wheel" ];
-  #   packages = with pkgs; [];
-  # };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -63,6 +59,7 @@
     #  wget
     git
     nfs-utils
+    neovim
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -82,14 +79,10 @@
     allowSFTP = true;
   };
 
-  hardware.bluetooth.enable = true;
-
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
-
-  programs.zsh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
