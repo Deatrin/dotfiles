@@ -15,8 +15,8 @@
       clean = "clear";
       ".." = "cd ..";
       "..." = "cd ../..";
-      grep = "rg";
-      ps = "procs";
+      # grep = "rg";
+      # ps = "procs";
     };
 
     initExtra = ''
