@@ -26,5 +26,5 @@
     packages = [inputs.home-manager.packages.${pkgs.system}.default];
   };
   home-manager.users.deatrin =
-    import deatrin/${config.networking.hostName}.nix;
+    import ../../../home/deatrin/${config.networking.hostName}.nix;
 }
