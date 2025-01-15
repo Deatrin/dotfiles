@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./ohmyposh.nix
     ./zsh.nix
   ];
   programs.zoxide = {
@@ -16,6 +15,12 @@
     extraOptions = ["-l" "--icons" "--git" "-a"];
   };
 
+  programs.oh-my-posh = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = builtins.fromTOML (builtins.unsafeDiscardStringContext (builtins.readFile ../../../../.config/ohmyposh/amro.toml));
+  };
+
   programs.bat = {enable = true;};
 
   home.packages = with pkgs; [
@@ -24,7 +29,6 @@
     htop
     httpie
     jq
-    oh-my-posh
     procs
     ripgrep
     tldr
