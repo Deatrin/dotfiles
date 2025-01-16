@@ -133,7 +133,7 @@
 
       bind = [
         "$mainMod, return, exec, alacritty"
-        "$mainMod, t, exec, alacritty -e zsh -c 'neofetch; exec zsh'"
+        "$mainMod, t, exec, alacritty -e zsh -c 'fastfetch; exec zsh'"
         # "$mainMod SHIFT, e, exec, kitty -e zellij_nvim"
         "$mainMod, o, exec, hyprctl setprop activewindow opaque toggle"
         "$mainMod, b, exec, thunar"
