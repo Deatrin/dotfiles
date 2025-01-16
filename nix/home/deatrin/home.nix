@@ -25,7 +25,6 @@ in {
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   xdg.configFile.nvim.source = mkOutOfStoreSymlink "/home/deatrin/dotfiles/.config/nvim";
-  xdg.configFile.rofi.source = mkOutOfStoreSymlink "/home/deatrin/dotfiles/.config/rofi";
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
