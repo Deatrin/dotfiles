@@ -236,6 +236,7 @@
     qt6.qtwayland
     slurp
     waypipe
+    waybar
     wf-recorder
     wl-mirror
     wl-clipboard
