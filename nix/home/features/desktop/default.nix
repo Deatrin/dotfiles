@@ -7,5 +7,6 @@
     ./wayland.nix
   ];
   home.packages = with pkgs; [
+    brave
   ];
 }

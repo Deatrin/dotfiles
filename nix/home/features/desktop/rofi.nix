@@ -17,7 +17,7 @@
       enable = true;
       package = rofi-pass-wayland;
     };
-    terminal = "\${pkgs.kitty}/bin/kitty";
+    terminal = "\${pkgs.alacritty}/bin/alacritty";
     font = "Fira Code";
     extraConfig = {
       show-icons = true;
