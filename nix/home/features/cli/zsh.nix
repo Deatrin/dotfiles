@@ -22,11 +22,11 @@
     initExtra = ''
       ZSH_DISABLE_COMPFIX=true
       export EDITOR=nvim
-      # if [ -n "$TTY" ]; then
-      #   export GPG_TTY=$(tty)
-      # else
-      #   export GPG_TTY="$TTY"
-      # fi
+      if [ -n "$TTY" ]; then
+        export GPG_TTY=$(tty)
+      else
+        export GPG_TTY="$TTY"
+      fi
 
       # source /run/agenix/${config.home.username}-secrets
       if [[ $(tty) = "/dev/tty1" ]]
@@ -35,8 +35,8 @@
       fi
 
       # # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
-      # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-      # gpgconf --launch gpg-agent
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
 
       bindkey -e
 
