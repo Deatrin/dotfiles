@@ -233,7 +233,6 @@
     hyprcursor
     hyprlock
     hyprpaper
-    hyprpanel
     qt6.qtwayland
     slurp
     waypipe
