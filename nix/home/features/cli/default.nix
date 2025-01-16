@@ -2,6 +2,7 @@
   imports = [
     ./bat.nix
     ./fzf.nix
+    ./gpg.nix
     ./zsh.nix
   ];
   programs.zoxide = {
