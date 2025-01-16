@@ -2,9 +2,9 @@
   imports = [
     ./bat.nix
     ./fzf.nix
+    ./git.nix
     ./gpg.nix
     ./zsh.nix
-    ./git.nix
   ];
   programs.zoxide = {
     enable = true;
