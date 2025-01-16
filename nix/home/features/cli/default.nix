@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./bat.nix
     ./fzf.nix
     ./zsh.nix
   ];
