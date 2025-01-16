@@ -60,6 +60,7 @@
     git
     nfs-utils
     neovim
+    yubikey-personalization
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -71,6 +72,12 @@
   # };
 
   # List services that you want to enable:
+
+  services.pcscd.enable = true;
+
+  services.udev.packages = with pkgs; [
+    yubikey-personalization
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
