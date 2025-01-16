@@ -75,9 +75,9 @@
 
   services.pcscd.enable = true;
 
-  services.udev.packages = with pkgs; [
-    yubikey-personalization
-  ];
+  # services.udev.packages = with pkgs; [
+  #   yubikey-personalization
+  # ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
