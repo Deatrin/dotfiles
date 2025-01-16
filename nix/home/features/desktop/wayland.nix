@@ -232,8 +232,8 @@
     grim
     hyprcursor
     hyprlock
-    hyprpanel
     hyprpaper
+    hyprpanel
     qt6.qtwayland
     slurp
     waypipe
