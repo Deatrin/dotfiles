@@ -74,6 +74,7 @@
   # List services that you want to enable:
 
   services.pcscd.enable = true;
+  services.yubikey-agent.enable = true;
 
   services.udev.packages = with pkgs; [
     yubikey-personalization
