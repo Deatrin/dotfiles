@@ -4,6 +4,7 @@
     ./fzf.nix
     ./gpg.nix
     ./zsh.nix
+    ../../darwin/git.nix
   ];
   programs.zoxide = {
     enable = true;
