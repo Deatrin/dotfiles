@@ -230,7 +230,9 @@
 
   home.packages = with pkgs; [
     grim
+    hyprcursor
     hyprlock
+    hyprpaper
     qt6.qtwayland
     slurp
     waypipe
