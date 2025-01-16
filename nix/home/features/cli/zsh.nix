@@ -29,10 +29,10 @@
       # fi
 
       # source /run/agenix/${config.home.username}-secrets
-      # if [[ $(tty) = "/dev/tty1" ]]
-      # then
-      #   exec Hyprland &> /dev/null
-      # fi
+      if [[ $(tty) = "/dev/tty1" ]]
+      then
+        exec Hyprland &> /dev/null
+      fi
 
       # # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
       # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
