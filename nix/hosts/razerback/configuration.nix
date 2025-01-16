@@ -75,6 +75,7 @@
 
   services.pcscd.enable = true;
   services.yubikey-agent.enable = true;
+  programs.ssh.startAgent = false;
 
   services.udev.packages = with pkgs; [
     yubikey-personalization
