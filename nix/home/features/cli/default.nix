@@ -33,6 +33,7 @@
     procs
     ripgrep
     tldr
+    zig
     zip
   ];
 }
