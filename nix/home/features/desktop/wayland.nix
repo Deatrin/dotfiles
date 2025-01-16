@@ -232,11 +232,11 @@
     grim
     hyprcursor
     hyprlock
+    hyprpanel
     hyprpaper
     qt6.qtwayland
     slurp
     waypipe
-    waybar
     wf-recorder
     wl-mirror
     wl-clipboard
