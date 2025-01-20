@@ -139,7 +139,7 @@
       system.defaults = {
         # Dock Options
         dock.autohide = true;
-        dock.minimize-to-application = true;
+        dock.minimize-to-application = false;
         dock.mouse-over-hilite-stack = true;
         dock.mru-spaces = false;
         dock.show-recents = false;
