@@ -1,5 +1,5 @@
 {lib, ...}: {
-  virtualisation.oci-containers."echo-http-service" = {
+  virtualisation.oci-containers.containers."echo-http-service" = {
     image = "hashicorp/http-echo:latest";
     extraOptions = ["-text='Hello, World!'" "--network=web"];
     ports = ["5678:5678"];

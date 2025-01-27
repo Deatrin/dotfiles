@@ -11,7 +11,7 @@
           "--filter=label!=important"
         ];
       };
-      defaultnetwork.settings.dns_enableds = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
   };
   environment.systemPackages = with pkgs; [
