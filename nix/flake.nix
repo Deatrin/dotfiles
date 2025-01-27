@@ -10,10 +10,15 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
+    disko,
     home-manager,
     nixpkgs,
     ...
@@ -34,7 +39,10 @@
     nixosConfigurations = {
       razerback = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [./hosts/razerback];
+        modules = [
+          ./hosts/razerback
+          inputs.disko.nixosModules.disko
+        ];
       };
     };
     homeConfigurations = {
