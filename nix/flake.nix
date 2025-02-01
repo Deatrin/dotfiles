@@ -14,7 +14,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix.url = "githubryantm/agenix";
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs = {
