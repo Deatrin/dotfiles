@@ -14,10 +14,12 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix.url = "githubryantm/agenix";
   };
 
   outputs = {
     self,
+    agenix,
     disko,
     home-manager,
     nixpkgs,
@@ -42,6 +44,7 @@
         modules = [
           ./hosts/razerback
           inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
         ];
       };
     };
