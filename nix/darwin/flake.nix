@@ -168,6 +168,7 @@
         # Finder Options
         finder.FXPreferredViewStyle = "clmv";
         finder._FXSortFoldersFirst = true;
+        finder.ShowHardDrivesOnDesktop = true;
 
         # Login Options
         loginwindow.GuestEnabled = false;
