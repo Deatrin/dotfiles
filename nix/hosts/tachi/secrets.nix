@@ -1,13 +1,15 @@
 {
   age = {
     secrets = {
-      traefik = {
-        file = ../../secrets/traefik.age;
-        owner = "traefik";
+      secret1 = {
+        file = ../../secrets/secret1.age;
+        # owner = "deatrin";
+        # mode = "0400";
+        # path = "/home/deatrin/.secret1";
       };
-      m3tam3re-secrets = {
-        file = ../../secrets/m3tam3re-secrets.age;
-        owner = "m3tam3re";
+      deatrin-secrets = {
+        file = ../../secrets/deatrin-secrets.age;
+        owner = "deatrin";
       };
     };
   };

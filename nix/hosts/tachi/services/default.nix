@@ -1,6 +1,5 @@
 {
   imports = [
     ./containers
-    ./traefik.nix
   ];
 }

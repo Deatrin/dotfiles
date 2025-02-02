@@ -55,6 +55,15 @@
           agenix.nixosModules.default
         ];
       };
+      tachi = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        system = "x86_x64-linux";
+        modules = [
+          ./hosts/tachi
+          inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
+        ];
+      };
     };
     homeConfigurations = {
       "deatrin@razerback" = home-manager.lib.homeManagerConfiguration {
@@ -66,6 +75,11 @@
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/deatrin/tycho.nix];
+      };
+      "deatrin@tachi" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home/deatrin/tachi.nix];
       };
     };
   };
