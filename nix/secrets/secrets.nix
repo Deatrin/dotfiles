@@ -7,7 +7,18 @@ let
 
   # Users
   deatrin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOzIb3yvc65BxpM2hjwNhs9viZdYTRm+FCBOLcoVwOzf";
+
+  users = [
+    deatrin
+  ];
+
+  systems = [
+    razerback
+    # tachi
+    tachivirt
+    tycho
+  ];
 in {
-  "secret1.age".publicKeys = [razerback tycho tachivirt deatrin];
-  "deatrin-secrets.age".publicKeys = [razerback tycho tachivirt deatrin];
+  "secret1.age".publicKeys = systems ++ users;
+  "deatrin-secrets.age".publicKeys = systems ++ users;
 }
