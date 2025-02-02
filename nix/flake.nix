@@ -47,12 +47,25 @@
           agenix.nixosModules.default
         ];
       };
+      tycho = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/tycho
+          inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
+        ];
+      };
     };
     homeConfigurations = {
       "deatrin@razerback" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/deatrin/razerback.nix];
+      };
+      "deatrin@tycho" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home/deatrin/tycho.nix];
       };
     };
   };
