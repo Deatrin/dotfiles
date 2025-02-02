@@ -23,3 +23,7 @@ sudo nixos-install --flake .#MACHINE_NAME
 ```shell
 gpg-connect-agent updatestartuptty /bye
 ```
+
+```shell
+nix run github:nix-community/nixos-anywhere -- --flake .#tachi root@<ip of box>
+```
