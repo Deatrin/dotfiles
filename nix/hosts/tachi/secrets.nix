@@ -11,6 +11,10 @@
         file = ../../secrets/deatrin-secrets.age;
         owner = "deatrin";
       };
+      traefik-secrets = {
+        file = ../../secrets/traefik.age;
+        owner = "deatrin";
+      };
     };
   };
 }
