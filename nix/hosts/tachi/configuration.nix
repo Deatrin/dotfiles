@@ -94,6 +94,24 @@
   # Automatic cleanup
   nix.settings.auto-optimise-store = true;
 
+  fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
+    device = "10.1.10.5:/volume1/kubedata/paperless_data";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
+
+  fileSystems."/home/deatrin/docker_volumes/immich/Library" = {
+    device = "10.1.10.5:/volume1/kubedata/Photos";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
