@@ -6,7 +6,8 @@
     nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    # nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    nix-homebrew.url = "git+https://github.com/zhaofengli/nix-homebrew?ref=refs/pull/71/merge";
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
@@ -22,8 +23,8 @@
   } @ inputs: let
     add-unstable-packages = final: _prev: {
       unstable = import inputs.nixpkgs-unstable {
-        # system = "x86_64-darwin";
-        system = "aarch64-darwin";
+        system = "x86_64-darwin";
+        # system = "aarch64-darwin";
       };
     };
     username = "ajennex";
@@ -218,8 +219,8 @@
       system.stateVersion = 5;
 
       # The platform the configuration will be used on.
-      # nixpkgs.hostPlatform = "x86_64-darwin";
-      nixpkgs.hostPlatform = "aarch64-darwin";
+      nixpkgs.hostPlatform = "x86_64-darwin";
+      # nixpkgs.hostPlatform = "aarch64-darwin";
     };
   in {
     # Build darwin flake using:
