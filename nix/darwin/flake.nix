@@ -55,6 +55,7 @@
         pkgs.mkalias
         pkgs.neofetch
         pkgs.nixd
+        pkgs.nixos-anywhere
         pkgs.obsidian
         pkgs.pinentry_mac
         pkgs.spotify
