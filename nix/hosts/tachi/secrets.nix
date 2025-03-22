@@ -16,6 +16,11 @@
         path = "/home/deatrin/docker_volumes/traefik/.env";
         owner = "deatrin";
       };
+      immich-secrets = {
+        file = ../../secrets/immich.age;
+        path = "/home/deatrin/docker_volumes/immich/.env";
+        owner = "deatrin";
+      };
     };
   };
 }
