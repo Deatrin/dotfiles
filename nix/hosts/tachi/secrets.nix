@@ -21,6 +21,7 @@
         path = "/home/deatrin/docker_volumes/immich/.env";
         owner = "deatrin";
       };
+      tailscale-key.file = ../../secrets/tailscale-key.age;
     };
   };
 }

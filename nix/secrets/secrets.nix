@@ -29,5 +29,6 @@ in {
   "minio.age".publicKeys = systems ++ users;
   "monitoring.age".publicKeys = systems ++ users;
   "paperless.age".publicKeys = systems ++ users;
+  "tailscale-key.age".publicKeys = systems ++ users;
   "traefik.age".publicKeys = systems ++ users;
 }
