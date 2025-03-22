@@ -21,4 +21,13 @@ let
 in {
   "secret1.age".publicKeys = systems ++ users;
   "deatrin-secrets.age".publicKeys = systems ++ users;
+  "cloudflareddns.age".publicKeys = systems ++ users;
+  "cloudflaretunnel.age".publicKeys = systems ++ users;
+  "idrac.age".publicKeys = systems ++ users;
+  "immich.age".publicKeys = systems ++ users;
+  "mealie.age".publicKeys = systems ++ users;
+  "minio.age".publicKeys = systems ++ users;
+  "monitoring.age".publicKeys = systems ++ users;
+  "paperless.age".publicKeys = systems ++ users;
+  "traefik.age".publicKeys = systems ++ users;
 }
