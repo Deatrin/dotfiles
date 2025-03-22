@@ -1,6 +1,5 @@
 {
   imports = [
     ./containers
-    ./docker.nix
   ];
 }
