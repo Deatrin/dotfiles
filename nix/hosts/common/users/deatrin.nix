@@ -9,6 +9,7 @@
     isNormalUser = true;
     description = "Deatrin";
     extraGroups = [
+      "docker"
       "wheel"
       "networkmanager"
       "libvirtd"
