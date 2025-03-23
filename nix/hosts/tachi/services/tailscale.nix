@@ -14,7 +14,7 @@
 
   # Here, we mount the token file
   age.secrets.tailscale-token = {
-    file = ./tailscale-key.age;
+    file = ../../secrets/tailscale-key.age;
     owner = "root";
     group = "root";
     mode = "600";
