@@ -1,10 +1,3 @@
-# {
-#   services.tailscale = {
-#     enable = true;
-#     useRoutingFeatures = "both";
-#   };
-# }
-# # tailscale.nix
 {
   config,
   pkgs,
