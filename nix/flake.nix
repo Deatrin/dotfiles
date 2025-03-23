@@ -64,6 +64,15 @@
           agenix.nixosModules.default
         ];
       };
+      tachi-virt = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        system = "x86_x64-linux";
+        modules = [
+          ./hosts/tachi-virt
+          inputs.disko.nixosModules.disko
+          agenix.nixosModules.default
+        ];
+      };
     };
     homeConfigurations = {
       "deatrin@razerback" = home-manager.lib.homeManagerConfiguration {
