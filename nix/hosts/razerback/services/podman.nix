@@ -7,7 +7,7 @@
         enable = true;
         dates = "weekly";
         flags = [
-          "--filter=until-24h"
+          "--filter=until=24h"
           "--filter=label!=important"
         ];
       };
