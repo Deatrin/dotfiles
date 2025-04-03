@@ -82,7 +82,8 @@
       gestures = {
         workspace_swipe = false;
       };
-
+      
+      monitor = "eDP-1, 1920x1200@60, 0x0, 1";
       # device = [
       #   {
       #     name = "epic-mouse-v1";

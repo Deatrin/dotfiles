@@ -73,6 +73,14 @@
   # };
 
   # List services that you want to enable:
+  
+  services.upower.enable = true;
+  services.blueman.enable = true;
+  services.libinput.enable = true;
+  services.power-profiles-daemon.enable = true;
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = false;
 
   services.pcscd.enable = true;
   services.yubikey-agent.enable = true;
