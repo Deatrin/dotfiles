@@ -82,7 +82,10 @@
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "no";
+    settings.PasswordAuthentication = false;
     allowSFTP = true;
+    ports = [ 2222 ];
+
   };
 
   programs.zsh.enable = true;
