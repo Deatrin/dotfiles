@@ -28,6 +28,17 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking = {
+    interfaces.ens18.ipv4.addresses = [
+      {
+        address = "10.1.30.10";
+        prefixLength = 24;
+      }
+    ];
+    defaultGateway = "10.1.30.1";
+    nameservers = ["10.30.0.1"];
+  };
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
