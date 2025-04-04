@@ -64,11 +64,11 @@
           agenix.nixosModules.default
         ];
       };
-      tachi-virt = nixpkgs.lib.nixosSystem {
+      nauvoo = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         system = "x86_x64-linux";
         modules = [
-          ./hosts/tachi-virt
+          ./hosts/nauvoo
           inputs.disko.nixosModules.disko
           agenix.nixosModules.default
         ];
@@ -89,6 +89,11 @@
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/deatrin/tachi.nix];
+      };
+      "deatrin@nauvoo" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home/deatrin/nauvoo.nix];
       };
     };
   };

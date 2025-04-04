@@ -18,7 +18,7 @@
     efiInstallAsRemovable = true;
   };
 
-  networking.hostName = "tachi-virt"; # Define your hostname.
+  networking.hostName = "nauvoo"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -82,9 +82,10 @@
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "no";
+    settings.PasswordAuthentication = false;
     allowSFTP = true;
+    ports = [2222];
   };
-
   programs.zsh.enable = true;
 
   # Automatic Updating
@@ -94,23 +95,23 @@
   # Automatic cleanup
   nix.settings.auto-optimise-store = true;
 
-  fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
-    device = "10.1.10.5:/volume1/kubedata/paperless_data";
-    fsType = "nfs";
-    options = [
-      "rw"
-      "nolock"
-    ];
-  };
+  # fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
+  #   device = "10.1.10.5:/volume1/kubedata/paperless_data";
+  #   fsType = "nfs";
+  #   options = [
+  #     "rw"
+  #     "nolock"
+  #   ];
+  # };
 
-  fileSystems."/home/deatrin/docker_volumes/immich/Library" = {
-    device = "10.1.10.5:/volume1/kubedata/Photos";
-    fsType = "nfs";
-    options = [
-      "rw"
-      "nolock"
-    ];
-  };
+  # fileSystems."/home/deatrin/docker_volumes/immich/Library" = {
+  #   device = "10.1.10.5:/volume1/kubedata/Photos";
+  #   fsType = "nfs";
+  #   options = [
+  #     "rw"
+  #     "nolock"
+  #   ];
+  # };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
