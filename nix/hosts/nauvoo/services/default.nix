@@ -1,7 +1,7 @@
 {
   imports = [
     ./containers
-    ./docker.yaml
+    ./docker.nix
     ./tailscale.nix
   ];
 }
