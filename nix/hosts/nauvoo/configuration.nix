@@ -36,7 +36,7 @@
       }
     ];
     defaultGateway = "10.1.30.1";
-    nameservers = ["10.1.10.220, 1.1.1.1"];
+    nameservers = ["10.1.10.220"];
   };
 
   # Set your time zone.
