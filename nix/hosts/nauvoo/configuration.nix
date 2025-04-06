@@ -123,6 +123,14 @@
   #     "nolock"
   #   ];
   # };
+  fileSystems."/home/deatrin/docker_volumes/navidrome-prod-1/library" = {
+    device = "10.1.10.5:/volume1/kubedata/media/music";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
