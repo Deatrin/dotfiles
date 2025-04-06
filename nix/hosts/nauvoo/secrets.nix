@@ -16,11 +16,6 @@
         path = "/home/deatrin/docker_volumes/traefik/.env";
         owner = "deatrin";
       };
-      renovate-secrets = {
-        file = ../../secrets/renovate.age;
-        path = "/home/deatrin/docker_volumes/renovate/.env";
-        owner = "deatrin";
-      };
       # immich-secrets = {
       #   file = ../../secrets/immich.age;
       #   path = "/home/deatrin/docker_volumes/immich/.env";
