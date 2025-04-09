@@ -34,8 +34,10 @@
     htop
     httpie
     jq
+    packer
     procs
     ripgrep
+    tenv
     tldr
     zig
     zip
