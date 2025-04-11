@@ -83,7 +83,7 @@
         workspace_swipe = false;
       };
       
-      monitor = "eDP-1, 1920x1200@60, 0x0, 1";
+      monitor = "eDP-1, 1920x1200@59.95, 0x0, 1";
       # device = [
       #   {
       #     name = "epic-mouse-v1";
@@ -98,7 +98,7 @@
       #     kb_layout = "us";
       #   }
       # ];
-      windowrule = [
+      windowrulev2 = [
         "float, file_progress"
         "float, confirm"
         "float, dialog"
