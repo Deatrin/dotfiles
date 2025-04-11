@@ -73,7 +73,7 @@
   # };
 
   # List services that you want to enable:
-
+  
   services.upower.enable = true;
   services.blueman.enable = true;
   services.libinput.enable = true;

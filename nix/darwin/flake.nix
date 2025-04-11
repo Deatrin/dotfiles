@@ -72,6 +72,7 @@
           "k9s"
           "mas"
           "neovim"
+          "tenv"
           "wireshark"
         ];
         casks = [
