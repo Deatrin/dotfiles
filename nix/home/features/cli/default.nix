@@ -2,6 +2,7 @@
   imports = [
     ./bat.nix
     ./fzf.nix
+    ./fonts.nix
     ./git.nix
     ./gpg.nix
     ./zsh.nix
