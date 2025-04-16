@@ -37,5 +37,6 @@
     ../common
     ./configuration.nix
     ./secrets.nix
+    ./services
   ];
 }
