@@ -23,6 +23,7 @@ in {
   "deatrin-secrets.age".publicKeys = systems ++ users;
   "cloudflareddns.age".publicKeys = systems ++ users;
   "cloudflaretunnel.age".publicKeys = systems ++ users;
+  "homepage.age".publicKeys = systems ++ users;
   "idrac.age".publicKeys = systems ++ users;
   "immich.age".publicKeys = systems ++ users;
   "mealie.age".publicKeys = systems ++ users;
