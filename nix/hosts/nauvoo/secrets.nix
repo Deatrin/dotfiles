@@ -25,6 +25,6 @@
         file = ../../secrets/homepage.age;
         path = "/home/deatrin/docker_volumes/homepage-prod-1/.env";
         owner = "deatrin";
-    };
+      };
   };
 }
