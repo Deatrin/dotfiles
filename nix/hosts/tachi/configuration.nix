@@ -116,14 +116,14 @@
   #   ];
   # };
 
-  # fileSystems."/home/deatrin/docker_volumes/immich/Library" = {
-  #   device = "10.1.10.5:/volume1/kubedata/Photos";
-  #   fsType = "nfs";
-  #   options = [
-  #     "rw"
-  #     "nolock"
-  #   ];
-  # };
+  fileSystems."/home/deatrin/docker_volumes/immich-prod-1/Library" = {
+    device = "10.1.10.5:/volume1/kubedata/Photos";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
 
   # fileSystems."/home/deatrin/docker_volumes/navidrome/library" = {
   #   device = "10.1.10.5:/volume1/kubedata/media/music";
