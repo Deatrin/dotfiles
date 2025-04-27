@@ -26,6 +26,11 @@
         path = "/home/deatrin/docker_volumes/ddns-prod-1/.env";
         owner = "deatrin";
       };
+      homepage-secrets = {
+        file = ../../secrets/homepage.age;
+        path = "/home/deatrin/docker_volumes/homepage-prod-1/.env";
+        owner = "deatrin";
+      };
       tailscale-key.file = ../../secrets/tailscale-key.age;
     };
   };
