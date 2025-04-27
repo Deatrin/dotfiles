@@ -16,11 +16,11 @@
         path = "/home/deatrin/docker_volumes/traefik-prod-1/.env";
         owner = "deatrin";
       };
-      # immich-secrets = {
-      #   file = ../../secrets/immich.age;
-      #   path = "/home/deatrin/docker_volumes/immich/.env";
-      #   owner = "deatrin";
-      # };
+      immich-secrets = {
+        file = ../../secrets/immich.age;
+        path = "/home/deatrin/docker_volumes/immich-prod-1/.env";
+        owner = "deatrin";
+      };
       ddns-secrets = {
         file = ../../secrets/cloudflareddns.age;
         path = "/home/deatrin/docker_volumes/ddns-prod-1/.env";
