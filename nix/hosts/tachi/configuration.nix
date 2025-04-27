@@ -28,6 +28,17 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking = {
+    interfaces.ens18.ipv4.addresses = [
+      {
+        address = "10.1.10.220";
+        prefixLength = 24;
+      }
+    ];
+    defaultGateway = "10.1.10.1";
+    nameservers = ["10.1.10.220,1.1.1.1"];
+  };
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
@@ -96,32 +107,32 @@
   # Automatic cleanup
   nix.settings.auto-optimise-store = true;
 
-  fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
-    device = "10.1.10.5:/volume1/kubedata/paperless_data";
-    fsType = "nfs";
-    options = [
-      "rw"
-      "nolock"
-    ];
-  };
+  # fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
+  #   device = "10.1.10.5:/volume1/kubedata/paperless_data";
+  #   fsType = "nfs";
+  #   options = [
+  #     "rw"
+  #     "nolock"
+  #   ];
+  # };
 
-  fileSystems."/home/deatrin/docker_volumes/immich/Library" = {
-    device = "10.1.10.5:/volume1/kubedata/Photos";
-    fsType = "nfs";
-    options = [
-      "rw"
-      "nolock"
-    ];
-  };
+  # fileSystems."/home/deatrin/docker_volumes/immich/Library" = {
+  #   device = "10.1.10.5:/volume1/kubedata/Photos";
+  #   fsType = "nfs";
+  #   options = [
+  #     "rw"
+  #     "nolock"
+  #   ];
+  # };
 
-  fileSystems."/home/deatrin/docker_volumes/navidrome/library" = {
-    device = "10.1.10.5:/volume1/kubedata/media/music";
-    fsType = "nfs";
-    options = [
-      "rw"
-      "nolock"
-    ];
-  };
+  # fileSystems."/home/deatrin/docker_volumes/navidrome/library" = {
+  #   device = "10.1.10.5:/volume1/kubedata/media/music";
+  #   fsType = "nfs";
+  #   options = [
+  #     "rw"
+  #     "nolock"
+  #   ];
+  # };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
