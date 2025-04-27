@@ -13,7 +13,7 @@
       };
       traefik-secrets = {
         file = ../../secrets/traefik.age;
-        path = "/home/deatrin/docker_volumes/traefik/.env";
+        path = "/home/deatrin/docker_volumes/traefik-prod-1/.env";
         owner = "deatrin";
       };
       # immich-secrets = {
