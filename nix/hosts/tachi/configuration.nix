@@ -134,6 +134,15 @@
     ];
   };
 
+  fileSystems."/home/deatrin/docker_volumes/audiobookshelf-prod-1/library" = {
+    device = "10.1.10.5:/volume1/kubedata/audiobookshelf";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
