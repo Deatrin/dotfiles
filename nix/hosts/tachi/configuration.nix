@@ -107,14 +107,14 @@
   # Automatic cleanup
   nix.settings.auto-optimise-store = true;
 
-  # fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
-  #   device = "10.1.10.5:/volume1/kubedata/paperless_data";
-  #   fsType = "nfs";
-  #   options = [
-  #     "rw"
-  #     "nolock"
-  #   ];
-  # };
+  fileSystems."/home/deatrin/docker_volumes/paperless-prod-1/paperless_data" = {
+    device = "10.1.10.5:/volume1/kubedata/paperless_data";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
 
   fileSystems."/home/deatrin/docker_volumes/immich-prod-1/Library" = {
     device = "10.1.10.5:/volume1/kubedata/Photos";
