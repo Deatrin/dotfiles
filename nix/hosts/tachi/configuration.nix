@@ -143,6 +143,15 @@
     ];
   };
 
+  fileSystems."/home/deatrin/docker_volumes/arr-stack-prod-1/data" = {
+    device = "10.1.10.5:/volume1/kubedata/media";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
