@@ -31,6 +31,11 @@
         path = "/home/deatrin/docker_volumes/homepage-prod-1/.env";
         owner = "deatrin";
       };
+      paperless-secrets = {
+        file = ../../secrets/paperless.age;
+        path = "/home/deatrin/docker_volumes/paperless-prod-1/.env";
+        owner = "deatrin";
+      };
       tailscale-key.file = ../../secrets/tailscale-key.age;
     };
   };
