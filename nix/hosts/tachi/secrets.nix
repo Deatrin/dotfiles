@@ -37,7 +37,7 @@
         owner = "deatrin";
       };
       renovate-secrets = {
-        file = ../../secrets/paperless.age;
+        file = ../../secrets/renovate.age;
         path = "/home/deatrin/docker_volumes/renovate-prod-1/.env";
         owner = "deatrin";
       };
