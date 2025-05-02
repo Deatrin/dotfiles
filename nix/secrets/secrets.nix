@@ -29,6 +29,7 @@ in {
   "mealie.age".publicKeys = systems ++ users;
   "minio.age".publicKeys = systems ++ users;
   "monitoring.age".publicKeys = systems ++ users;
+  "n8n.age".publicKeys = systems ++ users;
   "paperless.age".publicKeys = systems ++ users;
   "renovate.age".publicKeys = systems ++ users;
   "tailscale-key.age".publicKeys = systems ++ users;
