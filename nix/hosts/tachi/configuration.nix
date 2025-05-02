@@ -152,8 +152,8 @@
     ];
   };
 
-  fileSystems."/home/deatrin/docker_volumes/komga-prod-1/data" = {
-    device = "10.1.10.5:/volume1/kubedata/komga";
+  fileSystems."/home/deatrin/docker_volumes/calibre-prod-1/books" = {
+    device = "10.1.10.5:/volume1/kubedata/books";
     fsType = "nfs";
     options = [
       "rw"
