@@ -19,7 +19,7 @@
       ps = "procs";
     };
 
-    initExtra = ''
+    initContent = ''
       ZSH_DISABLE_COMPFIX=true
       export EDITOR=nvim
       if [ -n "$TTY" ]; then
