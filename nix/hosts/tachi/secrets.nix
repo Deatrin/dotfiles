@@ -31,6 +31,11 @@
         path = "/home/deatrin/docker_volumes/homepage-prod-1/.env";
         owner = "deatrin";
       };
+      n8n-secrets = {
+        file = ../../secrets/n8n.age;
+        path = "/home/deatrin/docker_volumes/n8n-prod-1/.env";
+        owner = "deatrin";
+      };
       paperless-secrets = {
         file = ../../secrets/paperless.age;
         path = "/home/deatrin/docker_volumes/paperless-prod-1/.env";
