@@ -30,8 +30,8 @@
       };
 
       general = {
-        gaps_in = 5;
-        gaps_out = 5;
+        gaps_in = 2;
+        gaps_out = 2;
         border_size = 1;
         "col.active_border" = "rgba(9742b5ee) rgba(9742b5ee) 45deg";
         "col.inactive_border" = "rgba(595959aa)";
@@ -53,7 +53,7 @@
           size = 3;
           passes = 3;
         };
-        active_opacity = 0.9;
+        active_opacity = 1.0;
         inactive_opacity = 0.5;
       };
 
@@ -80,7 +80,7 @@
       };
 
       gestures = {
-        workspace_swipe = false;
+        workspace_swipe = true;
       };
       
       monitor = "eDP-1, 1920x1200@59.95, 0x0, 1";
@@ -133,6 +133,7 @@
         "$mainMod, Space, togglefloating"
         "$mainMod, q, killactive"
         "$mainMod, M, exit"
+        "$mainMod SHIFT, l, exec, hyprlock"
         "$mainMod, F, fullscreen"
         "$mainMod, V, togglefloating"
         "$mainMod, D, exec, rofi -show"
