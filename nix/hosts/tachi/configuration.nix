@@ -161,6 +161,16 @@
     ];
   };
 
+  fileSystems."/home/deatrin/docker_volumes/netbox-prod-1/config" = {
+    device = "10.1.10.5:/volume1/kubedata/Netbox";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
+
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
