@@ -6,6 +6,14 @@
       config.vim = {
         viAlias = true;
         vimAlias = true;
+        vim.keymaps = [
+          {
+            key = "<leader>pv";
+            mode = "n";
+            silent = true;
+            action = ":Neotree position=current"
+          }
+        ];
 
         spellcheck = {
           enable = true;
@@ -55,7 +63,7 @@
           cinnamon-nvim.enable = true;
           fidget-nvim.enable = true;
           highlight-undo.enable = true;
-          indent-blankline.enable = true;
+          indent-blan/kline.enable = true;
 
           # Fun
           cellular-automaton.enable = false;
