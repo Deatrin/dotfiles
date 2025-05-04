@@ -13,6 +13,12 @@
             silent = true;
             action = ":Neotree<Cr>";
           }
+          {
+            key = "<leader>pt";
+            mode = "n";
+            silent = true;
+            action = ":Neotree toggle<Cr>";
+          }
           # Telescope keys
           {
             key = "<leader><leader>";
