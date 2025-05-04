@@ -67,7 +67,6 @@
     #  wget
     git
     nfs-utils
-    neovim
     yubikey-personalization
   ];
 
