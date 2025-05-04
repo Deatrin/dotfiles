@@ -6,12 +6,83 @@
       config.vim = {
         viAlias = true;
         vimAlias = true;
-        vim.keymaps = [
+        keymaps = [
           {
             key = "<leader>pv";
             mode = "n";
             silent = true;
-            action = ":Neotree position=current"
+            action = ":Neotree<Cr>";
+          }
+          # Telescope keys
+          {
+            key = "<leader><leader>";
+            mode = "n";
+            silent = true;
+            action = ":Telescope buffers<Cr>";
+            desc = "[ ] Find existing buffers";
+          }
+          {
+            key = "<leader>s.";
+            mode = "n";
+            silent = true;
+            action = ":Telescope oldfiles<Cr>";
+            desc = "[S]earch Recent Files (. for repeat)";
+          }
+          {
+            key = "<leader>sr";
+            mode = "n";
+            silent = true;
+            action = ":Telescope resume<Cr>";
+            desc = "[S]earch [R]esume";
+          }
+          {
+            key = "<leader>sd";
+            mode = "n";
+            silent = true;
+            action = ":Telescope diagnostics<Cr>";
+            desc = "[S]earch [D]iagnostics";
+          }
+          {
+            key = "<leader>sg";
+            mode = "n";
+            silent = true;
+            action = ":Telescope live_grep<Cr>";
+            desc = "[S]earch by [G]rep";
+          }
+          {
+            key = "<leader>sw";
+            mode = "n";
+            silent = true;
+            action = ":Telescope grep_string<Cr>";
+            desc = "[S]earch current [W]ord";
+          }
+          {
+            key = "<leader>ss";
+            mode = "n";
+            silent = true;
+            action = ":Telescope builtin<Cr>";
+            desc = "[S]earch [S]elect Telescope";
+          }
+          {
+            key = "<leader>sf";
+            mode = "n";
+            silent = true;
+            action = ":Telescope find_files<Cr>";
+            desc = "[S]earch [F]iles";
+          }
+          {
+            key = "<leader>sk";
+            mode = "n";
+            silent = true;
+            action = ":Telescope keymaps<Cr>";
+            desc = "[S]earch [K]eymaps";
+          }
+          {
+            key = "<leader>sh";
+            mode = "n";
+            silent = true;
+            action = ":Telescope help_tags<Cr>";
+            desc = "[S]earch [H]elp";
           }
         ];
 
@@ -63,7 +134,7 @@
           cinnamon-nvim.enable = true;
           fidget-nvim.enable = true;
           highlight-undo.enable = true;
-          indent-blan/kline.enable = true;
+          indent-blankline.enable = true;
 
           # Fun
           cellular-automaton.enable = false;
