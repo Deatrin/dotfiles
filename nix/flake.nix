@@ -17,7 +17,7 @@
     agenix.url = "github:ryantm/agenix";
     nvf = {
       url = "github:notashelf/nvf";
-      inputs.nixpkgs.follow = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -84,8 +84,8 @@
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
-            ./home/deatrin/razerback.nix
             nvf.homeManagerModules.default
+            ./home/deatrin/razerback.nix
           ];
       };
       "deatrin@tycho" = home-manager.lib.homeManagerConfiguration {
