@@ -50,7 +50,6 @@
           ./hosts/razerback
           inputs.disko.nixosModules.disko
           agenix.nixosModules.default
-          nvf.nixosModules.default
         ];
       };
       tycho = nixpkgs.lib.nixosSystem {
