@@ -1,12 +1,5 @@
-{
-  config,
-  lib,
-  options,
-  pkgs,
-  inputs,
-  ...
-}: {
-  imports = [ inputs.nvf.homeManagerModules.default ];
+{inputs, ...}: {
+  imports = [inputs.nvf.homeManagerModules.default];
   programs.nvf = {
     enable = true;
     settings = {
@@ -97,6 +90,7 @@
         filetree = {
           neo-tree = {
             enable = true;
+            setupOpts.enable_cursor_hijacking = true;
           };
         };
 
@@ -109,7 +103,7 @@
         binds = {
           whichKey.enable = true;
           cheatsheet.enable = true;
-          hardtime-nvim.enable = true;
+          #     hardtime-nvim.enable = true;
         };
 
         telescope.enable = true;
