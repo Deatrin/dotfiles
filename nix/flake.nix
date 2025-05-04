@@ -91,7 +91,10 @@
       "deatrin@tycho" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home/deatrin/tycho.nix];
+        modules = [
+          nvf.homeManagerModules.default
+          ./home/deatrin/tycho.nix
+          ];
       };
       "deatrin@tachi" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
