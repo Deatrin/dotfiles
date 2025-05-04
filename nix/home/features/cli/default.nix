@@ -5,6 +5,7 @@
     ./fonts.nix
     ./git.nix
     ./gpg.nix
+    ./nvf.nix
     ./zsh.nix
   ];
   programs.zoxide = {

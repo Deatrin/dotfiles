@@ -15,6 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix.url = "github:ryantm/agenix";
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {
@@ -23,6 +24,7 @@
     disko,
     home-manager,
     nixpkgs,
+    nvf,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -78,7 +80,10 @@
       "deatrin@razerback" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home/deatrin/razerback.nix];
+        modules = [
+            ./home/deatrin/razerback.nix
+            nvf.homeManagerModules.default
+          ];
       };
       "deatrin@tycho" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
