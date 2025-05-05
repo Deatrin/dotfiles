@@ -33,6 +33,7 @@
     coreutils
     fastfetch
     fd
+    go
     htop
     httpie
     jq
