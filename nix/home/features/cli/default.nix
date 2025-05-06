@@ -42,6 +42,7 @@
     ripgrep
     tenv
     tldr
+    xxd
     zig
     zip
   ];

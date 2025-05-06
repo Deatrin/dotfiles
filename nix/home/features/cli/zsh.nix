@@ -22,6 +22,7 @@
     initContent = ''
       ZSH_DISABLE_COMPFIX=true
       export EDITOR=nvim
+      export PATH=$PATH:$HOME/go/bin
       if [ -n "$TTY" ]; then
         export GPG_TTY=$(tty)
       else
