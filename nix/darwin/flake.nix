@@ -55,7 +55,6 @@
         pkgs.neofetch
         pkgs.nixd
         pkgs.nixos-anywhere
-        pkgs.obsidian
         pkgs.pinentry_mac
         pkgs.spotify
         pkgs.unstable.tmux
@@ -88,6 +87,7 @@
           "jetbrains-toolbox"
           "lens"
           "logseq"
+          "notion"
           "raycast"
           "rekordbox"
           "mixed-in-key"
