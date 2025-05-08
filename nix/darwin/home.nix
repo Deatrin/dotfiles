@@ -26,11 +26,14 @@ in {
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "24.05";
+  imports = [
+    ../home/features/cli/git.nix
+  ];
 
   programs = {
     alacritty = import ../home/darwin/alacritty.nix {inherit pkgs;};
     fzf = import ../home/darwin/fzf.nix {inherit pkgs;};
-    git = import ../home/darwin/git.nix {inherit config pkgs;};
+    # git = import ../home/darwin/git.nix {inherit config pkgs;};
     gpg = import ../home/darwin/gpg.nix {inherit pkgs;};
     oh-my-posh = import ../home/darwin/oh-my-posh.nix {inherit pkgs;};
     neovim = import ../home/darwin/neovim.nix {inherit config pkgs;};
