@@ -1,20 +1,24 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     # ./atuin.nix
-    # ./bat.nix
-    # ./direnv.nix
-    # ./eza.nix
-    # ./fzf.nix
-    # ./ghostty.nix
-    # ./git.nix
-    # ./gpg.nix
-    # ./nvf.nix
-    # ./oh-my-posh.nix
-    # ./opnix.nix
-    # ./tealdeer.nix
-    # ./tmux.nix
-    # ./zoxide.nix
-    # ./zsh.nix
+    ./bat.nix
+    ./direnv.nix
+    ./eza.nix
+    ./fzf.nix
+    ./ghostty.nix
+    ./git.nix
+    ./gpg.nix
+    ./nvf.nix
+    ./oh-my-posh.nix
+    ./opnix.nix
+    ./tealdeer.nix
+    ./tmux.nix
+    ./zoxide.nix
+    ./zsh.nix
   ];
   home.packages = with pkgs; [
     # _1password # password manager CLI - installing this break op CLI on macbooks
