@@ -20,7 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nh_darwin.url = "github:ToyVo/nh_plus";
+    nh_darwin.url = "github:ToyVo/nh_plus";
 
     # for VSCode remote-ssh
     nix-ld-vscode = {
