@@ -95,6 +95,20 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#<hostname>
     darwinConfigurations = {
+      Barkeith = nix-darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        specialArgs = {
+          inherit inputs outputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            system = "x86_64-darwin";
+            config.allowUnfree = true;
+          };
+        };
+        modules = [
+          ./hosts/barkeith
+          # nh_darwin.nixDarwinModules.default
+        ];
+      };
       Chetzemoka = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
@@ -130,6 +144,11 @@
       # "jeff@home" = mkHome [ ./home-manager/jeff_home.nix ] nixpkgs.legacyPackages."x86_64-linux";
       # "jeff@cloud" = mkHome [ ./home-manager/jeff_cloud.nix ] nixpkgs.legacyPackages."aarch64-linux";
       # Laptops
+      "ajennex@barkeith" =
+        mkHome [
+          ./home-manager/barkeith
+        ]
+        nixpkgs.legacyPackages."x86_64-darwin";
       "ajennex@chetzemoka" =
         mkHome [
           ./home-manager/chetzemoka.nix
