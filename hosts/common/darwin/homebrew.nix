@@ -9,7 +9,10 @@
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
     onActivation.cleanup = "zap";
-    brews = ["cask"];
+    brews = [
+      "cask"
+      "tenv"
+    ];
     # taps = [
     #   "homebrew/bundle"
     #   "homebrew/cask-fonts"
