@@ -6,10 +6,13 @@
   #homebrew packages
   homebrew = {
     casks = [
+      "airtool"
       "google-chrome"
       "discord"
       "microsoft-office"
-      "obs"
+      "mixed-in-key"
+      "rekordbox"
+      "wifi-explorer-pro"
       "slack"
     ];
     masApps = {

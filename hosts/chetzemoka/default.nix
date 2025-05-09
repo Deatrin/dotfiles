@@ -12,7 +12,7 @@
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  environment.darwinConfig = "$HOME/src/dotfiles/hosts/donnager/default.nix";
+  environment.darwinConfig = "$HOME/src/dotfiles/hosts/chetzemoka/default.nix";
 
   networking.hostName = "Chetzemoka";
 
