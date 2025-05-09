@@ -48,15 +48,12 @@
 
   environment = {
     systemPackages = [
-      pkgs.alacritty
-      pkgs.alacritty-theme
+      pkgs-unstable.alacritty
+      pkgs-unstable.alacritty-theme
       pkgs.alejandra
       pkgs.git
       pkgs.fastfetch
       pkgs.nixd
-      pkgs.nixos-anywhere
-      pkgs.pinentry_mac
-      pkgs.spotify
       pkgs.home-manager
     ];
   };
@@ -77,6 +74,7 @@
     pkgs-unstable.monaspace
     pkgs-unstable.nerd-fonts.monaspace
     pkgs-unstable.nerd-fonts.symbols-only
+    pkgs-unstable.nerd-fonts-jetbrains-mono
   ];
 
   system.keyboard = {
