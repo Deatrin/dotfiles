@@ -14,6 +14,8 @@
 
     # Override default nodejs with nodejs_22
     # https://github.com/NixOS/nixpkgs/issues/402079
+    nodejs = prev.nodejs_22;
+    nodejs-slim = prev.nodejs-slim_22;
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
