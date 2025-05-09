@@ -95,7 +95,7 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#<hostname>
     darwinConfigurations = {
-      Barkeith = nix-darwin.lib.darwinSystem {
+      barkeith = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         specialArgs = {
           inherit inputs outputs;
@@ -109,7 +109,7 @@
           # nh_darwin.nixDarwinModules.default
         ];
       };
-      Chetzemoka = nix-darwin.lib.darwinSystem {
+      chetzemoka = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
           inherit inputs outputs;
@@ -120,7 +120,7 @@
         };
         modules = [./hosts/chetzemoka];
       };
-      Donnager = nix-darwin.lib.darwinSystem {
+      donnager = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         specialArgs = {
           inherit inputs outputs;
