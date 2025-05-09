@@ -112,9 +112,9 @@
     };
 
     # trackpad
-    # trackpad = {
-    #   Clicking = true;
-    # };
+    trackpad = {
+      Clicking = true;
+    };
 
     # software updates
     SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
@@ -173,7 +173,7 @@
   '';
 
   # Use touch ID for sudo auth
-  # security.pam.enableSudoTouchIdAuth = true;
+  security.pam.enableSudoTouchIdAuth = true;
 
   # Set sudo timestamp timeout
   security.sudo.extraConfig = ''
