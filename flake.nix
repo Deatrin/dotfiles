@@ -34,113 +34,112 @@
     opnix.url = "github:brizzbuzz/opnix";
     nvf.url = "github:notashelf/nvf";
   };
-  outputs = 
-  {
+  outputs = {
     self,
     nixpkgs,
     home-manager,
     nix-darwin,
     nixpkgs-unstable,
     ...
-  }@inputs:
-  let 
+  } @ inputs: let
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
     systems = [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
+      "aarch64-linux"
+      "i686-linux"
+      "x86_64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
     ];
-      # This is a function that generates an attribute by calling a function you
-      # pass to it, with each system as an argument
-      forAllSystems = nixpkgs.lib.genAttrs systems;
+    # This is a function that generates an attribute by calling a function you
+    # pass to it, with each system as an argument
+    forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      mkNixos = 
-      modules:
+    mkNixos = modules:
       nixpkgs.lib.nixosSystem {
         inherit modules;
         specialArgs = {
           inherit inputs outputs;
         };
       };
-      mkHome =
-      modules: pkgs:
+    mkHome = modules: pkgs:
       home-manager.lib.homeManagerConfiguration {
         inherit modules pkgs;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
-  in 
-  {
-      # Your custom packages
-      # Acessible through 'nix build', 'nix shell', etc
-      # packages = forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; });
+  in {
+    # Your custom packages
+    # Acessible through 'nix build', 'nix shell', etc
+    packages = forAllSystems (system: import ./pkgs {pkgs = nixpkgs.legacyPackages.${system};});
 
-      # Your custom packages and modifications, exported as overlays
-      overlays = import ./overlays { inherit inputs; };
-      # Reusable nixos modules you might want to export
-      # These are usually stuff you would upstream into nixpkgs
-      nixosModules = import ./modules/nixos;
-      # Reusable home-manager modules you might want to export
-      # These are usually stuff you would upstream into home-manager
-      homeManagerModules = import ./modules/home-manager;
+    # Your custom packages and modifications, exported as overlays
+    overlays = import ./overlays {inherit inputs;};
+    # Reusable nixos modules you might want to export
+    # These are usually stuff you would upstream into nixpkgs
+    nixosModules = import ./modules/nixos;
+    # Reusable home-manager modules you might want to export
+    # These are usually stuff you would upstream into home-manager
+    homeManagerModules = import ./modules/home-manager;
 
-      # NixOS configuration entrypoint
-      # Available through 'nixos-rebuild --flake .#your-hostname'
-      nixosConfigurations = {
-        nauvoo = mkNixos [ ./hosts/nauvoo ];
-        razerback = mkNixos [ ./hosts/razerback ];
-        tycho = mkNixos [ ./hosts/tycho ];
-        tachi = mkNixos [ ./hosts/tachi ];
-      };
+    # NixOS configuration entrypoint
+    # Available through 'nixos-rebuild --flake .#your-hostname'
+    nixosConfigurations = {
+      nauvoo = mkNixos [./hosts/nauvoo];
+      razerback = mkNixos [./hosts/razerback];
+      tycho = mkNixos [./hosts/tycho];
+      tachi = mkNixos [./hosts/tachi];
+    };
 
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#<hostname>
-      darwinConfigurations = {
-        work-laptop = nix-darwin.lib.darwinSystem {
-          specialArgs = {
-            inherit inputs outputs;
-            pkgs-unstable = import nixpkgs-unstable {
-              system = "aarch64-darwin";
-              config.allowUnfree = true;
-            };
+    # Build darwin flake using:
+    # $ darwin-rebuild build --flake .#<hostname>
+    darwinConfigurations = {
+      Chetzemoka = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {
+          inherit inputs outputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            system = "aarch64-darwin";
+            config.allowUnfree = true;
           };
-          system = "aarch64-darwin";
-          modules = [ ./hosts/work_laptop ];
         };
-        Donnager = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = {
-            inherit inputs outputs;
-            pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-darwin";
-              config.allowUnfree = true;
-            };
-          };
-          modules = [
-            ./hosts/donnager
-            # nh_darwin.nixDarwinModules.default
-          ];
-        };
+        modules = [./hosts/chetzemoka];
       };
+      Donnager = nix-darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        specialArgs = {
+          inherit inputs outputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            system = "x86_64-darwin";
+            config.allowUnfree = true;
+          };
+        };
+        modules = [
+          ./hosts/donnager
+          # nh_darwin.nixDarwinModules.default
+        ];
+      };
+    };
 
-      # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager --flake .#your-username@your-hostname'
-      homeConfigurations = {
-        # "nix@nas" = mkHome [ ./home-manager/nix_nas.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        # # VMs
-        # "jeff@home" = mkHome [ ./home-manager/jeff_home.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        # "jeff@cloud" = mkHome [ ./home-manager/jeff_cloud.nix ] nixpkgs.legacyPackages."aarch64-linux";
-        # Laptops
-        # "jeff@work-laptop" = mkHome [
-        #   ./home-manager/jeff_work_laptop.nix
-        # ] nixpkgs.legacyPackages."aarch64-darwin";
-        "ajennex@donnager" = mkHome [
+    # Standalone home-manager configuration entrypoint
+    # Available through 'home-manager --flake .#your-username@your-hostname'
+    homeConfigurations = {
+      # "nix@nas" = mkHome [ ./home-manager/nix_nas.nix ] nixpkgs.legacyPackages."x86_64-linux";
+      # # VMs
+      # "jeff@home" = mkHome [ ./home-manager/jeff_home.nix ] nixpkgs.legacyPackages."x86_64-linux";
+      # "jeff@cloud" = mkHome [ ./home-manager/jeff_cloud.nix ] nixpkgs.legacyPackages."aarch64-linux";
+      # Laptops
+      "ajennex@chetzemoka" =
+        mkHome [
+          ./home-manager/chetzemoka.nix
+        ]
+        nixpkgs.legacyPackages."aarch64-darwin";
+      "ajennex@donnager" =
+        mkHome [
           ./home-manager/donnager.nix
-        ] nixpkgs.legacyPackages."x86_64-darwin";
-      };
-  }
+        ]
+        nixpkgs.legacyPackages."x86_64-darwin";
+    };
+  };
 }

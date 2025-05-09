@@ -52,8 +52,6 @@
       pkgs-unstable.alacritty-theme
       pkgs.alejandra
       pkgs.git
-      pkgs.fastfetch
-      pkgs.nixd
       pkgs.home-manager
     ];
   };
@@ -105,6 +103,7 @@
       AppleShowAllExtensions = false; # show all file extensions
       FXEnableExtensionChangeWarning = false; # disable warning when changing file extensions
       _FXShowPosixPathInTitle = false; # show full path in title bar
+      _FXSortFoldersFirst = true; # shows folders first in finder
       FXPreferredViewStyle = "clmv"; # list view
       FXDefaultSearchScope = "SCcf"; # search current folder by default
       ShowHardDrivesOnDesktop = true; # shows the hard disk on the desktop

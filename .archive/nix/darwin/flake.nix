@@ -106,6 +106,7 @@
           "Termius" = 1176074088;
           "Yoink" = 457622435;
           "Yubico Authenticator" = 1497506650;
+          "WireGuard" = 1451685025;
         };
         onActivation.cleanup = "zap";
         onActivation.autoUpdate = true;
