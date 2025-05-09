@@ -19,7 +19,7 @@
       ps = "procs";
     };
 
-    initContent = ''
+    initLocation = ''
       ZSH_DISABLE_COMPFIX=true
       export EDITOR=nvim
       export PATH=$PATH:$HOME/go/bin
