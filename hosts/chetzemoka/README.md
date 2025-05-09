@@ -10,15 +10,6 @@
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
-* Install [nix-dawrin](https://github.com/LnL7/nix-darwin)
-
-```shell
-nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-./result/bin/darwin-installer
- ```
-
-It will probably be necessary to mess with some files in `/etc` like `/etc/bashrc` & `/etc/zshrc` to get a clean installation
-
 * Install [homebrew](https://brew.sh/)
 
 ```shell
@@ -32,10 +23,14 @@ Homebrew is used to install GUI packages that we don't want to install via nix.
 ```shell
 mkdir -p ~/src
 cd ~/src
-git clone https://github.com/billimek/dotfiles.git
+git clone https://github.com/Deatrin/dotfiles.git
 ```
 
 Install the flake
+
+ ``` shell
+  nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#intel
+  ```
 
 ```shell
 darwin-rebuild switch --flake $HOME/src.github/dotfiles/.#work-laptop
