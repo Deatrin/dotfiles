@@ -14,7 +14,7 @@
     # ./tealdeer.nix
     # ./tmux.nix
     # ./zoxide.nix
-    ./zsh.nix
+    # ./zsh.nix
   ];
   home.packages = with pkgs; [
     # _1password # password manager CLI - installing this break op CLI on macbooks
