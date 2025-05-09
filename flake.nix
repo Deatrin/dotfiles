@@ -95,6 +95,7 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#<hostname>
     darwinConfigurations = {
+      # I am a intel based macbook pro
       barkeith = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         specialArgs = {
@@ -109,6 +110,7 @@
           # nh_darwin.nixDarwinModules.default
         ];
       };
+      # I am a m2 macbook air
       chetzemoka = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {
@@ -120,6 +122,7 @@
         };
         modules = [./hosts/chetzemoka];
       };
+      # I am a imac pro
       donnager = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         specialArgs = {
