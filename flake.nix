@@ -27,6 +27,10 @@
       url = "github:scottstephens/nix-ld-vscode/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hardware.url = "github:nixos/nixos-hardware";
     nix-colors.url = "github:misterio77/nix-colors";
@@ -36,6 +40,7 @@
   };
   outputs = {
     self,
+    disko,
     nixpkgs,
     home-manager,
     nix-darwin,
@@ -144,7 +149,7 @@
     homeConfigurations = {
       # "nix@nas" = mkHome [ ./home-manager/nix_nas.nix ] nixpkgs.legacyPackages."x86_64-linux";
       # # VMs
-      # "jeff@home" = mkHome [ ./home-manager/jeff_home.nix ] nixpkgs.legacyPackages."x86_64-linux";
+      "ajennex@nauvoo" = mkHome [./home-manager/deatrin_nauvoo.nix] nixpkgs.legacyPackages."x86_64-linux";
       # "jeff@cloud" = mkHome [ ./home-manager/jeff_cloud.nix ] nixpkgs.legacyPackages."aarch64-linux";
       # Laptops
       "ajennex@barkeith" =
