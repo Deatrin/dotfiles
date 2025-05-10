@@ -85,7 +85,6 @@
     pkgs.git
     pkgs.htop
     pkgs.unstable.nh
-    pkgs.unstable.ghostty
   ];
 
   environment.variables = {
