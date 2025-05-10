@@ -15,7 +15,7 @@
     "mptspi"
     "uhci_hcd"
     "ehci_pci"
-    "ahcu"
+    "ahci"
     "sd_mod"
     "sr_mod"
   ];
