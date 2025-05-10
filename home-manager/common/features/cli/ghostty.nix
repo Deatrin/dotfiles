@@ -2,7 +2,7 @@
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
-    package = pkgs.unstable.ghostty;
+    package = pkgs.ghostty;
     settings = {
       theme = "dracula";
       font-family = [
