@@ -9,6 +9,7 @@ in {
   users.users.deatrin = {
     initialHashedPassword = "$y$j9T$ubrmfsxzOK4EuYl7KTdp81$ac./pAT.2yhEIrLNU.FNzlNeRdxX8DPPcyvCGHtooaC";
     isNormalUser = true;
+    shell = pkgs.zsh;
     extraGroups =
       ["wheel"]
       ++ ifTheyExist [
