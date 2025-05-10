@@ -12,7 +12,7 @@
 
   boot.initrd.availableKernelModules = [
     "ata_piix"
-    "mtpspi"
+    "mptspi"
     "uhci_hcd"
     "ehci_pci"
     "ahcu"
