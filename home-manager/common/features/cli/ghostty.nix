@@ -43,9 +43,9 @@
         selection-foreground = "#f8f8f2";
         selection-background = "#44475a";
         palette = [
-          " 0=#21222c"
+          "0=#21222c"
           "1=#ff5555"
-          "2=#50fa7"
+          "2=#50fa7b"
           "3=#f1fa8c"
           "4=#bd93f9"
           "5=#ff79c6"
