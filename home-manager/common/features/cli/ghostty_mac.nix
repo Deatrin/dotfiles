@@ -10,7 +10,7 @@
     font-family = "Monaspace Neon"
     font-family = "Symbols Nerd Font Mono"
 
-    font-size = 12
+    font-size = 14
 
     keybind = shift+page_down=scroll_page_down
     keybind = shift+page_up=scroll_page_up
