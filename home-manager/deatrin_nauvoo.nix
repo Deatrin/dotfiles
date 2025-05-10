@@ -8,6 +8,7 @@
   imports = [
     ./common/global
     #./common/features/dev
+    ./common/features/desktop
     ./common/features/kubernetes
     inputs.nix-ld-vscode.nixosModules.default
   ];
