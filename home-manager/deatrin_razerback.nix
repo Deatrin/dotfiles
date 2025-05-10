@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./common/global
+    ./common/features/cli/ghostty.nix
     #./common/features/dev
     ./common/features/desktop
     ./common/features/kubernetes

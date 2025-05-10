@@ -8,6 +8,7 @@
 }: {
   imports = [
     ./common/global
+    ./common/features/cli/ghostty_mac.nix
     ./common/features/dev
     ./common/features/kubernetes
   ];

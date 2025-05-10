@@ -29,7 +29,7 @@
       "flux" # make my screen red at night
       "jetbrains-toolbox" # insatlls jetbrains toolbox to install other jetbrains stuff
       "lens" # k8s tool
-      # "ghostty" # so hot right now
+      "ghostty" # so hot right now
       "karabiner-elements" # keyboard remapping
       "notion" # notetaking app
       "qlmarkdown" # markdown preview in quicklook
