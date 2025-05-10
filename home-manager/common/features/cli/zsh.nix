@@ -31,9 +31,8 @@
 
       # source /run/agenix/${config.home.username}-secrets
 
-      if [[ $(tty) = "/dev/tty1" ]]
-      then
-        exec Hyprland &> /dev/null
+      if uwsm check may-start && uwsm select; then
+        exec uwsm start default
       fi
 
       # # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
