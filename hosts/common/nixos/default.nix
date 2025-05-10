@@ -10,7 +10,6 @@
     [
       inputs.home-manager.nixosModules.home-manager
       # ./auto-upgrade.nix # doesn't work right now with git-crypt repos - will revisit
-      ./ghostty
       ./locale.nix
       ./nix.nix
       ./nfs.nix
@@ -86,6 +85,7 @@
     pkgs.git
     pkgs.htop
     pkgs.unstable.nh
+    pkgs.unstable.ghostty
   ];
 
   environment.variables = {
