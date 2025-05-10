@@ -29,11 +29,12 @@
         export GPG_TTY="$TTY"
       fi
 
-      # source /run/agenix/${config.home.username}-secrets
-
       if uwsm check may-start && uwsm select; then
         exec uwsm start default
       fi
+
+      export PATH="/opt/homebrew/bin:$PATH"
+      export PATH="/opt/homebrew/sbin:$PATH"
 
       # # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
