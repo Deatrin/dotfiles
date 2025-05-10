@@ -30,7 +30,10 @@
       fi
 
       # source /run/agenix/${config.home.username}-secrets
-      exec uwsm start hyprland.desktop
+
+      if uwsm check may-start; then
+        exec uwsm start hyprland.desktop
+      fi
 
       # # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
