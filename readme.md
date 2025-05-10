@@ -2,6 +2,10 @@
 
 Leveraging Nix with nix-darwin or nixOS with home manager to apply desiered configuration to machines
 
+## Background
+
+I just want to be able to get a new machine run a few commands and have it be exactly as I like that way the turn up to working and computing is wayyyyy faster I also dont have to try and remember that one setting from long ago that I will never remember
+
 ## Structure
 
 - Root Folder
@@ -34,3 +38,9 @@ Leveraging Nix with nix-darwin or nixOS with home manager to apply desiered conf
   - [overlays](overlays) (Custom overlays)
   - [pkgs](pkgs) (Custom packages used for things not found in nixpkgs)
   - [wallpapers](wallpapers) (Stores my default wallpaper)
+
+## Referances
+
+- Not gonna lie most of this was made possible by stumbling on [billimek's](https://github.com/billimek/dotfiles/tree/master) dotfiles while I was trying to figure out how to get [nvf](https://github.com/NotAShelf/nvf) to work with nix darwin
+- Shoutouts to code search on github wayyyyy better than any google seach to find examples
+- Nix is a rabbit hole once I found I could merge both nixOS and nix-darwin files this was the outcome
