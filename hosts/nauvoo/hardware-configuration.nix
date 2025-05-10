@@ -12,14 +12,15 @@
 
   boot.initrd.availableKernelModules = [
     "ata_piix"
+    "mtpspi"
     "uhci_hcd"
-    "virtio_pci"
-    "virtio_scsi"
+    "ehci_pci"
+    "ahcu"
     "sd_mod"
     "sr_mod"
   ];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
+  boot.kernelModules = [];
   boot.extraModulePackages = [];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
