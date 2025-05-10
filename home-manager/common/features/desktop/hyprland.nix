@@ -7,7 +7,7 @@
       };
 
       exec-once = [
-        "hyprpanel"
+        "waybar"
         "hyprpaper"
         "hypridle"
         "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
@@ -82,7 +82,7 @@
       gestures = {
         workspace_swipe = true;
       };
-      
+
       monitor = "eDP-1, 1920x1200@59.95, 0x0, 1";
       # device = [
       #   {
@@ -124,8 +124,8 @@
       "$mainMod" = "SUPER";
 
       bind = [
-        "$mainMod, return, exec, alacritty"
-        "$mainMod, t, exec, alacritty -e zsh -c 'fastfetch; exec zsh'"
+        "$mainMod, return, exec, ghostty"
+        "$mainMod, t, exec, ghostty -e zsh -c 'fastfetch; exec zsh'"
         # "$mainMod SHIFT, e, exec, kitty -e zellij_nvim"
         "$mainMod, o, exec, hyprctl setprop activewindow opaque toggle"
         "$mainMod, b, exec, thunar"
