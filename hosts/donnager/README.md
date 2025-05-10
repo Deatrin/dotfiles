@@ -1,6 +1,4 @@
-# MacBook air
-
-![Image](../../resources/MacbookAir.png)
+# iMac Pro
 
 ## Prerequieites/Setup
 
@@ -31,12 +29,12 @@ git clone https://github.com/Deatrin/dotfiles.git
 Install the flake
 
  ``` shell
-  nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#chetzemoka
+  nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#donnager
   ```
 
 ```shell
-darwin-rebuild switch --flake .#chetzemoka
-home-manager switch --flake .#ajennex@chetzemoka
+darwin-rebuild switch --flake .#donnager
+home-manager switch --flake .#ajennex@donnager
 ```
 
 ## Things that need secrets

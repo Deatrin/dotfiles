@@ -1,4 +1,4 @@
-# Bootstrapping NixOS on 'nauvoo' VM
+# Bootstrapping NixOS on 'tachi'
 
 It is installed with the NixOS iso installation media.  These are the steps initially taken to install NixOS, though once the config is setup it can just be re-used for future re-installs if needed. This assumes you have booted into a NixOS install image from a USB stick and that we will be using systemd-boot.  Following the [manual installation steps](https://nixos.org/manual/nixos/stable/index.html#sec-installation-manual):
 
@@ -15,7 +15,7 @@ git clone https://github.com/Deatrin/dotfiles.git
 We use disko to partition the disk to make ready for install. In this case we are not encrypting
 
 ```shell
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/nauvoo/disko-config.nix
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/tachi/disko-config.nix
 ```
 
 ## NixOS Install
@@ -23,7 +23,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 Once the disk is partitioned we run the install using the flake
 
 ```shell
-sudo nixos-install --flake .#nauvoo
+sudo nixos-install --flake .#tachi
 ```
 
 ## First Run
@@ -39,7 +39,7 @@ chown -R deatrin:users .
 Then we should be able to update the nixos-configuration repo in github and just pull/rebuild as needed on the machine.
 
 ```shell
-sudo sh -c "cd /etc/nixos && git pull && nixos-rebuild switch --flake .#nauvoo"
+sudo sh -c "cd /etc/nixos && git pull && nixos-rebuild switch --flake .#tachi"
 ```
 
 ## Things that need secrets
@@ -63,14 +63,6 @@ atuin sync -f
 ```shell
 mkdir -p ~/.kube
 op document get --vault kubernetes 'k3s.yaml' --out-file ~/.kube/config
-```
-
-## Troubleshooting
-
-### fix yubikey
-
-```shell
-gpg-connect-agent updatestartuptty /bye
 ```
 
 ## TODO see if these commands work while using linux they were not happy when trying to run from darwin

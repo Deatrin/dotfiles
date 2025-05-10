@@ -1,6 +1,8 @@
-# MacBook air
+# Macbook Pro
 
 ## Prerequieites/Setup
+
+* Make sure to be logged into icloud/appstore or MAS will fail to work
 
 * Install [nix](https://nixos.org/download.html)
 
@@ -14,7 +16,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Homebrew is used to install GUI packages that we don't want to install via nix.
+Homebrew is used to install GUI packages that we don't want to install via nix becuase sometimes its hard to get spotlight to find them
 
 ## Use this flake
 
@@ -27,12 +29,12 @@ git clone https://github.com/Deatrin/dotfiles.git
 Install the flake
 
  ``` shell
-  nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#intel
+  nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake .#barkeith
   ```
 
 ```shell
-darwin-rebuild switch --flake $HOME/src.github/dotfiles/.#work-laptop
-home-manager switch --flake $HOME/src.github/dotfiles/.#jeff@work-laptop
+darwin-rebuild switch --flake .#barkeith
+home-manager switch --flake .#ajennex@barkeith
 ```
 
 ## Things that need secrets

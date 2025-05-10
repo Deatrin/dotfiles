@@ -1,4 +1,4 @@
-# Bootstrapping NixOS on 'nauvoo' VM
+# Bootstrapping NixOS on 'tycho'
 
 It is installed with the NixOS iso installation media.  These are the steps initially taken to install NixOS, though once the config is setup it can just be re-used for future re-installs if needed. This assumes you have booted into a NixOS install image from a USB stick and that we will be using systemd-boot.  Following the [manual installation steps](https://nixos.org/manual/nixos/stable/index.html#sec-installation-manual):
 
@@ -12,10 +12,16 @@ git clone https://github.com/Deatrin/dotfiles.git
 
 ## Disk Setup
 
-We use disko to partition the disk to make ready for install. In this case we are not encrypting
+We use disko to partition the disk to make ready for install. In this case we are encrypting
+
+Create secret at /tmp/secret.key / this is used as the key needed to boot the machine
 
 ```shell
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/nauvoo/disko-config.nix
+echo '<my-secret>' > /tmp/secret.key
+```
+
+```shell
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/tycho/disko-config.nix
 ```
 
 ## NixOS Install
@@ -23,7 +29,7 @@ sudo nix --experimental-features "nix-command flakes" run github:nix-community/d
 Once the disk is partitioned we run the install using the flake
 
 ```shell
-sudo nixos-install --flake .#nauvoo
+sudo nixos-install --flake .#tycho
 ```
 
 ## First Run
@@ -39,7 +45,7 @@ chown -R deatrin:users .
 Then we should be able to update the nixos-configuration repo in github and just pull/rebuild as needed on the machine.
 
 ```shell
-sudo sh -c "cd /etc/nixos && git pull && nixos-rebuild switch --flake .#nauvoo"
+sudo sh -c "cd /etc/nixos && git pull && nixos-rebuild switch --flake .#tycho"
 ```
 
 ## Things that need secrets
@@ -78,9 +84,9 @@ gpg-connect-agent updatestartuptty /bye
 ### nixos anywhere commands
 
 ```shell
-nix run github:nix-community/nixos-anywhere -- --flake .#tachi root@<ip of box>
+nix run github:nix-community/nixos-anywhere -- --flake .#tycho root@<ip of box>
 ```
 
 ```shell
-nix run github:nix-community/nixos-anywhere -- --flake .#tachi --generate-hadware-config nixos-generate-config ./hosts/tachi/hardware-configuration.nix root@<ip of box>
+nix run github:nix-community/nixos-anywhere -- --flake .#tycho --generate-hadware-config nixos-generate-config ./hosts/tycho/hardware-configuration.nix root@<ip of box>
 ```
