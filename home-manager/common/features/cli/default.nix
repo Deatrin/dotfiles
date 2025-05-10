@@ -14,7 +14,7 @@
     ./gpg.nix
     ./nvf.nix
     ./oh-my-posh.nix
-    ./opnix.nix
+    # ./opnix.nix
     ./tealdeer.nix
     ./tmux.nix
     ./zoxide.nix
