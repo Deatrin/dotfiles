@@ -148,11 +148,13 @@
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
       # "nix@nas" = mkHome [ ./home-manager/nix_nas.nix ] nixpkgs.legacyPackages."x86_64-linux";
-      # # VMs
+      # NixOS
+      
       "ajennex@nauvoo" = mkHome [./home-manager/deatrin_nauvoo.nix] nixpkgs.legacyPackages."x86_64-linux";
       "ajennex@razerback" = mkHome [./home-manager/deatrin_razerback.nix] nixpkgs.legacyPackages."x86_64-linux";
-      # "jeff@cloud" = mkHome [ ./home-manager/jeff_cloud.nix ] nixpkgs.legacyPackages."aarch64-linux";
-      # Laptops
+      "ajennex@tycho" = mkHome [./home-manager/deatrin_tycho.nix] nixpkgs.legacyPackages."x86_64-linux";
+
+      # Macs
       "ajennex@barkeith" =
         mkHome [
           ./home-manager/barkeith

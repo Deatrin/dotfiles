@@ -13,7 +13,6 @@
     ../common/nixos/auto-upgrade.nix
     ../common/nixos/users/deatrin
     ../common/optional/docker.nix
-    ../common/optional/qemu.nix
     ../common/optional/reboot-required.nix
     ../common/optional/xwayland.nix
   ];
