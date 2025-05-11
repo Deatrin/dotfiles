@@ -5,4 +5,7 @@
     # ./theme.nix
     ./wayland.nix
   ];
+  home.packages = with pkgs; [
+    brave
+  ];
 }
