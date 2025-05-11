@@ -86,7 +86,14 @@
     pkgs.htop
     pkgs.unstable.nh
   ];
+  services.pcscd.enable = true;
+  services.yubikey-agent.enable = true;
+  programs.ssh.startAgent = false;
 
+  services.udev.packages = with pkgs; [
+    yubikey-personalization
+  ];
+  
   environment.variables = {
     NH_FLAKE = "/etc/nixos";
   };
