@@ -13,6 +13,89 @@
           action = ":lua require('precognition').peek()<CR>";
           desc = "Peek recognition";
         }
+        {
+          key = "<leader>pv";
+          mode = "n";
+          silent = true;
+          action = ":Neotree<Cr>";
+        }
+        {
+          key = "<leader>pt";
+          mode = "n";
+          silent = true;
+          action = ":Neotree toggle<Cr>";
+        }
+        # Telescope keys
+        {
+          key = "<leader><leader>";
+          mode = "n";
+          silent = true;
+          action = ":Telescope buffers<Cr>";
+          desc = "[ ] Find existing buffers";
+        }
+        {
+          key = "<leader>s.";
+          mode = "n";
+          silent = true;
+          action = ":Telescope oldfiles<Cr>";
+          desc = "[S]earch Recent Files (. for repeat)";
+        }
+        {
+          key = "<leader>sr";
+          mode = "n";
+          silent = true;
+          action = ":Telescope resume<Cr>";
+          desc = "[S]earch [R]esume";
+        }
+        {
+          key = "<leader>sd";
+          mode = "n";
+          silent = true;
+          action = ":Telescope diagnostics<Cr>";
+          desc = "[S]earch [D]iagnostics";
+        }
+        {
+          key = "<leader>sg";
+          mode = "n";
+          silent = true;
+          action = ":Telescope live_grep<Cr>";
+          desc = "[S]earch by [G]rep";
+        }
+        {
+          key = "<leader>sw";
+          mode = "n";
+          silent = true;
+          action = ":Telescope grep_string<Cr>";
+          desc = "[S]earch current [W]ord";
+        }
+        {
+          key = "<leader>ss";
+          mode = "n";
+          silent = true;
+          action = ":Telescope builtin<Cr>";
+          desc = "[S]earch [S]elect Telescope";
+        }
+        {
+          key = "<leader>sf";
+          mode = "n";
+          silent = true;
+          action = ":Telescope find_files<Cr>";
+          desc = "[S]earch [F]iles";
+        }
+        {
+          key = "<leader>sk";
+          mode = "n";
+          silent = true;
+          action = ":Telescope keymaps<Cr>";
+          desc = "[S]earch [K]eymaps";
+        }
+        {
+          key = "<leader>sh";
+          mode = "n";
+          silent = true;
+          action = ":Telescope help_tags<Cr>";
+          desc = "[S]earch [H]elp";
+        }
       ];
       viAlias = false;
       vimAlias = true;
@@ -32,7 +115,13 @@
         nix.enable = true;
         markdown.enable = true;
         bash.enable = true;
+        css.enable = true;
+        go.enable = true;
+        html.enable = true;
         helm.enable = true;
+        lua.enable = true;
+        python.enbale = true;
+        sql.enable = true;
         terraform.enable = true;
         yaml.enable = true;
       };
@@ -49,15 +138,14 @@
       statusline = {
         lualine = {
           enable = true;
-          theme = "catppuccin";
+          theme = "dracula";
         };
       };
 
       theme = {
         enable = true;
-        name = "catppuccin";
-        style = "mocha";
-        transparent = false;
+        name = "dracula";
+        # transparent = false;
       };
 
       autopairs.nvim-autopairs.enable = true;
