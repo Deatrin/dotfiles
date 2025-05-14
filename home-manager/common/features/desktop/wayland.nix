@@ -80,8 +80,6 @@
       #clock,
       #battery,
       #pulseaudio,
-      #network,
-      #workspaces,
       #tray,
       #backlight {
           background: #1e1e2e;
