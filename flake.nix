@@ -152,9 +152,9 @@
       # "nix@nas" = mkHome [ ./home-manager/nix_nas.nix ] nixpkgs.legacyPackages."x86_64-linux";
       # NixOS
 
-      "ajennex@nauvoo" = mkHome [./home-manager/deatrin_nauvoo.nix] nixpkgs.legacyPackages."x86_64-linux";
-      "ajennex@razerback" = mkHome [./home-manager/deatrin_razerback.nix] nixpkgs.legacyPackages."x86_64-linux";
-      "ajennex@tycho" = mkHome [./home-manager/deatrin_tycho.nix] nixpkgs.legacyPackages."x86_64-linux";
+      "deatrin@nauvoo" = mkHome [./home-manager/deatrin_nauvoo.nix] nixpkgs.legacyPackages."x86_64-linux";
+      "deatrin@razerback" = mkHome [./home-manager/deatrin_razerback.nix] nixpkgs.legacyPackages."x86_64-linux";
+      "deatrin@tycho" = mkHome [./home-manager/deatrin_tycho.nix] nixpkgs.legacyPackages."x86_64-linux";
 
       # Macs
       "ajennex@barkeith" =
