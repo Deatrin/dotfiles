@@ -32,6 +32,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprpanel.url = "github:jas-singhfsu/hyprpanel";
+
     hardware.url = "github:nixos/nixos-hardware";
     nix-colors.url = "github:misterio77/nix-colors";
     talhelper.url = "github:budimanjojo/talhelper";
@@ -149,7 +151,7 @@
     homeConfigurations = {
       # "nix@nas" = mkHome [ ./home-manager/nix_nas.nix ] nixpkgs.legacyPackages."x86_64-linux";
       # NixOS
-      
+
       "ajennex@nauvoo" = mkHome [./home-manager/deatrin_nauvoo.nix] nixpkgs.legacyPackages."x86_64-linux";
       "ajennex@razerback" = mkHome [./home-manager/deatrin_razerback.nix] nixpkgs.legacyPackages."x86_64-linux";
       "ajennex@tycho" = mkHome [./home-manager/deatrin_tycho.nix] nixpkgs.legacyPackages."x86_64-linux";
