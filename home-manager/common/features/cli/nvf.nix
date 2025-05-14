@@ -120,7 +120,7 @@
         html.enable = true;
         helm.enable = true;
         lua.enable = true;
-        python.enbale = true;
+        python.enable = true;
         sql.enable = true;
         terraform.enable = true;
         yaml.enable = true;
