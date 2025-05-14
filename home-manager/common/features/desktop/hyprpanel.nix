@@ -16,6 +16,7 @@
     settings = {
       bar.launcher.autoDetectIcon = true;
       bar.workspaces.show_icons = true;
+      theme.bar.transparent = true;
       theme.font = {
         name = "JetbrainsMonoNL Nerd Font Regular";
       };
