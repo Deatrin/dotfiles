@@ -99,7 +99,7 @@
   services.power-profiles-daemon.enable = true;
 
   hardware.bluetooth.enable = true;
-  hardware.bluetoothe.powerOnBoot = false;
+  hardware.bluetooth.powerOnBoot = false;
 
   environment.variables = {
     NH_FLAKE = "/etc/nixos";
