@@ -93,6 +93,13 @@
   services.udev.packages = with pkgs; [
     yubikey-personalization
   ];
+  services.upower.enable = true;
+  services.blueman.enable = true;
+  services.libinput.enable = true;
+  services.power-profiles-daemon.enable = true;
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetoothe.powerOnBoot = false;
 
   environment.variables = {
     NH_FLAKE = "/etc/nixos";
