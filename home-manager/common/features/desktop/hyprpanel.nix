@@ -17,7 +17,7 @@
       bar.launcher.autoDetectIcon = true;
       bar.workspaces.show_icons = true;
       theme.font = {
-        name = "jetbrains-mono";
+        name = "JetbrainsMonoNL Nerd Font Regular";
       };
     };
     # Fix the overwrite issue with HyprPanel.

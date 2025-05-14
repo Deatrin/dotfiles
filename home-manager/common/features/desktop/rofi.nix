@@ -14,7 +14,7 @@
     }
 
     * {
-        font: "Jetbrains Mono 12";
+        font: "JetbrainsMonoNL Nerd Font Regular";
         foreground: #f8f8f2;
         background-color: #282a36;
         active-background: #6272a4;
