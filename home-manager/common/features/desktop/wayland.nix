@@ -23,7 +23,7 @@
       * {
           border: none;
           border-radius: 0;
-          font-family: Monaspace Neon;
+          font-family: FiraCode Nerd Font;
           font-weight: bold;
           font-size: 14px;
           min-height: 0;
@@ -180,10 +180,14 @@
         modules-center = ["hyprland/window"];
         modules-right = [
           "tray"
+          "network"
+          "pulseaudio"
+          "backlight"
+          "battery"
         ];
 
         "hyprland/window" = {
-          format = "👉 {}";
+          format = " {}";
           seperate-outputs = true;
         };
         "hyprland/workspaces" = {
@@ -194,7 +198,7 @@
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
           format-icons = {
-            "1" = "";
+            "1" = "";
             "2" = "";
             "3" = "";
             "4" = "";
@@ -210,10 +214,10 @@
           };
         };
         "custom/weather" = {
-          format = "{}°C";
+          format = "{}°F";
           tooltip = true;
           interval = 3600;
-          exec = "wttrbar --location Pockau-Lengefeld";
+          exec = "wttrbar --location Temple-City --fahrenheit";
           return-type = "json";
         };
         tray = {
@@ -221,7 +225,7 @@
           spacing = 10;
         };
         clock = {
-          format = " {:%R   %d/%m}";
+          format = " {:%R   %m/%d}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
       };
@@ -242,5 +246,13 @@
     wlogout
     wtype
     ydotool
+    # Fonts
+
+    fira-code
+    fira-code-symbols
+    jetbrains-mono
+    font-manager
+    font-awesome_5
+    noto-fonts
   ];
 }

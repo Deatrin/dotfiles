@@ -93,7 +93,7 @@
   services.udev.packages = with pkgs; [
     yubikey-personalization
   ];
-  
+
   environment.variables = {
     NH_FLAKE = "/etc/nixos";
   };
