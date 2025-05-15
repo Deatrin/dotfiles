@@ -34,7 +34,7 @@
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "23.11";
     packages = with pkgs; [
-      _1password
+      _1password-gui
       _1password-cli
       nfs-utils
       yubioath-flutter
