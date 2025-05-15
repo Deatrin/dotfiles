@@ -9,7 +9,7 @@
       # }
       {
         path = ".config/secret-app/token";
-        reference = "op://nix/test/test-cred";
+        reference = "op://nix_secrets/atuin/username";
       }
     ];
   };
