@@ -23,7 +23,7 @@
       #   reference = "op://Personal/ssh-key/private-key";
       # }
       {
-        path = ".config/secret-app/token";
+        path = ".config/secret-app/token1";
         reference = "op://nix_secrets/atuin/username";
       }
     ];
