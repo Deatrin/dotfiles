@@ -19,7 +19,6 @@ let
     tycho
   ];
 in {
-  "secret1.age".publicKeys = systems ++ users;
   "deatrin-secrets.age".publicKeys = systems ++ users;
   "cloudflareddns.age".publicKeys = systems ++ users;
   "cloudflaretunnel.age".publicKeys = systems ++ users;
