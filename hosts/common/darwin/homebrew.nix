@@ -30,24 +30,31 @@
       "jetbrains-toolbox" # insatlls jetbrains toolbox to install other jetbrains stuff
       "lens" # k8s tool
       "ghostty" # so hot right now
+      "google-chrome" # le google chrome
       "karabiner-elements" # keyboard remapping
+      "microsoft-office" # Office just in case
       "notion" # notetaking app
+      "OrbStack" # docker and linux virt
       "qlmarkdown" # markdown preview in quicklook
       "raindropio" # raindrop bookmark manager
       "raycast" # spotlight replacement
       "rectangle-pro" # key controlled snap feature
       "sanesidebuttons" # enable side buttons on mouse
       "serial" # serial connection application
+      "slack" # Work
       "spotify" # music
       "shottr" # screenshot tool
       "visual-studio-code" # code editor
       "vlc" # video player
+      # "vmware-fusion" # Virtulization
       "zwift" # cycling training
     ];
     masApps = {
+      "Canary Mail App" = 1236045954;
       "Tailscale" = 1475387142;
       "Termius" = 1176074088;
       "TickTick" = 966085870;
+      "WireGuard" = 1451685025;
       "Yoink" = 457622435;
       "Yubico Authenticator" = 1497506650;
     };
