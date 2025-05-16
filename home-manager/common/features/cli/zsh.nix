@@ -32,6 +32,7 @@
       if uwsm check may-start && uwsm select; then
         exec uwsm start default
       fi
+      source /run/agenix/${config.home.username}-secrets
 
       export PATH="/opt/homebrew/bin:$PATH"
       export PATH="/opt/homebrew/sbin:$PATH"
