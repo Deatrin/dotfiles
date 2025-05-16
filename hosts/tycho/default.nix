@@ -6,7 +6,7 @@
   ...
 }: {
   imports = [
-    agenix.nixosModules.default
+    inputs.agenix.nixosModules.default
     inputs.disko.nixosModules.disko
     ./disko-config.nix
     ./hardware-configuration.nix

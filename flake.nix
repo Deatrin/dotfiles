@@ -48,6 +48,7 @@
     disko,
     nixpkgs,
     home-manager,
+    agenix,
     nix-darwin,
     nixpkgs-unstable,
     ...
