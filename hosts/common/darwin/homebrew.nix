@@ -42,6 +42,7 @@
       "shottr" # screenshot tool
       "visual-studio-code" # code editor
       "vlc" # video player
+      "zwift" # cycling training
     ];
     masApps = {
       "Tailscale" = 1475387142;
