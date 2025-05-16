@@ -48,8 +48,6 @@
 
   environment = {
     systemPackages = [
-      pkgs-unstable.alacritty
-      pkgs-unstable.alacritty-theme
       pkgs.alejandra
       pkgs.git
       pkgs.home-manager
