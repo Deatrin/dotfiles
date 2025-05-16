@@ -3,7 +3,7 @@ let
   razerback = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJZwU7D1AaKmtxj70Ujautj6xJEME0ldrmi0tBc9LNtI";
   tachi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKibh5GTexyqYUlCN5jfhLxxM9AE8irXmkjh+fsbuGTo";
   nauvoo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO5lpFFv1P0wcit8dYSN723Um30CUudt6gEykVR/twbB";
-  tycho = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIc39gdL4PClqHy8iOajHQWoy15mKujglhWmGMXHNld7";
+  tycho = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPz3wiePro7pwMuqK2Dbxfa6F4uQN+6HDSDCIVOWowYI";
 
   # Users
   deatrin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOzIb3yvc65BxpM2hjwNhs9viZdYTRm+FCBOLcoVwOzf";

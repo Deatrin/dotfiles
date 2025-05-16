@@ -32,6 +32,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Secrets
+    agenix.url = "github:ryantm/agenix";
+
     hyprpanel.url = "github:jas-singhfsu/hyprpanel";
 
     hardware.url = "github:nixos/nixos-hardware";

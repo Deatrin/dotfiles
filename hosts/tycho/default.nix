@@ -6,9 +6,11 @@
   ...
 }: {
   imports = [
+    agenix.nixosModules.default
     inputs.disko.nixosModules.disko
     ./disko-config.nix
     ./hardware-configuration.nix
+    ./secrets.nix
     ../common/nixos
     ../common/nixos/auto-upgrade.nix
     ../common/nixos/users/deatrin
