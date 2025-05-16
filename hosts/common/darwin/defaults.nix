@@ -92,18 +92,40 @@
       mru-spaces = false; # turn off rearrange on recent user
       show-recents = false; # show recents on dock
       showhidden = true; # make hidden apps translusent
-      # persistent-apps = [ # we use this to set the dock to preffered layout
-      #
-      # ];
+      persistent-apps = [
+        # we use this to set the dock to preffered layout
+        "/Applications/TickTick.app"
+        "/Applications/Notion.app"
+        "/Applications/Canary Mail.app"
+        "/Applications/Brave Browser.app"
+        "/Applications/Google Chrome.app"
+        "/System/Applications/Messages.app"
+        "/Applications/Raindrop.io.app"
+        "/Applications/1Password.app"
+        "/Applications/Discord.app"
+        "/Applications/Slack.app"
+        "/Applications/Visual Studio Code.app"
+        "/Applications/OrbStack.app"
+        "/Applications/Termius.app"
+        "/Applications/Ghostty.app"
+        "/Applications/Spotify.app"
+        "/Applications/rekordbox 7/rekordbox.app"
+        "/Applications/Mixed In Key 11.app"
+        "/System/Applications/App Store.app"
+        "/System/Applications/System Settings.app"
+        "/Applications/Yubico Authenticator.app"
+        "/System/Applications/iPhone Mirroring.app"
+      ];
     };
     # finder options
     finder = {
-      AppleShowAllExtensions = false; # show all file extensions
+      AppleShowAllExtensions = true; # show all file extensions
       FXEnableExtensionChangeWarning = false; # disable warning when changing file extensions
       _FXShowPosixPathInTitle = false; # show full path in title bar
       _FXSortFoldersFirst = true; # shows folders first in finder
       FXPreferredViewStyle = "clmv"; # list view
       FXDefaultSearchScope = "SCcf"; # search current folder by default
+      NewWindowTarget = "Computer";
       ShowHardDrivesOnDesktop = true; # shows the hard disk on the desktop
       ShowStatusBar = true; # show status bar
       ShowPathbar = false; # show path bar
