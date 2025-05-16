@@ -23,7 +23,7 @@ Homebrew is used to install GUI packages that we don't want to install via nix b
 ```shell
 mkdir -p ~/src
 cd ~/src
-git clone https://github.com/Deatrin/dotfiles.git
+nix-shell -p git --run 'git clone https://github.com/Deatrin/dotfiles.git 
 ```
 
 Install the flake

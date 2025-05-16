@@ -46,7 +46,6 @@
       "shottr" # screenshot tool
       "visual-studio-code" # code editor
       "vlc" # video player
-      # "vmware-fusion" # Virtulization
       "zwift" # cycling training
     ];
     masApps = {
