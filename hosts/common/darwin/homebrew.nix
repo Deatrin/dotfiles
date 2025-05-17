@@ -19,7 +19,7 @@
     #   "homebrew/services"
     # ];
     casks = [
-      "1password"
+      "1password" # GUI 1pass
       "1password-cli" # need to install CLI via brew too to make biometric unlock work with GUI app
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser
@@ -32,6 +32,7 @@
       "ghostty" # so hot right now
       "google-chrome" # le google chrome
       "karabiner-elements" # keyboard remapping
+      "logi-options+" # mouse stuff
       "microsoft-office" # Office just in case
       "notion" # notetaking app
       "OrbStack" # docker and linux virt
