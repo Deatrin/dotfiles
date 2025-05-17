@@ -163,7 +163,7 @@
       # Macs
       "ajennex@barkeith" =
         mkHome [
-          ./home-manager/barkeith
+          ./home-manager/barkeith.nix
         ]
         nixpkgs.legacyPackages."x86_64-darwin";
       "ajennex@chetzemoka" =
