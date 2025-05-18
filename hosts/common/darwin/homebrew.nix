@@ -11,7 +11,8 @@
     onActivation.cleanup = "zap";
     brews = [
       "cask"
-      "tenv"
+      "pyenv" # Python version management
+      "tenv" # Terraform/opentofu version management
     ];
     # taps = [
     #   "homebrew/bundle"
