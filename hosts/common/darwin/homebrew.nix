@@ -14,11 +14,6 @@
       "pyenv" # Python version management
       "tenv" # Terraform/opentofu version management
     ];
-    # taps = [
-    #   "homebrew/bundle"
-    #   "homebrew/cask-fonts"
-    #   "homebrew/services"
-    # ];
     casks = [
       "1password" # GUI 1pass
       "1password-cli" # need to install CLI via brew too to make biometric unlock work with GUI app
