@@ -27,6 +27,9 @@
     macos-secure-input-indication = true
     macos-titlebar-style = tabs
 
+    background-opacity = 0.8
+    background-blur = true
+
     quit-after-last-window-closed = true
     shell-integration = "detect"
     shell-integration-features = cursor,sudo,title
