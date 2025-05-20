@@ -9,6 +9,9 @@
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
     onActivation.cleanup = "zap";
+    taps = [
+      "nikitabobko/tap"
+    ];
     brews = [
       "cask"
       "pyenv" # Python version management
@@ -17,6 +20,7 @@
     casks = [
       "1password" # GUI 1pass
       "1password-cli" # need to install CLI via brew too to make biometric unlock work with GUI app
+      "aerospace"
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser
       "discord" # chat
