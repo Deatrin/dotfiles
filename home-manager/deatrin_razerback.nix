@@ -24,7 +24,6 @@
       nfs-utils
       yubioath-flutter
       yubikey-manager
-      yubikey-manager-qt
     ];
   };
 }
