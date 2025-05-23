@@ -16,6 +16,8 @@
 
   networking.hostName = "Barkeith";
 
+  system.primaryUser = "ajennex";
+
   users.users.ajennex = {
     description = "Andrew Jennex";
     home = "/Users/ajennex";

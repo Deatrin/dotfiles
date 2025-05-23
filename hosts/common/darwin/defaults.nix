@@ -40,11 +40,7 @@
         "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
       ];
     };
-
-    configureBuildUsers = true;
   };
-
-  services.nix-daemon.enable = true;
 
   environment = {
     systemPackages = [
@@ -193,7 +189,7 @@
   '';
 
   # Use touch ID for sudo auth
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Set sudo timestamp timeout
   security.sudo.extraConfig = ''

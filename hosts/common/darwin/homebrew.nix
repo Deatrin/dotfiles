@@ -20,7 +20,8 @@
     casks = [
       "1password" # GUI 1pass
       "1password-cli" # need to install CLI via brew too to make biometric unlock work with GUI app
-      "aerospace"
+      "aerospace" # macOS tiling window manager
+      "bambu-studio" # silcer for 3d printer
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser
       "discord" # chat
