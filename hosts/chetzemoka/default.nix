@@ -2,12 +2,15 @@
   config,
   pkgs,
   lib,
+  inputs,
   home-manager,
   ...
 }: {
   imports = [
+    inputs.agenix.darwinModules.default
     ../common/darwin/defaults.nix
     ./homebrew.nix
+    ./secrets.nix
   ];
 
   # Use a custom configuration.nix location.
