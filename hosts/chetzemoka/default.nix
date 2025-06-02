@@ -7,10 +7,10 @@
   ...
 }: {
   imports = [
-    inputs.agenix.darwinModules.default
+    # inputs.agenix.darwinModules.default
     ../common/darwin/defaults.nix
     ./homebrew.nix
-    ./secrets.nix
+    # ./secrets.nix
   ];
 
   # Use a custom configuration.nix location.
