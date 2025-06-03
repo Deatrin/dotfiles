@@ -41,6 +41,7 @@
       "raindropio" # raindrop bookmark manager
       "raycast" # spotlight replacement
       "rectangle-pro" # key controlled snap feature
+      "remote-desktop-manager" # devolutions rdm
       "sanesidebuttons" # enable side buttons on mouse
       "serial" # serial connection application
       "slack" # Work
