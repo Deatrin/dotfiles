@@ -15,7 +15,8 @@
     ../common/nixos/auto-upgrade.nix
     ../common/nixos/users/deatrin
     ../common/optional/font.nix
-    ../common/optional/docker.nix
+    #    ../common/optional/docker.nix
+    ../common/optional/podman.nix
     ../common/optional/reboot-required.nix
     ../common/optional/xwayland.nix
   ];
