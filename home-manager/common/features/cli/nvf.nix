@@ -115,7 +115,6 @@
         nix.enable = true;
         markdown.enable = true;
         bash.enable = true;
-        css.enable = true;
         go.enable = true;
         html.enable = true;
         helm.enable = true;
