@@ -6,6 +6,7 @@
   #homebrew packages
   homebrew = {
     brews = [
+      "hugo"
       "mise"
     ];
     casks = [
