@@ -20,7 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nh_darwin.url = "github:ToyVo/nh_plus";
+    nh_darwin.url = "github:nix-community/nh";
 
     # for VSCode remote-ssh
     nix-ld-vscode = {
@@ -118,7 +118,6 @@
         };
         modules = [
           ./hosts/barkeith
-          # nh_darwin.nixDarwinModules.default
         ];
       };
       # I am a m2 macbook air
@@ -145,7 +144,6 @@
         };
         modules = [
           ./hosts/donnager
-          # nh_darwin.nixDarwinModules.default
         ];
       };
     };

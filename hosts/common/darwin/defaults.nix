@@ -47,18 +47,18 @@
       pkgs.alejandra
       pkgs.git
       pkgs.home-manager
+      inputs.nh_darwin.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 
   programs = {
     zsh.enable = true;
     nix-index.enable = true;
-    nh = {
-      enable = true;
-      clean.enable = true;
-      # Installation option once https://github.com/LnL7/nix-darwin/pull/942 is merged:
-      # package = nh_darwin.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    };
+    # TODO: Uncomment when programs.nh becomes available in nix-darwin
+    # nh = {
+    #   enable = true;
+    #   clean.enable = true;
+    # };
   };
 
   # add nerd fonts
