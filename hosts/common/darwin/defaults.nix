@@ -7,8 +7,7 @@
 }: {
   imports = [
     ./homebrew.nix
-    # can probsbly remove once https://github.com/LnL7/nix-darwin/pull/942 is merged:
-    inputs.nh_darwin.nixDarwinModules.prebuiltin
+    inputs.opnix.darwinModules.default
   ];
   #package config
   nixpkgs = {
@@ -136,7 +135,7 @@
     SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 
     # other options
-    NSGlobalDomain = {
+    CustomUserPreferences.NSGlobalDomain = {
       AppleInterfaceStyle = "Dark"; # set dark mode
       "com.apple.swipescrolldirection" = false; # set natural scrolling to the _correct_ value
       # "com.apple.mouse.tapBehavior" = 1; # sets tap to click to on
