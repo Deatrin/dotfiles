@@ -15,6 +15,7 @@
     brews = [
       "cask"
       "pyenv" # Python version management
+      "synergy-core" # Synergy m/kb sharing
       "tenv" # Terraform/opentofu version management
     ];
     casks = [
