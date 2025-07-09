@@ -8,6 +8,8 @@
     brews = [
       "hugo"
       "mise"
+      "age"
+      "cloudflared"
     ];
     casks = [
       "airtool"
