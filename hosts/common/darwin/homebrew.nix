@@ -16,6 +16,7 @@
       "aqua" # Declarative cli version management
       "cask"
       "pyenv" # Python version management
+      "sops" # Secrets
       "tenv" # Terraform/opentofu version management
     ];
     casks = [
