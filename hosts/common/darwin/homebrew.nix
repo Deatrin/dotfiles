@@ -13,6 +13,7 @@
       "nikitabobko/tap"
     ];
     brews = [
+      "aqua" # Declarative cli version management
       "cask"
       "pyenv" # Python version management
       "tenv" # Terraform/opentofu version management
