@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./hyprland.nix
-    ./hyprpanel.nix
+    #    ./hyprpanel.nix
     ./rofi.nix
     # ./theme.nix
     ./wayland.nix
