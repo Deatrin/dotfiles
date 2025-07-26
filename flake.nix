@@ -146,6 +146,18 @@
           ./hosts/donnager
         ];
       };
+      # I am an M1 Pro
+      tynan = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {
+          inherit inputs outputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            system = "aarch64-darwin";
+            config.allowUnfree = true;
+          };
+        };
+        modules = [./hosts/tynan];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
@@ -174,6 +186,11 @@
           ./home-manager/donnager.nix
         ]
         nixpkgs.legacyPackages."x86_64-darwin";
+      "deatrin@tynan" =
+        mkHome [
+          ./home-manager/tynan.nix
+        ]
+        nixpkgs.legacyPackages."aarch64-darwin";
     };
   };
 }
