@@ -27,7 +27,7 @@
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser
       "discord" # chat
-      "docker" # you already know
+      # "docker" # you already know
       "dropbox" # self id
       "flux" # make my screen red at night
       "jetbrains-toolbox" # insatlls jetbrains toolbox to install other jetbrains stuff
