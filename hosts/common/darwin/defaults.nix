@@ -52,7 +52,7 @@
 
   programs = {
     zsh.enable = true;
-    nix-index.enable = true;
+    # nix-index.enable = true;
     # TODO: Uncomment when programs.nh becomes available in nix-darwin
     # nh = {
     #   enable = true;
@@ -118,7 +118,7 @@
       FXEnableExtensionChangeWarning = false; # disable warning when changing file extensions
       _FXShowPosixPathInTitle = false; # show full path in title bar
       _FXSortFoldersFirst = true; # shows folders first in finder
-      FXPreferredViewStyle = "clmv"; # list view
+      FXPreferredViewStyle = "clmv"; # column view
       FXDefaultSearchScope = "SCcf"; # search current folder by default
       NewWindowTarget = "Computer";
       ShowHardDrivesOnDesktop = true; # shows the hard disk on the desktop
