@@ -48,7 +48,6 @@
       "serial" # serial connection application
       "slack" # Work
       "spotify" # music
-      "shottr" # screenshot tool
       "visual-studio-code" # code editor
       "vlc" # video player
       "zwift" # cycling training
