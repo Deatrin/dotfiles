@@ -78,6 +78,11 @@
       ShowAMPM = false;
     };
 
+    # control center
+    controlcenter = {
+      BatteryShowPercentage = true; # show battery percentage in control center
+    };
+
     # dock options
     dock = {
       autohide = true; # autohide task bar
