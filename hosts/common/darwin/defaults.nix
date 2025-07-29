@@ -87,6 +87,10 @@
       mru-spaces = false; # turn off rearrange on recent user
       show-recents = false; # show recents on dock
       showhidden = true; # make hidden apps translusent
+      wvous-br-corner = 1; # sets bottom right corner to nothing in hot corners
+      wvous-bl-corner = 1; # sets bottom left corner to nothing in hot corners
+      wvous-tl-corner = 1; # sets top left corner to nothing in hot corners
+      wvous-tr-corner = 1; # sets top right corner to nothing in hot corners
       persistent-apps = [
         # we use this to set the dock to preffered layout
         "/Applications/TickTick.app"
@@ -98,7 +102,6 @@
         "/Applications/Raindrop.io.app"
         "/Applications/1Password.app"
         "/Applications/Discord.app"
-        "/Applications/Slack.app"
         "/Applications/Visual Studio Code.app"
         "/Applications/OrbStack.app"
         "/Applications/Termius.app"
