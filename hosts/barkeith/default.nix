@@ -23,6 +23,9 @@
     home = "/Users/ajennex";
   };
 
+  # Change the default location for screenshots.
+  system.defaults.screencapture.location = "/Users/ajennex/Pictures/Screenshots";
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;

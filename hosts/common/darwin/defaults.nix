@@ -166,10 +166,6 @@
       PMPrintingExpandedStateForPrint2 = true;
     };
 
-    # screen cap settings
-    screencapture = {
-      location = "/Users/ajennex/Pictures/Screenshots";
-    };
     # screen lock options
     screensaver = {
       askForPassword = true;

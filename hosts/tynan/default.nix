@@ -26,6 +26,9 @@
     home = "/Users/deatrin";
   };
 
+  # Change the default location for screenshots.
+  system.defaults.screencapture.location = "/Users/deatrin/Pictures/Screenshots";
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;
