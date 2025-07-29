@@ -21,8 +21,7 @@
     ];
     casks = [
       "1password" # GUI 1pass
-      "1password-cli" # need to install CLI via brew too to make biometric unlock work with GUI app
-      "aerospace" # macOS tiling window manager
+      "1password-cli" # need to install CLI via brew to make biometric unlock work with GUI app
       "bambu-studio" # silcer for 3d printer
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser
@@ -33,8 +32,7 @@
       "jetbrains-toolbox" # insatlls jetbrains toolbox to install other jetbrains stuff
       "lens" # k8s tool
       "ghostty" # so hot right now
-      "google-chrome" # le google chrome
-      "karabiner-elements" # keyboard remapping
+      "google-chrome" # le chrome
       "logi-options+" # mouse stuff
       "microsoft-office" # Office just in case
       "notion" # notetaking app
@@ -50,7 +48,6 @@
       "spotify" # music
       "visual-studio-code" # code editor
       "vlc" # video player
-      "zwift" # cycling training
     ];
     masApps = {
       "Canary Mail App" = 1236045954;

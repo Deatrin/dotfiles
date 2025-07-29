@@ -143,7 +143,7 @@
     SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 
     # other options
-    CustomUserPreferences.NSGlobalDomain = {
+    NSGlobalDomain = {
       AppleInterfaceStyle = "Dark"; # set dark mode
       "com.apple.swipescrolldirection" = false; # set natural scrolling to the _correct_ value
       # "com.apple.mouse.tapBehavior" = 1; # sets tap to click to on
@@ -175,6 +175,10 @@
     screensaver = {
       askForPassword = true;
       askForPasswordDelay = 10;
+    };
+
+    WindowManager = {
+      EnableTiledWindowMargins = false; # disable tiled window margins
     };
 
     CustomUserPreferences = {

@@ -12,7 +12,7 @@
     casks = [
       "mixed-in-key"
       "rekordbox"
-      "zoom"
+      "zwift" # cycling training
     ];
     # masApps = {
     # };
