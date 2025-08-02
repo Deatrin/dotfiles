@@ -13,8 +13,6 @@
     ];
     casks = [
       "airtool"
-      "mixed-in-key"
-      "rekordbox"
       "wifi-explorer-pro"
     ];
     # masApps = {
