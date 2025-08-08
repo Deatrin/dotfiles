@@ -14,6 +14,8 @@
     casks = [
       "airtool"
       "wifi-explorer-pro"
+      "claude"
+      "claude-code"
     ];
     # masApps = {
     # };
