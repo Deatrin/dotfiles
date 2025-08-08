@@ -11,7 +11,6 @@
     onActivation.cleanup = "zap";
     taps = [
       "nikitabobko/tap"
-      "charmbracelet/tap" # for charm cli tools
     ];
     brews = [
       "aqua" # Declarative cli version management
