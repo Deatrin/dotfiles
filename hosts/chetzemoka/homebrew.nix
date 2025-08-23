@@ -17,7 +17,8 @@
       "claude"
       "claude-code"
     ];
-    # masApps = {
-    # };
+    masApps = {
+      "Good Notes 6" = 1444383602;
+    };
   };
 }
