@@ -50,7 +50,7 @@ eval $(op signin --account <redacted>.1password.com)
 ### atuin login
 
 ```shell
-atuin login --username $(op item get "atuin - THD" --vault Work --fields label=username) --password $(op item get "atuin - THD" --vault Work --fields label=password) --key "$(op item get "atuin - THD" --vault Work --fields label=key)"
+atuin login --username $(op item get "atuin" --vault nix_secrets --fields label=username) --password $(op item get "atuin" --vault nix_secrets --fields label=pass --reveal) --key "$(op item get "atuin" --vault nix_secrets --fields label=key --reveal)"
 atuin import auto
 atuin sync
 ```
