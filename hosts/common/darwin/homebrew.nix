@@ -28,7 +28,6 @@
       "discord" # chat
       # "docker" # you already know
       "dropbox" # self id
-      "flux" # make my screen red at night
       "jetbrains-toolbox" # insatlls jetbrains toolbox to install other jetbrains stuff
       "lens" # k8s tool
       "ghostty" # so hot right now
