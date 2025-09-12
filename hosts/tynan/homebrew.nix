@@ -13,11 +13,14 @@
     ];
     casks = [
       "airtool"
+      "claude"
+      "claude-code"
       "mixed-in-key"
       "rekordbox"
       "wifi-explorer-pro"
     ];
-    # masApps = {
-    # };
+    masApps = {
+      "Good Notes 6" = 1444383602;
+    };
   };
 }
