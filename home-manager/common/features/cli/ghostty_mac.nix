@@ -19,10 +19,10 @@
     keybind = super+right=next_tab
 
     macos-auto-secure-input = true
-    macos-icon = custom-style
-    macos-icon-frame = aluminum
-    macos-icon-ghost-color = #cd6600
-    macos-icon-screen-color = #cd6600
+    macos-icon = xray
+    # macos-icon-frame = aluminum
+    # macos-icon-ghost-color = #cd6600
+    # macos-icon-screen-color = #cd6600
     macos-option-as-alt = true
     macos-secure-input-indication = true
     macos-titlebar-style = tabs
