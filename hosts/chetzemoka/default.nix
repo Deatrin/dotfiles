@@ -28,6 +28,27 @@
 
   # Change the location of screenshots
   system.defaults.screencapture.location = "/Users/ajennex/Pictures/Screenshots";
+  system.defaults.dock.persistent-apps = [
+    "/Applications/TickTick.app"
+    "/Applications/Notion.app"
+    "/Applications/Canary Mail.app"
+    "/Applications/Brave Browser.app"
+    "/System/Applications/Messages.app"
+    "/Applications/Raindrop.io.app"
+    "/Applications/1Password.app"
+    "/Applications/Discord.app"
+    "/Applications/Visual Studio Code.app"
+    "/Applications/OrbStack.app"
+    "/Applications/Termius.app"
+    "/Applications/Ghostty.app"
+    "/Applications/Spotify.app"
+    "/Applications/rekordbox 7/rekordbox.app"
+    "/Applications/Mixed In Key 11.app"
+    "/System/Applications/App Store.app"
+    "/System/Applications/System Settings.app"
+    "/Applications/Yubico Authenticator.app"
+    "/System/Applications/iPhone Mirroring.app"
+  ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
