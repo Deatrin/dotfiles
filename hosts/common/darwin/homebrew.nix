@@ -23,7 +23,7 @@
       "1password" # GUI 1pass
       "1password-cli" # need to install CLI via brew to make biometric unlock work with GUI app
       "bambu-studio" # silcer for 3d printer
-      "bartender" # cleans up menu bar
+      # "bartender" # cleans up menu bar # bring back after the homebrew cask is updated
       "brave-browser" # perfered browser
       "discord" # chat
       # "docker" # you already know
