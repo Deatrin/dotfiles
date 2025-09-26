@@ -34,6 +34,7 @@
       "ghostty" # so hot right now
       "google-chrome" # le chrome
       "logi-options+" # mouse stuff
+      "mailbird" # email client
       "microsoft-office" # Office just in case
       "notion" # notetaking app
       "obsidian" # note taking app
