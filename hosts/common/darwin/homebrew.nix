@@ -53,6 +53,7 @@
     ];
     masApps = {
       "Canary Mail App" = 1236045954;
+      "Paprika Recipe Manager 3 " = 1303222628;
       "Tailscale" = 1475387142;
       "Termius" = 1176074088;
       "TickTick" = 966085870;

@@ -46,6 +46,7 @@
     "/Applications/Spotify.app"
     "/Applications/rekordbox 7/rekordbox.app"
     "/Applications/Mixed In Key 11.app"
+    "/Applications/Paprika Recipe Manager 3.app"
     "/System/Applications/App Store.app"
     "/System/Applications/System Settings.app"
     "/Applications/Yubico Authenticator.app"
