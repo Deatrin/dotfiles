@@ -12,7 +12,6 @@
     ./hardware-configuration.nix
     ./secrets.nix
     ../common/nixos
-    ../common/nixos/auto-upgrade.nix
     ../common/nixos/users/deatrin
     ../common/optional/font.nix
     #    ../common/optional/docker.nix

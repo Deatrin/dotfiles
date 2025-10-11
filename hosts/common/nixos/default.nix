@@ -9,7 +9,7 @@
   imports =
     [
       inputs.home-manager.nixosModules.home-manager
-      # ./auto-upgrade.nix # doesn't work right now with git-crypt repos - will revisit
+      ./auto-upgrade.nix
       ./locale.nix
       ./nix.nix
       ./nfs.nix
