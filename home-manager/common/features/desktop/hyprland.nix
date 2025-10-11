@@ -84,7 +84,7 @@
         workspace_swipe = true;
       };
 
-      monitor = "eDP-1, 1920x1200@59.95, 0x0, 1";
+      monitor = "eDP-1, 1920x1200@59.95, 0x0, 1.2";
       # device = [
       #   {
       #     name = "epic-mouse-v1";
