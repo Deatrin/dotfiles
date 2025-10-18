@@ -67,6 +67,11 @@
       value = "1048576";
     }
   ];
+  security.pam.services = {
+    sudo = {
+      u2fAuth = true;
+    };
+  };
 
   # Enable printing changes on nix build etc with nvd
   #system.activationScripts.report-changes = ''
@@ -84,6 +89,7 @@
     # pkgs.opnix.default
     pkgs.git
     pkgs.htop
+    pkgs.pam_u2f
     pkgs.unstable.nh
   ];
   services.pcscd.enable = true;
