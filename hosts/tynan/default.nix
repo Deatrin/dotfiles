@@ -31,9 +31,8 @@
 
   # Per system dock
   system.defaults.dock.persistent-apps = [
-    "/Applications/TickTick.app"
-    "/Applications/Notion.app"
-    "/Applications/Canary Mail.app"
+    "/Applications/Obsidian.app"
+    "/Applications/Spark.app"
     "/Applications/Brave Browser.app"
     "/System/Applications/Messages.app"
     "/Applications/Raindrop.io.app"
