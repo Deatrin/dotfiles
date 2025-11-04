@@ -23,7 +23,7 @@
       * {
           border: none;
           border-radius: 0;
-          font-family: FiraCode Nerd Font;
+          font-family: JetbrainsMonoNL Nerd Font Regular;
           font-weight: bold;
           font-size: 14px;
           min-height: 0;

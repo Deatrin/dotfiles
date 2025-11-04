@@ -96,29 +96,6 @@
       wvous-bl-corner = 1; # sets bottom left corner to nothing in hot corners
       wvous-tl-corner = 1; # sets top left corner to nothing in hot corners
       wvous-tr-corner = 1; # sets top right corner to nothing in hot corners
-      # persistent-apps = [
-      #   # we use this to set the dock to preffered layout
-      #   "/Applications/TickTick.app"
-      #   "/Applications/Notion.app"
-      #   "/Applications/Canary Mail.app"
-      #   "/Applications/Brave Browser.app"
-      #   "/Applications/Google Chrome.app"
-      #   "/System/Applications/Messages.app"
-      #   "/Applications/Raindrop.io.app"
-      #   "/Applications/1Password.app"
-      #   "/Applications/Discord.app"
-      #   "/Applications/Visual Studio Code.app"
-      #   "/Applications/OrbStack.app"
-      #   "/Applications/Termius.app"
-      #   "/Applications/Ghostty.app"
-      #   "/Applications/Spotify.app"
-      #   "/Applications/rekordbox 7/rekordbox.app"
-      #   "/Applications/Mixed In Key 11.app"
-      #   "/System/Applications/App Store.app"
-      #   "/System/Applications/System Settings.app"
-      #   "/Applications/Yubico Authenticator.app"
-      #   "/System/Applications/iPhone Mirroring.app"
-      # ];
     };
     # finder options
     finder = {
