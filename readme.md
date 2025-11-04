@@ -31,7 +31,6 @@ I just want to be able to get a new machine run a few commands and have it be ex
     - [donnager](/hosts/donnager/README.md) (macOS (iMac Pro) configuration)
     - [nauvoo](/hosts/nauvoo/README.md) (nixOS (VM) configuration)
     - [razerback](/hosts/razerback/README.md) (nixOS (Percision 5760) configruation)
-    - [tachi](/hosts/tachi/README.md) (nixOS (Optiplex 5050) configuration)
     - [tycho](/hosts/tycho/README.md) (nixOS (T14 G3) configuration)
   - [keys](/keys/) (Stores public keys needed for GPG)
   - [modules](/modules/) (Custom nixOS and home-manager modules)
