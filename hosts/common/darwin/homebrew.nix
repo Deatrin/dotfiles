@@ -46,7 +46,6 @@
       "remote-desktop-manager" # devolutions rdm
       "sanesidebuttons" # enable side buttons on mouse
       "serial" # serial connection application
-      "slack" # Work
       "spotify" # music
       "visual-studio-code" # code editor
       "vlc" # video player
