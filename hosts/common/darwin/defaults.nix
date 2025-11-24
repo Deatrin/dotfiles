@@ -46,7 +46,7 @@
       pkgs.alejandra
       pkgs.git
       pkgs.home-manager
-      inputs.nh_darwin.packages.${pkgs.stdenv.hostPlatform.system}.default
+      pkgs-unstable.nh
     ];
   };
 
