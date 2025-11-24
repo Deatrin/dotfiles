@@ -30,7 +30,7 @@
       }
     ];
     defaultGateway = "10.1.30.1";
-    nameservers = ["10.1.10.220"];
+    nameservers = ["10.1.30.1"];
   };
 
   # may fix issues with network service failing during a nixos-rebuild
