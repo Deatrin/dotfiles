@@ -2,7 +2,7 @@ let
   # Systems
   razerback = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK86jag7YpxLKMDY+KSrtOP2U9cKiXVFBq2QNC0AhNeC";
   tachi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKibh5GTexyqYUlCN5jfhLxxM9AE8irXmkjh+fsbuGTo";
-  nauvoo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO5lpFFv1P0wcit8dYSN723Um30CUudt6gEykVR/twbB";
+  nauvoo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJzjafp0pbs0seTAo744NU3erRoRQzYVtJqxZKtqcFET";
   tycho = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPz3wiePro7pwMuqK2Dbxfa6F4uQN+6HDSDCIVOWowYI";
 
   # Users
