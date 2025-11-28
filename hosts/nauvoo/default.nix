@@ -34,6 +34,15 @@
     nameservers = ["10.1.10.1"];
   };
 
+  # fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
+  #   device = "10.1.10.5:/volume1/kubedata/paperless_data";
+  #   fsType = "nfs";
+  #   options = [
+  #     "rw"
+  #     "nolock"
+  #   ];
+  # };
+
   # may fix issues with network service failing during a nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
