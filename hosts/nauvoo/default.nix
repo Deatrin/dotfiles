@@ -10,9 +10,8 @@
     inputs.disko.nixosModules.disko
     ./disko-config.nix
     ./hardware-configuration.nix
-    # ./secrets.nix
+    ./secrets.nix
     ../common/nixos
-    # ../common/nixos/auto-upgrade.nix
     ../common/nixos/users/deatrin
     ../common/optional/docker.nix
     # ../common/optional/qemu.nix
