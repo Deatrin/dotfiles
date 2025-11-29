@@ -29,7 +29,6 @@
     dig # DNS lookups
     dogdns # DNS lookups "WRITTEN IN RUST"
     duf # better 'df' "WRITTEN IN RUST"
-    # unstable.eza # replacement for exa "WRITTEN IN RUST"
     unstable.fastfetch # fetch system info
     fd # better find "WRITTEN IN RUST""
     file # inspect file types
