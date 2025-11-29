@@ -11,8 +11,8 @@
       inputs.home-manager.nixosModules.home-manager
       ./auto-upgrade.nix
       ./locale.nix
-      ./nix.nix
       ./nfs.nix
+      ./nix.nix
       ./openssh.nix
       ./systemd-initrd.nix
       ./tailscale.nix

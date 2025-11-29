@@ -14,7 +14,6 @@
     ../common/nixos
     ../common/nixos/users/deatrin
     ../common/optional/docker.nix
-    # ../common/optional/qemu.nix
     ../common/optional/plex.nix
     ../common/optional/reboot-required.nix
     ../common/optional/vscode-server.nix
