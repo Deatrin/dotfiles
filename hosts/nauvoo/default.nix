@@ -33,14 +33,14 @@
     nameservers = ["10.1.10.1"];
   };
 
-  # fileSystems."/home/deatrin/docker_volumes/paperless/paperless_data" = {
-  #   device = "10.1.10.5:/volume1/kubedata/paperless_data";
-  #   fsType = "nfs";
-  #   options = [
-  #     "rw"
-  #     "nolock"
-  #   ];
-  # };
+  fileSystems."/home/deatrin/Media" = {
+    device = "10.1.10.5:/volume1/Roci/Media_Storage";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
 
   # may fix issues with network service failing during a nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
