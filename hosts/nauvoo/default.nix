@@ -16,6 +16,7 @@
     ../common/optional/docker.nix
     ../common/optional/plex.nix
     ../common/optional/reboot-required.nix
+    ../common/optional/salt.nix
     ../common/optional/vscode-server.nix
   ];
 
