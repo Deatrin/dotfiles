@@ -14,7 +14,7 @@
   };
 
   # We'll install the package to the system, enable the service, and set up some networking rules
-  environment.systemPackages = with pkgs; [tailscale];
+  environment.systemPackages = with unstable.pkgs; [tailscale];
   services.tailscale.enable = true;
   networking = {
     firewall = {
