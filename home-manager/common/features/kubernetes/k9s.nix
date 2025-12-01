@@ -1,7 +1,7 @@
 {
   programs.k9s = {
     enable = true;
-    plugin = {
+    plugins = {
       plugins = {
         # https://github.com/derailed/k9s/blob/master/plugins/debug-container.yaml
         debug = {
