@@ -8,6 +8,7 @@
       enable = true;
       openFirewall = true;
       package = pkgs.unstable.plex;
+      dataDir = "/var/lib/plex";
     };
   };
 }
