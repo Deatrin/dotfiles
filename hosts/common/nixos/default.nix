@@ -89,7 +89,7 @@
     # pkgs.opnix.default
     pkgs.git
     pkgs.htop
-    pkgs.lspci
+    pkgs.toybox
     pkgs.pam_u2f
     pkgs.unstable.nh
   ];
