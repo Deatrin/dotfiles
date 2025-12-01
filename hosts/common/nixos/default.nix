@@ -91,6 +91,7 @@
     pkgs.htop
     pkgs.toybox
     pkgs.pam_u2f
+    pkgs.pciutils
     pkgs.unstable.nh
   ];
   services.pcscd.enable = true;
