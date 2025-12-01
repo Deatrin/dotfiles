@@ -25,7 +25,7 @@
   networking = {
     hostName = "nauvoo";
     networkmanager.enable = true; # Easiest to use and most distros use this by default.
-    interfaces.ens18.ipv4.addresses = [
+    interfaces.enp38s0.ipv4.addresses = [
       {
         address = "10.1.30.100";
         prefixLength = 24;
