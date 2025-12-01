@@ -15,7 +15,7 @@
     ../common/nixos/users/deatrin
     ../common/optional/docker.nix
     ../common/optional/jellyseerr.nix
-    # ../common/optional/plex.nix
+    ../common/optional/plex.nix
     ../common/optional/reboot-required.nix
     # TODO: currently there seems to be an issue with salt and crypto keys will revist later
     # ../common/optional/salt.nix
