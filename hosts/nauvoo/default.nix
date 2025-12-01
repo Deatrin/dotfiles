@@ -60,7 +60,7 @@
     # supported GPUs is at:
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
-    open = false;
+    open = true;
 
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
@@ -70,14 +70,14 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  # fileSystems."/home/deatrin/Media" = {
-  #   device = "10.1.10.5:/volume1/Roci/Media_Storage";
-  #   fsType = "nfs";
-  #   options = [
-  #     "rw"
-  #     "nolock"
-  #   ];
-  # };
+  fileSystems."/home/deatrin/Media" = {
+    device = "10.1.10.5:/volume1/Roci/Media_Storage";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
 
   # may fix issues with network service failing during a nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
