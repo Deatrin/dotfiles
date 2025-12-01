@@ -7,7 +7,7 @@
     plex = {
       enable = true;
       openFirewall = true;
-      package = unstable.plex;
+      package = pkgs.unstable.plex;
     };
   };
 }
