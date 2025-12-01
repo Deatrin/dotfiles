@@ -8,21 +8,19 @@
   modulesPath,
   ...
 }: {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [(modulesPath + "/profiles/qemu-guest.nix")];
 
   boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
+    "ata_piix"
+    "mptspi"
+    "uhci_hcd"
+    "ehci_pci"
     "ahci"
-    "usbhid"
-    "usb_storage"
     "sd_mod"
     "sr_mod"
   ];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
+  boot.kernelModules = [];
   boot.extraModulePackages = [];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
