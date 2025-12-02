@@ -71,8 +71,8 @@
   };
 
   hardware.nvidia-container-toolkit.enable = true;
-  hardware.nvidia.datacenter.enable = true;
   hardware.graphics.enable32Bit = true;
+  services.xserver.videoDrivers = ["nvidia"];
 
   # fileSystems."/home/deatrin/Media" = {
   #   device = "10.1.10.5:/volume1/Roci/Media_Storage";
