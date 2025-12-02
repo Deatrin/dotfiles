@@ -12,3 +12,6 @@
     };
   };
 }
+# use this to claim a new server
+# curl -X POST 'http://127.0.0.1:32400/myplex/claim?token=claim-xxxxxxx'
+
