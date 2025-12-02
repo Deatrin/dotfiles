@@ -71,6 +71,7 @@
   };
 
   hardware.nvidia-container-toolkit.enable = true;
+  hardware.nvidia.datacenter.enable = true;
   hardware.graphics.enable32Bit = true;
 
   # fileSystems."/home/deatrin/Media" = {
