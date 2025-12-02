@@ -15,7 +15,7 @@
     ../common/nixos/users/deatrin
     ../common/optional/docker.nix
     ../common/optional/jellyseerr.nix
-    # ../common/optional/plex.nix
+    ../common/optional/plex.nix
     ../common/optional/reboot-required.nix
     # TODO: currently there seems to be an issue with salt and crypto keys will revist later
     # ../common/optional/salt.nix
@@ -70,14 +70,17 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  fileSystems."/home/deatrin/Media" = {
-    device = "10.1.10.5:/volume1/Roci/Media_Storage";
-    fsType = "nfs";
-    options = [
-      "rw"
-      "nolock"
-    ];
-  };
+  hardware.nvidia-container-toolkit.enable = true;
+  hardware.graphics.enable32Bit = true;
+
+  # fileSystems."/home/deatrin/Media" = {
+  #   device = "10.1.10.5:/volume1/Roci/Media_Storage";
+  #   fsType = "nfs";
+  #   options = [
+  #     "rw"
+  #     "nolock"
+  #   ];
+  # };
 
   # may fix issues with network service failing during a nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
