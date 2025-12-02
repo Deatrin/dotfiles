@@ -4,6 +4,6 @@
   ...
 }: {
   imports = [
-    ../common/containers/arr-stack/docker-compose.nix
+    ./arr-stack/docker-compose.nix
   ];
 }
