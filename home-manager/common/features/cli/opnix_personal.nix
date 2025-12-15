@@ -6,6 +6,7 @@
       example = {
         path = ".config/personal-app/.env";
         reference = "op://Darwin Secrets/testenv/text";
+        mode = "0600";
       };
     };
   };
