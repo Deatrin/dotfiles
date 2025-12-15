@@ -9,6 +9,7 @@
   imports =
     [
       inputs.home-manager.nixosModules.home-manager
+      inputs.opnix.nixosModules.default
       ./auto-upgrade.nix
       ./locale.nix
       ./nfs.nix
@@ -19,8 +20,10 @@
     ]
     ++ (builtins.attrValues outputs.nixosModules);
 
-  home-manager.extraSpecialArgs = {
-    inherit inputs outputs;
+  home-manager = {
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
   };
 
   nixpkgs = {
@@ -86,8 +89,8 @@
 
   # always install these for all users on nixos systems
   environment.systemPackages = [
-    # pkgs.opnix.default
     pkgs.git
+    pkgs.unstable.gemini-cli
     pkgs.htop
     pkgs.toybox
     pkgs.pam_u2f

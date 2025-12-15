@@ -6,19 +6,16 @@
   ...
 }: {
   imports = [
-    inputs.agenix.nixosModules.default
     inputs.disko.nixosModules.disko
     ./disko-config.nix
     ./hardware-configuration.nix
-    ./secrets.nix
     ../common/nixos
     ../common/nixos/users/deatrin
     ../common/optional/docker.nix
     ../common/optional/jellyseerr.nix
     ../common/optional/plex.nix
     ../common/optional/reboot-required.nix
-    # TODO: currently there seems to be an issue with salt and crypto keys will revist later
-    # ../common/optional/salt.nix
+    ../common/optional/salt.nix
     ../common/optional/vscode-server.nix
   ];
 

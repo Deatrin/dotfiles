@@ -22,18 +22,13 @@
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
+      system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
   };
 
   # Add talhelper overlay
   talhelper-overlay = final: _prev: {
-    inherit (inputs.talhelper.packages.${final.system}) talhelper;
-  };
-
-  # Add opnix overlay
-  opnix-overlay = final: _prev: {
-    opnix = inputs.opnix.packages.${final.system};
+    inherit (inputs.talhelper.packages.${final.stdenv.hostPlatform.system}) talhelper;
   };
 }

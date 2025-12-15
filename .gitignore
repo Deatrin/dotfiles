@@ -1,1 +1,83 @@
+# Nix build artifacts
+result
+result-*
+.direnv/
+.envrc
+
+# Nix profiles
+/profiles/
+
+# Hardware configuration (often machine-specific)
+# Uncomment if you don't want to track hardware configs
+# hardware-configuration.nix
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Editor files
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+*.orig
+*.bak
+.vscode/
+.idea/
+*.iml
+
+# Claude Code
+.claude/
+.claude-code/
+*claude.md
+.claude_history
+*gemini.md
+
+# Backup files
+*.backup
+*.old
+backup/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Secrets (double-check these are encrypted with agenix!)
+# *.age files should be tracked, but never plain secrets
+secrets/*.key
+secrets/*.pem
+secrets/*.txt
+*.secret
+
+# Log files
+*.log
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

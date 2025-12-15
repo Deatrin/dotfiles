@@ -29,10 +29,14 @@
         export GPG_TTY="$TTY"
       fi
 
-      if uwsm check may-start && uwsm select; then
-        exec uwsm start default
+      # UWSM auto-start removed - handled by SDDM display manager
+      # Hyprland sessions are now launched via SDDM, not shell startup
+      # To manually start Hyprland from TTY: uwsm start default
+
+      # Source shell secrets from opnix
+      if [ -f "${config.home.homeDirectory}/.config/shell-secrets/env" ]; then
+        source ${config.home.homeDirectory}/.config/shell-secrets/env
       fi
-      source /run/agenix/${config.home.username}-secrets
 
       export PATH="/opt/homebrew/bin:$PATH"
       export PATH="/opt/homebrew/sbin:$PATH"

@@ -15,6 +15,8 @@
     brews = [
       "aqua" # Declarative cli version management
       "cask"
+      "gemini-cli" # you already know gemini
+      "jj" # jujutsu
       "pyenv" # Python version management
       "sops" # Secrets
       "tenv" # Terraform/opentofu version management
@@ -49,6 +51,7 @@
       "spotify" # music
       "visual-studio-code" # code editor
       "vlc" # video player
+      "zed" # zed editor
     ];
     masApps = {
       "Spark Classic – Email App" = 1176895641;

@@ -81,7 +81,8 @@
       };
 
       gestures = {
-        workspace_swipe = true;
+        # 3-finger horizontal swipe to switch workspaces
+        gesture = "3, horizontal, workspace";
       };
 
       monitor = "eDP-1, 1920x1200@59.95, 0x0, 1.2";

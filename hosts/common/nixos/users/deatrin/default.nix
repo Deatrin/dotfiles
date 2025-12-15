@@ -34,5 +34,5 @@ in {
     packages = [pkgs.home-manager];
   };
   programs.zsh.enable = true;
-  home-manager.users.deatrin = import ../../../../../home-manager/deatrin_${config.networking.hostName}.nix;
+  home-manager.users.deatrin = import ../../../../../home-manager/nixos/deatrin_${config.networking.hostName}.nix;
 }

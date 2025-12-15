@@ -1,45 +1,105 @@
-# Dotfile Storage
+# dotfiles
 
-Leveraging Nix with nix-darwin or nixOS with home manager to apply desiered configuration to machines
+Personal NixOS and nix-darwin configuration managing multiple systems with declarative, reproducible setups.
 
-## Background
+## Overview
 
-I just want to be able to get a new machine run a few commands and have it be exactly as I like that way the turn up to working and computing is wayyyyy faster I also dont have to try and remember that one setting from long ago that I will never remember
+This repository uses:
+- **Nix Flakes** with **flake-parts** for modular organization
+- **NixOS** (3 hosts) and **nix-darwin** (4 hosts) for system configuration
+- **home-manager** for user-level configuration (integrated into system rebuilds)
+- **opnix** for 1Password secrets management
+- **Hyprland** for desktop environments on NixOS hosts
+- **Neovim** configured with [nvf](https://github.com/NotAShelf/nvf)
+- **Ghostty** terminal across all platforms
+- **Dracula** color scheme via nix-colors
+
+## Quick Start
+
+For detailed documentation about the architecture, build commands, and development workflow, see **[CLAUDE.md](CLAUDE.md)**.
+
+For host-specific setup instructions, see the individual README files in the [Hosts](#hosts) section below.
+
+## Build Commands
+
+### NixOS Systems
+```bash
+sudo nixos-rebuild switch --flake .#<hostname>
+# or with nh (recommended)
+nh os switch
+```
+
+### macOS Systems
+```bash
+darwin-rebuild switch --flake .#<hostname>
+# or with nh (recommended)
+nh home switch
+```
+
+### Flake Management
+```bash
+# Update all inputs
+nix flake update
+
+# Update specific input
+nix flake lock --update-input <input-name>
+
+# Check flake validity
+nix flake check
+```
+
+## Hosts
+
+| Host | Platform | Type | User | README |
+|------|----------|------|------|--------|
+| nauvoo | NixOS (x86_64) | VM | deatrin | [README](hosts/nixos/nauvoo/README.md) |
+| razerback | NixOS (x86_64) | Laptop | deatrin | [README](hosts/nixos/razerback/README.md) |
+| tycho | NixOS (x86_64) | Laptop | deatrin | [README](hosts/nixos/tycho/README.md) |
+| barkeith | macOS (x86_64) | MacBook Pro | ajennex | [README](hosts/darwin/barkeith/README.md) |
+| chetzemoka | macOS (aarch64) | MacBook Air | ajennex | [README](hosts/darwin/chetzemoka/README.md) |
+| donnager | macOS (x86_64) | iMac Pro | ajennex | [README](hosts/darwin/donnager/README.md) |
+| tynan | macOS (aarch64) | MacBook | deatrin | [README](hosts/darwin/tynan/README.md) |
 
 ## Structure
 
-- Root Folder
-  - [flake.nix](flake.nix) (The top level flake for rebuilding via nixos-rebuild/darwin-rebuild/home-manager)
-  - [flake.lock](flake.lock) (The flake lockfile for current state updated daily via [github action](.github/workflows/main.yml))
-  - [home-manager](home-manager) (User level configuration per machine via home-manager)
-    - [common](home-manager/common/) (Top level folder holding the common configurations)
-      - [features](home-manager/common/features/) (Holds various feature configs split into categories)
-        - [cli](home-manager/common/features/cli/) (Holds the common configuration for CLI tools)
-        - [desktop](home-manager/common/features/desktop/) (Holds the common configuration for Desktop maanger in nixOS)
-        - [dev](home-manager/common/features/dev/) (Holds dev tools configuration use this to turn on things like go)
-        - [kubrenetes](home-manager/common/features/kubernetes/) (Holds Kubernetes tools configuration)
-      - [global](home-manager/common/global/) (Holds global configuration for everything)
-    - [barkeith](home-manager/barkeith.nix) (Holds the home-manager config for [barkeith](/hosts/barkeith/README.md))
-    - [chetzemoka](home-manager/chetzemoka.nix) (Holds the home-manager config for [chetzemoka](/hosts/chetzemoka/README.md))
-    - [deatrin_nauvoo](home-manager/deatrin_nauvoo.nix) (Holds the home-manager config for [nauvoo](/hosts/nauvoo/README.md))
-    - [deatrin_razerback](home-manager/deatrin_razerback.nix) (Holds the home-manager config for [razerback](/hosts/razerback/README.md))
-    - [donnager](home-manager/donnager.nix) (Holds the home-manager config for [donnager](/hosts/donnager/README.md))
-  - [hosts](/hosts/README.md) (Definition of hosts both macOS and nixOS)
-    - [common](/hosts/common/) (Role definitions)
-    - [barkeith](/hosts/barkeith/README.md) (macOS (Intel Macbook Pro) configuration)
-    - [chetzemoka](/hosts/chetzemoka/README.md) (macOS (m2 Macbook Air) configuration)
-    - [donnager](/hosts/donnager/README.md) (macOS (iMac Pro) configuration)
-    - [nauvoo](/hosts/nauvoo/README.md) (nixOS (VM) configuration)
-    - [razerback](/hosts/razerback/README.md) (nixOS (Percision 5760) configruation)
-    - [tycho](/hosts/tycho/README.md) (nixOS (T14 G3) configuration)
-  - [keys](/keys/) (Stores public keys needed for GPG)
-  - [modules](/modules/) (Custom nixOS and home-manager modules)
-  - [overlays](overlays) (Custom overlays)
-  - [pkgs](pkgs) (Custom packages used for things not found in nixpkgs)
-  - [wallpapers](wallpapers) (Stores my default wallpaper)
+- **Root files**
+  - [flake.nix](flake.nix) - Minimal orchestrator that imports flake-parts modules
+  - [flake.lock](flake.lock) - Lockfile for dependency versions (updated daily via GitHub Actions)
+  - [CLAUDE.md](CLAUDE.md) - Comprehensive documentation for development and architecture
+- **[flake/](flake/)** - Flake-parts modules for modular flake organization
+  - [hosts.nix](flake/hosts.nix) - Single source of truth for all host metadata
+  - [lib.nix](flake/lib.nix) - Helper functions (mkNixos, mkDarwin, mkHome)
+  - [packages.nix](flake/packages.nix) - perSystem packages module
+  - [overlays.nix](flake/overlays.nix) - perSystem overlays with pkgs and pkgs-unstable
+  - [nixos.nix](flake/nixos.nix) - NixOS configuration factory
+  - [darwin.nix](flake/darwin.nix) - Darwin configuration factory
+  - [home-manager.nix](flake/home-manager.nix) - Home-manager configuration factory
+- **[home-manager/](home-manager/)** - User-level configuration
+  - [common/global/](home-manager/common/global/) - Universal user configuration imported by all users
+  - [common/features/](home-manager/common/features/) - Opt-in feature modules
+    - [cli/](home-manager/common/features/cli/) - CLI tools (git, zsh, tmux, neovim, etc.)
+    - [desktop/](home-manager/common/features/desktop/) - Desktop environment (Hyprland, rofi, theming)
+    - [dev/](home-manager/common/features/dev/) - Development environment configurations
+    - [kubernetes/](home-manager/common/features/kubernetes/) - Kubernetes tooling (k9s, kubectl)
+  - [darwin/](home-manager/darwin/) - macOS user configurations (barkeith.nix, chetzemoka.nix, donnager.nix, tynan.nix)
+  - [nixos/](home-manager/nixos/) - NixOS user configurations (deatrin_nauvoo.nix, deatrin_razerback.nix, deatrin_tycho.nix)
+- **[hosts/](hosts/README.md)** - Machine-level configuration
+  - [common/darwin/](hosts/common/darwin/) - Shared macOS configuration (defaults, homebrew)
+  - [common/nixos/](hosts/common/nixos/) - Shared NixOS configuration (locale, nix, openssh, tailscale)
+  - [common/optional/](hosts/common/optional/) - Optional modules (docker, podman, fonts, plex, jellyseerr)
+  - [common/containers/](hosts/common/containers/) - Docker compose configurations
+  - [darwin/](hosts/darwin/) - Per-host macOS configurations (barkeith, chetzemoka, donnager, tynan)
+  - [nixos/](hosts/nixos/) - Per-host NixOS configurations (nauvoo, razerback, tycho)
+  - [VMtemplate/](hosts/VMtemplate/) - Template for VM setup
+- **[modules/](modules/)** - Custom NixOS and home-manager modules
+- **[overlays/](overlays/)** - Custom package overlays including unstable packages
+- **[pkgs/](pkgs/)** - Custom packages not available in nixpkgs
+- **[backup/](backup/)** - Migration artifacts and old configurations (e.g., agenix migration)
+- **[keys/](keys/)** - Public GPG keys
+- **[wallpapers/](wallpapers/)** - Default wallpapers
 
-## Referances
+## References
 
 - Not gonna lie most of this was made possible by stumbling on [billimek's](https://github.com/billimek/dotfiles/tree/master) dotfiles while I was trying to figure out how to get [nvf](https://github.com/NotAShelf/nvf) to work with nix darwin
-- Shoutouts to code search on github wayyyyy better than any google seach to find examples
+- Shoutouts to code search on github wayyyyy better than any google search to find examples
 - Nix is a rabbit hole once I found I could merge both nixOS and nix-darwin files this was the outcome

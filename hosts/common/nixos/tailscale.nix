@@ -3,15 +3,8 @@
   pkgs,
   ...
 }: {
-  # the nix expression containing age secret configuration, enabling tailscale packages and service, networking rules, and the systemd autoconnect unit file
-
-  # Here, we mount the token file
-  age.secrets.tailscale-token = {
-    file = ../../../secrets/tailscale-key.age;
-    owner = "root";
-    group = "root";
-    mode = "600";
-  };
+  # the nix expression enabling tailscale packages and service, networking rules, and the systemd autoconnect unit file
+  # tailscale-key secret is managed by opnix (see opnix-system.nix)
 
   # We'll install the package to the system, enable the service, and set up some networking rules
   environment.systemPackages = with pkgs.unstable; [tailscale];
@@ -24,19 +17,19 @@
     };
   };
 
-  # Here is the magic, where we automatically connect with the tailscale CLI by passing our secret token, and ensure that agenix mounting was completed
+  # Here is the magic, where we automatically connect with the tailscale CLI by passing our secret token from opnix
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
 
-    # We must make sure that both the tailscale service and the agenix file mounting are running / complete before trying to connect to tailscale
-    after = ["network-pre.target" "tailscale.service" "run-agenix.d.mount"];
-    wants = ["network-pre.target" "tailscale.service" "run-agenix.d.mount"];
+    # We must make sure that the tailscale service is running before trying to connect
+    after = ["network-pre.target" "tailscale.service"];
+    wants = ["network-pre.target" "tailscale.service"];
     wantedBy = ["multi-user.target"];
 
     # Set this service as a oneshot job
     serviceConfig.Type = "oneshot";
 
-    # Run the following shell script for the job, passing the mounted secret for the tailscale connection
+    # Run the following shell script for the job, passing the opnix-managed secret for the tailscale connection
     script = with pkgs; ''
       # wait for tailscaled to settle
       sleep 2
@@ -48,7 +41,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey "$(cat "${config.age.secrets.tailscale-token.path}")"
+      ${tailscale}/bin/tailscale up -authkey "$(cat "/run/opnix/tailscale-key")"
     '';
   };
 }

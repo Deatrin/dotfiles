@@ -1,16 +1,27 @@
 {
   inputs,
+  outputs,
   pkgs,
   lib,
-  pkgs-unstable,
   ...
 }: {
   imports = [
-    ./homebrew.nix
+    inputs.home-manager.darwinModules.home-manager
     inputs.opnix.darwinModules.default
+    ./homebrew.nix
   ];
+
+  home-manager.extraSpecialArgs = {
+    inherit inputs outputs;
+  };
   #package config
   nixpkgs = {
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.unstable-packages
+      outputs.overlays.talhelper-overlay
+    ];
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
@@ -46,26 +57,22 @@
       pkgs.alejandra
       pkgs.git
       pkgs.home-manager
-      pkgs-unstable.nh
+      pkgs.unstable.nh
+      pkgs.unstable.compose2nix
     ];
   };
 
   programs = {
     zsh.enable = true;
     # nix-index.enable = true;
-    # TODO: Uncomment when programs.nh becomes available in nix-darwin
-    # nh = {
-    #   enable = true;
-    #   clean.enable = true;
-    # };
   };
 
   # add nerd fonts
   fonts.packages = [
-    pkgs-unstable.monaspace
-    pkgs-unstable.nerd-fonts.monaspace
-    pkgs-unstable.nerd-fonts.symbols-only
-    pkgs-unstable.nerd-fonts.jetbrains-mono
+    pkgs.unstable.monaspace
+    pkgs.unstable.nerd-fonts.monaspace
+    pkgs.unstable.nerd-fonts.symbols-only
+    pkgs.unstable.nerd-fonts.jetbrains-mono
   ];
 
   system.keyboard = {

@@ -15,7 +15,7 @@ git clone https://github.com/Deatrin/dotfiles.git
 We use disko to partition the disk to make ready for install. In this case we are not encrypting
 
 ```shell
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/nauvoo/disko-config.nix
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/nixos/nauvoo/disko-config.nix
 ```
 
 ## NixOS Install
