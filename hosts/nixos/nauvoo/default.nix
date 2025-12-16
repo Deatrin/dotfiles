@@ -12,7 +12,7 @@
     ../../common/containers
     ../../common/nixos
     ../../common/nixos/users/deatrin
-    # ../../common/optional/docker.nix
+    ../../common/optional/docker.nix
     ../../common/optional/jellyseerr.nix
     ../../common/optional/plex.nix
     ../../common/optional/reboot-required.nix
