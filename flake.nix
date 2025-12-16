@@ -25,6 +25,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprpanel.url = "github:jas-singhfsu/hyprpanel";
+    hyprsettings.url = "github:acropolis914/hyprsettings";
     hardware.url = "github:nixos/nixos-hardware";
     nix-colors.url = "github:misterio77/nix-colors";
     talhelper.url = "github:budimanjojo/talhelper";
