@@ -10,6 +10,7 @@
     [
       inputs.home-manager.nixosModules.home-manager
       inputs.opnix.nixosModules.default
+      inputs.nix-topology.nixosModules.default
       ./auto-upgrade.nix
       ./locale.nix
       ./nfs.nix

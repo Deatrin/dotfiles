@@ -31,6 +31,7 @@
     talhelper.url = "github:budimanjojo/talhelper";
     opnix.url = "github:brizzbuzz/opnix";
     nvf.url = "github:notashelf/nvf";
+    nix-topology.url = "github:oddlama/nix-topology";
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -43,6 +44,7 @@
         ./flake/nixos.nix
         ./flake/darwin.nix
         ./flake/home-manager.nix
+        ./flake/topology.nix
       ];
 
       systems = [
