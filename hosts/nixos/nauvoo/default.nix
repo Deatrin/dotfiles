@@ -71,7 +71,7 @@
   hardware.graphics.enable32Bit = true;
   services.xserver.videoDrivers = ["nvidia"];
 
-  fileSystems."/nmedia" = {
+  fileSystems."/media" = {
     device = "10.1.10.5:/volume1/Roci/Media_Storage";
     fsType = "nfs";
     options = [
