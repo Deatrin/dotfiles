@@ -45,7 +45,7 @@
               content = {
                 type = "filesystem";
                 format = "ext4";
-                mountpoint = "/mnt/storage";
+                mountpoint = "/storage";
               };
             };
           };
@@ -62,7 +62,7 @@
               content = {
                 type = "filesystem";
                 format = "ext4";
-                mountpoint = "/mnt/ssdstorage";
+                mountpoint = "/ssdstorage";
               };
             };
           };
