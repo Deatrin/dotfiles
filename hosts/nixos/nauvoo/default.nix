@@ -71,14 +71,14 @@
   hardware.graphics.enable32Bit = true;
   services.xserver.videoDrivers = ["nvidia"];
 
-  # fileSystems."/mnt/nmedia" = {
-  #   device = "10.1.10.5:/volume1/Roci/Media_Storage";
-  #   fsType = "nfs";
-  #   options = [
-  #     "rw"
-  #     "nolock"
-  #   ];
-  # };
+  fileSystems."/nmedia" = {
+    device = "10.1.10.5:/volume1/Roci/Media_Storage";
+    fsType = "nfs";
+    options = [
+      "rw"
+      "nolock"
+    ];
+  };
 
   # may fix issues with network service failing during a nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
