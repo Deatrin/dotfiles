@@ -35,7 +35,7 @@
         };
       };
       storage = {
-        device = "/dev/sda";
+        device = "/dev/sdb";
         type = "disk";
         content = {
           type = "gpt";
@@ -52,7 +52,7 @@
         };
       };
       ssdstorage = {
-        device = "/dev/sdb";
+        device = "/dev/sda";
         type = "disk";
         content = {
           type = "gpt";
