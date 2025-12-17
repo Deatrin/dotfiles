@@ -27,6 +27,7 @@
       "bambu-studio" # silcer for 3d printer
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser
+      "cyberduck"
       "discord" # chat
       # "docker" # you already know
       "dropbox" # self id

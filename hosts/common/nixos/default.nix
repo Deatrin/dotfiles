@@ -97,6 +97,7 @@
     pkgs.pam_u2f
     pkgs.pciutils
     pkgs.unstable.nh
+    pkgs.unstable.cifs-utils
   ];
   services.pcscd.enable = true;
   services.yubikey-agent.enable = true;
