@@ -52,7 +52,7 @@
         };
       };
       ssdstorage = {
-        device = "/dev/sda";
+        device = "/dev/sdb";
         type = "disk";
         content = {
           type = "gpt";
