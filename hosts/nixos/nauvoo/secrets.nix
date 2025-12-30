@@ -1,24 +1,21 @@
-# {
-#   age = {
-#     secrets = {
-#       deatrin-secrets = {
-#         file = ../../../secrets/deatrin-secrets.age;
-#         owner = "deatrin";
-#       };
-#       tailscale-key.file = ../../../secrets/tailscale-key.age;
-#     };
-#   };
-# }
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  # System-level opnix secrets for tycho
   services.onepassword-secrets = {
     enable = true;
     tokenFile = "/etc/opnix-token";
     # Ensure deatrin user has access to onepassword-secrets group
     users = ["deatrin"];
-
     secrets = {
-      autin = {
-        reference = "op://nix_secrets/atuin/username";
+      tailscaleKey = {
+        path = "/run/opnix/tailscale-key";
+        reference = "op://nix_secrets/tailscale-key/key";
+        owner = "root";
+        group = "root";
         mode = "0600";
       };
     };
