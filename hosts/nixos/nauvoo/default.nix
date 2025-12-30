@@ -10,7 +10,6 @@
     ./disko-config.nix
     ./hardware-configuration.nix
     ./secrets.nix
-    ../../common/containers
     ../../common/nixos
     ../../common/nixos/users/deatrin
     ../../common/optional/docker.nix
