@@ -33,7 +33,10 @@
   };
 
   # Change up the ssh port to make room for forgejo
-  services.openssh.ports = [2222];
+  services.openssh = {
+    ports = [2222];
+    openFirewall = true; # Explicitly ensure firewall allows SSH on custom port
+  };
 
   # Enable OpenGL
   hardware.graphics = {
