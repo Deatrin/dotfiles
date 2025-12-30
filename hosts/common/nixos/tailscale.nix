@@ -23,9 +23,9 @@
 
     # We must make sure that the tailscale service is running before trying to connect
     # AND that opnix has provisioned the secret file
-    after = ["network-pre.target" "tailscale.service" "onepassword-secrets.service"];
+    after = ["network-pre.target" "tailscale.service" "opnix-secrets.service"];
     wants = ["network-pre.target" "tailscale.service"];
-    requires = ["onepassword-secrets.service"];
+    requires = ["opnix-secrets.service"];
     wantedBy = ["multi-user.target"];
 
     # Set this service as a oneshot job
