@@ -29,21 +29,40 @@
     wantedBy = ["multi-user.target"];
 
     # Set this service as a oneshot job
-    serviceConfig.Type = "oneshot";
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      TimeoutStartSec = "60s";
+    };
 
     # Run the following shell script for the job, passing the opnix-managed secret for the tailscale connection
     script = with pkgs; ''
+      set -eu
+
       # wait for tailscaled to settle
-      sleep 2
+      echo "Waiting for tailscaled to be ready..."
+      sleep 5
 
       # check if we are already authenticated to tailscale
+      echo "Checking Tailscale status..."
       status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
-      if [ $status = "Running" ]; then
+      echo "Current status: $status"
+
+      if [ "$status" = "Running" ]; then
+          echo "Already connected to Tailscale"
           exit 0
       fi
 
+      # verify secret file exists
+      if [ ! -f "/run/opnix/tailscale-key" ]; then
+          echo "ERROR: Tailscale key file not found at /run/opnix/tailscale-key"
+          exit 1
+      fi
+
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey "$(cat "/run/opnix/tailscale-key")"
+      echo "Connecting to Tailscale..."
+      ${tailscale}/bin/tailscale up --authkey "file:/run/opnix/tailscale-key"
+      echo "Successfully connected to Tailscale"
     '';
   };
 }
