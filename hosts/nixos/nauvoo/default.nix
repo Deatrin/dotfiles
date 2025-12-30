@@ -13,6 +13,7 @@
     ../../common/nixos
     ../../common/nixos/users/deatrin
     ../../common/optional/docker.nix
+    ../../common/optional/jellyfin.nix
     ../../common/optional/plex.nix
     ../../common/optional/reboot-required.nix
     ../../common/optional/salt.nix
