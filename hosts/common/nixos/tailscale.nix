@@ -61,7 +61,7 @@
 
       # otherwise authenticate with tailscale
       echo "Connecting to Tailscale..."
-      ${tailscale}/bin/tailscale up --authkey "file:/run/opnix/tailscale-key"
+      ${tailscale}/bin/tailscale up --authkey "file:/run/opnix/tailscale-key" --accept-dns=false
       echo "Successfully connected to Tailscale"
     '';
   };
