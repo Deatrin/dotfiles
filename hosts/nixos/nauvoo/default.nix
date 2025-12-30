@@ -32,6 +32,9 @@
     nameservers = ["10.1.30.1"];
   };
 
+  # Change up the ssh port to make room for forgejo
+  services.openssh.ports = [2222];
+
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
