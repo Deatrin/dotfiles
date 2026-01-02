@@ -39,7 +39,6 @@
       "logi-options+" # mouse stuff
       "mailbird" # email client
       "microsoft-office" # Office just in case
-      "notion" # notetaking app
       "obsidian" # note taking app
       "OrbStack" # docker and linux virt
       "qlmarkdown" # markdown preview in quicklook
