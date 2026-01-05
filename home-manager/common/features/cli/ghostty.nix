@@ -25,8 +25,11 @@
         "super+`=toggle_quick_terminal"
         "shift+page_up=scroll_page_up"
         "shift+page_down=scroll_page_down"
-        "ctrl+i=text:\t"  # Fix fzf-tab completion
       ];
+
+      # Disable kitty keyboard protocol for shell compatibility
+      # Fixes fzf-tab and other completion issues
+      keyboard-protocol = false;
 
       # Window settings
       background-opacity = "0.8";
