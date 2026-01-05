@@ -8,7 +8,7 @@
 }: {
   imports = [
     ../common/global
-    ../common/features/cli/ghostty_mac.nix
+    ../common/features/cli/ghostty.nix
     ../common/features/cli/opnix_personal.nix
     ../common/features/dev
     ../common/features/kubernetes

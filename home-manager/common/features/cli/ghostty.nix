@@ -1,10 +1,15 @@
-{pkgs, ...}: {
-  programs.ghostty = {
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  # On Linux: Use the programs.ghostty module with the package
+  programs.ghostty = lib.mkIf pkgs.stdenv.isLinux {
     enable = true;
     enableZshIntegration = true;
     package = pkgs.unstable.ghostty;
     settings = {
-      theme = "dracula";
+      theme = "tokyo-night";
       font-family = [
         "Monaspace Neon"
         "Symbols Nerd Font Mono"
@@ -13,6 +18,7 @@
 
       clipboard-trim-trailing-spaces = true;
       copy-on-select = true;
+
       keybind = [
         "super+right=next_tab"
         "super+left=previous_tab"
@@ -20,49 +26,110 @@
         "shift+page_up=scroll_page_up"
         "shift+page_down=scroll_page_down"
       ];
-      macos-auto-secure-input = true;
-      macos-icon = "custom-style";
-      macos-icon-frame = "aluminum";
-      macos-icon-ghost-color = "#cd6600";
-      macos-icon-screen-color = "#cd6600";
-      macos-option-as-alt = true;
-      macos-secure-input-indication = true;
-      macos-titlebar-style = "tabs";
+
+      # Window settings
       background-opacity = "0.8";
       background-blur = true;
       quit-after-last-window-closed = true;
-      shell-integration = "detect";
-      shell-integration-features = "cursor,sudo,title";
       window-save-state = "always";
       window-theme = "ghostty";
+
+      # Shell integration
+      shell-integration = "detect";
+      shell-integration-features = "cursor,sudo,title";
     };
+
     themes = {
-      dracula = {
-        background = "#282a36";
-        foreground = "#f8f8f2";
-        cursor-color = "#f8f8f2";
-        cursor-text = "#282a36";
-        selection-foreground = "#f8f8f2";
-        selection-background = "#44475a";
+      tokyo-night = {
+        background = "#1a1b26";
+        foreground = "#c0caf5";
+        cursor-color = "#c0caf5";
+        cursor-text = "#1a1b26";
+        selection-foreground = "#c0caf5";
+        selection-background = "#33467c";
         palette = [
-          "0=#21222c"
-          "1=#ff5555"
-          "2=#50fa7b"
-          "3=#f1fa8c"
-          "4=#bd93f9"
-          "5=#ff79c6"
-          "6=#8be9fd"
-          "7=#f8f8f2"
-          "8=#6272a4"
-          "9=#ff6e6e"
-          "10=#69ff94"
-          "11=#ffffa5"
-          "12=#d6acff"
-          "13=#ff92df"
-          "14=#a4ffff"
-          "15=#ffffff"
+          "0=#15161e"
+          "1=#f7768e"
+          "2=#9ece6a"
+          "3=#e0af68"
+          "4=#7aa2f7"
+          "5=#bb9af7"
+          "6=#7dcfff"
+          "7=#a9b1d6"
+          "8=#414868"
+          "9=#f7768e"
+          "10=#9ece6a"
+          "11=#e0af68"
+          "12=#7aa2f7"
+          "13=#bb9af7"
+          "14=#7dcfff"
+          "15=#c0caf5"
         ];
       };
     };
+  };
+
+  # On macOS: Use raw config files (ghostty package not yet available for Darwin)
+  home.file = lib.mkIf pkgs.stdenv.isDarwin {
+    ".config/ghostty/config".text = ''
+      clipboard-trim-trailing-spaces = true
+      copy-on-select = clipboard
+
+      font-family = "Monaspace Neon"
+      font-family = "Symbols Nerd Font Mono"
+      font-size = 14
+
+      keybind = shift+page_down=scroll_page_down
+      keybind = shift+page_up=scroll_page_up
+      keybind = super+`=toggle_quick_terminal
+      keybind = super+left=previous_tab
+      keybind = super+right=next_tab
+
+      macos-auto-secure-input = true
+      macos-icon = custom-style
+      macos-icon-frame = aluminum
+      macos-icon-ghost-color = #7aa2f7
+      macos-icon-screen-color = #7aa2f7
+      macos-option-as-alt = true
+      macos-secure-input-indication = true
+      macos-titlebar-style = tabs
+
+      background-opacity = 0.8
+      background-blur = true
+
+      quit-after-last-window-closed = true
+      shell-integration = detect
+      shell-integration-features = cursor,sudo,title
+
+      theme = tokyo-night
+
+      window-save-state = always
+      window-theme = ghostty
+    '';
+
+    ".config/ghostty/themes/tokyo-night".text = ''
+      palette = 0=#15161e
+      palette = 1=#f7768e
+      palette = 2=#9ece6a
+      palette = 3=#e0af68
+      palette = 4=#7aa2f7
+      palette = 5=#bb9af7
+      palette = 6=#7dcfff
+      palette = 7=#a9b1d6
+      palette = 8=#414868
+      palette = 9=#f7768e
+      palette = 10=#9ece6a
+      palette = 11=#e0af68
+      palette = 12=#7aa2f7
+      palette = 13=#bb9af7
+      palette = 14=#7dcfff
+      palette = 15=#c0caf5
+      background = #1a1b26
+      foreground = #c0caf5
+      cursor-color = #c0caf5
+      cursor-text = #1a1b26
+      selection-foreground = #c0caf5
+      selection-background = #33467c
+    '';
   };
 }
