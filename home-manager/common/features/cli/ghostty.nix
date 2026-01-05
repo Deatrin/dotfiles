@@ -27,10 +27,6 @@
         "shift+page_down=scroll_page_down"
       ];
 
-      # Disable kitty keyboard protocol for shell compatibility
-      # Fixes fzf-tab and other completion issues
-      keyboard-protocol = false;
-
       # Window settings
       background-opacity = "0.8";
       background-blur = true;

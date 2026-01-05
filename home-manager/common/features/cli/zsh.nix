@@ -6,7 +6,6 @@
 }: {
   programs.zsh = {
     enable = true;
-    enableCompletion = true;
     history.size = 10000;
     history.path = "${config.xdg.dataHome}/zsh/history";
     shellAliases = {
@@ -90,12 +89,6 @@
       setopt hist_save_no_dups
       setopt hist_ignore_dups
       setopt hist_find_no_dups
-
-      # Explicitly enable fzf-tab completion
-      enable-fzf-tab
-
-      # Initialize zoxide AFTER fzf-tab so completion works
-      eval "$(${pkgs.zoxide}/bin/zoxide init zsh --cmd cd)"
     '';
     oh-my-zsh = {
       enable = true;
@@ -110,28 +103,25 @@
     };
     plugins = [
       {
-        # Must be loaded first to set up completion system
-        name = "zsh-completions";
-        src = pkgs.zsh-completions;
-        file = "share/zsh-completions/zsh-completions.zsh";
-      }
-      {
-        # Must be loaded after completions, before other plugins
-        name = "fzf-tab";
-        src = pkgs.zsh-fzf-tab;
-        file = "share/fzf-tab/fzf-tab.plugin.zsh";
-      }
-      {
         # will source zsh-autosuggestions.plugin.zsh
         name = "zsh-autosuggestions";
         src = pkgs.zsh-autosuggestions;
         file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
       }
       {
-        # Must be loaded last
+        name = "zsh-completions";
+        src = pkgs.zsh-completions;
+        file = "share/zsh-completions/zsh-completions.zsh";
+      }
+      {
         name = "zsh-syntax-highlighting";
         src = pkgs.zsh-syntax-highlighting;
         file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
+      }
+      {
+        name = "fzf-tab";
+        src = pkgs.zsh-fzf-tab;
+        file = "share/fzf-tab/fzf-tab.plugin.zsh";
       }
     ];
   };

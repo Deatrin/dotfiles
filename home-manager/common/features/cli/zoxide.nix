@@ -1,7 +1,7 @@
 {
   programs.zoxide = {
     enable = true;
-    enableZshIntegration = false;  # Manually init after fzf-tab loads
+    enableZshIntegration = true;
     options = ["--cmd cd"];
   };
 }
