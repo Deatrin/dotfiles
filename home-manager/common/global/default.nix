@@ -44,7 +44,7 @@ in {
     git.enable = true;
   };
 
-  colorscheme = lib.mkDefault colorSchemes.dracula;
+  colorscheme = lib.mkDefault (import ../../../modules/home-manager/colorschemes/tokyo-night.nix);
   home.file.".colorscheme".text = config.colorscheme.slug;
 
   home.sessionPath = [

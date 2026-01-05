@@ -18,7 +18,7 @@
         "XCURSOR_SIZE,32"
         "HYPRCURSOR_THEME,Bibata-Modern-Ice"
         "WLR_NO_HARDWARE_CURSORS,1"
-        "GTK_THEME,Dracula"
+        "GTK_THEME,Tokyonight-Dark"
       ];
 
       input = {

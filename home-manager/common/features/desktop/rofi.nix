@@ -4,8 +4,8 @@
   lib,
   ...
 }: {
-  home.file.".config/rofi/themes/dracula.rasi".text = ''
-    /*Dracula theme based on the Purple official rofi theme*/
+  home.file.".config/rofi/themes/tokyo-night.rasi".text = ''
+    /*Tokyo Night theme based on the Purple official rofi theme*/
 
     configuration {
         show-icons:      true;
@@ -15,11 +15,11 @@
 
     * {
         font: "JetbrainsMonoNL Nerd Font Regular";
-        foreground: #f8f8f2;
-        background-color: #282a36;
-        active-background: #6272a4;
-        urgent-background: #ff5555;
-        urgent-foreground: #282a36;
+        foreground: #c0caf5;
+        background-color: #1a1b26;
+        active-background: #2ac3de;
+        urgent-background: #f7768e;
+        urgent-foreground: #1a1b26;
         selected-background: @active-background;
         selected-urgent-background: @urgent-background;
         selected-active-background: @active-background;
@@ -162,6 +162,6 @@
       kb-primary-paste = "Control+V,Shift+Insert";
       kb-secondary-paste = "Control+v,Insert";
     };
-    theme = "dracula";
+    theme = "tokyo-night";
   };
 }
