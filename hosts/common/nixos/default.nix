@@ -113,8 +113,4 @@
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = false;
-
-  environment.variables = {
-    NH_FLAKE = "/etc/nixos";
-  };
 }

@@ -16,7 +16,7 @@
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/src/dotfiles/hosts/darwin/tynan/default.nix";
 
-  networking.hostName = "Tynan";
+  networking.hostName = "tynan";
 
   system.primaryUser = "deatrin";
 

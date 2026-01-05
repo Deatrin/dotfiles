@@ -11,6 +11,7 @@
     ./fzf.nix
     ./git.nix
     ./gpg.nix
+    ./nh.nix
     ./nvf.nix
     ./oh-my-posh.nix
     ./tealdeer.nix
