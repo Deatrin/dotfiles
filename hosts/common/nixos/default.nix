@@ -98,6 +98,7 @@
     pkgs.pciutils
     pkgs.unstable.nh
     pkgs.unstable.cifs-utils
+    pkgs.unstable.alacritty
   ];
   services.pcscd.enable = true;
   services.yubikey-agent.enable = true;
