@@ -86,7 +86,7 @@
       keybind = super+right=next_tab
 
       macos-auto-secure-input = true
-      macos-icon = custom-style
+      macos-icon = holographic
       macos-icon-frame = aluminum
       macos-icon-ghost-color = #7aa2f7
       macos-icon-screen-color = #7aa2f7
