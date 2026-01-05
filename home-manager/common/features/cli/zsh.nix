@@ -93,6 +93,9 @@
 
       # Explicitly enable fzf-tab completion
       enable-fzf-tab
+
+      # Initialize zoxide AFTER fzf-tab so completion works
+      eval "$(${pkgs.zoxide}/bin/zoxide init zsh --cmd cd)"
     '';
     oh-my-zsh = {
       enable = true;
