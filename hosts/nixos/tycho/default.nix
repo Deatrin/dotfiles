@@ -19,6 +19,7 @@
     ../../common/optional/reboot-required.nix
     ../../common/optional/xwayland.nix
     ../../common/optional/greetd.nix
+    ../../common/optional/moonlight-qt.nix
   ];
 
   networking = {
