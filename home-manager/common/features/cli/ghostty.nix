@@ -25,6 +25,7 @@
         "super+`=toggle_quick_terminal"
         "shift+page_up=scroll_page_up"
         "shift+page_down=scroll_page_down"
+        "ctrl+i=text:\t"  # Fix fzf-tab completion
       ];
 
       # Window settings
