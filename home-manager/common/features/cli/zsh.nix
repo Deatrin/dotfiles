@@ -120,8 +120,13 @@
       }
       {
         name = "fzf-tab";
-        src = pkgs.unstable.zsh-fzf-tab;
-        file = "share/fzf-tab/fzf-tab.plugin.zsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "Aloxaf";
+          repo = "fzf-tab";
+          rev = "master";
+          sha256 = "1mn7wsm16i1qdgnsxsmx2hcyajc68ypbmd2vff2wzy2yzzxjp2nl";
+        };
+        file = "fzf-tab.plugin.zsh";
       }
     ];
   };
