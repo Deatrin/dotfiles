@@ -19,7 +19,7 @@
       ps = "procs";
     };
 
-    initExtra = ''
+    initContent = ''
       ZSH_DISABLE_COMPFIX=true
       export EDITOR=nvim
       export PATH=$PATH:$HOME/go/bin
@@ -89,6 +89,9 @@
       setopt hist_save_no_dups
       setopt hist_ignore_dups
       setopt hist_find_no_dups
+
+      # Explicitly enable fzf-tab completion
+      enable-fzf-tab
     '';
     oh-my-zsh = {
       enable = true;
