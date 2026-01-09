@@ -53,6 +53,7 @@
       "zed" # zed editor
     ];
     masApps = {
+      "GrandPerspective" = 1111570163;
       "Spark Classic – Email App" = 1176895641;
       "Paprika Recipe Manager 3 " = 1303222628;
       "Tailscale" = 1475387142;
