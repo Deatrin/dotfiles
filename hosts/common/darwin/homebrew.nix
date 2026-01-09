@@ -57,7 +57,6 @@
       "Paprika Recipe Manager 3 " = 1303222628;
       "Tailscale" = 1475387142;
       "Termius" = 1176074088;
-      "TickTick" = 966085870;
       "WireGuard" = 1451685025;
       "Yoink" = 457622435;
       "Yubico Authenticator" = 1497506650;
