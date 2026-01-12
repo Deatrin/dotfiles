@@ -15,7 +15,10 @@
       "airtool"
       "claude"
       "claude-code"
+      "datagrip"
+      "goland"
       "mixed-in-key"
+      "pycharm"
       "rekordbox"
       "wifi-explorer-pro"
     ];
