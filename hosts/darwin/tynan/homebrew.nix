@@ -21,6 +21,7 @@
     ];
     masApps = {
       "Good Notes 6" = 1444383602;
+      "Amazon Kindle" = 302584613;
     };
   };
 }
