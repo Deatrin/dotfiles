@@ -264,11 +264,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1769120960,
-        "narHash": "sha256-dFWNt2ytdjHioF+natkjC3u01eO+OQFoHmUGPCIDgU0=",
+        "lastModified": 1769392091,
+        "narHash": "sha256-u0h+VMxjc8GtGBcrrWi0E3q3g+8CGodz5Rk9/yO2b88=",
         "owner": "acropolis914",
         "repo": "hyprsettings",
-        "rev": "9a8543b791a1e0c661a402e8a79c5815eecaeb12",
+        "rev": "3001e54361d3467be9a76af599936ffc3dc9d450",
         "type": "github"
       },
       "original": {
@@ -472,11 +472,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1769298235,
-        "narHash": "sha256-6LYNeTHX7779CiR4oqhG4C6u2NIUeZUOfITHgywaRlQ=",
+        "lastModified": 1769330179,
+        "narHash": "sha256-yxgb4AmkVHY5OOBrC79Vv6EVd4QZEotqv+6jcvA212M=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "26b0093bc977081dc7653175a3fadab11e07bed7",
+        "rev": "48698d12cc10555a4f3e3222d9c669b884a49dfe",
         "type": "github"
       },
       "original": {
@@ -592,11 +592,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1769247611,
-        "narHash": "sha256-T7icKolKxPtEauIQJAKY+zwjhfau94Rhnk+GfDCve+U=",
+        "lastModified": 1769403795,
+        "narHash": "sha256-Gk1MedUqTOMt9Hnn4WEGK/lpC/6UJ8O+e1Rm3LRnLgI=",
         "owner": "notashelf",
         "repo": "nvf",
-        "rev": "cf066ec6812af32ad229b0d2ab3228182f8b0a14",
+        "rev": "45aaf1cccff9981456821105b4d2b5918f00cab0",
         "type": "github"
       },
       "original": {
