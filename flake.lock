@@ -264,11 +264,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1770241777,
-        "narHash": "sha256-C5+mNC7cjuJ7fUiS6KP4uMA5WzDTZWr5QdSquwy8ZIk=",
+        "lastModified": 1770319472,
+        "narHash": "sha256-nmsz+kVANxznGh/olmj3UmBAdWIB8Pvm/2x/IXLeMCY=",
         "owner": "acropolis914",
         "repo": "hyprsettings",
-        "rev": "3cdf1a32cb75dc42bae2f6e3a139b290a71562b8",
+        "rev": "000d505c9e722b0d79a74691b93447661cb8706d",
         "type": "github"
       },
       "original": {
