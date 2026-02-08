@@ -32,6 +32,10 @@
     opnix.url = "github:brizzbuzz/opnix";
     nvf.url = "github:notashelf/nvf";
     nix-topology.url = "github:oddlama/nix-topology";
+    apple-silicon = {
+      url = "github:nix-community/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:

@@ -1,0 +1,23 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  # System-level opnix secrets for chetzemoka
+  services.onepassword-secrets = {
+    enable = true;
+    tokenFile = "/etc/opnix-token";
+    # Ensure deatrin user has access to onepassword-secrets group
+    users = ["deatrin"];
+    secrets = {
+      tailscaleKey = {
+        path = "/run/opnix/tailscale-key";
+        reference = "op://nix_secrets/tailscale-key/key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+    };
+  };
+}

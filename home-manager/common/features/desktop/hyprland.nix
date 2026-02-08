@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
@@ -85,7 +85,7 @@
         gesture = "3, horizontal, workspace";
       };
 
-      monitor = "eDP-1, 1920x1200@59.95, 0x0, 1.2";
+      monitor = lib.mkDefault "eDP-1, 1920x1200@59.95, 0x0, 1.2";
       # device = [
       #   {
       #     name = "epic-mouse-v1";

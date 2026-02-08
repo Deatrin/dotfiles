@@ -15,6 +15,11 @@
       user = "deatrin";
       modules = [../hosts/nixos/tycho];
     };
+    chetzemoka = {
+      system = "aarch64-linux";
+      user = "deatrin";
+      modules = [../hosts/nixos/chetzemoka];
+    };
   };
 
   darwinHosts = {
@@ -68,6 +73,10 @@
     "deatrin@tynan" = {
       system = "aarch64-darwin";
       modules = [../home-manager/darwin/tynan.nix];
+    };
+    "deatrin@chetzemoka" = {
+      system = "aarch64-linux";
+      modules = [../home-manager/nixos/deatrin_chetzemoka.nix];
     };
   };
 }
