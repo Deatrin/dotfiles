@@ -16,6 +16,14 @@
     # # https://github.com/NixOS/nixpkgs/issues/402079
     # nodejs = prev.nodejs_22;
     # nodejs-slim = prev.nodejs-slim_22;
+
+    # Fix inetutils build on macOS with newer clang
+    # https://github.com/NixOS/nixpkgs/issues/XXX
+    inetutils = prev.inetutils.overrideAttrs (oldAttrs: {
+      env = (oldAttrs.env or {}) // {
+        NIX_CFLAGS_COMPILE = (oldAttrs.env.NIX_CFLAGS_COMPILE or "") + " -Wno-error=format-security";
+      };
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
