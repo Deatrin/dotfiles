@@ -13,6 +13,10 @@
     ../../common/nixos
     ../../common/nixos/users/deatrin
     ../../common/optional/docker.nix
+    # ../../common/optional/quadlet.nix
+    # ../../common/containers/network.nix
+    # ../../common/containers/traefik
+    # ../../common/containers/jellyseerr
     ../../common/optional/jellyfin.nix
     ../../common/optional/plex.nix
     ../../common/optional/reboot-required.nix

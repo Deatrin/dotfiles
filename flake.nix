@@ -32,6 +32,7 @@
     opnix.url = "github:brizzbuzz/opnix";
     nvf.url = "github:notashelf/nvf";
     nix-topology.url = "github:oddlama/nix-topology";
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     apple-silicon = {
       url = "github:nix-community/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
