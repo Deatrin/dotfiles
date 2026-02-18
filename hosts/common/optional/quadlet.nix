@@ -21,6 +21,28 @@
     defaultNetwork.settings.dns_enabled = true;
   };
 
+  # Enable podman auto-update timer to pull new images for containers
+  # with autoUpdate = "registry" and restart them automatically
+  systemd.timers.podman-auto-update = {
+    description = "Podman auto-update timer";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+      RandomizedDelaySec = "900";
+    };
+  };
+
+  systemd.services.podman-auto-update = {
+    description = "Podman auto-update service";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.podman}/bin/podman auto-update";
+    };
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+  };
+
   environment.systemPackages = with pkgs; [
     podman-compose
   ];
