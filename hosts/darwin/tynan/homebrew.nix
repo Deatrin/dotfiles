@@ -16,10 +16,12 @@
       "claude"
       "claude-code"
       "datagrip"
+      "devpod"
       "goland"
       "mixed-in-key"
       "pycharm"
       "rekordbox"
+      "vivaldi"
       "wifi-explorer-pro"
     ];
     masApps = {

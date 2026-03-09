@@ -10,6 +10,8 @@
   ];
   home.packages = with pkgs; [
     brave
+    devpod-desktop
+    vavaldi
     wttrbar
   ];
 }
