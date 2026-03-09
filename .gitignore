@@ -52,9 +52,9 @@ Temporary Items
 # Claude Code
 .claude/
 .claude-code/
-*claude.md
+*CLAUDE.md
 .claude_history
-*gemini.md
+*GEMINI.md
 
 # Backup files
 *.backup
