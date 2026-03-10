@@ -68,6 +68,70 @@
         mode = "0600";
       };
 
+      rommDbPassword = {
+        path = "/run/opnix/romm-db-password";
+        reference = "op://nix_secrets/romm/db_password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommDbRootPassword = {
+        path = "/run/opnix/romm-db-root-password";
+        reference = "op://nix_secrets/romm/db_root_password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommAuthSecretKey = {
+        path = "/run/opnix/romm-auth-secret-key";
+        reference = "op://nix_secrets/romm/auth_secret_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommScreenscraperUser = {
+        path = "/run/opnix/romm-screenscraper-user";
+        reference = "op://nix_secrets/romm/screenscraper_user";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommScreenscraperPass = {
+        path = "/run/opnix/romm-screenscraper-pass";
+        reference = "op://nix_secrets/romm/screenscraper_password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommRetroachievementsKey = {
+        path = "/run/opnix/romm-retroachievements-key";
+        reference = "op://nix_secrets/romm/retroachievements_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommSteamgriddbKey = {
+        path = "/run/opnix/romm-steamgriddb-key";
+        reference = "op://nix_secrets/romm/steamgriddb_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommIgdbClientId = {
+        path = "/run/opnix/romm-igdb-client-id";
+        reference = "op://nix_secrets/romm/igdb_client_id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      rommIgdbClientSecret = {
+        path = "/run/opnix/romm-igdb-client-secret";
+        reference = "op://nix_secrets/romm/igdb_client_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+
       pocketIdEncryptionKey = {
         path = "/run/opnix/pocket-id-encryption-key";
         reference = "op://nix_secrets/pocket-id/encryption_key";

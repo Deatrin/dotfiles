@@ -13,6 +13,7 @@
     ./navidrome
     ./pihole
     ./pocket-id
+    ./romm
     ./traefik
   ];
 }
