@@ -100,13 +100,6 @@ in {
         };
         environmentFiles = ["/run/opnix/romm-db-env"];
         volumes = ["${volumes.romm-mysql.ref}:/var/lib/mysql"];
-        healthcheck = {
-          test = ["CMD" "healthcheck.sh" "--connect" "--innodb_initialized"];
-          startPeriod = "30s";
-          interval = "10s";
-          timeout = "5s";
-          retries = 5;
-        };
       };
     };
 
