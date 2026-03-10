@@ -8,7 +8,7 @@
     #    ./ddns
     #    ./grocy
     #    ./homebox
-    #    ./homepage
+    ./homepage
     ./it-tools
     #    ./navidrome
     ./pihole

@@ -1,25 +1,226 @@
-# Homepage config lives at /home/deatrin/docker_volumes/homepage/config
-# Uses the Podman socket instead of docker.sock
-{config, ...}: let
+# Homepage dashboard
+#
+# Config files are Nix-managed and copied to /var/lib/homepage/config at
+# activation — homepage needs a writable directory for logs.
+#
+# Secrets required (via opnix):
+#   /run/opnix/homepage-unifi-user
+#   /run/opnix/homepage-unifi-pass
+#   /run/opnix/homepage-latitude
+#   /run/opnix/homepage-longitude
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (config.virtualisation.quadlet) networks;
+
+  settingsYaml = pkgs.writeText "homepage-settings.yaml" ''
+    ---
+    title: Homelab Homepage
+
+    favicon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homepage.png
+    theme: dark
+    background:
+      image: https://raw.githubusercontent.com/Deatrin/dotfiles/main/wallpapers/chill_firewatch.png
+      opacity: 25
+    color: slate
+    headerStyle: clean
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+      showSearchSuggestions: true
+      hideVisitURL: true
+
+    layout:
+      Arr-Stack:
+        icon: sh-yarr
+      Dev:
+        icon: mdi-dev-to
+      Infrastructure:
+        icon: mdi-server
+      Photos:
+        icon: mdi-camera-burst
+      Self-Hosted:
+        icon: mdi-server-plus
+  '';
+
+  servicesYaml = pkgs.writeText "homepage-services.yaml" ''
+    ---
+    - Infrastructure:
+        - Unifi:
+            href: https://unifi.ui.com
+            icon: unifi.png
+            description: Unifi Dashboard
+            widget:
+              type: unifi
+              url: https://10.1.1.1:443
+              username: '{{HOMEPAGE_VAR_UNIFI_USER}}'
+              password: '{{HOMEPAGE_VAR_UNIFI_PASS}}'
+  '';
+
+  dockerYaml = pkgs.writeText "homepage-docker.yaml" ''
+    ---
+    testbed-podman:
+      socket: /var/run/docker.sock
+  '';
+
+  bookmarksYaml = pkgs.writeText "homepage-bookmarks.yaml" ''
+    ---
+    - Communicate:
+        - Discord:
+            - icon: discord.png
+              href: 'https://discord.com/app'
+        - Gmail:
+            - icon: gmail.png
+              href: 'http://gmail.com'
+        - Google Calendar:
+            - icon: google-calendar.png
+              href: 'https://calendar.google.com'
+
+    - Media:
+        - YouTube:
+            - icon: youtube.png
+              href: 'https://youtube.com/feed/subscriptions'
+        - Spotify:
+            - icon: spotify.png
+              href: 'http://open.spotify.com'
+
+    - Reading:
+        - Reddit:
+            - icon: reddit.png
+              href: 'https://reddit.com'
+
+    - Git:
+        - kubesearch:
+            - icon: kubernetes-dashboard.png
+              href: 'https://kubesearch.dev/'
+        - home-ops:
+            - icon: github.png
+              href: 'https://github.com/Deatrin/Home-Ops'
+  '';
+
+  widgetsYaml = pkgs.writeText "homepage-widgets.yaml" ''
+    ---
+    - greeting:
+        text_size: xl
+        text: Greetings, Drew!
+
+    - resources:
+        cpu: true
+        memory: true
+        disk: /
+
+    - search:
+        provider: [duckduckgo, google]
+        focus: false
+        target: _blank
+
+    - openmeteo:
+        label: Home
+        latitude: '{{HOMEPAGE_VAR_LATITUDE}}'
+        longitude: '{{HOMEPAGE_VAR_LONGITUDE}}'
+        timezone: America/Los_Angeles
+        units: imperial
+        cache: 5
+
+    - datetime:
+        text_size: l
+        format:
+          dateStyle: long
+          timeStyle: short
+          hourCycle: h23
+
+    - unifi_console:
+        url: https://10.1.1.1:443
+        username: '{{HOMEPAGE_VAR_UNIFI_USER}}'
+        password: '{{HOMEPAGE_VAR_UNIFI_PASS}}'
+  '';
 in {
+  systemd.tmpfiles.rules = [
+    "d /var/lib/homepage/config 0755 root root -"
+  ];
+
+  # Build homepage env file from individual opnix secrets
+  systemd.services.homepage-env-setup = {
+    description = "Build Homepage environment file from secrets";
+    after = ["opnix-secrets.service"];
+    requires = ["opnix-secrets.service"];
+    before = ["homepage.service"];
+    wantedBy = ["homepage.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = lib.getExe (pkgs.writeShellApplication {
+        name = "homepage-env-setup";
+        text = ''
+          {
+            printf 'HOMEPAGE_VAR_UNIFI_USER=%s\n' "$(cat /run/opnix/homepage-unifi-user)"
+            printf 'HOMEPAGE_VAR_UNIFI_PASS=%s\n' "$(cat /run/opnix/homepage-unifi-pass)"
+            printf 'HOMEPAGE_VAR_LATITUDE=%s\n' "$(cat /run/opnix/homepage-latitude)"
+            printf 'HOMEPAGE_VAR_LONGITUDE=%s\n' "$(cat /run/opnix/homepage-longitude)"
+          } > /run/opnix/homepage-env
+          chmod 600 /run/opnix/homepage-env
+        '';
+      });
+    };
+  };
+
+  # Copy Nix-managed config files into writable directory at activation
+  systemd.services.homepage-config-setup = {
+    description = "Deploy Homepage config files from Nix store";
+    before = ["homepage.service"];
+    wantedBy = ["homepage.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = lib.getExe (pkgs.writeShellApplication {
+        name = "homepage-config-setup";
+        text = ''
+          mkdir -p /var/lib/homepage/config
+          cp -f ${settingsYaml}  /var/lib/homepage/config/settings.yaml
+          cp -f ${servicesYaml}  /var/lib/homepage/config/services.yaml
+          cp -f ${dockerYaml}    /var/lib/homepage/config/docker.yaml
+          cp -f ${bookmarksYaml} /var/lib/homepage/config/bookmarks.yaml
+          cp -f ${widgetsYaml}   /var/lib/homepage/config/widgets.yaml
+        '';
+      });
+    };
+  };
+
   virtualisation.quadlet.containers.homepage = {
+    unitConfig = {
+      After = [
+        "opnix-secrets.service"
+        "homepage-env-setup.service"
+        "homepage-config-setup.service"
+      ];
+      Requires = [
+        "opnix-secrets.service"
+        "homepage-env-setup.service"
+        "homepage-config-setup.service"
+      ];
+    };
     containerConfig = {
       image = "ghcr.io/gethomepage/homepage:latest";
       autoUpdate = "registry";
       networks = [networks.traefik_network.ref];
       environments = {
-        HOMEPAGE_ALLOWED_HOSTS = "homepage.jennex.dev";
+        HOMEPAGE_ALLOWED_HOSTS = "homepage.deatrin.dev";
       };
+      environmentFiles = ["/run/opnix/homepage-env"];
       volumes = [
-        "/home/deatrin/docker_volumes/homepage/config:/app/config"
+        "/var/lib/homepage/config:/app/config"
         "/run/podman/podman.sock:/var/run/docker.sock:ro"
       ];
       labels = [
         "traefik.enable=true"
-        "traefik.http.routers.homepage.rule=Host(`homepage.jennex.dev`)"
-        "traefik.http.routers.homepage-secure.entrypoints=websecure"
+        "traefik.http.routers.homepage.rule=Host(`homepage.deatrin.dev`)"
+        "traefik.http.routers.homepage-secure.entrypoints=https"
+        "traefik.http.routers.homepage-secure.rule=Host(`homepage.deatrin.dev`)"
         "traefik.http.routers.homepage-secure.tls=true"
+        "traefik.http.routers.homepage-secure.tls.certresolver=cloudflare"
         "traefik.http.services.homepage.loadbalancer.server.port=3000"
       ];
     };

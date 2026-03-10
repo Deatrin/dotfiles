@@ -39,6 +39,34 @@
         group = "root";
         mode = "0600";
       };
+      homepageUnifiUser = {
+        path = "/run/opnix/homepage-unifi-user";
+        reference = "op://nix_secrets/homepage/HOMEPAGE_UNIFI_USER";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      homepageUnifiPass = {
+        path = "/run/opnix/homepage-unifi-pass";
+        reference = "op://nix_secrets/homepage/HOMEPAGE_UNIFI_PASS";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      homepageLatitude = {
+        path = "/run/opnix/homepage-latitude";
+        reference = "op://nix_secrets/homepage/HOMEPAGE_LATITUDE";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      homepageLongitude = {
+        path = "/run/opnix/homepage-longitude";
+        reference = "op://nix_secrets/homepage/HOMEPAGE_LONGITUDE";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
     };
   };
 }
