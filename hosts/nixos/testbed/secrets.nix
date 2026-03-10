@@ -67,6 +67,37 @@
         group = "root";
         mode = "0600";
       };
+
+      pocketIdEncryptionKey = {
+        path = "/run/opnix/pocket-id-encryption-key";
+        reference = "op://nix_secrets/pocket-id/encryption_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      pocketIdMaxmindKey = {
+        path = "/run/opnix/pocket-id-maxmind-key";
+        reference = "op://nix_secrets/pocket-id/maxmind_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+
+      # TODO: Fill in correct op:// references before enabling DDNS
+      # ddnsApiKey = {
+      #   path = "/run/opnix/ddns-api-key";
+      #   reference = "op://nix_secrets/<item>/api_key";
+      #   owner = "root";
+      #   group = "root";
+      #   mode = "0600";
+      # };
+      # ddnsZone = {
+      #   path = "/run/opnix/ddns-zone";
+      #   reference = "op://nix_secrets/<item>/zone";
+      #   owner = "root";
+      #   group = "root";
+      #   mode = "0600";
+      # };
     };
   };
 }

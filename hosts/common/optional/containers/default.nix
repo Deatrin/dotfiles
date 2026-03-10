@@ -12,6 +12,7 @@
     ./it-tools
     ./navidrome
     ./pihole
+    ./pocket-id
     ./traefik
   ];
 }
