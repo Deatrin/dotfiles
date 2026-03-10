@@ -79,6 +79,10 @@ in {
   };
 
   virtualisation.quadlet.containers.traefik = {
+    unitConfig = {
+      After = ["opnix-secrets.service" "traefik-env-setup.service"];
+      Requires = ["opnix-secrets.service" "traefik-env-setup.service"];
+    };
     containerConfig = {
       image = "docker.io/traefik:latest";
       autoUpdate = "registry";

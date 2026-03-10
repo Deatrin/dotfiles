@@ -29,6 +29,10 @@ in {
       volumes."etc-pihole" = {};
 
       containers.pihole = {
+        unitConfig = {
+          After = ["opnix-secrets.service"];
+          Requires = ["opnix-secrets.service"];
+        };
         containerConfig = {
           image = "docker.io/pihole/pihole:latest";
           autoUpdate = "registry";
