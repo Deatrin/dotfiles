@@ -27,6 +27,11 @@ in {
   };
 
   config = {
+    # Disable systemd-resolved stub listener so Pi-hole can bind 0.0.0.0:53
+    services.resolved.extraConfig = ''
+      DNSStubListener=no
+    '';
+
     virtualisation.quadlet = {
       volumes."etc-pihole" = {};
 
