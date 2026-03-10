@@ -57,7 +57,8 @@
         echo "Current status: $status"
 
         if [ "$status" = "Running" ]; then
-            echo "Already connected to Tailscale"
+            echo "Already connected, applying settings..."
+            ${tailscale}/bin/tailscale set --accept-dns=false --advertise-exit-node=${if config.services.tailscale-autoconnect.exitNode then "true" else "false"}
             exit 0
         fi
 
@@ -67,9 +68,10 @@
             exit 1
         fi
 
-        # otherwise authenticate with tailscale
+        # authenticate and apply settings
         echo "Connecting to Tailscale..."
-        ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"}        echo "Successfully connected to Tailscale"
+        ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"}
+        echo "Successfully connected to Tailscale"
       '';
     };
   };
