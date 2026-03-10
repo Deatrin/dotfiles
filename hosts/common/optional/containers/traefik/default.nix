@@ -43,6 +43,10 @@
           # Email injected via TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL in traefik-env
           storage: /acme.json
           # caServer defaults to prod: https://acme-v02.api.letsencrypt.org/directory
+          domains:
+            - main: "deatrin.dev"
+              sans:
+                - "*.deatrin.dev"
           dnsChallenge:
             provider: cloudflare
             resolvers:
