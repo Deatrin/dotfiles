@@ -10,6 +10,7 @@
     ../../common/nixos
     ../../common/nixos/users/deatrin
     ../../common/optional/quadlet.nix
+    ../../common/optional/containers
     ../../common/optional/reboot-required.nix
     ../../common/optional/vscode-server.nix
   ];
