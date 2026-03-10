@@ -3,6 +3,7 @@
 {...}: {
   imports = [
     ./networks.nix
+    ./arr-stack
     ./audiobookshelf
     ./calibre
     #    ./ddns
