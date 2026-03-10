@@ -16,6 +16,8 @@
     ../../common/optional/vscode-server.nix
   ];
 
+  services.pihole-quadlet.dnsListenIP = "10.1.40.200";
+
   networking = {
     hostName = "testbed";
     networkmanager.enable = true;

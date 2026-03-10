@@ -32,6 +32,13 @@
         group = "root";
         mode = "0600";
       };
+      piholeAdmin = {
+        path = "/run/opnix/pihole-env";
+        reference = "op://nix_secrets/pihole/piihole_admin";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
     };
   };
 }
