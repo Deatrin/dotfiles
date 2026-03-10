@@ -9,6 +9,7 @@
     ./grocy
     ./homebox
     ./homepage
+    ./immich
     ./it-tools
     ./navidrome
     ./paperless

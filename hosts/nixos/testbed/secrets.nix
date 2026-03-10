@@ -68,6 +68,14 @@
         mode = "0600";
       };
 
+      immichEnv = {
+        path = "/run/opnix/immich-env";
+        reference = "op://nix_secrets/immich/env";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+
       paperlessSecret = {
         path = "/run/opnix/paperless-secret";
         reference = "op://nix_secrets/paperless/env";
