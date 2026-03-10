@@ -18,6 +18,7 @@
     ./pihole
     ./pocket-id
     ./romm
+    ./seerr
     ./traefik
   ];
 }
