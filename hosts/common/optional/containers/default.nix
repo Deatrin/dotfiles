@@ -7,7 +7,7 @@
     #    ./calibre
     #    ./ddns
     ./grocy
-    #    ./homebox
+    ./homebox
     ./homepage
     ./it-tools
     #    ./navidrome
