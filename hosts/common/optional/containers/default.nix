@@ -9,6 +9,7 @@
     #    ./ddns
     ./forgejo
     ./grocy
+    #    ./idrac
     ./homebox
     ./homepage
     ./immich
