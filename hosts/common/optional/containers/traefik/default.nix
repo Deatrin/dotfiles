@@ -75,7 +75,7 @@ in {
         text = ''
           printf 'TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL=%s\n' \
             "$(cat /run/opnix/acme-email)" > /run/opnix/traefik-env
-          chmod 600 /run/traefik-env
+          chmod 600 /run/opnix/traefik-env
         '';
       });
     };
