@@ -5,7 +5,9 @@
 #       FTLCONF_webserver_api_password=<password>
 #
 # The wildcard dnsmasq config is baked in via Nix — no manual config needed.
-# DNS listens on the host's primary IP (set per-host via dnsListenIP option).
+# DNS binds to 0.0.0.0:53 (all interfaces, including Tailscale) so Pi-hole is
+# reachable as a Tailscale nameserver. dnsListenIP is used only for the wildcard
+# DNS resolution target.
 {
   config,
   pkgs,
@@ -38,8 +40,8 @@ in {
           autoUpdate = "registry";
           networks = [networks.traefik_network.ref];
           publishPorts = [
-            "${config.services.pihole-quadlet.dnsListenIP}:53:53/tcp"
-            "${config.services.pihole-quadlet.dnsListenIP}:53:53/udp"
+            "0.0.0.0:53:53/tcp"
+            "0.0.0.0:53:53/udp"
           ];
           environments = {
             TZ = "America/Los_Angeles";
