@@ -6,6 +6,7 @@ in {
       image = "docker.io/corentinth/it-tools:latest";
       autoUpdate = "registry";
       networks = [networks.traefik_network.ref];
+      publishPorts = ["8090:80"];
       labels = [
         "homepage.group=Dev"
         "homepage.name=IT Tools"
