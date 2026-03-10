@@ -12,24 +12,27 @@ in {
         environments = {
           PUID = "1000";
           PGID = "1000";
-          TZ = "Etc/UTC";
+          TZ = "America/Los_Angeles";
           DOCKER_MODS = "linuxserver/mods:universal-calibre";
           OAUTHLIB_RELAX_TOKEN_SCOPE = "1";
         };
         volumes = [
           "${volumes."calibre-data".ref}:/config"
-          "/storage/media/books:/books"
+          # Uncomment when deployed to nauvoo (path only available there)
+          # "/storage/media/books:/books"
         ];
         labels = [
           "homepage.group=Self-Hosted"
           "homepage.name=Calibre"
           "homepage.icon=calibre.png"
-          "homepage.href=https://calibre.jennex.dev"
+          "homepage.href=https://calibre.deatrin.dev"
           "homepage.description=Books"
           "traefik.enable=true"
-          "traefik.http.routers.calibre.rule=Host(`calibre.jennex.dev`)"
-          "traefik.http.routers.calibre-secure.entrypoints=websecure"
+          "traefik.http.routers.calibre.rule=Host(`calibre.deatrin.dev`)"
+          "traefik.http.routers.calibre-secure.entrypoints=https"
+          "traefik.http.routers.calibre-secure.rule=Host(`calibre.deatrin.dev`)"
           "traefik.http.routers.calibre-secure.tls=true"
+          "traefik.http.routers.calibre-secure.tls.certresolver=cloudflare"
           "traefik.http.services.calibre.loadbalancer.server.port=8083"
         ];
       };

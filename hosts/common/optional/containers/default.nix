@@ -3,8 +3,8 @@
 {...}: {
   imports = [
     ./networks.nix
-    #    ./audiobookshelf
-    #    ./calibre
+    ./audiobookshelf
+    ./calibre
     #    ./ddns
     ./grocy
     ./homebox
