@@ -25,7 +25,6 @@ in {
           "traefik.http.routers.navi-secure.entrypoints=https"
           "traefik.http.routers.navi-secure.rule=Host(`navi.deatrin.dev`)"
           "traefik.http.routers.navi-secure.tls=true"
-          "traefik.http.routers.navi-secure.tls.certresolver=cloudflare"
           "traefik.http.services.navi.loadbalancer.server.port=4533"
         ];
       };

@@ -28,6 +28,13 @@
               scheme: https
       https:
         address: ":443"
+        http:
+          tls:
+            certResolver: cloudflare
+            domains:
+              - main: "deatrin.dev"
+                sans:
+                  - "*.deatrin.dev"
 
     serversTransport:
       insecureSkipVerify: true
@@ -116,14 +123,10 @@ in {
         "traefik.http.routers.traefik.rule=Host(`traefik.deatrin.dev`)"
         "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
         "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
-        # Dashboard (LE wildcard cert)
+        # Dashboard (wildcard cert via entrypoint default)
         "traefik.http.routers.traefik-secure.entrypoints=https"
         "traefik.http.routers.traefik-secure.rule=Host(`traefik.deatrin.dev`)"
         "traefik.http.routers.traefik-secure.tls=true"
-        "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
-        # Request wildcard cert — all *.deatrin.dev routers will reuse it
-        "traefik.http.routers.traefik-secure.tls.domains[0].main=deatrin.dev"
-        "traefik.http.routers.traefik-secure.tls.domains[0].sans[0]=*.deatrin.dev"
         "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
         "traefik.http.routers.traefik-secure.service=api@internal"
         # Dashboard basic auth

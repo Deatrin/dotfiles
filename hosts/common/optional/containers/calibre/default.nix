@@ -32,7 +32,6 @@ in {
           "traefik.http.routers.calibre-secure.entrypoints=https"
           "traefik.http.routers.calibre-secure.rule=Host(`calibre.deatrin.dev`)"
           "traefik.http.routers.calibre-secure.tls=true"
-          "traefik.http.routers.calibre-secure.tls.certresolver=cloudflare"
           "traefik.http.services.calibre.loadbalancer.server.port=8083"
         ];
       };

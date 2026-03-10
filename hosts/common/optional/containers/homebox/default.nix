@@ -28,7 +28,6 @@ in {
         "traefik.http.routers.homebox-secure.entrypoints=https"
         "traefik.http.routers.homebox-secure.rule=Host(`homebox.deatrin.dev`)"
         "traefik.http.routers.homebox-secure.tls=true"
-        "traefik.http.routers.homebox-secure.tls.certresolver=cloudflare"
         "traefik.http.services.homebox.loadbalancer.server.port=7745"
       ];
     };

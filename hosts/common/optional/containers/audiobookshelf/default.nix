@@ -32,7 +32,6 @@ in {
         "traefik.http.routers.audiobookshelf-secure.entrypoints=https"
         "traefik.http.routers.audiobookshelf-secure.rule=Host(`audiobookshelf.deatrin.dev`)"
         "traefik.http.routers.audiobookshelf-secure.tls=true"
-        "traefik.http.routers.audiobookshelf-secure.tls.certresolver=cloudflare"
         "traefik.http.services.audiobookshelf.loadbalancer.server.port=80"
       ];
     };

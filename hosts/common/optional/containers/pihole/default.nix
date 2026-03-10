@@ -62,7 +62,6 @@ in {
             "traefik.http.routers.pihole-secure.entrypoints=https"
             "traefik.http.routers.pihole-secure.rule=Host(`pihole.deatrin.dev`)"
             "traefik.http.routers.pihole-secure.tls=true"
-            "traefik.http.routers.pihole-secure.tls.certresolver=cloudflare"
             "traefik.http.services.pihole.loadbalancer.server.port=80"
           ];
         };

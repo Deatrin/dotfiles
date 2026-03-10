@@ -27,7 +27,6 @@ in {
         "traefik.http.routers.grocy-secure.entrypoints=https"
         "traefik.http.routers.grocy-secure.rule=Host(`grocy.deatrin.dev`)"
         "traefik.http.routers.grocy-secure.tls=true"
-        "traefik.http.routers.grocy-secure.tls.certresolver=cloudflare"
         "traefik.http.services.grocy.loadbalancer.server.port=80"
       ];
     };

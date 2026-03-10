@@ -220,7 +220,6 @@ in {
         "traefik.http.routers.homepage-secure.entrypoints=https"
         "traefik.http.routers.homepage-secure.rule=Host(`homepage.deatrin.dev`)"
         "traefik.http.routers.homepage-secure.tls=true"
-        "traefik.http.routers.homepage-secure.tls.certresolver=cloudflare"
         "traefik.http.services.homepage.loadbalancer.server.port=3000"
       ];
     };

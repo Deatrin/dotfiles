@@ -17,7 +17,6 @@ in {
         "traefik.http.routers.it_tools-secure.entrypoints=https"
         "traefik.http.routers.it_tools-secure.rule=Host(`it-tools.deatrin.dev`)"
         "traefik.http.routers.it_tools-secure.tls=true"
-        "traefik.http.routers.it_tools-secure.tls.certresolver=cloudflare"
         "traefik.http.services.it_tools.loadbalancer.server.port=80"
       ];
     };
