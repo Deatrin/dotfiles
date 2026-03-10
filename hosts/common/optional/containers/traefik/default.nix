@@ -43,10 +43,6 @@
           # Email injected via TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL in traefik-env
           storage: /acme.json
           # caServer defaults to prod: https://acme-v02.api.letsencrypt.org/directory
-          domains:
-            - main: "deatrin.dev"
-              sans:
-                - "*.deatrin.dev"
           dnsChallenge:
             provider: cloudflare
             resolvers:
@@ -120,11 +116,14 @@ in {
         "traefik.http.routers.traefik.rule=Host(`traefik.deatrin.dev`)"
         "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
         "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
-        # Dashboard (LE cert)
+        # Dashboard (LE wildcard cert)
         "traefik.http.routers.traefik-secure.entrypoints=https"
         "traefik.http.routers.traefik-secure.rule=Host(`traefik.deatrin.dev`)"
         "traefik.http.routers.traefik-secure.tls=true"
         "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+        # Request wildcard cert — all *.deatrin.dev routers will reuse it
+        "traefik.http.routers.traefik-secure.tls.domains[0].main=deatrin.dev"
+        "traefik.http.routers.traefik-secure.tls.domains[0].sans[0]=*.deatrin.dev"
         "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
         "traefik.http.routers.traefik-secure.service=api@internal"
         # Dashboard basic auth
