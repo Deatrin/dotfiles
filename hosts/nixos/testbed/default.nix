@@ -17,6 +17,7 @@
   ];
 
   services.pihole-quadlet.dnsListenIP = "10.1.40.200";
+  services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
 
   networking = {
     hostName = "testbed";

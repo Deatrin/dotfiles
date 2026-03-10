@@ -4,10 +4,17 @@
   lib,
   ...
 }: {
-  options.services.tailscale-autoconnect.exitNode = lib.mkOption {
-    type = lib.types.bool;
-    default = false;
-    description = "Whether to advertise this host as a Tailscale exit node.";
+  options.services.tailscale-autoconnect = {
+    exitNode = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to advertise this host as a Tailscale exit node.";
+    };
+    advertiseRoutes = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "Subnets to advertise as Tailscale routes (e.g. [\"10.1.0.0/16\"]).";
+    };
   };
 
   config = {
@@ -58,7 +65,10 @@
 
         if [ "$status" = "Running" ]; then
             echo "Already connected, applying settings..."
-            ${tailscale}/bin/tailscale set --accept-dns=false --advertise-exit-node=${if config.services.tailscale-autoconnect.exitNode then "true" else "false"}
+            ${tailscale}/bin/tailscale set \
+              --accept-dns=false \
+              --advertise-exit-node=${if config.services.tailscale-autoconnect.exitNode then "true" else "false"} \
+              ${lib.optionalString (config.services.tailscale-autoconnect.advertiseRoutes != []) "--advertise-routes=${lib.concatStringsSep "," config.services.tailscale-autoconnect.advertiseRoutes}"}
             exit 0
         fi
 
@@ -70,7 +80,9 @@
 
         # authenticate and apply settings
         echo "Connecting to Tailscale..."
-        ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"}
+        ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false \
+          ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"} \
+          ${lib.optionalString (config.services.tailscale-autoconnect.advertiseRoutes != []) "--advertise-routes=${lib.concatStringsSep "," config.services.tailscale-autoconnect.advertiseRoutes}"}
         echo "Successfully connected to Tailscale"
       '';
     };
