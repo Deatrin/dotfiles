@@ -11,18 +11,21 @@ in {
         networks = [networks.traefik_network.ref];
         volumes = [
           "${volumes.navidrome.ref}:/data"
-          "/storage/media/music:/music:ro"
+          # Uncomment when deployed to nauvoo (path only available there)
+          # "/storage/media/music:/music:ro"
         ];
         labels = [
           "homepage.group=Self-Hosted"
           "homepage.name=Navidrome"
           "homepage.icon=navidrome.png"
-          "homepage.href=https://navi.jennex.dev"
+          "homepage.href=https://navi.deatrin.dev"
           "homepage.description=Music Player"
           "traefik.enable=true"
-          "traefik.http.routers.navi.rule=Host(`navi.jennex.dev`)"
-          "traefik.http.routers.navi-secure.entrypoints=websecure"
+          "traefik.http.routers.navi.rule=Host(`navi.deatrin.dev`)"
+          "traefik.http.routers.navi-secure.entrypoints=https"
+          "traefik.http.routers.navi-secure.rule=Host(`navi.deatrin.dev`)"
           "traefik.http.routers.navi-secure.tls=true"
+          "traefik.http.routers.navi-secure.tls.certresolver=cloudflare"
           "traefik.http.services.navi.loadbalancer.server.port=4533"
         ];
       };
