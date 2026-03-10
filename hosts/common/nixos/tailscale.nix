@@ -69,8 +69,7 @@
 
         # otherwise authenticate with tailscale
         echo "Connecting to Tailscale..."
-        ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"} --accept-routes
-        echo "Successfully connected to Tailscale"
+        ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"}        echo "Successfully connected to Tailscale"
       '';
     };
   };
