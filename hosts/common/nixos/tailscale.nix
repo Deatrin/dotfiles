@@ -1,8 +1,14 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
+  options.services.tailscale-autoconnect.exitNode = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+    description = "Whether to advertise this host as a Tailscale exit node.";
+  };
   # the nix expression enabling tailscale packages and service, networking rules, and the systemd autoconnect unit file
   # tailscale-key secret is managed by opnix (see opnix-system.nix)
 
@@ -61,7 +67,7 @@
 
       # otherwise authenticate with tailscale
       echo "Connecting to Tailscale..."
-      ${tailscale}/bin/tailscale up --authkey "file:/run/opnix/tailscale-key" --accept-dns=false --advertise-exit-node --accept-routes
+      ${tailscale}/bin/tailscale up --authkey "file:/run/opnix/tailscale-key" --accept-dns=false ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"} --accept-routes
       echo "Successfully connected to Tailscale"
     '';
   };
