@@ -2,11 +2,10 @@
 #
 # Secrets required (via opnix):
 #   /run/opnix/cf-api-token        — Cloudflare API token for DNS challenge
-#   /run/opnix/traefik-env         — env file containing:
-#       TRAEFIK_DASHBOARD_CREDENTIALS=<htpasswd-format user:hash>
+#   /run/opnix/acme-email          — Let's Encrypt registration email
+#   /run/opnix/traefik-dashboard-users — htpasswd file for dashboard basic auth
 #
 # First-run: ensure /var/lib/traefik/acme.json exists (handled by tmpfiles below)
-# Tailscale: Traefik reads the host tailscaled socket to issue *.ts.net certs
 {
   config,
   pkgs,
@@ -50,8 +49,6 @@
             resolvers:
               - "1.1.1.1:53"
               - "1.0.0.1:53"
-      tailscale:
-        tailscale: {}
   '';
 in {
   # Ensure acme.json exists with correct permissions before container starts
@@ -99,8 +96,6 @@ in {
         "/etc/localtime:/etc/localtime:ro"
         # Podman socket (docker-compat API) for container discovery
         "/run/podman/podman.sock:/var/run/docker.sock:ro"
-        # Tailscale daemon socket for TS cert resolver
-        "/var/run/tailscale/tailscaled.sock:/var/run/tailscale/tailscaled.sock"
         # Static config (Nix-managed, read-only)
         "${traefikConfig}:/traefik.yml:ro"
         # ACME cert storage (persistent, writable)
@@ -118,22 +113,15 @@ in {
         "traefik.http.routers.traefik.rule=Host(`traefik.deatrin.dev`)"
         "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
         "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
-        # Dashboard (public, LE cert)
+        # Dashboard (LE cert)
         "traefik.http.routers.traefik-secure.entrypoints=https"
         "traefik.http.routers.traefik-secure.rule=Host(`traefik.deatrin.dev`)"
         "traefik.http.routers.traefik-secure.tls=true"
         "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
         "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
         "traefik.http.routers.traefik-secure.service=api@internal"
-        # Dashboard basic auth (credentials from TRAEFIK_DASHBOARD_CREDENTIALS in traefik-env)
+        # Dashboard basic auth
         "traefik.http.middlewares.traefik-auth.basicauth.usersfile=/run/secrets/dashboard-users"
-        # Dashboard (Tailscale)
-        "traefik.http.routers.traefik-ts.entrypoints=https"
-        "traefik.http.routers.traefik-ts.rule=Host(`traefik.tail64718.ts.net`)"
-        "traefik.http.routers.traefik-ts.tls=true"
-        "traefik.http.routers.traefik-ts.tls.certresolver=tailscale"
-        "traefik.http.routers.traefik-ts.middlewares=traefik-auth"
-        "traefik.http.routers.traefik-ts.service=api@internal"
       ];
     };
   };
