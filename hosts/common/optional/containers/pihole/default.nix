@@ -5,9 +5,9 @@
 #       FTLCONF_webserver_api_password=<password>
 #
 # The wildcard dnsmasq config is baked in via Nix — no manual config needed.
-# DNS binds to 0.0.0.0:53 (all interfaces, including Tailscale) so Pi-hole is
-# reachable as a Tailscale nameserver. dnsListenIP is used only for the wildcard
-# DNS resolution target.
+# DNS listens on the host's primary IP (set per-host via dnsListenIP option).
+# For Tailscale remote access, testbed advertises subnet routes so Tailscale
+# clients can reach 10.1.40.200:53 directly as a nameserver.
 {
   config,
   pkgs,
@@ -27,11 +27,6 @@ in {
   };
 
   config = {
-    # Disable systemd-resolved stub listener so Pi-hole can bind 0.0.0.0:53
-    services.resolved.extraConfig = ''
-      DNSStubListener=no
-    '';
-
     virtualisation.quadlet = {
       volumes."etc-pihole" = {};
 
@@ -45,8 +40,8 @@ in {
           autoUpdate = "registry";
           networks = [networks.traefik_network.ref];
           publishPorts = [
-            "0.0.0.0:53:53/tcp"
-            "0.0.0.0:53:53/udp"
+            "${config.services.pihole-quadlet.dnsListenIP}:53:53/tcp"
+            "${config.services.pihole-quadlet.dnsListenIP}:53:53/udp"
           ];
           environments = {
             TZ = "America/Los_Angeles";
