@@ -11,6 +11,7 @@
     ./homepage
     ./it-tools
     ./navidrome
+    ./paperless
     ./pihole
     ./pocket-id
     ./romm

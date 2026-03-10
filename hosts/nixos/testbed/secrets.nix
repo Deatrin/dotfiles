@@ -68,6 +68,14 @@
         mode = "0600";
       };
 
+      paperlessSecret = {
+        path = "/run/opnix/paperless-secret";
+        reference = "op://nix_secrets/paperless/env";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+
       rommDbPassword = {
         path = "/run/opnix/romm-db-password";
         reference = "op://nix_secrets/romm/db_password";
