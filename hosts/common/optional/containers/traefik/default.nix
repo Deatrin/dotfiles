@@ -10,6 +10,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   inherit (config.virtualisation.quadlet) networks;
@@ -40,11 +41,10 @@
     certificatesResolvers:
       cloudflare:
         acme:
-          # TODO: set your Let's Encrypt email here
-          email: "you@example.com"
+          # Email injected via TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL in traefik-env
           storage: /acme.json
-          # Staging (comment out for production):
-          # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+          # Switch to prod when ready: https://acme-v02.api.letsencrypt.org/directory
+          caServer: https://acme-staging-v02.api.letsencrypt.org/directory
           dnsChallenge:
             provider: cloudflare
             resolvers:
@@ -58,6 +58,28 @@ in {
   systemd.tmpfiles.rules = [
     "f /var/lib/traefik/acme.json 0600 root root -"
   ];
+
+  # Build the Traefik env file from individual opnix secrets.
+  # Runs after opnix has provisioned secrets, before the container starts.
+  systemd.services.traefik-env-setup = {
+    description = "Build Traefik environment file from secrets";
+    after = ["opnix-secrets.service"];
+    requires = ["opnix-secrets.service"];
+    before = ["traefik.service"];
+    wantedBy = ["traefik.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = lib.getExe (pkgs.writeShellApplication {
+        name = "traefik-env-setup";
+        text = ''
+          printf 'TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL=%s\n' \
+            "$(cat /run/opnix/acme-email)" > /run/opnix/traefik-env
+          chmod 600 /run/traefik-env
+        '';
+      });
+    };
+  };
 
   virtualisation.quadlet.containers.traefik = {
     containerConfig = {
@@ -85,6 +107,8 @@ in {
         "/var/lib/traefik/acme.json:/acme.json"
         # Cloudflare API token file
         "/run/opnix/cf-api-token:/run/secrets/cf-api-token:ro"
+        # Dashboard basic auth htpasswd file
+        "/run/opnix/traefik-dashboard-users:/run/secrets/dashboard-users:ro"
       ];
       noNewPrivileges = true;
       labels = [
@@ -103,6 +127,13 @@ in {
         "traefik.http.routers.traefik-secure.service=api@internal"
         # Dashboard basic auth (credentials from TRAEFIK_DASHBOARD_CREDENTIALS in traefik-env)
         "traefik.http.middlewares.traefik-auth.basicauth.usersfile=/run/secrets/dashboard-users"
+        # Dashboard (Tailscale)
+        "traefik.http.routers.traefik-ts.entrypoints=https"
+        "traefik.http.routers.traefik-ts.rule=Host(`traefik.tail64718.ts.net`)"
+        "traefik.http.routers.traefik-ts.tls=true"
+        "traefik.http.routers.traefik-ts.tls.certresolver=tailscale"
+        "traefik.http.routers.traefik-ts.middlewares=traefik-auth"
+        "traefik.http.routers.traefik-ts.service=api@internal"
       ];
     };
   };
