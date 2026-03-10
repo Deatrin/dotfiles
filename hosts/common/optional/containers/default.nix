@@ -6,7 +6,7 @@
     #    ./audiobookshelf
     #    ./calibre
     #    ./ddns
-    #    ./grocy
+    ./grocy
     #    ./homebox
     ./homepage
     ./it-tools
