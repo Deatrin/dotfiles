@@ -11,6 +11,6 @@
     #    ./homepage
     ./it-tools
     #    ./navidrome
-    ./traefik
+    #    ./traefik
   ];
 }
