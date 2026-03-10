@@ -10,7 +10,7 @@
     #    ./homebox
     #    ./homepage
     ./it-tools
-    #    ./navidrome
+    #   ./navidrome
     #    ./traefik
   ];
 }
