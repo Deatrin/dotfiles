@@ -17,6 +17,7 @@
   ];
 
   services.pihole-quadlet.dnsListenIP = "10.1.40.200";
+  services.forgejo-quadlet.sshPort = 2222; # nauvoo prod: set to 22 (system SSH is on 2222 there)
   services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
 
   networking = {

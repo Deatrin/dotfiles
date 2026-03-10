@@ -6,6 +6,7 @@
     ./audiobookshelf
     ./calibre
     #    ./ddns
+    ./forgejo
     ./grocy
     ./homebox
     ./homepage
