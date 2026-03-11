@@ -6,7 +6,7 @@
     ../../common/optional/quadlet.nix
     ../../common/optional/containers/networks.nix
     # ../../common/optional/containers/traefik
-    # ../../common/optional/containers/pihole
+    ../../common/optional/containers/pihole
     # ../../common/optional/containers/homepage
     # ../../common/optional/containers/it-tools
     # ../../common/optional/containers/grocy
@@ -24,6 +24,9 @@
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
   ];
+
+  # Nauvoo-specific container settings
+  services.pihole-quadlet.dnsListenIP = "10.1.30.100";
 
   # Forgejo settings — uncomment alongside the forgejo import above
   # services.forgejo-quadlet.sshPort = 22;       # system SSH is on 2222
