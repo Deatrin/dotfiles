@@ -12,7 +12,7 @@
     ./secrets.nix
     ../../common/nixos
     ../../common/nixos/users/deatrin
-    ../../common/optional/docker.nix  # TODO: remove after migration backups done
+    # ../../common/optional/docker.nix  # removed — replaced by quadlet
     ./containers.nix
     ../../common/optional/jellyfin.nix
     ../../common/optional/plex.nix
