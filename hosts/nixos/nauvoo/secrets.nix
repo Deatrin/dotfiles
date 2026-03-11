@@ -39,6 +39,27 @@
         group = "root";
         mode = "0600";
       };
+      homepageTraefikUsername = {
+        path = "/run/opnix/homepage-traefik-username";
+        reference = "op://nix_secrets/homepage/traefik username";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      homepageTraefik = {
+        path = "/run/opnix/homepage-traefik";
+        reference = "op://nix_secrets/homepage/traefik";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      homepagePihole = {
+        path = "/run/opnix/homepage-pihole";
+        reference = "op://nix_secrets/homepage/pihole";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
       homepageUnifiUser = {
         path = "/run/opnix/homepage-unifi-user";
         reference = "op://nix_secrets/homepage/HOMEPAGE_UNIFI_USER";

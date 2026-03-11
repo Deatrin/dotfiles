@@ -65,8 +65,8 @@
             widget:
               type: traefik
               url: https://traefik.jennex.dev
-              username: admin
-              password: ""
+              username: '{{HOMEPAGE_VAR_TRAEFIK_USERNAME}}'
+              password: '{{HOMEPAGE_VAR_TRAEFIK_PASSWORD}}'
         - Pi-hole:
             href: https://pihole.jennex.dev/admin
             icon: pi-hole.png
@@ -75,6 +75,7 @@
               type: pihole
               url: https://pihole.jennex.dev
               version: 6
+              key: '{{HOMEPAGE_VAR_PIHOLE_PASSWORD}}'
   '';
 
   dockerYaml = pkgs.writeText "homepage-docker.yaml" ''
@@ -177,6 +178,9 @@ in {
             printf 'HOMEPAGE_VAR_UNIFI_PASS=%s\n' "$(cat /run/opnix/homepage-unifi-pass)"
             printf 'HOMEPAGE_VAR_LATITUDE=%s\n' "$(cat /run/opnix/homepage-latitude)"
             printf 'HOMEPAGE_VAR_LONGITUDE=%s\n' "$(cat /run/opnix/homepage-longitude)"
+            printf 'HOMEPAGE_VAR_TRAEFIK_USERNAME=%s\n' "$(cat /run/opnix/homepage-traefik-username)"
+            printf 'HOMEPAGE_VAR_TRAEFIK_PASSWORD=%s\n' "$(cat /run/opnix/homepage-traefik)"
+            printf 'HOMEPAGE_VAR_PIHOLE_PASSWORD=%s\n' "$(cat /run/opnix/homepage-pihole)"
           } > /run/opnix/homepage-env
           chmod 600 /run/opnix/homepage-env
         '';
