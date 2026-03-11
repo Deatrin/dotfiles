@@ -81,11 +81,11 @@
               version: 6
               key: '{{HOMEPAGE_VAR_PIHOLE_PASSWORD}}'
         - Proxmox iDRAC:
-            href: https://idrac-proxmox.jennex.dev
+            href: https://10.1.20.10
             icon: idrac.png
             description: Proxmox Server iDRAC
         - TrueNAS iDRAC:
-            href: https://idrac-truenas.jennex.dev
+            href: https://10.1.20.15
             icon: idrac.png
             description: TrueNAS Server iDRAC
     - Media:

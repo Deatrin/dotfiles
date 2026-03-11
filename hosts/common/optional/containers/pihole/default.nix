@@ -21,28 +21,12 @@
     address=/.jennex.dev/${config.services.pihole-quadlet.dnsListenIP}
   '';
 
-  # Per-host DNS overrides — specific hostnames resolved to their own IPs
-  # (bypasses Traefik for services that can't be proxied, e.g. iDRAC)
-  dnsOverridesConfig = pkgs.writeText "03-deatrin-overrides.conf" (
-    lib.concatMapStrings (entry: "address=/${entry.hostname}/${entry.ip}\n")
-      config.services.pihole-quadlet.dnsOverrides
-  );
 in {
   options.services.pihole-quadlet.dnsListenIP = lib.mkOption {
     type = lib.types.str;
     description = "IP address Pi-hole binds DNS to, and used for local DNS wildcard.";
   };
 
-  options.services.pihole-quadlet.dnsOverrides = lib.mkOption {
-    type = lib.types.listOf (lib.types.submodule {
-      options = {
-        hostname = lib.mkOption { type = lib.types.str; };
-        ip = lib.mkOption { type = lib.types.str; };
-      };
-    });
-    default = [];
-    description = "Specific hostname → IP overrides, bypassing the wildcard (e.g. iDRAC).";
-  };
 
   config = {
     virtualisation.quadlet = {
@@ -72,8 +56,6 @@ in {
             "${volumes."etc-pihole".ref}:/etc/pihole"
             # Wildcard local DNS config (Nix-managed)
             "${dnsmasqConfig}:/etc/dnsmasq.d/02-deatrin-local.conf:ro"
-            # Per-host DNS overrides (Nix-managed)
-            "${dnsOverridesConfig}:/etc/dnsmasq.d/03-deatrin-overrides.conf:ro"
           ];
           addCapabilities = ["NET_ADMIN" "SYS_TIME" "SYS_NICE"];
           labels = [

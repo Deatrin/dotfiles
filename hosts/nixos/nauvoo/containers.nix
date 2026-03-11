@@ -37,11 +37,6 @@
     }
   ];
 
-  # DNS overrides — bypass Traefik, resolve directly to the service IP
-  services.pihole-quadlet.dnsOverrides = [
-    { hostname = "idrac-proxmox.jennex.dev"; ip = "10.1.20.10"; }
-    { hostname = "idrac-truenas.jennex.dev"; ip = "10.1.20.15"; }
-  ];
 
   # Forgejo settings — uncomment alongside the forgejo import above
   services.forgejo-quadlet.sshPort = 22;
