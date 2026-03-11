@@ -186,6 +186,13 @@
         group = "root";
         mode = "0600";
       };
+      nextcloudAdminPassword = {
+        path = "/run/opnix/nextcloud-admin-password";
+        reference = "op://nix_secrets/Nextcloud/admin password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
       proxmoxTokenId = {
         path = "/run/opnix/proxmox-token-id";
         reference = "op://nix_secrets/homepage/tokenid";

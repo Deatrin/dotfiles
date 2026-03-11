@@ -21,6 +21,8 @@
     ../../common/optional/containers/forgejo  # also uncomment forgejo settings below
     ../../common/optional/containers/arr-stack
     ../../common/optional/containers/seerr
+    ../../common/optional/containers/syncthing
+    ../../common/optional/containers/nextcloud
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
   ];
