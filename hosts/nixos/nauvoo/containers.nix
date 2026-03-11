@@ -19,7 +19,7 @@
     ../../common/optional/containers/paperless
     ../../common/optional/containers/immich
     ../../common/optional/containers/forgejo  # also uncomment forgejo settings below
-    # ../../common/optional/containers/arr-stack
+    ../../common/optional/containers/arr-stack
     # ../../common/optional/containers/seerr
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
