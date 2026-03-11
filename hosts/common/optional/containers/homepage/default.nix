@@ -80,6 +80,15 @@
               url: https://pihole.jennex.dev
               version: 6
               key: '{{HOMEPAGE_VAR_PIHOLE_PASSWORD}}'
+        - Proxmox:
+            href: https://10.1.20.20:8006
+            icon: proxmox.png
+            description: Proxmox VE
+            widget:
+              type: proxmox
+              url: https://10.1.20.20:8006
+              username: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}'
+              password: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}'
         - Proxmox iDRAC:
             href: https://10.1.20.10
             icon: idrac.png
@@ -202,7 +211,9 @@ in {
             printf 'HOMEPAGE_VAR_TRAEFIK_USERNAME=%s\n' "$(cat /run/opnix/homepage-traefik-username)"
             printf 'HOMEPAGE_VAR_TRAEFIK_PASSWORD=%s\n' "$(cat /run/opnix/homepage-traefik)"
             printf 'HOMEPAGE_VAR_PIHOLE_PASSWORD=%s\n' "$(cat /run/opnix/homepage-pihole)"
-            printf 'HOMEPAGE_VAR_PLEX_TOKEN=%s\n'     "$(cat /run/opnix/plex-token)"
+            printf 'HOMEPAGE_VAR_PLEX_TOKEN=%s\n'          "$(cat /run/opnix/plex-token)"
+            printf 'HOMEPAGE_VAR_PROXMOX_TOKEN_ID=%s\n'     "$(cat /run/opnix/proxmox-token-id)"
+            printf 'HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET=%s\n' "$(cat /run/opnix/proxmox-token-secret)"
           } > /run/opnix/homepage-env
           chmod 600 /run/opnix/homepage-env
         '';

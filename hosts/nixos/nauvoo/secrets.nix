@@ -186,6 +186,20 @@
         group = "root";
         mode = "0600";
       };
+      proxmoxTokenId = {
+        path = "/run/opnix/proxmox-token-id";
+        reference = "op://nix_secrets/homepage/tokenid";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      proxmoxTokenSecret = {
+        path = "/run/opnix/proxmox-token-secret";
+        reference = "op://nix_secrets/homepage/token secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
       plexToken = {
         path = "/run/opnix/plex-token";
         reference = "op://nix_secrets/plex/token";
