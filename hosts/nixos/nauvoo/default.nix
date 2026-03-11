@@ -31,7 +31,7 @@
       }
     ];
     defaultGateway = "10.1.30.1";
-    nameservers = ["10.1.30.1"];
+    nameservers = ["10.1.30.100" "10.1.30.1"];
   };
 
   # Change up the ssh port to make room for forgejo
