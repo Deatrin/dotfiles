@@ -11,9 +11,9 @@
     ../../common/optional/containers/it-tools
     ../../common/optional/containers/grocy
     ../../common/optional/containers/homebox
-    # ../../common/optional/containers/navidrome
-    # ../../common/optional/containers/audiobookshelf
-    # ../../common/optional/containers/calibre
+    ../../common/optional/containers/navidrome
+    ../../common/optional/containers/audiobookshelf
+    ../../common/optional/containers/calibre
     ../../common/optional/containers/pocket-id
     # ../../common/optional/containers/romm
     ../../common/optional/containers/paperless
