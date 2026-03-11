@@ -15,9 +15,8 @@ in {
         TZ = "America/Los_Angeles";
       };
       volumes = [
-        # Uncomment when deployed to nauvoo (paths only available there)
-        # "/storage/media/audiobooks:/audiobooks"
-        # "/storage/media/audiobooks:/podcasts"
+        "/storage/media/audiobooks:/audiobooks"
+        "/storage/media/audiobooks:/podcasts"
         "/var/lib/audiobookshelf/config:/config"
         "/var/lib/audiobookshelf/metadata:/metadata"
       ];

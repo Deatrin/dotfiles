@@ -11,8 +11,7 @@ in {
         networks = [networks.traefik_network.ref];
         volumes = [
           "${volumes.navidrome.ref}:/data"
-          # Uncomment when deployed to nauvoo (path only available there)
-          # "/storage/media/music:/music:ro"
+          "/storage/media/music:/music:ro"
         ];
         labels = [
           "homepage.group=Self-Hosted"

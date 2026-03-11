@@ -3,18 +3,12 @@
 # Secrets required (via opnix):
 #   /run/opnix/immich-env  — env file containing:
 #       DB_PASSWORD=<password>
-#
-# On nauvoo, replace /var/lib/immich/upload with:
-#   /storage/media/photos/immich
 {
   config,
   ...
 }: let
   inherit (config.virtualisation.quadlet) networks volumes;
 in {
-  systemd.tmpfiles.rules = [
-    "d /var/lib/immich/upload 0755 root root -"
-  ];
 
   virtualisation.quadlet = {
     networks.immich_network = {};
@@ -90,8 +84,7 @@ in {
         };
         environmentFiles = ["/run/opnix/immich-env"];
         volumes = [
-          # On nauvoo replace with /storage/media/photos/immich
-          "/var/lib/immich/upload:/usr/src/app/upload"
+          "/storage/media/photos/immich:/usr/src/app/upload"
           "/etc/localtime:/etc/localtime:ro"
         ];
         labels = [

@@ -18,8 +18,7 @@ in {
         };
         volumes = [
           "${volumes."calibre-data".ref}:/config"
-          # Uncomment when deployed to nauvoo (path only available there)
-          # "/storage/media/books:/books"
+          "/storage/media/books:/books"
         ];
         labels = [
           "homepage.group=Self-Hosted"

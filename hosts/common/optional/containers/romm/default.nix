@@ -135,9 +135,8 @@ in {
           "${volumes.romm-resources.ref}:/romm/resources"
           "${volumes.romm-redis.ref}:/redis-data"
           "/var/lib/romm/config:/romm/config"
-          # Uncomment when deployed to nauvoo (paths only available there)
-          # "/storage/media/games/romm/library:/romm/library"
-          # "/storage/media/games/romm/assets:/romm/assets"
+          "/storage/media/games/romm/library:/romm/library"
+          "/storage/media/games/romm/assets:/romm/assets"
         ];
         labels = [
           "homepage.group=Self-Hosted"

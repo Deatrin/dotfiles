@@ -3,21 +3,12 @@
 # Secrets required (via opnix):
 #   /run/opnix/paperless-secret  — env file containing:
 #       PAPERLESS_SECRET_KEY=<long random string>
-#
-# On nauvoo, replace /var/lib/paperless/* volume paths with:
-#   /storage/media/documents/paperless/{data,media,export,consume}
 {
   config,
   ...
 }: let
   inherit (config.virtualisation.quadlet) networks volumes;
 in {
-  systemd.tmpfiles.rules = [
-    "d /var/lib/paperless/data    0755 root root -"
-    "d /var/lib/paperless/media   0755 root root -"
-    "d /var/lib/paperless/export  0755 root root -"
-    "d /var/lib/paperless/consume 0755 root root -"
-  ];
 
   virtualisation.quadlet = {
     networks.paperless_network = {};
@@ -82,11 +73,10 @@ in {
         };
         environmentFiles = ["/run/opnix/paperless-secret"];
         volumes = [
-          # On nauvoo replace with /storage/media/documents/paperless/{data,media,export,consume}
-          "/var/lib/paperless/data:/usr/src/paperless/data"
-          "/var/lib/paperless/media:/usr/src/paperless/media"
-          "/var/lib/paperless/export:/usr/src/paperless/export"
-          "/var/lib/paperless/consume:/usr/src/paperless/consume"
+          "/storage/media/documents/paperless/data:/usr/src/paperless/data"
+          "/storage/media/documents/paperless/media:/usr/src/paperless/media"
+          "/storage/media/documents/paperless/export:/usr/src/paperless/export"
+          "/storage/media/documents/paperless/consume:/usr/src/paperless/consume"
         ];
         labels = [
           "homepage.group=Self-Hosted"

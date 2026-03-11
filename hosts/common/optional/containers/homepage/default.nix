@@ -62,7 +62,7 @@
 
   dockerYaml = pkgs.writeText "homepage-docker.yaml" ''
     ---
-    testbed-podman:
+    nauvoo-podman:
       socket: /var/run/docker.sock
   '';
 

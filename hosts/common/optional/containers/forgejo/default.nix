@@ -1,10 +1,12 @@
 # Forgejo — self-hosted Git service
 #
 # SSH port is configurable per-host via services.forgejo-quadlet.sshPort:
-#   - testbed/nauvoo: set to 2222 (port 22 is used by system SSH)
-#   - nauvoo prod:    set to 22 (system SSH is on 2222, port 22 is free)
+#   - testbed: default 2222
+#   - nauvoo prod: set to 22 (system SSH is on 2222, port 22 is free)
 #
-# Volume paths on nauvoo replace /var/lib/forgejo/* with /ssdstorage/forgejo/*
+# Data path is configurable per-host via services.forgejo-quadlet.dataPath:
+#   - default: /var/lib/forgejo
+#   - nauvoo prod: /ssdstorage/forgejo
 #
 # Runner setup (dind + runner containers):
 #   TODO: Enable after first Forgejo startup:
@@ -19,16 +21,23 @@
 }: let
   inherit (config.virtualisation.quadlet) networks volumes;
 in {
-  options.services.forgejo-quadlet.sshPort = lib.mkOption {
-    type = lib.types.port;
-    default = 2222;
-    description = "Host port to expose Forgejo SSH on. Set to 22 on nauvoo (system SSH is on 2222).";
+  options.services.forgejo-quadlet = {
+    sshPort = lib.mkOption {
+      type = lib.types.port;
+      default = 2222;
+      description = "Host port to expose Forgejo SSH on. Set to 22 on nauvoo (system SSH is on 2222).";
+    };
+    dataPath = lib.mkOption {
+      type = lib.types.str;
+      default = "/var/lib/forgejo";
+      description = "Host base path for Forgejo data. Set to /ssdstorage/forgejo on nauvoo.";
+    };
   };
 
   config = {
     systemd.tmpfiles.rules = [
-      "d /var/lib/forgejo/data   0755 root root -"
-      "d /var/lib/forgejo/runner 0755 root root -"
+      "d ${config.services.forgejo-quadlet.dataPath}/data   0755 root root -"
+      "d ${config.services.forgejo-quadlet.dataPath}/runner 0755 root root -"
     ];
 
     virtualisation.quadlet = {
@@ -74,8 +83,7 @@ in {
             GNUPGHOME = "/data/gitea/home/.gnupg";
           };
           volumes = [
-            # On nauvoo replace with /ssdstorage/forgejo/data
-            "/var/lib/forgejo/data:/data"
+            "${config.services.forgejo-quadlet.dataPath}/data:/data"
           ];
           labels = [
             "homepage.group=Dev"
@@ -125,8 +133,7 @@ in {
       #     };
       #     environmentFiles = ["/run/opnix/forgejo-runner-env"];
       #     volumes = [
-      #       # On nauvoo replace with /ssdstorage/forgejo/runner
-      #       "/var/lib/forgejo/runner:/data"
+      #       "${config.services.forgejo-quadlet.dataPath}/runner:/data"
       #     ];
       #     exec = ["/bin/sh" "-c" "sleep 5; forgejo-runner daemon --config /data/config.yaml"];
       #   };

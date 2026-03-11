@@ -35,9 +35,8 @@ in {
         environments = commonEnv;
         volumes = [
           "${volumes.arr-lidarr.ref}:/config"
-          # Uncomment when deployed to nauvoo (paths only available there)
-          # "/storage/media/music/lidarr:/music"
-          # "/storage/media/downloads/sabnzbd:/downloads"
+          "/storage/media/music/lidarr:/music"
+          "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
           "homepage.group=Arr-Stack"
@@ -63,9 +62,8 @@ in {
         environments = commonEnv;
         volumes = [
           "${volumes.arr-radarr.ref}:/config"
-          # Uncomment when deployed to nauvoo (paths only available there)
-          # "/storage/media/movies:/movies"
-          # "/storage/media/downloads/sabnzbd:/downloads"
+          "/storage/media/movies:/movies"
+          "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
           "homepage.group=Arr-Stack"
@@ -91,9 +89,8 @@ in {
         environments = commonEnv;
         volumes = [
           "${volumes.arr-sonarr.ref}:/config"
-          # Uncomment when deployed to nauvoo (paths only available there)
-          # "/storage/media/tv:/tv"
-          # "/storage/media/downloads/sabnzbd:/downloads"
+          "/storage/media/tv:/tv"
+          "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
           "homepage.group=Arr-Stack"
@@ -119,9 +116,8 @@ in {
         environments = commonEnv;
         volumes = [
           "${volumes.arr-whisparr.ref}:/config"
-          # Uncomment when deployed to nauvoo (paths only available there)
-          # "/storage/media/whisparr/data:/data"
-          # "/storage/media/downloads/sabnzbd:/downloads"
+          "/storage/media/whisparr/data:/data"
+          "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
           "homepage.group=Arr-Stack"
@@ -170,9 +166,8 @@ in {
         environments = commonEnv;
         volumes = [
           "/var/lib/arr-stack/sabnzbd:/config"
-          # Uncomment when deployed to nauvoo (paths only available there)
-          # "/storage/media/downloads/sabnzbd/downloads:/downloads"
-          # "/storage/media/downloads/sabnzbd/incomplete:/incomplete-downloads"
+          "/storage/media/downloads/sabnzbd/downloads:/downloads"
+          "/storage/media/downloads/sabnzbd/incomplete:/incomplete-downloads"
         ];
         labels = [
           "homepage.group=Arr-Stack"
