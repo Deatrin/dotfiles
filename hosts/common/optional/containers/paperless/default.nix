@@ -79,7 +79,7 @@ in {
           "/storage/media/documents/paperless/consume:/usr/src/paperless/consume"
         ];
         labels = [
-          "homepage.group=Self-Hosted"
+          "homepage.group=Home"
           "homepage.name=Paperless"
           "homepage.icon=paperless-ngx.png"
           "homepage.href=https://paperless.jennex.dev"

@@ -17,7 +17,7 @@ in {
       };
       volumes = ["/var/lib/grocy:/config"];
       labels = [
-        "homepage.group=Self-Hosted"
+        "homepage.group=Home"
         "homepage.name=grocy"
         "homepage.icon=grocy.png"
         "homepage.href=https://grocy.jennex.dev"

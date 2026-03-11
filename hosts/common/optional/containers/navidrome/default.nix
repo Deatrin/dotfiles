@@ -14,7 +14,7 @@ in {
           "/storage/media/music:/music:ro"
         ];
         labels = [
-          "homepage.group=Self-Hosted"
+          "homepage.group=Media"
           "homepage.name=Navidrome"
           "homepage.icon=navidrome.png"
           "homepage.href=https://navi.jennex.dev"

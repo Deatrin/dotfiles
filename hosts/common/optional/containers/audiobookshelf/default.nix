@@ -21,7 +21,7 @@ in {
         "/var/lib/audiobookshelf/metadata:/metadata"
       ];
       labels = [
-        "homepage.group=Self-Hosted"
+        "homepage.group=Media"
         "homepage.name=Audiobookshelf"
         "homepage.icon=audiobookshelf.png"
         "homepage.href=https://audiobookshelf.jennex.dev"

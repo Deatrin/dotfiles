@@ -21,7 +21,7 @@ in {
           "/storage/media/books:/books"
         ];
         labels = [
-          "homepage.group=Self-Hosted"
+          "homepage.group=Media"
           "homepage.name=Calibre"
           "homepage.icon=calibre.png"
           "homepage.href=https://calibre.jennex.dev"

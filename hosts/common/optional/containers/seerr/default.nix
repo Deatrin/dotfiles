@@ -23,7 +23,7 @@ in {
         };
         volumes = ["${volumes.seerr-config.ref}:/app/config"];
         labels = [
-          "homepage.group=Arr-Stack"
+          "homepage.group=Downloads"
           "homepage.name=Seerr"
           "homepage.icon=jellyseerr.png"
           "homepage.href=https://seerr.jennex.dev"

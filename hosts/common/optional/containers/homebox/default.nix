@@ -18,7 +18,7 @@ in {
       };
       volumes = ["/var/lib/homebox:/data"];
       labels = [
-        "homepage.group=Self-Hosted"
+        "homepage.group=Home"
         "homepage.name=homebox"
         "homepage.icon=homebox.png"
         "homepage.href=https://homebox.jennex.dev"

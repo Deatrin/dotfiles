@@ -139,7 +139,7 @@ in {
           "/storage/media/games/romm/assets:/romm/assets"
         ];
         labels = [
-          "homepage.group=Self-Hosted"
+          "homepage.group=Games"
           "homepage.name=RoMM"
           "homepage.icon=romm.png"
           "homepage.href=https://romm.jennex.dev"

@@ -39,7 +39,7 @@ in {
           "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
-          "homepage.group=Arr-Stack"
+          "homepage.group=Downloads"
           "homepage.name=Lidarr"
           "homepage.icon=lidarr.png"
           "homepage.href=https://lidarr.jennex.dev"
@@ -66,7 +66,7 @@ in {
           "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
-          "homepage.group=Arr-Stack"
+          "homepage.group=Downloads"
           "homepage.name=Radarr"
           "homepage.icon=radarr.png"
           "homepage.href=https://radarr.jennex.dev"
@@ -93,7 +93,7 @@ in {
           "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
-          "homepage.group=Arr-Stack"
+          "homepage.group=Downloads"
           "homepage.name=Sonarr"
           "homepage.icon=sonarr.png"
           "homepage.href=https://sonarr.jennex.dev"
@@ -120,7 +120,7 @@ in {
           "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
-          "homepage.group=Arr-Stack"
+          "homepage.group=Downloads"
           "homepage.name=Whisparr"
           "homepage.icon=whisparr.png"
           "homepage.href=https://whisparr.jennex.dev"
@@ -143,7 +143,7 @@ in {
         environments = commonEnv;
         volumes = ["${volumes.arr-prowlarr.ref}:/config"];
         labels = [
-          "homepage.group=Arr-Stack"
+          "homepage.group=Downloads"
           "homepage.name=Prowlarr"
           "homepage.icon=prowlarr.png"
           "homepage.href=https://prowlarr.jennex.dev"
@@ -170,7 +170,7 @@ in {
           "/storage/media/downloads/sabnzbd/incomplete:/incomplete-downloads"
         ];
         labels = [
-          "homepage.group=Arr-Stack"
+          "homepage.group=Downloads"
           "homepage.name=SABnzbd"
           "homepage.icon=sabnzbd.png"
           "homepage.href=https://sabnzbd.jennex.dev"

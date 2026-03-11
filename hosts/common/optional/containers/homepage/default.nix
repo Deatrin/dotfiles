@@ -34,16 +34,20 @@
       hideVisitURL: true
 
     layout:
-      Arr-Stack:
-        icon: sh-yarr
-      Dev:
-        icon: mdi-dev-to
       Infrastructure:
         icon: mdi-server
+      Media:
+        icon: mdi-television-play
+      Downloads:
+        icon: mdi-download-circle
       Photos:
         icon: mdi-camera-burst
-      Self-Hosted:
-        icon: mdi-server-plus
+      Home:
+        icon: mdi-home-heart
+      Games:
+        icon: mdi-controller
+      Dev:
+        icon: mdi-dev-to
   '';
 
   servicesYaml = pkgs.writeText "homepage-services.yaml" ''
