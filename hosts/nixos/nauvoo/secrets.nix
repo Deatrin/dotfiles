@@ -179,6 +179,13 @@
         group = "root";
         mode = "0600";
       };
+      forgejoRunnerToken = {
+        path = "/run/opnix/forgejo-runner-token";
+        reference = "op://nix_secrets/forgejo/runner_token";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {
