@@ -66,7 +66,7 @@
               type: traefik
               url: https://traefik.jennex.dev
               username: admin
-              password: ''
+              password: ""
         - Pi-hole:
             href: https://pihole.jennex.dev/admin
             icon: pi-hole.png
