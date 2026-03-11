@@ -84,6 +84,15 @@
             href: https://idrac-truenas.jennex.dev
             icon: idrac.png
             description: TrueNAS Server iDRAC
+    - Media:
+        - Plex:
+            href: https://plex.jennex.dev
+            icon: plex.png
+            description: Media Server
+            widget:
+              type: plex
+              url: https://plex.jennex.dev
+              key: '{{HOMEPAGE_VAR_PLEX_TOKEN}}'
   '';
 
   dockerYaml = pkgs.writeText "homepage-docker.yaml" ''
@@ -189,6 +198,7 @@ in {
             printf 'HOMEPAGE_VAR_TRAEFIK_USERNAME=%s\n' "$(cat /run/opnix/homepage-traefik-username)"
             printf 'HOMEPAGE_VAR_TRAEFIK_PASSWORD=%s\n' "$(cat /run/opnix/homepage-traefik)"
             printf 'HOMEPAGE_VAR_PIHOLE_PASSWORD=%s\n' "$(cat /run/opnix/homepage-pihole)"
+            printf 'HOMEPAGE_VAR_PLEX_TOKEN=%s\n'     "$(cat /run/opnix/plex-token)"
           } > /run/opnix/homepage-env
           chmod 600 /run/opnix/homepage-env
         '';

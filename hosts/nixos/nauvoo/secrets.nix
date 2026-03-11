@@ -186,6 +186,13 @@
         group = "root";
         mode = "0600";
       };
+      plexToken = {
+        path = "/run/opnix/plex-token";
+        reference = "op://nix_secrets/plex/token";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {

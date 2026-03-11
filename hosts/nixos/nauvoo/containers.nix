@@ -40,6 +40,11 @@
       hostname = "idrac-truenas.jennex.dev";
       url = "https://10.1.20.15";
     }
+    {
+      name = "plex";
+      hostname = "plex.jennex.dev";
+      url = "http://10.1.30.100:32400";
+    }
   ];
 
   # Forgejo settings — uncomment alongside the forgejo import above
