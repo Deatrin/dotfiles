@@ -15,7 +15,7 @@
     ../../common/optional/containers/audiobookshelf
     ../../common/optional/containers/calibre
     ../../common/optional/containers/pocket-id
-    # ../../common/optional/containers/romm
+    ../../common/optional/containers/romm
     ../../common/optional/containers/paperless
     ../../common/optional/containers/immich
     ../../common/optional/containers/forgejo  # also uncomment forgejo settings below
