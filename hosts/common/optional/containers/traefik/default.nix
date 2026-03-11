@@ -49,7 +49,6 @@
         acme:
           # Email injected via TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL in traefik-env
           storage: /acme.json
-          caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
           dnsChallenge:
             provider: cloudflare
             resolvers:
