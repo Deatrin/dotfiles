@@ -51,7 +51,7 @@
         endpoint: "unix:///var/run/docker.sock"
         exposedByDefault: false
       file:
-        directory: /etc/traefik/dynamic
+        filename: /etc/traefik/external.yml
         watch: true
 
     certificatesResolvers:
@@ -66,7 +66,8 @@
               - "1.0.0.1:53"
   '';
 
-  # Generate dynamic config YAML for external services
+  # Generate dynamic config YAML for external services, mounted directly from Nix store
+  # (avoids symlink issues with environment.etc inside containers)
   mkExternalServicesYaml = svcs:
     "http:\n"
     + "  routers:\n"
@@ -83,6 +84,13 @@
       + "      loadBalancer:\n"
       + "        servers:\n"
       + "          - url: \"${svc.url}\"\n") svcs;
+
+  # Always generate the file — empty when no external services, avoids missing file error
+  externalServicesFile = pkgs.writeText "traefik-external.yml" (
+    if externalServices == []
+    then "# No external services configured\n"
+    else mkExternalServicesYaml externalServices
+  );
 in {
   options.services.traefik-quadlet.externalServices = lib.mkOption {
     type = lib.types.listOf (lib.types.submodule {
@@ -109,13 +117,7 @@ in {
     # Ensure acme.json exists with correct permissions before container starts
     systemd.tmpfiles.rules = [
       "f /var/lib/traefik/acme.json 0600 root root -"
-      "d /etc/traefik/dynamic 0755 root root -"
     ];
-
-    # Write external services dynamic config if any are defined
-    environment.etc."traefik/dynamic/external.yml" = lib.mkIf (externalServices != []) {
-      text = mkExternalServicesYaml externalServices;
-    };
 
     # Build the Traefik env file from individual opnix secrets.
     systemd.services.traefik-env-setup = {
@@ -162,8 +164,8 @@ in {
           "/run/podman/podman.sock:/var/run/docker.sock:ro"
           # Static config (Nix-managed, read-only)
           "${traefikConfig}:/traefik.yml:ro"
-          # Dynamic config directory (external services, Nix-managed)
-          "/etc/traefik/dynamic:/etc/traefik/dynamic:ro"
+          # External services dynamic config (Nix store file, avoids symlink issues)
+          "${externalServicesFile}:/etc/traefik/external.yml:ro"
           # ACME cert storage (persistent, writable)
           "/var/lib/traefik/acme.json:/acme.json"
           # Cloudflare API token file
