@@ -15,11 +15,6 @@
       user = "deatrin";
       modules = [../hosts/nixos/tycho];
     };
-    testbed = {
-      system = "x86_64-linux";
-      user = "deatrin";
-      modules = [../hosts/nixos/testbed];
-    };
     chetzemoka = {
       system = "aarch64-linux";
       user = "deatrin";
@@ -82,10 +77,6 @@
     "deatrin@chetzemoka" = {
       system = "aarch64-linux";
       modules = [../home-manager/nixos/deatrin_chetzemoka.nix];
-    };
-    "deatrin@testbed" = {
-      system = "x86_64-linux";
-      modules = [../home-manager/nixos/deatrin_testbed.nix];
     };
   };
 }
