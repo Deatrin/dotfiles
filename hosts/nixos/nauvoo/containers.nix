@@ -9,8 +9,8 @@
     ../../common/optional/containers/pihole
     ../../common/optional/containers/homepage
     ../../common/optional/containers/it-tools
-    # ../../common/optional/containers/grocy
-    # ../../common/optional/containers/homebox
+    ../../common/optional/containers/grocy
+    ../../common/optional/containers/homebox
     # ../../common/optional/containers/navidrome
     # ../../common/optional/containers/audiobookshelf
     # ../../common/optional/containers/calibre
