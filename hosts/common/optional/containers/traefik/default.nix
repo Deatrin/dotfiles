@@ -82,6 +82,7 @@
     + lib.concatMapStrings (svc:
       "    ${svc.name}:\n"
       + "      loadBalancer:\n"
+      + "        passHostHeader: false\n"
       + "        servers:\n"
       + "          - url: \"${svc.url}\"\n") svcs;
 
