@@ -31,20 +31,16 @@
   # External services proxied through Traefik
   services.traefik-quadlet.externalServices = [
     {
-      name = "idrac-proxmox";
-      hostname = "idrac-proxmox.jennex.dev";
-      url = "https://10.1.20.10";
-    }
-    {
-      name = "idrac-truenas";
-      hostname = "idrac-truenas.jennex.dev";
-      url = "https://10.1.20.15";
-    }
-    {
       name = "plex";
       hostname = "plex.jennex.dev";
       url = "http://10.1.30.100:32400";
     }
+  ];
+
+  # DNS overrides — bypass Traefik, resolve directly to the service IP
+  services.pihole-quadlet.dnsOverrides = [
+    { hostname = "idrac-proxmox.jennex.dev"; ip = "10.1.20.10"; }
+    { hostname = "idrac-truenas.jennex.dev"; ip = "10.1.20.15"; }
   ];
 
   # Forgejo settings — uncomment alongside the forgejo import above
