@@ -18,7 +18,7 @@
     # ../../common/optional/containers/romm
     # ../../common/optional/containers/paperless
     # ../../common/optional/containers/immich
-    # ../../common/optional/containers/forgejo  # also uncomment forgejo settings below
+    ../../common/optional/containers/forgejo  # also uncomment forgejo settings below
     # ../../common/optional/containers/arr-stack
     # ../../common/optional/containers/seerr
     # ../../common/optional/containers/ddns
@@ -29,6 +29,6 @@
   services.pihole-quadlet.dnsListenIP = "10.1.30.100";
 
   # Forgejo settings — uncomment alongside the forgejo import above
-  # services.forgejo-quadlet.sshPort = 22;       # system SSH is on 2222
-  # services.forgejo-quadlet.dataPath = "/ssdstorage/forgejo";
+  services.forgejo-quadlet.sshPort = 22;
+  services.forgejo-quadlet.dataPath = "/ssdstorage/forgejo";
 }
