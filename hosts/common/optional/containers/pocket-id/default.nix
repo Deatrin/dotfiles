@@ -43,7 +43,7 @@ in {
       Requires = ["opnix-secrets.service" "pocket-id-env-setup.service"];
     };
     containerConfig = {
-      image = "ghcr.io/pocket-id/pocket-id:v1";
+      image = "ghcr.io/pocket-id/pocket-id:v2";
       autoUpdate = "registry";
       networks = [networks.traefik_network.ref];
       environments = {
