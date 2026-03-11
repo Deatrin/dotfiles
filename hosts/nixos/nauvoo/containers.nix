@@ -16,7 +16,7 @@
     # ../../common/optional/containers/calibre
     ../../common/optional/containers/pocket-id
     # ../../common/optional/containers/romm
-    # ../../common/optional/containers/paperless
+    ../../common/optional/containers/paperless
     # ../../common/optional/containers/immich
     ../../common/optional/containers/forgejo  # also uncomment forgejo settings below
     # ../../common/optional/containers/arr-stack
