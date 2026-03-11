@@ -58,6 +58,23 @@
               url: https://10.1.1.1:443
               username: '{{HOMEPAGE_VAR_UNIFI_USER}}'
               password: '{{HOMEPAGE_VAR_UNIFI_PASS}}'
+        - Traefik:
+            href: https://traefik.jennex.dev
+            icon: traefik.png
+            description: Reverse Proxy
+            widget:
+              type: traefik
+              url: https://traefik.jennex.dev
+              username: admin
+              password: ''
+        - Pi-hole:
+            href: https://pihole.jennex.dev/admin
+            icon: pi-hole.png
+            description: DNS & Ad Blocking
+            widget:
+              type: pihole
+              url: https://pihole.jennex.dev
+              version: 6
   '';
 
   dockerYaml = pkgs.writeText "homepage-docker.yaml" ''
