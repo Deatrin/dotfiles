@@ -28,6 +28,20 @@
   # Nauvoo-specific container settings
   services.pihole-quadlet.dnsListenIP = "10.1.30.100";
 
+  # External services proxied through Traefik
+  services.traefik-quadlet.externalServices = [
+    {
+      name = "idrac-proxmox";
+      hostname = "idrac-proxmox.jennex.dev";
+      url = "https://10.1.20.10";
+    }
+    {
+      name = "idrac-truenas";
+      hostname = "idrac-truenas.jennex.dev";
+      url = "https://10.1.20.15";
+    }
+  ];
+
   # Forgejo settings — uncomment alongside the forgejo import above
   services.forgejo-quadlet.sshPort = 22;
   services.forgejo-quadlet.dataPath = "/ssdstorage/forgejo";

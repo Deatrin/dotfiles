@@ -76,6 +76,14 @@
               url: https://pihole.jennex.dev
               version: 6
               key: '{{HOMEPAGE_VAR_PIHOLE_PASSWORD}}'
+        - Proxmox iDRAC:
+            href: https://idrac-proxmox.jennex.dev
+            icon: idrac.png
+            description: Proxmox Server iDRAC
+        - TrueNAS iDRAC:
+            href: https://idrac-truenas.jennex.dev
+            icon: idrac.png
+            description: TrueNAS Server iDRAC
   '';
 
   dockerYaml = pkgs.writeText "homepage-docker.yaml" ''
