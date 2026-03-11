@@ -16,9 +16,9 @@
 }: let
   inherit (config.virtualisation.quadlet) networks volumes;
 
-  # Wildcard local DNS — all *.deatrin.dev resolves to this host's IP
+  # Wildcard local DNS — all *.jennex.dev resolves to this host's IP
   dnsmasqConfig = pkgs.writeText "02-deatrin-local.conf" ''
-    address=/.deatrin.dev/${config.services.pihole-quadlet.dnsListenIP}
+    address=/.jennex.dev/${config.services.pihole-quadlet.dnsListenIP}
   '';
 in {
   options.services.pihole-quadlet.dnsListenIP = lib.mkOption {
@@ -58,9 +58,9 @@ in {
           addCapabilities = ["NET_ADMIN" "SYS_TIME" "SYS_NICE"];
           labels = [
             "traefik.enable=true"
-            "traefik.http.routers.pihole.rule=Host(`pihole.deatrin.dev`)"
+            "traefik.http.routers.pihole.rule=Host(`pihole.jennex.dev`)"
             "traefik.http.routers.pihole-secure.entrypoints=https"
-            "traefik.http.routers.pihole-secure.rule=Host(`pihole.deatrin.dev`)"
+            "traefik.http.routers.pihole-secure.rule=Host(`pihole.jennex.dev`)"
             "traefik.http.routers.pihole-secure.tls=true"
             "traefik.http.services.pihole.loadbalancer.server.port=80"
           ];

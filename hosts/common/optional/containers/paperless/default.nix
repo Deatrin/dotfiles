@@ -66,7 +66,7 @@ in {
           PAPERLESS_DBHOST = "paperless-db";
           PAPERLESS_DBUSER = "paperless";
           PAPERLESS_DBNAME = "paperless";
-          PAPERLESS_URL = "https://paperless.deatrin.dev";
+          PAPERLESS_URL = "https://paperless.jennex.dev";
           PAPERLESS_TIME_ZONE = "America/Los_Angeles";
           PAPERLESS_OCR_LANGUAGE = "eng";
           PAPERLESS_CONSUMER_POLLING = "300";
@@ -82,12 +82,12 @@ in {
           "homepage.group=Self-Hosted"
           "homepage.name=Paperless"
           "homepage.icon=paperless-ngx.png"
-          "homepage.href=https://paperless.deatrin.dev"
+          "homepage.href=https://paperless.jennex.dev"
           "homepage.description=Documents"
           "traefik.enable=true"
-          "traefik.http.routers.paperless.rule=Host(`paperless.deatrin.dev`)"
+          "traefik.http.routers.paperless.rule=Host(`paperless.jennex.dev`)"
           "traefik.http.routers.paperless-secure.entrypoints=https"
-          "traefik.http.routers.paperless-secure.rule=Host(`paperless.deatrin.dev`)"
+          "traefik.http.routers.paperless-secure.rule=Host(`paperless.jennex.dev`)"
           "traefik.http.routers.paperless-secure.tls=true"
           "traefik.http.services.paperless.loadbalancer.server.port=8000"
         ];

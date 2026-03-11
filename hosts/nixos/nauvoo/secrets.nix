@@ -13,7 +13,7 @@
       };
       cfApiToken = {
         path = "/run/opnix/cf-api-token";
-        reference = "op://nix_secrets/deatrindev/cf_token";
+        reference = "op://nix_secrets/Cloudflare API Key/jennexDEV";
         owner = "root";
         group = "root";
         mode = "0600";

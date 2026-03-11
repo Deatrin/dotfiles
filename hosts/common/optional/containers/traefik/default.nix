@@ -32,9 +32,9 @@
           tls:
             certResolver: cloudflare
             domains:
-              - main: "deatrin.dev"
+              - main: "jennex.dev"
                 sans:
-                  - "*.deatrin.dev"
+                  - "*.jennex.dev"
 
     serversTransport:
       insecureSkipVerify: true
@@ -49,7 +49,7 @@
         acme:
           # Email injected via TRAEFIK_CERTIFICATESRESOLVERS_CLOUDFLARE_ACME_EMAIL in traefik-env
           storage: /acme.json
-          # caServer defaults to prod: https://acme-v02.api.letsencrypt.org/directory
+          caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
           dnsChallenge:
             provider: cloudflare
             resolvers:
@@ -120,12 +120,12 @@ in {
         "traefik.enable=true"
         # HTTP → HTTPS redirect
         "traefik.http.routers.traefik.entrypoints=http"
-        "traefik.http.routers.traefik.rule=Host(`traefik.deatrin.dev`)"
+        "traefik.http.routers.traefik.rule=Host(`traefik.jennex.dev`)"
         "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
         "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
         # Dashboard (wildcard cert via entrypoint default)
         "traefik.http.routers.traefik-secure.entrypoints=https"
-        "traefik.http.routers.traefik-secure.rule=Host(`traefik.deatrin.dev`)"
+        "traefik.http.routers.traefik-secure.rule=Host(`traefik.jennex.dev`)"
         "traefik.http.routers.traefik-secure.tls=true"
         "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
         "traefik.http.routers.traefik-secure.service=api@internal"
