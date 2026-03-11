@@ -88,6 +88,10 @@
     ];
   };
 
+  # Tailscale exit node + subnet routing
+  services.tailscale-autoconnect.exitNode = true;
+  services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
+
   # Enable IP forwarding for Tailscale exit node
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;

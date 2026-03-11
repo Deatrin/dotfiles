@@ -18,8 +18,6 @@
 
   services.pihole-quadlet.dnsListenIP = "10.1.40.200";
   services.forgejo-quadlet.sshPort = 2222; # nauvoo prod: set to 22 (system SSH is on 2222 there)
-  services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
-
   networking = {
     hostName = "testbed";
     networkmanager.enable = true;
@@ -36,12 +34,6 @@
   # may fix issues with network service failing during a nixos-rebuild
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
-
-  # Enable IP forwarding for Tailscale exit node
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "25.11";
