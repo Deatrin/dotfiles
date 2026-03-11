@@ -84,7 +84,7 @@ in {
         };
         environmentFiles = ["/run/opnix/immich-env"];
         volumes = [
-          "/storage/media/photos/immich:/usr/src/app/upload"
+          "/storage/media/pictures/immich:/usr/src/app/upload"
           "/etc/localtime:/etc/localtime:ro"
         ];
         labels = [
