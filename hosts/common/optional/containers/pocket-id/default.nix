@@ -47,7 +47,7 @@ in {
       autoUpdate = "registry";
       networks = [networks.traefik_network.ref];
       environments = {
-        APP_URL = "https://pocket-id.jennex.dev";
+        APP_URL = "https://pocket.jennex.dev";
         TRUST_PROXY = "true";
         PUID = "1000";
         PGID = "1000";
@@ -58,12 +58,12 @@ in {
         "homepage.group=Infrastructure"
         "homepage.name=Pocket ID"
         "homepage.icon=pocket-id.png"
-        "homepage.href=https://pocket-id.jennex.dev"
+        "homepage.href=https://pocket.jennex.dev"
         "homepage.description=OIDC Identity Provider"
         "traefik.enable=true"
-        "traefik.http.routers.pocket-id.rule=Host(`pocket-id.jennex.dev`)"
+        "traefik.http.routers.pocket-id.rule=Host(`pocket.jennex.dev`)"
         "traefik.http.routers.pocket-id-secure.entrypoints=https"
-        "traefik.http.routers.pocket-id-secure.rule=Host(`pocket-id.jennex.dev`)"
+        "traefik.http.routers.pocket-id-secure.rule=Host(`pocket.jennex.dev`)"
         "traefik.http.routers.pocket-id-secure.tls=true"
         "traefik.http.services.pocket-id.loadbalancer.server.port=1411"
       ];
