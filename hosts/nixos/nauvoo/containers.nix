@@ -3,8 +3,8 @@
 # When enabling forgejo, also uncomment its settings below.
 { ... }: {
   imports = [
-    ../../common/optional/quadlet.nix
-    ../../common/optional/containers/networks.nix
+    # ../../common/optional/quadlet.nix   # enable when ready to migrate (remove docker.nix first)
+    # ../../common/optional/containers/networks.nix  # requires quadlet
     # ../../common/optional/containers/traefik
     # ../../common/optional/containers/pihole
     # ../../common/optional/containers/homepage
