@@ -5,7 +5,7 @@
   imports = [
     ../../common/optional/quadlet.nix
     ../../common/optional/containers/networks.nix
-    # ../../common/optional/containers/traefik
+    ../../common/optional/containers/traefik
     ../../common/optional/containers/pihole
     # ../../common/optional/containers/homepage
     # ../../common/optional/containers/it-tools
