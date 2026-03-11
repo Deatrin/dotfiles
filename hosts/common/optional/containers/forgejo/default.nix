@@ -17,7 +17,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
   inherit (config.virtualisation.quadlet) networks volumes;
@@ -41,27 +40,7 @@ in {
       "d ${config.services.forgejo-quadlet.dataPath}/runner 0755 root root -"
     ];
 
-    systemd.services.forgejo-runner-env-setup = {
-      description = "Build Forgejo runner environment file from secrets";
-      after = ["opnix-secrets.service"];
-      requires = ["opnix-secrets.service"];
-      before = ["forgejo-runner.service"];
-      wantedBy = ["forgejo-runner.service"];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = lib.getExe (pkgs.writeShellApplication {
-          name = "forgejo-runner-env-setup";
-          text = ''
-            printf 'FORGEJO_RUNNER_TOKEN=%s\n' "$(cat /run/opnix/forgejo-runner-token)" \
-              > /run/opnix/forgejo-runner-env
-            chmod 600 /run/opnix/forgejo-runner-env
-          '';
-        });
-      };
-    };
-
-    virtualisation.quadlet = {
+virtualisation.quadlet = {
       networks.forgejo_network = {};
 
       volumes.forgejo-pgdata = {};
@@ -122,42 +101,11 @@ in {
         };
       };
 
-      # Docker-in-Docker for CI runner
-      containers.forgejo-dind = {
-        containerConfig = {
-          image = "docker.io/library/docker:dind";
-          autoUpdate = "registry";
-          networks = [networks.forgejo_network.ref];
-          addCapabilities = ["SYS_ADMIN"];
-          securityLabelDisable = true;
-          environments = {
-            DOCKER_TLS_CERTDIR = "";
-          };
-          exec = ["dockerd" "-H" "tcp://0.0.0.0:2375" "--tls=false"];
-        };
-      };
-
-      # Forgejo runner
-      containers.forgejo-runner = {
-        unitConfig = {
-          After = ["opnix-secrets.service" "forgejo-runner-env-setup.service" "forgejo-dind.service" "forgejo-server.service"];
-          Requires = ["opnix-secrets.service" "forgejo-runner-env-setup.service" "forgejo-dind.service" "forgejo-server.service"];
-        };
-        containerConfig = {
-          image = "code.forgejo.org/forgejo/runner:12";
-          autoUpdate = "registry";
-          networks = [networks.forgejo_network.ref];
-          user = "1000:1000";
-          environments = {
-            DOCKER_HOST = "tcp://forgejo-dind:2375";
-          };
-          environmentFiles = ["/run/opnix/forgejo-runner-env"];
-          volumes = [
-            "${config.services.forgejo-quadlet.dataPath}/runner:/data"
-          ];
-          exec = ["/bin/sh" "-c" "sleep 5; forgejo-runner daemon --config /data/config.yaml"];
-        };
-      };
+      # TODO: Forgejo runner — DinD doesn't work inside Podman on NixOS.
+      # Need to investigate: Podman-in-Podman, or NixOS systemd service running
+      # forgejo-runner directly on the host instead of in a container.
+      # containers.forgejo-dind = { ... };
+      # containers.forgejo-runner = { ... };
     };
   };
 }
