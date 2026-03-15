@@ -57,15 +57,15 @@
             href: https://10.1.1.1
             icon: unifi.png
             description: Unifi Dashboard
-        - Home Assistant:
-            href: http://10.1.1.123:8123
-            icon: home-assistant.png
-            description: Home Automation
             widget:
               type: unifi
               url: https://10.1.1.1:443
               username: '{{HOMEPAGE_VAR_UNIFI_USER}}'
               password: '{{HOMEPAGE_VAR_UNIFI_PASS}}'
+        - Home Assistant:
+            href: http://10.1.1.123:8123
+            icon: home-assistant.png
+            description: Home Automation
         - Traefik:
             href: https://traefik.jennex.dev
             icon: traefik.png
