@@ -86,7 +86,7 @@ virtualisation.quadlet = {
             "${config.services.forgejo-quadlet.dataPath}/data:/data"
           ];
           labels = [
-            "homepage.group=Dev"
+            "homepage.group=Dev & Games"
             "homepage.name=Forgejo"
             "homepage.icon=forgejo.png"
             "homepage.href=https://forgejo.jennex.dev"

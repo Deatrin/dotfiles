@@ -36,6 +36,8 @@
     layout:
       Network:
         icon: mdi-network
+        style: row
+        columns: 2
       Media:
         icon: mdi-television-play
       Downloads:
@@ -44,14 +46,16 @@
         columns: 4
       System:
         icon: mdi-server
+        style: row
+        columns: 3
       Home:
         icon: mdi-home-heart
-      Games:
+        style: row
+        columns: 2
+      Dev & Games:
         icon: mdi-controller
-      Dev:
-        icon: mdi-dev-to
-      Hardware:
-        icon: mdi-server-network
+        style: row
+        columns: 3
   '';
 
   servicesYaml = pkgs.writeText "homepage-services.yaml" ''
@@ -107,7 +111,6 @@
               url: https://10.1.20.20:8006
               username: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}'
               password: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}'
-    - Hardware:
         - Proxmox iDRAC:
             href: https://10.1.20.10
             icon: idrac.png

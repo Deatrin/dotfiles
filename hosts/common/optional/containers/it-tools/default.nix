@@ -7,7 +7,7 @@ in {
       autoUpdate = "registry";
       networks = [networks.traefik_network.ref];
       labels = [
-        "homepage.group=Dev"
+        "homepage.group=Dev & Games"
         "homepage.name=IT Tools"
         "homepage.icon=it-tools.png"
         "homepage.href=https://it-tools.jennex.dev"
