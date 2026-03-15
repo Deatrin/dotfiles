@@ -38,16 +38,6 @@
       hostname = "plex.jennex.dev";
       url = "http://10.1.30.100:32400";
     }
-    {
-      name = "unifi";
-      hostname = "unifi.jennex.dev";
-      url = "https://10.1.1.1:443";
-    }
-    {
-      name = "homeassistant";
-      hostname = "homeassistant.jennex.dev";
-      url = "http://10.1.1.123:8123";
-    }
   ];
 
 
