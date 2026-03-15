@@ -235,6 +235,62 @@
         group = "root";
         mode = "0600";
       };
+      netboxSecretKey = {
+        path = "/run/opnix/netbox-secret-key";
+        reference = "op://nix_secrets/netbox/netboxSecretKey";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      netboxDbPassword = {
+        path = "/run/opnix/netbox-db-password";
+        reference = "op://nix_secrets/netbox/netboxDbPassword";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      netboxRedisPassword = {
+        path = "/run/opnix/netbox-redis-password";
+        reference = "op://nix_secrets/netbox/netboxRedisPassword";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      netboxRedisCachePassword = {
+        path = "/run/opnix/netbox-redis-cache-password";
+        reference = "op://nix_secrets/netbox/netboxRedisCachePassword";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      netboxSuperuserName = {
+        path = "/run/opnix/netbox-superuser-name";
+        reference = "op://nix_secrets/netbox/netboxSuperuserName";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      netboxSuperuserPassword = {
+        path = "/run/opnix/netbox-superuser-password";
+        reference = "op://nix_secrets/netbox/netboxSuperuserPassword";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      netboxSuperuserEmail = {
+        path = "/run/opnix/netbox-superuser-email";
+        reference = "op://nix_secrets/netbox/netboxSuperuserEmail";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      netboxSuperuserApiToken = {
+        path = "/run/opnix/netbox-superuser-api-token";
+        reference = "op://nix_secrets/netbox/netboxSuperuserApiToken";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {

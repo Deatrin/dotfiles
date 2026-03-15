@@ -24,6 +24,7 @@
     ../../common/optional/containers/syncthing
     ../../common/optional/containers/nextcloud
     ../../common/optional/containers/makersvault
+    ../../common/optional/containers/netbox
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
   ];
