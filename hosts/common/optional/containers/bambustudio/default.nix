@@ -60,14 +60,17 @@ in {
       autoUpdate = "registry";
       networks = [networks.traefik_network.ref];
       shmSize = "1g";
-      devices = ["nvidia.com/gpu=all"];
+      # CDI injects /dev/nvidia* but not /dev/dri/*; mount render node explicitly
+      devices = ["nvidia.com/gpu=all" "/dev/dri/renderD128:/dev/dri/renderD128"];
       environments = {
         PUID = "1000";
         PGID = "1000";
         TZ = "America/Los_Angeles";
         DARK_MODE = "true";
         DRINODE = "/dev/dri/renderD128";
-        PIXELFLUX_WAYLAND = "true";
+        # PIXELFLUX_WAYLAND omitted — requires KMS/GBM dumb buffer allocation
+        # (DRM_IOCTL_MODE_CREATE_DUMB) which needs /dev/dri/card* master access,
+        # not available via CDI. Standard EGL encoding works without it.
         TITLE = "BambuStudio";
       };
       environmentFiles = ["/run/opnix/bambustudio-env"];
