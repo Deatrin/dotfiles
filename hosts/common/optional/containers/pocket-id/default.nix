@@ -55,7 +55,7 @@ in {
       environmentFiles = ["/run/opnix/pocket-id-env"];
       volumes = ["/var/lib/pocket-id:/app/data"];
       labels = [
-        "homepage.group=Infrastructure"
+        "homepage.group=System"
         "homepage.name=Pocket ID"
         "homepage.icon=pocket-id.png"
         "homepage.href=https://pocket.jennex.dev"

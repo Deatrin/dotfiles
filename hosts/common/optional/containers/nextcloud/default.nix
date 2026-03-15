@@ -107,7 +107,7 @@ in {
           "/storage/media:/storage/media"
         ];
         labels = [
-          "homepage.group=Infrastructure"
+          "homepage.group=System"
           "homepage.name=Nextcloud"
           "homepage.icon=nextcloud.png"
           "homepage.href=https://nextcloud.jennex.dev"

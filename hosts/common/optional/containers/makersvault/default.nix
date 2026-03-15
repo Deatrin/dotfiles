@@ -110,7 +110,7 @@ in {
           CORS_ORIGINS = "https://${domain}";
         };
         labels = [
-          "homepage.group=Maker"
+          "homepage.group=Home"
           "homepage.name=MakersVault"
           "homepage.icon=mdi-printer-3d-nozzle"
           "homepage.href=https://${domain}"

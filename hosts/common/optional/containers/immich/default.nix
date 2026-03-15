@@ -88,7 +88,7 @@ in {
           "/etc/localtime:/etc/localtime:ro"
         ];
         labels = [
-          "homepage.group=Photos"
+          "homepage.group=Media"
           "homepage.name=Immich"
           "homepage.icon=immich.png"
           "homepage.href=https://immich.jennex.dev"

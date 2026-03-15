@@ -34,25 +34,29 @@
       hideVisitURL: true
 
     layout:
-      Infrastructure:
-        icon: mdi-server
+      Network:
+        icon: mdi-network
       Media:
         icon: mdi-television-play
       Downloads:
         icon: mdi-download-circle
-      Photos:
-        icon: mdi-camera-burst
+        style: row
+        columns: 4
+      System:
+        icon: mdi-server
       Home:
         icon: mdi-home-heart
       Games:
         icon: mdi-controller
       Dev:
         icon: mdi-dev-to
+      Hardware:
+        icon: mdi-server-network
   '';
 
   servicesYaml = pkgs.writeText "homepage-services.yaml" ''
     ---
-    - Infrastructure:
+    - Network:
         - Unifi:
             href: https://10.1.1.1
             icon: unifi.png
@@ -62,10 +66,6 @@
               url: https://10.1.1.1:443
               username: '{{HOMEPAGE_VAR_UNIFI_USER}}'
               password: '{{HOMEPAGE_VAR_UNIFI_PASS}}'
-        - Home Assistant:
-            href: http://10.1.1.123:8123
-            icon: home-assistant.png
-            description: Home Automation
         - Traefik:
             href: https://traefik.jennex.dev
             icon: traefik.png
@@ -84,23 +84,6 @@
               url: https://pihole.jennex.dev
               version: 6
               key: '{{HOMEPAGE_VAR_PIHOLE_PASSWORD}}'
-        - Proxmox:
-            href: https://10.1.20.20:8006
-            icon: proxmox.png
-            description: Proxmox VE
-            widget:
-              type: proxmox
-              url: https://10.1.20.20:8006
-              username: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}'
-              password: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}'
-        - Proxmox iDRAC:
-            href: https://10.1.20.10
-            icon: idrac.png
-            description: Proxmox Server iDRAC
-        - TrueNAS iDRAC:
-            href: https://10.1.20.15
-            icon: idrac.png
-            description: TrueNAS Server iDRAC
     - Media:
         - Plex:
             href: https://plex.jennex.dev
@@ -110,6 +93,29 @@
               type: plex
               url: https://plex.jennex.dev
               key: '{{HOMEPAGE_VAR_PLEX_TOKEN}}'
+    - System:
+        - Home Assistant:
+            href: http://10.1.1.123:8123
+            icon: home-assistant.png
+            description: Home Automation
+        - Proxmox:
+            href: https://10.1.20.20:8006
+            icon: proxmox.png
+            description: Proxmox VE
+            widget:
+              type: proxmox
+              url: https://10.1.20.20:8006
+              username: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}'
+              password: '{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}'
+    - Hardware:
+        - Proxmox iDRAC:
+            href: https://10.1.20.10
+            icon: idrac.png
+            description: Proxmox Server iDRAC
+        - TrueNAS iDRAC:
+            href: https://10.1.20.15
+            icon: idrac.png
+            description: TrueNAS Server iDRAC
   '';
 
   dockerYaml = pkgs.writeText "homepage-docker.yaml" ''

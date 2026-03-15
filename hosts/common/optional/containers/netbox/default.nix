@@ -232,7 +232,7 @@ in {
           "${volumes.netbox-scripts.ref}:/opt/netbox/netbox/scripts"
         ];
         labels = [
-          "homepage.group=Infrastructure"
+          "homepage.group=Network"
           "homepage.name=NetBox"
           "homepage.icon=netbox.png"
           "homepage.href=https://${domain}"

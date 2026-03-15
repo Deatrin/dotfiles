@@ -33,7 +33,7 @@ in {
         "/storage/media:/storage/media"
       ];
       labels = [
-        "homepage.group=Infrastructure"
+        "homepage.group=System"
         "homepage.name=Syncthing"
         "homepage.icon=syncthing.png"
         "homepage.href=https://syncthing.jennex.dev"
