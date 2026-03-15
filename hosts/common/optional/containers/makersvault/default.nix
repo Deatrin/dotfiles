@@ -112,7 +112,7 @@ in {
         labels = [
           "homepage.group=Maker"
           "homepage.name=MakersVault"
-          "homepage.icon=makersvault.png"
+          "homepage.icon=mdi-printer-3d-nozzle"
           "homepage.href=https://${domain}"
           "homepage.description=3D Print File Manager"
           "traefik.enable=true"

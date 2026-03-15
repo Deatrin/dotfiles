@@ -54,7 +54,7 @@
     ---
     - Infrastructure:
         - Unifi:
-            href: https://unifi.ui.com
+            href: https://unifi.jennex.dev
             icon: unifi.png
             description: Unifi Dashboard
             widget:
