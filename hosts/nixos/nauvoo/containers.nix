@@ -23,6 +23,7 @@
     ../../common/optional/containers/seerr
     ../../common/optional/containers/syncthing
     ../../common/optional/containers/nextcloud
+    ../../common/optional/containers/makersvault
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
   ];

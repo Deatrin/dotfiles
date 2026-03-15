@@ -214,6 +214,27 @@
         group = "root";
         mode = "0600";
       };
+      makersVaultUsername = {
+        path = "/run/opnix/makersvault-username";
+        reference = "op://nix_secrets/makervault/username";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      makersVaultPassword = {
+        path = "/run/opnix/makersvault-password";
+        reference = "op://nix_secrets/makervault/password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      makersVaultSecretKey = {
+        path = "/run/opnix/makersvault-secret-key";
+        reference = "op://nix_secrets/makervault/secret_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {
