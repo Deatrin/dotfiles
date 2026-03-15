@@ -235,20 +235,6 @@
         group = "root";
         mode = "0600";
       };
-      bambuStudioUser = {
-        path = "/run/opnix/bambustudio-user";
-        reference = "op://nix_secrets/bambu studio/username";
-        owner = "root";
-        group = "root";
-        mode = "0600";
-      };
-      bambuStudioPassword = {
-        path = "/run/opnix/bambustudio-password";
-        reference = "op://nix_secrets/bambu studio/password";
-        owner = "root";
-        group = "root";
-        mode = "0600";
-      };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {
