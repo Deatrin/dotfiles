@@ -70,7 +70,7 @@ in {
             printf 'appendonly yes\n'
             printf 'requirepass %s\n' "$(cat /run/opnix/netbox-redis-password)"
           } > /run/opnix/netbox-redis.conf
-          chmod 600 /run/opnix/netbox-redis.conf
+          chmod 644 /run/opnix/netbox-redis.conf
         '';
       });
     };
@@ -93,7 +93,7 @@ in {
             printf 'appendonly yes\n'
             printf 'requirepass %s\n' "$(cat /run/opnix/netbox-redis-cache-password)"
           } > /run/opnix/netbox-redis-cache.conf
-          chmod 600 /run/opnix/netbox-redis-cache.conf
+          chmod 644 /run/opnix/netbox-redis-cache.conf
         '';
       });
     };
