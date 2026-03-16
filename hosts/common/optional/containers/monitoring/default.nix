@@ -305,14 +305,16 @@
                 "properties": [
                   { "id": "unit", "value": "percent" },
                   { "id": "min", "value": 0 },
-                  { "id": "custom.axisPlacement", "value": "left" }
+                  { "id": "custom.axisPlacement", "value": "left" },
+                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#7aa2f7" } }
                 ]
               },
               {
                 "matcher": { "id": "byName", "options": "Memory" },
                 "properties": [
                   { "id": "unit", "value": "bytes" },
-                  { "id": "custom.axisPlacement", "value": "right" }
+                  { "id": "custom.axisPlacement", "value": "right" },
+                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#bb9af7" } }
                 ]
               }
             ]
@@ -395,7 +397,7 @@
       "timezone": "browser",
       "title": "Container Resources",
       "uid": "container-overview",
-      "version": 3
+      "version": 4
     }
   '';
 
