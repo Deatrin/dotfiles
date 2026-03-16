@@ -327,6 +327,21 @@
         mode = "0600";
       };
 
+      pushoverPodmanToken = {
+        path = "/run/opnix/pushover-podman-token";
+        reference = "op://nix_secrets/Pushover/podmanToken";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      pushoverUserToken = {
+        path = "/run/opnix/pushover-user-token";
+        reference = "op://nix_secrets/Pushover/pushoverUserToken";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {
       #   path = "/run/opnix/idrac-ip-1";
