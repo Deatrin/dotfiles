@@ -241,6 +241,7 @@ in {
           GF_INSTALL_PLUGINS = "grafana-clock-panel,natel-discrete-panel,grafana-piechart-panel";
           GF_PATHS_PROVISIONING = "/etc/grafana/provisioning";
           GF_AUTH_DISABLE_LOGIN_FORM = "true";
+          GF_AUTH_BASIC_ENABLED = "false";
           GF_AUTH_PROXY_ENABLED = "true";
           GF_AUTH_PROXY_HEADER_NAME = "X-Forwarded-User";
           GF_AUTH_PROXY_HEADER_PROPERTY = "email";
