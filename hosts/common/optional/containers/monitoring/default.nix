@@ -572,7 +572,7 @@ in {
         image = "quay.io/navidys/prometheus-podman-exporter:latest";
         autoUpdate = "registry";
         networks = [networks.monitoring_network.ref];
-        privileged = true;
+        user = "root";
         volumes = ["/run/podman/podman.sock:/run/podman/podman.sock"];
         environments = {
           CONTAINER_HOST = "unix:///run/podman/podman.sock";
