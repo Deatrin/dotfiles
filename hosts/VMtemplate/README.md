@@ -1,86 +1,60 @@
-# Bootstrapping NixOS on 'nauvoo' VM
+# VMtemplate
 
-It is installed with the NixOS iso installation media.  These are the steps initially taken to install NixOS, though once the config is setup it can just be re-used for future re-installs if needed. This assumes you have booted into a NixOS install image from a USB stick and that we will be using systemd-boot.  Following the [manual installation steps](https://nixos.org/manual/nixos/stable/index.html#sec-installation-manual):
+Quick-deploy NixOS VM template for spinning up new VMs on Proxmox.
 
-## Clone this repo
+## Purpose
 
-Were going to need this on the host machine
+A minimal NixOS configuration used as a starting point for new VMs. Clone this directory and customize for a new host.
 
-```shell
-git clone https://github.com/Deatrin/dotfiles.git
+## Usage
+
+### 1. Copy the template
+
+```bash
+cp -r hosts/VMtemplate hosts/nixos/<new-hostname>
 ```
 
-## Disk Setup
+### 2. Add to flake/hosts.nix
 
-We use disko to partition the disk to make ready for install. In this case we are not encrypting
-
-```shell
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./hosts/nixos/nauvoo/disko-config.nix
+```nix
+nixosHosts = {
+  myNewVm = {
+    system = "x86_64-linux";
+    user = "deatrin";
+    modules = [../hosts/nixos/myNewVm];
+  };
+};
 ```
 
-## NixOS Install
+### 3. Generate hardware config
 
-Once the disk is partitioned we run the install using the flake
+Boot the VM from a NixOS ISO, then:
 
-```shell
-sudo nixos-install --flake .#nauvoo
+```bash
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- \
+  --mode disko ./hosts/nixos/myNewVm/disko-config.nix
+
+sudo nixos-install --flake .#myNewVm
 ```
 
-## First Run
+### 4. First boot
 
-This is where I bring down the git repo so I can work on it but most importantly I can easily switch configs:
-
-```shell
+```bash
 cd /etc/nixos
-git clone git@github.com:Deatrin/dotfiles.git .
-chown -R deatrin:users .
+sudo git clone git@github.com:Deatrin/dotfiles.git .
+sudo chown -R deatrin:users .
+nh os switch
 ```
 
-Then we should be able to update the nixos-configuration repo in github and just pull/rebuild as needed on the machine.
+### 5. Opnix setup
 
-```shell
-sudo sh -c "cd /etc/nixos && git pull && nixos-rebuild switch --flake .#nauvoo"
+```bash
+sudo opnix token set
+nh os switch
 ```
 
-## Things that need secrets
+## Notes
 
-### 1Password bootstrapping auth
-
-```shell
-eval $(op signin --account <redacted>.1password.com)
-```
-
-### atuin login
-
-```shell
-atuin login --username $(op item get "atuin" --fields label=username) --password $(op item get "atuin" --fields label=password) --key "$(op item get "atuin" --fields label=key)"
-atuin import auto
-atuin sync -f
-```
-
-### kubeconfig
-
-```shell
-mkdir -p ~/.kube
-op document get --vault kubernetes 'k3s.yaml' --out-file ~/.kube/config
-```
-
-## Troubleshooting
-
-### fix yubikey
-
-```shell
-gpg-connect-agent updatestartuptty /bye
-```
-
-## TODO see if these commands work while using linux they were not happy when trying to run from darwin
-
-### nixos anywhere commands
-
-```shell
-nix run github:nix-community/nixos-anywhere -- --flake .#tachi root@<ip of box>
-```
-
-```shell
-nix run github:nix-community/nixos-anywhere -- --flake .#tachi --generate-hadware-config nixos-generate-config ./hosts/tachi/hardware-configuration.nix root@<ip of box>
-```
+- Uses disko for declarative disk partitioning (see `disko-config.nix`)
+- SaltStack master can be enabled via `hosts/common/optional/salt.nix`
+- For production container hosts, see [nauvoo](../nixos/nauvoo/README.md) as a reference

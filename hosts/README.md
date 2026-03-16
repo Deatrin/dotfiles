@@ -6,8 +6,8 @@ This directory contains per-machine system-level configurations for both NixOS a
 
 - **common/darwin/**: Shared macOS configurations (defaults, homebrew integration)
 - **common/nixos/**: Shared NixOS configurations (locale, nix settings, openssh, tailscale)
-- **common/optional/**: Optional modules (docker, podman, fonts, plex, jellyseerr, vscode-server)
-- **common/containers/**: Docker compose configurations for containerized services
+- **common/optional/**: Optional modules (podman, quadlet, fonts, greetd, salt, etc.)
+- **common/optional/containers/**: Podman Quadlet container definitions (nauvoo)
 - **darwin/**: Per-host macOS configurations
 - **nixos/**: Per-host NixOS configurations
 - **VMtemplate/**: Template for VM setup
@@ -16,40 +16,26 @@ This directory contains per-machine system-level configurations for both NixOS a
 
 ### NixOS (Linux)
 
-- **[nauvoo](nixos/nauvoo/README.md)**: VM with GPU, media server (Plex, Jellyseerr)
+- **[nauvoo](nixos/nauvoo/README.md)**: Production homelab server (Proxmox VM)
   - x86_64-linux, AMD CPU, NVIDIA GPU
-  - Docker, Plex, Jellyseerr, VSCode Server
+  - Podman Quadlet containers, all services on *.jennex.dev
   - NFS mount for media storage
-
-- **[razerback](nixos/razerback/README.md)**: Dell Precision 5760 laptop with Hyprland
-  - x86_64-linux, Intel CPU, Thunderbolt
-  - Docker, Hyprland desktop, Auto-upgrade enabled
-  - LUKS encrypted storage
 
 - **[tycho](nixos/tycho/README.md)**: Lenovo T14 G3 laptop with Hyprland
   - x86_64-linux, Intel CPU, Thunderbolt
-  - Podman, Hyprland desktop
+  - Hyprland + greetd + hyprlock desktop
   - LUKS + LVM + BTRFS storage
-  - Opnix secrets management (system-level)
+  - Opnix secrets management
 
 ### Darwin (macOS)
-
-- **[barkeith](darwin/barkeith/README.md)**: Intel MacBook Pro (ajennex)
-  - x86_64-darwin
-  - Standard configuration with Homebrew integration
-
-- **[chetzemoka](darwin/chetzemoka/README.md)**: M2 MacBook Air (ajennex)
-  - aarch64-darwin (Apple Silicon)
-  - Standard configuration with Homebrew integration
 
 - **[donnager](darwin/donnager/README.md)**: iMac Pro (ajennex)
   - x86_64-darwin
   - Standard configuration with Homebrew integration
 
-- **[tynan](darwin/tynan/README.md)**: M1 MacBook (deatrin)
+- **[tynan](darwin/tynan/README.md)**: M1 Pro MacBook (deatrin)
   - aarch64-darwin (Apple Silicon)
-  - Opnix secrets management (system-level)
-  - Different dock configuration
+  - Opnix secrets management
 
 ## Adding a New Host
 

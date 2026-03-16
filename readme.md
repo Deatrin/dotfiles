@@ -6,13 +6,13 @@ Personal NixOS and nix-darwin configuration managing multiple systems with decla
 
 This repository uses:
 - **Nix Flakes** with **flake-parts** for modular organization
-- **NixOS** (3 hosts) and **nix-darwin** (4 hosts) for system configuration
+- **NixOS** (2 hosts) and **nix-darwin** (2 hosts) for system configuration
 - **home-manager** for user-level configuration (integrated into system rebuilds)
 - **opnix** for 1Password secrets management
 - **Hyprland** for desktop environments on NixOS hosts
 - **Neovim** configured with [nvf](https://github.com/NotAShelf/nvf)
 - **Ghostty** terminal across all platforms
-- **Dracula** color scheme via nix-colors
+- **Tokyo Night Dark** color scheme
 
 ## Quick Start
 
@@ -33,7 +33,7 @@ nh os switch
 ```bash
 darwin-rebuild switch --flake .#<hostname>
 # or with nh (recommended)
-nh home switch
+nh darwin switch
 ```
 
 ### Flake Management
@@ -52,19 +52,16 @@ nix flake check
 
 | Host | Platform | Type | User | README |
 |------|----------|------|------|--------|
-| nauvoo | NixOS (x86_64) | VM | deatrin | [README](hosts/nixos/nauvoo/README.md) |
-| razerback | NixOS (x86_64) | Laptop | deatrin | [README](hosts/nixos/razerback/README.md) |
+| nauvoo | NixOS (x86_64) | Proxmox VM | deatrin | [README](hosts/nixos/nauvoo/README.md) |
 | tycho | NixOS (x86_64) | Laptop | deatrin | [README](hosts/nixos/tycho/README.md) |
-| barkeith | macOS (x86_64) | MacBook Pro | ajennex | [README](hosts/darwin/barkeith/README.md) |
-| chetzemoka | macOS (aarch64) | MacBook Air | ajennex | [README](hosts/darwin/chetzemoka/README.md) |
 | donnager | macOS (x86_64) | iMac Pro | ajennex | [README](hosts/darwin/donnager/README.md) |
-| tynan | macOS (aarch64) | MacBook | deatrin | [README](hosts/darwin/tynan/README.md) |
+| tynan | macOS (aarch64) | MacBook Pro | deatrin | [README](hosts/darwin/tynan/README.md) |
 
 ## Structure
 
 - **Root files**
   - [flake.nix](flake.nix) - Minimal orchestrator that imports flake-parts modules
-  - [flake.lock](flake.lock) - Lockfile for dependency versions (updated daily via GitHub Actions)
+  - [flake.lock](flake.lock) - Lockfile for dependency versions
   - [CLAUDE.md](CLAUDE.md) - Comprehensive documentation for development and architecture
 - **[flake/](flake/)** - Flake-parts modules for modular flake organization
   - [hosts.nix](flake/hosts.nix) - Single source of truth for all host metadata
@@ -81,22 +78,20 @@ nix flake check
     - [desktop/](home-manager/common/features/desktop/) - Desktop environment (Hyprland, rofi, theming)
     - [dev/](home-manager/common/features/dev/) - Development environment configurations
     - [kubernetes/](home-manager/common/features/kubernetes/) - Kubernetes tooling (k9s, kubectl)
-  - [darwin/](home-manager/darwin/) - macOS user configurations (barkeith.nix, chetzemoka.nix, donnager.nix, tynan.nix)
-  - [nixos/](home-manager/nixos/) - NixOS user configurations (deatrin_nauvoo.nix, deatrin_razerback.nix, deatrin_tycho.nix)
+  - [darwin/](home-manager/darwin/) - macOS user configurations (donnager.nix, tynan.nix)
+  - [nixos/](home-manager/nixos/) - NixOS user configurations (deatrin_nauvoo.nix, deatrin_tycho.nix)
 - **[hosts/](hosts/README.md)** - Machine-level configuration
   - [common/darwin/](hosts/common/darwin/) - Shared macOS configuration (defaults, homebrew)
   - [common/nixos/](hosts/common/nixos/) - Shared NixOS configuration (locale, nix, openssh, tailscale)
-  - [common/optional/](hosts/common/optional/) - Optional modules (docker, podman, fonts, plex, jellyseerr)
-  - [common/containers/](hosts/common/containers/) - Docker compose configurations
-  - [darwin/](hosts/darwin/) - Per-host macOS configurations (barkeith, chetzemoka, donnager, tynan)
-  - [nixos/](hosts/nixos/) - Per-host NixOS configurations (nauvoo, razerback, tycho)
-  - [VMtemplate/](hosts/VMtemplate/) - Template for VM setup
+  - [common/optional/](hosts/common/optional/) - Optional modules (podman, quadlet, fonts, greetd, etc.)
+  - [common/optional/containers/](hosts/common/optional/containers/) - Podman Quadlet container definitions
+  - [darwin/](hosts/darwin/) - Per-host macOS configurations (donnager, tynan)
+  - [nixos/](hosts/nixos/) - Per-host NixOS configurations (nauvoo, tycho)
+  - [VMtemplate/](hosts/VMtemplate/) - Template for quick VM deployment
 - **[modules/](modules/)** - Custom NixOS and home-manager modules
 - **[overlays/](overlays/)** - Custom package overlays including unstable packages
 - **[pkgs/](pkgs/)** - Custom packages not available in nixpkgs
-- **[backup/](backup/)** - Migration artifacts and old configurations (e.g., agenix migration)
 - **[keys/](keys/)** - Public GPG keys
-- **[wallpapers/](wallpapers/)** - Default wallpapers
 
 ## References
 
