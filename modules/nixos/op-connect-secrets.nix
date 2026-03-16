@@ -75,7 +75,7 @@
       ${lib.concatMapStrings (s: ''
         echo "Fetching: ${s.value.reference} -> ${s.value.path}"
         mkdir -p "$(dirname "${s.value.path}")"
-        op read "${s.value.reference}" --out-file "${s.value.path}"
+        op read "${s.value.reference}" --force --out-file "${s.value.path}"
         chown "${s.value.owner}:${s.value.group}" "${s.value.path}"
         chmod "${s.value.mode}" "${s.value.path}"
       '') (lib.attrsToList cfg.secrets)}
