@@ -573,7 +573,7 @@ in {
         autoUpdate = "registry";
         networks = [networks.monitoring_network.ref];
         user = "root";
-        exec = "--metrics.enhanced=true";
+        exec = "--enhanced";
         volumes = ["/run/podman/podman.sock:/run/podman/podman.sock"];
         environments = {
           CONTAINER_HOST = "unix:///run/podman/podman.sock";
