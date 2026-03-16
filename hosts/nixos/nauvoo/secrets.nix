@@ -214,23 +214,16 @@
         group = "root";
         mode = "0600";
       };
-      makersVaultUsername = {
-        path = "/run/opnix/makersvault-username";
-        reference = "op://nix_secrets/makervault/username";
+      manyfoldDbPassword = {
+        path = "/run/opnix/manyfold-db-password";
+        reference = "op://nix_secrets/ManyFold/db_password";
         owner = "root";
         group = "root";
         mode = "0600";
       };
-      makersVaultPassword = {
-        path = "/run/opnix/makersvault-password";
-        reference = "op://nix_secrets/makervault/password";
-        owner = "root";
-        group = "root";
-        mode = "0600";
-      };
-      makersVaultSecretKey = {
-        path = "/run/opnix/makersvault-secret-key";
-        reference = "op://nix_secrets/makervault/secret_key";
+      manyfoldSecretKeyBase = {
+        path = "/run/opnix/manyfold-secret-key-base";
+        reference = "op://nix_secrets/ManyFold/secret_key_base";
         owner = "root";
         group = "root";
         mode = "0600";
