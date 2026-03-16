@@ -125,6 +125,7 @@ in {
         RemainAfterExit = true;
         TimeoutStartSec = "180";
         ExecStart = lib.getExe fetchScript;
+        Environment = "HOME=/root";
       };
     };
 
