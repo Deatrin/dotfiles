@@ -426,7 +426,7 @@
           "targets": [
             {
               "datasource": { "type": "loki", "uid": "loki" },
-              "expr": "{job=\"systemd-journal\",host=\"nauvoo\"} |~ \"$container\"",
+              "expr": "{job=\"systemd-journal\",host=\"nauvoo\",unit=~\"$container.*\"}",
               "refId": "A"
             }
           ],
