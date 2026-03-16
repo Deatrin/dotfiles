@@ -19,7 +19,7 @@
   domain = "manyfold.jennex.dev";
 in {
   systemd.tmpfiles.rules = [
-    "d /storage/media/manyfold/models 0755 root root -"
+    "d /storage/media/manyfold/models 0755 1000 1000 -"
   ];
 
   systemd.services.manyfold-env-setup = {

@@ -120,11 +120,6 @@ in {
           "/storage/media/downloads/sabnzbd:/downloads"
         ];
         labels = [
-          "homepage.group=Downloads"
-          "homepage.name=Whisparr"
-          "homepage.icon=whisparr.png"
-          "homepage.href=https://whisparr.jennex.dev"
-          "homepage.description=Shhhh"
           "traefik.enable=true"
           "traefik.http.routers.whisparr.rule=Host(`whisparr.jennex.dev`)"
           "traefik.http.routers.whisparr-secure.entrypoints=https"
