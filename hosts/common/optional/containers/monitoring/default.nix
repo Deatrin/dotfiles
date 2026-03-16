@@ -71,34 +71,6 @@
       reject_old_samples_max_age: 168h
   '';
 
-  promtailConfig = pkgs.writeText "promtail-config.yaml" ''
-    server:
-      http_listen_port: 9080
-      grpc_listen_port: 0
-
-    positions:
-      filename: /tmp/positions.yaml
-
-    clients:
-      - url: http://monitoring-loki:3100/loki/api/v1/push
-
-    scrape_configs:
-      - job_name: journal
-        journal:
-          max_age: 12h
-          labels:
-            job: systemd-journal
-            host: nauvoo
-        relabel_configs:
-          - source_labels: ['__journal__systemd_unit']
-            target_label: unit
-          - source_labels: ['__journal__hostname']
-            target_label: hostname
-          - source_labels: ['__journal__container_name']
-            target_label: container
-          - source_labels: ['__journal__image_name']
-            target_label: image
-  '';
 
   grafanaDashboardProvider = pkgs.writeText "dashboards-provider.yaml" ''
     apiVersion: 1
@@ -542,6 +514,7 @@ in {
         image = "docker.io/grafana/loki:latest";
         autoUpdate = "registry";
         networks = [networks.monitoring_network.ref];
+        publishPorts = ["127.0.0.1:3100:3100"];
         volumes = [
           "${lokiConfig}:/etc/loki/local-config.yaml:ro"
           "${volumes.monitoring-loki.ref}:/loki"
@@ -549,23 +522,6 @@ in {
       };
     };
 
-    containers.monitoring-promtail = {
-      unitConfig = {
-        After = ["monitoring-loki.service"];
-        Requires = ["monitoring-loki.service"];
-      };
-      containerConfig = {
-        image = "docker.io/grafana/promtail:latest";
-        autoUpdate = "registry";
-        networks = [networks.monitoring_network.ref];
-        volumes = [
-          "${promtailConfig}:/etc/promtail/config.yml:ro"
-          "/var/log/journal:/var/log/journal:ro"
-          "/run/log/journal:/run/log/journal:ro"
-          "/etc/machine-id:/etc/machine-id:ro"
-        ];
-      };
-    };
 
     containers.monitoring-podman-exporter = {
       containerConfig = {
@@ -671,5 +627,41 @@ in {
     enable = true;
     port = 9100;
     openFirewall = true;
+  };
+
+  # Promtail runs as a NixOS service — the Docker image lacks systemd journal support
+  services.promtail = {
+    enable = true;
+    configuration = {
+      server = {
+        http_listen_port = 9080;
+        grpc_listen_port = 0;
+      };
+      positions.filename = "/var/lib/promtail/positions.yaml";
+      clients = [{url = "http://127.0.0.1:3100/loki/api/v1/push";}];
+      scrape_configs = [
+        {
+          job_name = "journal";
+          journal = {
+            max_age = "12h";
+            labels = {
+              job = "systemd-journal";
+              host = "nauvoo";
+            };
+          };
+          relabel_configs = [
+            {source_labels = ["__journal__systemd_unit"]; target_label = "unit";}
+            {source_labels = ["__journal__hostname"]; target_label = "hostname";}
+            {source_labels = ["__journal__container_name"]; target_label = "container";}
+            {source_labels = ["__journal__image_name"]; target_label = "image";}
+          ];
+        }
+      ];
+    };
+  };
+
+  systemd.services.promtail = {
+    after = ["monitoring-loki.service"];
+    wants = ["monitoring-loki.service"];
   };
 }
