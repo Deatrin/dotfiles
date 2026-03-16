@@ -86,6 +86,10 @@
             target_label: unit
           - source_labels: ['__journal__hostname']
             target_label: hostname
+          - source_labels: ['__journal__container_name']
+            target_label: container
+          - source_labels: ['__journal__image_name']
+            target_label: image
   '';
 
   grafanaDatasources = pkgs.writeText "datasources.yaml" ''

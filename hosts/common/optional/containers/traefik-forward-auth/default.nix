@@ -55,7 +55,7 @@ in {
         PROVIDERS_OIDC_ISSUER_URL = "https://pocket.jennex.dev";
         AUTH_HOST = "auth.jennex.dev";
         COOKIE_DOMAIN = "jennex.dev";
-        LOG_LEVEL = "trace";
+        LOG_LEVEL = "warn";
       };
       environmentFiles = ["/run/opnix/traefik-forward-auth-env"];
       labels = [

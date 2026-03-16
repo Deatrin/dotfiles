@@ -7,6 +7,10 @@
     inputs.quadlet-nix.nixosModules.quadlet
   ];
 
+  # Use journald log driver so all container logs flow through systemd journal
+  # and are picked up by Promtail → Loki
+  virtualisation.containers.containersConf.settings.containers.log_driver = "journald";
+
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
