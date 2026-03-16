@@ -101,6 +101,11 @@
         --exclude='docker/' \
         || fail "/var/lib rsync" $?
 
+      # Ensure all snapshot directories are browsable (rsync preserves source perms)
+      "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
+        "find $SNAPSHOT -type d -exec chmod 755 {} +" \
+        || fail "fixing snapshot directory permissions" $?
+
       # Update latest symlink
       "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
         "ln -sfn $SNAPSHOT $LATEST" \
