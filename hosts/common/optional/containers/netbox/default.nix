@@ -121,6 +121,7 @@ in {
             printf 'SUPERUSER_PASSWORD=%s\n'     "$(cat /run/opnix/netbox-superuser-password)"
             printf 'SUPERUSER_EMAIL=%s\n'        "$(cat /run/opnix/netbox-superuser-email)"
             printf 'SUPERUSER_API_TOKEN=%s\n'    "$(cat /run/opnix/netbox-superuser-api-token)"
+            printf 'API_TOKEN_PEPPERS=%s\n'      "$(cat /run/opnix/netbox-api-token-peppers)"
           } > /run/opnix/netbox-app-env
           chmod 600 /run/opnix/netbox-app-env
         '';

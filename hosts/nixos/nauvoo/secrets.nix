@@ -330,6 +330,13 @@
         group = "root";
         mode = "0600";
       };
+      netboxApiTokenPeppers = {
+        path = "/run/opnix/netbox-api-token-peppers";
+        reference = "op://nix_secrets/netbox/api_token_peppers";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
       pushoverPodmanToken = {
         path = "/run/opnix/pushover-podman-token";
         reference = "op://nix_secrets/Pushover/podmanToken";
