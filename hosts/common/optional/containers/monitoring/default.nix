@@ -339,7 +339,7 @@
               "datasource": { "type": "prometheus", "uid": "prometheus" },
               "expr": "sort_desc(sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100)",
               "instant": true,
-              "legendFormat": "{{name}}",
+              "legendFormat": "{{name}}{{id}}",
               "refId": "A"
             }
           ],
@@ -376,7 +376,7 @@
               "datasource": { "type": "prometheus", "uid": "prometheus" },
               "expr": "sort_desc(podman_container_mem_usage_bytes{name=~\"$container\"})",
               "instant": true,
-              "legendFormat": "{{name}}",
+              "legendFormat": "{{name}}{{id}}",
               "refId": "A"
             }
           ],
@@ -404,7 +404,7 @@
             {
               "datasource": { "type": "prometheus", "uid": "prometheus" },
               "expr": "sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100",
-              "legendFormat": "{{name}}",
+              "legendFormat": "{{name}}{{id}}",
               "refId": "A"
             }
           ],
@@ -426,7 +426,7 @@
           "targets": [
             {
               "datasource": { "type": "loki", "uid": "loki" },
-              "expr": "{job=\"systemd-journal\",host=\"nauvoo\",container=~\"$container\"}",
+              "expr": "{job=\"systemd-journal\",host=\"nauvoo\"} |~ \"$container\"",
               "refId": "A"
             }
           ],
@@ -573,6 +573,7 @@ in {
         autoUpdate = "registry";
         networks = [networks.monitoring_network.ref];
         user = "root";
+        exec = "--metrics.enhanced=true";
         volumes = ["/run/podman/podman.sock:/run/podman/podman.sock"];
         environments = {
           CONTAINER_HOST = "unix:///run/podman/podman.sock";
