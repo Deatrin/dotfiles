@@ -25,9 +25,8 @@
   inherit (config.virtualisation.quadlet) networks volumes;
   domain = "netbox.jennex.dev";
   extraPy = pkgs.writeText "netbox-extra.py" ''
-    import json
     with open('/run/opnix/netbox-api-token-peppers') as f:
-        API_TOKEN_PEPPERS = json.loads(f.read().strip())
+        API_TOKEN_PEPPERS = {"1": f.read().strip()}
   '';
 in {
   systemd.tmpfiles.rules = [
