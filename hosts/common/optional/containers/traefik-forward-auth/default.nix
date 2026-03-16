@@ -64,6 +64,7 @@ in {
         "traefik.http.routers.forward-auth-secure.entrypoints=https"
         "traefik.http.routers.forward-auth-secure.rule=Host(`auth.jennex.dev`)"
         "traefik.http.routers.forward-auth-secure.tls=true"
+        "traefik.http.routers.forward-auth-secure.middlewares=forward-auth"
         "traefik.http.services.forward-auth.loadbalancer.server.port=4181"
         # Shared forward-auth middleware — usable by any Traefik router
         "traefik.http.middlewares.forward-auth.forwardauth.address=http://traefik-forward-auth:4181"
