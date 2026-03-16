@@ -28,6 +28,14 @@
       - job_name: unifipoller
         static_configs:
           - targets: ['monitoring-unpoller:9130']
+
+      - job_name: node
+        static_configs:
+          - targets: ['10.1.30.100:9100']
+
+      - job_name: podman
+        static_configs:
+          - targets: ['monitoring-podman-exporter:9882']
   '';
 
   lokiConfig = pkgs.writeText "loki-config.yaml" ''
@@ -90,6 +98,374 @@
             target_label: container
           - source_labels: ['__journal__image_name']
             target_label: image
+  '';
+
+  grafanaDashboardProvider = pkgs.writeText "dashboards-provider.yaml" ''
+    apiVersion: 1
+    providers:
+      - name: provisioned
+        type: file
+        disableDeletion: false
+        allowUiUpdates: true
+        updateIntervalSeconds: 60
+        options:
+          path: /etc/grafana/provisioning/dashboards
+  '';
+
+  grafanaDashboardNauvoo = pkgs.writeText "nauvoo-overview.json" ''
+    {
+      "annotations": { "list": [] },
+      "editable": true,
+      "graphTooltip": 1,
+      "links": [],
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "lineWidth": 2, "fillOpacity": 10 },
+              "unit": "percent",
+              "min": 0,
+              "max": 100
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 0 },
+          "id": 1,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "single" }
+          },
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "100 - (avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+              "legendFormat": "CPU %",
+              "refId": "A"
+            }
+          ],
+          "title": "CPU Usage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "lineWidth": 2, "fillOpacity": 10 },
+              "unit": "percent",
+              "min": 0,
+              "max": 100
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 8 },
+          "id": 2,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "single" }
+          },
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
+              "legendFormat": "Memory %",
+              "refId": "A"
+            }
+          ],
+          "title": "Memory Usage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "lineWidth": 2, "fillOpacity": 5 },
+              "unit": "binBps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 16 },
+          "id": 3,
+          "options": {
+            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi" }
+          },
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "irate(node_network_receive_bytes_total{device!~\"lo|veth.*|br-.*\"}[5m])",
+              "legendFormat": "RX {{device}}",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "irate(node_network_transmit_bytes_total{device!~\"lo|veth.*|br-.*\"}[5m])",
+              "legendFormat": "TX {{device}}",
+              "refId": "B"
+            }
+          ],
+          "title": "Network I/O",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "lineWidth": 2, "fillOpacity": 5 },
+              "unit": "binBps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 24 },
+          "id": 4,
+          "options": {
+            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi" }
+          },
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "irate(node_disk_read_bytes_total{device!~\"sr.*|loop.*\"}[5m])",
+              "legendFormat": "Read {{device}}",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "irate(node_disk_written_bytes_total{device!~\"sr.*|loop.*\"}[5m])",
+              "legendFormat": "Write {{device}}",
+              "refId": "B"
+            }
+          ],
+          "title": "Disk I/O",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "gridPos": { "h": 32, "w": 16, "x": 8, "y": 0 },
+          "id": 5,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "targets": [
+            {
+              "datasource": { "type": "loki", "uid": "loki" },
+              "expr": "{job=\"systemd-journal\",host=\"nauvoo\",unit=~\"$unit\"}",
+              "refId": "A"
+            }
+          ],
+          "title": "Logs",
+          "type": "logs"
+        }
+      ],
+      "refresh": "30s",
+      "schemaVersion": 38,
+      "tags": ["nauvoo", "system"],
+      "templating": {
+        "list": [
+          {
+            "allValue": ".*",
+            "current": {},
+            "datasource": { "type": "loki", "uid": "loki" },
+            "definition": "label_values({job=\"systemd-journal\",host=\"nauvoo\"}, unit)",
+            "hide": 0,
+            "includeAll": true,
+            "label": "Unit",
+            "multi": false,
+            "name": "unit",
+            "options": [],
+            "query": {
+              "label": "unit",
+              "queryType": "labelValues",
+              "refId": "StandardVariableQuery",
+              "stream": "{job=\"systemd-journal\",host=\"nauvoo\"}"
+            },
+            "refresh": 2,
+            "type": "query"
+          }
+        ]
+      },
+      "time": { "from": "now-1h", "to": "now" },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "Nauvoo Overview",
+      "uid": "nauvoo-overview",
+      "version": 1
+    }
+  '';
+
+  grafanaDashboardContainers = pkgs.writeText "containers-overview.json" ''
+    {
+      "annotations": { "list": [] },
+      "editable": true,
+      "graphTooltip": 1,
+      "links": [],
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "continuous-BlPu" },
+              "unit": "percent",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 50 },
+                  { "color": "red", "value": 80 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 9, "w": 8, "x": 0, "y": 0 },
+          "id": 1,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "text": {}
+          },
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "sort_desc(sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100)",
+              "instant": true,
+              "legendFormat": "{{name}}",
+              "refId": "A"
+            }
+          ],
+          "title": "CPU Usage",
+          "type": "bargauge"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "continuous-BlPu" },
+              "unit": "bytes",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 536870912 },
+                  { "color": "red", "value": 1073741824 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 9, "w": 8, "x": 0, "y": 9 },
+          "id": 2,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "horizontal",
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "text": {}
+          },
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "sort_desc(podman_container_mem_usage_bytes{name=~\"$container\"})",
+              "instant": true,
+              "legendFormat": "{{name}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Memory Usage",
+          "type": "bargauge"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "lineWidth": 2, "fillOpacity": 10 },
+              "unit": "percent",
+              "min": 0
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 10, "w": 8, "x": 0, "y": 18 },
+          "id": 3,
+          "options": {
+            "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi" }
+          },
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100",
+              "legendFormat": "{{name}}",
+              "refId": "A"
+            }
+          ],
+          "title": "CPU Over Time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "loki", "uid": "loki" },
+          "gridPos": { "h": 28, "w": 16, "x": 8, "y": 0 },
+          "id": 4,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showTime": true,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "targets": [
+            {
+              "datasource": { "type": "loki", "uid": "loki" },
+              "expr": "{job=\"systemd-journal\",host=\"nauvoo\",container=~\"$container\"}",
+              "refId": "A"
+            }
+          ],
+          "title": "Container Logs",
+          "type": "logs"
+        }
+      ],
+      "refresh": "30s",
+      "schemaVersion": 38,
+      "tags": ["nauvoo", "containers"],
+      "templating": {
+        "list": [
+          {
+            "allValue": ".*",
+            "current": {},
+            "datasource": { "type": "prometheus", "uid": "prometheus" },
+            "definition": "label_values(podman_container_cpu_seconds_total, name)",
+            "hide": 0,
+            "includeAll": true,
+            "label": "Container",
+            "multi": true,
+            "name": "container",
+            "options": [],
+            "query": {
+              "query": "label_values(podman_container_cpu_seconds_total, name)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 2,
+            "type": "query"
+          }
+        ]
+      },
+      "time": { "from": "now-1h", "to": "now" },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "Container Resources",
+      "uid": "container-overview",
+      "version": 1
+    }
   '';
 
   grafanaDatasources = pkgs.writeText "datasources.yaml" ''
@@ -191,6 +567,18 @@ in {
       };
     };
 
+    containers.monitoring-podman-exporter = {
+      containerConfig = {
+        image = "quay.io/navidys/prometheus-podman-exporter:latest";
+        autoUpdate = "registry";
+        networks = [networks.monitoring_network.ref];
+        volumes = ["/run/podman/podman.sock:/run/podman/podman.sock"];
+        environments = {
+          CONTAINER_HOST = "unix:///run/podman/podman.sock";
+        };
+      };
+    };
+
     containers.monitoring-unpoller = {
       unitConfig = {
         After = ["opnix-secrets.service" "monitoring-env-setup.service"];
@@ -255,6 +643,9 @@ in {
         volumes = [
           "${volumes.monitoring-grafana.ref}:/var/lib/grafana"
           "${grafanaDatasources}:/etc/grafana/provisioning/datasources/datasources.yaml:ro"
+          "${grafanaDashboardProvider}:/etc/grafana/provisioning/dashboards/provider.yaml:ro"
+          "${grafanaDashboardNauvoo}:/etc/grafana/provisioning/dashboards/nauvoo-overview.json:ro"
+          "${grafanaDashboardContainers}:/etc/grafana/provisioning/dashboards/containers-overview.json:ro"
         ];
         labels = [
           "homepage.group=Network"
@@ -271,5 +662,12 @@ in {
         ];
       };
     };
+  };
+
+  # node_exporter runs on the host so Prometheus can scrape system metrics
+  services.prometheus.exporters.node = {
+    enable = true;
+    port = 9100;
+    openFirewall = true;
   };
 }
