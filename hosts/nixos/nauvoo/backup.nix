@@ -62,10 +62,8 @@
       pushover "Backup Starting — nauvoo" "Syncing /var/lib to TrueNAS ($DATE)"
 
       # Build link-dest args (skip if no previous snapshot exists)
-      LINK_STORAGE=""
       LINK_VARLIB=""
       if $SSH_CMD "$TRUENAS_USER@$TRUENAS_HOST" "test -e $LATEST" 2>/dev/null; then
-        LINK_STORAGE="--link-dest=$LATEST/storage"
         LINK_VARLIB="--link-dest=$LATEST/var-lib"
       fi
 
@@ -89,7 +87,7 @@ in {
   systemd.services.nauvoo-backup = {
     description = "Nauvoo → TrueNAS rsync backup";
     after = ["network-online.target" "opnix-secrets.service"];
-    requires = ["opnix-secrets.service"];
+    requires = ["network-online.target" "opnix-secrets.service"];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = lib.getExe backupScript;
