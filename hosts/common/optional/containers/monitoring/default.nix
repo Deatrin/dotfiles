@@ -223,6 +223,8 @@
             "dedupStrategy": "none",
             "enableLogDetails": true,
             "prettifyLogMessage": false,
+            "showLabels": true,
+            "showCommonLabels": false,
             "showTime": true,
             "sortOrder": "Descending",
             "wrapLogMessage": false
@@ -391,6 +393,8 @@
             "dedupStrategy": "none",
             "enableLogDetails": true,
             "prettifyLogMessage": false,
+            "showLabels": true,
+            "showCommonLabels": false,
             "showTime": true,
             "sortOrder": "Descending",
             "wrapLogMessage": false
