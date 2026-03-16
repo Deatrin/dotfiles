@@ -42,7 +42,7 @@
         local link_dest_arg="$3"
         shift 3
         # shellcheck disable=SC2086
-        rsync -az --delete --no-owner --no-group \
+        rsync -az --delete --no-owner --no-group --no-perms --chmod=D755 \
           -e "''${SSH_CMD[*]}" \
           $link_dest_arg \
           "$@" \
