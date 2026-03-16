@@ -12,8 +12,9 @@
 #     latest               → symlink to most recent snapshot
 #     snapshots/
 #       YYYY-MM-DD/
-#         storage/
-#         var-lib/
+#         podman-volumes/  ← named volume data (/var/lib/containers/storage/volumes/)
+#         var-lib/         ← other /var/lib state (nextcloud, syncthing, etc.)
+#         storage/         ← /storage/ large media (disabled until podman-volumes verified)
 {pkgs, lib, ...}: let
   truenasUser = "truenas_admin";
   truenasHost = "10.1.20.45";
@@ -33,8 +34,21 @@
       SNAPSHOT="$TRUENAS_BASE/snapshots/$DATE"
       LATEST="$TRUENAS_BASE/latest"
 
-      SSH_CMD="ssh -i $SSH_KEY -o StrictHostKeyChecking=accept-new -o BatchMode=yes"
-      RSYNC_SSH="rsync -az --delete --numeric-ids -e '$SSH_CMD'"
+      SSH_CMD=(ssh -i "$SSH_KEY" -o StrictHostKeyChecking=accept-new -o BatchMode=yes)
+
+      rsync_to() {
+        local src="$1"
+        local dest_suffix="$2"
+        local link_dest_arg="$3"
+        shift 3
+        # shellcheck disable=SC2086
+        rsync -az --delete --numeric-ids \
+          -e "${SSH_CMD[*]}" \
+          $link_dest_arg \
+          "$@" \
+          "$src" \
+          "$TRUENAS_USER@$TRUENAS_HOST:$SNAPSHOT/$dest_suffix/"
+      }
 
       pushover() {
         local title="$1"
@@ -54,37 +68,49 @@
       }
 
       # Check TrueNAS is reachable
-      if ! $SSH_CMD -o ConnectTimeout=10 "$TRUENAS_USER@$TRUENAS_HOST" true 2>/dev/null; then
+      if ! "${SSH_CMD[@]}" -o ConnectTimeout=10 "$TRUENAS_USER@$TRUENAS_HOST" true 2>/dev/null; then
         pushover "Backup Error — nauvoo" "Cannot reach TrueNAS at $TRUENAS_HOST — is it online?"
         exit 1
       fi
 
-      pushover "Backup Starting — nauvoo" "Syncing /var/lib to TrueNAS ($DATE)"
+      pushover "Backup Starting — nauvoo" "Syncing podman volumes + /var/lib state to TrueNAS ($DATE)"
 
       # Build link-dest args (skip if no previous snapshot exists)
+      LINK_VOLUMES=""
       LINK_VARLIB=""
-      if $SSH_CMD "$TRUENAS_USER@$TRUENAS_HOST" "test -e $LATEST" 2>/dev/null; then
+      if "${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" "test -e $LATEST" 2>/dev/null; then
+        LINK_VOLUMES="--link-dest=$LATEST/podman-volumes"
         LINK_VARLIB="--link-dest=$LATEST/var-lib"
       fi
 
-      # Sync /storage (disabled for initial testing — re-enable once /var/lib is verified)
-      # eval "$RSYNC_SSH $LINK_STORAGE /storage/ $TRUENAS_USER@$TRUENAS_HOST:$SNAPSHOT/storage/" \
-      #   || fail "/storage rsync" $?
+      # Create snapshot directories on TrueNAS
+      "${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
+        "mkdir -p $SNAPSHOT/podman-volumes $SNAPSHOT/var-lib" \
+        || fail "creating snapshot directories" $?
 
-      # Create snapshot directory on TrueNAS
-      $SSH_CMD "$TRUENAS_USER@$TRUENAS_HOST" "mkdir -p $SNAPSHOT/var-lib" \
-        || fail "creating snapshot directory" $?
+      # Sync named volumes (the actual persistent data — no overlay2 layer cache here)
+      rsync_to /var/lib/containers/storage/volumes/ podman-volumes "$LINK_VOLUMES" \
+        || fail "podman-volumes rsync" $?
 
-      # Sync /var/lib
-      eval "$RSYNC_SSH $LINK_VARLIB /var/lib/ $TRUENAS_USER@$TRUENAS_HOST:$SNAPSHOT/var-lib/" \
+      # Sync other /var/lib state (nextcloud, syncthing, netbox tmpfiles, etc.)
+      # Excludes container image layers and overlay filesystems — only regular files
+      rsync_to /var/lib/ var-lib "$LINK_VARLIB" \
+        --exclude='containers/storage/overlay/' \
+        --exclude='containers/storage/overlay-images/' \
+        --exclude='containers/storage/overlay-layers/' \
+        --exclude='docker/' \
         || fail "/var/lib rsync" $?
 
       # Update latest symlink
-      $SSH_CMD "$TRUENAS_USER@$TRUENAS_HOST" \
+      "${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
         "ln -sfn $SNAPSHOT $LATEST" \
         || fail "updating latest symlink" $?
 
-      pushover "Backup Finished — nauvoo" "Snapshot $DATE complete. /var/lib synced to TrueNAS."
+      # Sync /storage (disabled — re-enable once podman-volumes verified)
+      # rsync_to /storage/ storage "$LINK_STORAGE" \
+      #   || fail "/storage rsync" $?
+
+      pushover "Backup Finished — nauvoo" "Snapshot $DATE complete. Podman volumes + /var/lib synced to TrueNAS."
     '';
   };
 in {
