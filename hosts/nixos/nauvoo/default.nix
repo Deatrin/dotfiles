@@ -13,6 +13,7 @@
     ../../common/nixos
     ../../common/nixos/users/deatrin
     # ../../common/optional/docker.nix  # removed — replaced by quadlet
+    ./backup.nix
     ./containers.nix
     ../../common/optional/jellyfin.nix
     ../../common/optional/plex.nix

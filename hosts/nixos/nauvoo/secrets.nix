@@ -351,6 +351,20 @@
         group = "root";
         mode = "0600";
       };
+      pushoverBackupToken = {
+        path = "/run/opnix/pushover-backup-token";
+        reference = "op://nix_secrets/Pushover/nauvooBackup";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      truenasPrivateKey = {
+        path = "/run/opnix/truenas-private-key";
+        reference = "op://nix_secrets/truenas/private key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {
