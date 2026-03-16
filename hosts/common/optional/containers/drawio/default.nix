@@ -9,7 +9,7 @@ in {
       labels = [
         "homepage.group=Dev & Games"
         "homepage.name=draw.io"
-        "homepage.icon=drawio.png"
+        "homepage.icon=si-diagramsdotnet"
         "homepage.href=https://drawio.jennex.dev"
         "homepage.description=Diagramming and whiteboarding"
         "traefik.enable=true"
