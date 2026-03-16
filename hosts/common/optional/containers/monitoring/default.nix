@@ -629,6 +629,10 @@ in {
     openFirewall = true;
   };
 
+  systemd.tmpfiles.rules = [
+    "d /var/lib/promtail 0750 promtail promtail -"
+  ];
+
   # Promtail runs as a NixOS service — the Docker image lacks systemd journal support
   services.promtail = {
     enable = true;
