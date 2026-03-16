@@ -339,7 +339,7 @@
               "datasource": { "type": "prometheus", "uid": "prometheus" },
               "expr": "sort_desc(sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100)",
               "instant": true,
-              "legendFormat": "{{name}}{{id}}",
+              "legendFormat": "{{name}}",
               "refId": "A"
             }
           ],
@@ -376,7 +376,7 @@
               "datasource": { "type": "prometheus", "uid": "prometheus" },
               "expr": "sort_desc(podman_container_mem_usage_bytes{name=~\"$container\"})",
               "instant": true,
-              "legendFormat": "{{name}}{{id}}",
+              "legendFormat": "{{name}}",
               "refId": "A"
             }
           ],
@@ -404,7 +404,7 @@
             {
               "datasource": { "type": "prometheus", "uid": "prometheus" },
               "expr": "sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100",
-              "legendFormat": "{{name}}{{id}}",
+              "legendFormat": "{{name}}",
               "refId": "A"
             }
           ],
