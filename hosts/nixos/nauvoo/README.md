@@ -39,6 +39,8 @@ All containers managed via Podman Quadlet. Modules in `hosts/common/optional/con
 | syncthing | File sync | syncthing.jennex.dev |
 | netbox | Network documentation | netbox.jennex.dev |
 | it-tools | Developer utilities | it-tools.jennex.dev |
+| drawio | Diagramming | drawio.jennex.dev |
+| excalidraw | Virtual whiteboard | excalidraw.jennex.dev |
 | monitoring | Prometheus + Grafana + Loki + UnPoller | grafana.jennex.dev |
 | op-connect | 1Password Connect server | localhost:8080 only |
 

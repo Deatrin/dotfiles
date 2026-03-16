@@ -223,6 +223,7 @@ in {
           REDIS_CACHE_INSECURE_SKIP_TLS_VERIFY = "false";
           SKIP_SUPERUSER = "false";
           CORS_ORIGIN_ALLOW_ALL = "True";
+          CSRF_TRUSTED_ORIGINS = "https://${domain}";
           TZ = "America/Los_Angeles";
         };
         environmentFiles = ["/run/opnix/netbox-app-env"];
