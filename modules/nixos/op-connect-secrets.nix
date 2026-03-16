@@ -49,7 +49,7 @@
 
   fetchScript = pkgs.writeShellApplication {
     name = "op-connect-secrets-fetch";
-    runtimeInputs = [pkgs._1password pkgs.curl pkgs.coreutils];
+    runtimeInputs = [pkgs._1password-cli pkgs.curl pkgs.coreutils];
     text = ''
       # Wait for Connect API to be healthy
       MAX_WAIT=120
