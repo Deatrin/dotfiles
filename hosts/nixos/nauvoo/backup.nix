@@ -71,6 +71,10 @@
       # eval "$RSYNC_SSH $LINK_STORAGE /storage/ $TRUENAS_USER@$TRUENAS_HOST:$SNAPSHOT/storage/" \
       #   || fail "/storage rsync" $?
 
+      # Create snapshot directory on TrueNAS
+      $SSH_CMD "$TRUENAS_USER@$TRUENAS_HOST" "mkdir -p $SNAPSHOT/var-lib" \
+        || fail "creating snapshot directory" $?
+
       # Sync /var/lib
       eval "$RSYNC_SSH $LINK_VARLIB /var/lib/ $TRUENAS_USER@$TRUENAS_HOST:$SNAPSHOT/var-lib/" \
         || fail "/var/lib rsync" $?
