@@ -43,7 +43,7 @@
         shift 3
         # shellcheck disable=SC2086
         rsync -az --delete --numeric-ids \
-          -e "${SSH_CMD[*]}" \
+          -e "''${SSH_CMD[*]}" \
           $link_dest_arg \
           "$@" \
           "$src" \
@@ -68,7 +68,7 @@
       }
 
       # Check TrueNAS is reachable
-      if ! "${SSH_CMD[@]}" -o ConnectTimeout=10 "$TRUENAS_USER@$TRUENAS_HOST" true 2>/dev/null; then
+      if ! "''${SSH_CMD[@]}" -o ConnectTimeout=10 "$TRUENAS_USER@$TRUENAS_HOST" true 2>/dev/null; then
         pushover "Backup Error — nauvoo" "Cannot reach TrueNAS at $TRUENAS_HOST — is it online?"
         exit 1
       fi
@@ -78,13 +78,13 @@
       # Build link-dest args (skip if no previous snapshot exists)
       LINK_VOLUMES=""
       LINK_VARLIB=""
-      if "${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" "test -e $LATEST" 2>/dev/null; then
+      if "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" "test -e $LATEST" 2>/dev/null; then
         LINK_VOLUMES="--link-dest=$LATEST/podman-volumes"
         LINK_VARLIB="--link-dest=$LATEST/var-lib"
       fi
 
       # Create snapshot directories on TrueNAS
-      "${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
+      "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
         "mkdir -p $SNAPSHOT/podman-volumes $SNAPSHOT/var-lib" \
         || fail "creating snapshot directories" $?
 
@@ -102,7 +102,7 @@
         || fail "/var/lib rsync" $?
 
       # Update latest symlink
-      "${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
+      "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
         "ln -sfn $SNAPSHOT $LATEST" \
         || fail "updating latest symlink" $?
 
