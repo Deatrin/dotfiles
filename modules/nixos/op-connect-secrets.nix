@@ -51,19 +51,22 @@
     name = "op-connect-secrets-fetch";
     runtimeInputs = [pkgs._1password-cli pkgs.curl pkgs.coreutils];
     text = ''
-      # Wait for Connect API to be healthy
+      # Wait for Connect API to be healthy AND syncer to be ready
+      # /health returns 200 before the syncer is ready — poll a real vault
+      # endpoint instead so we know actual secret reads will succeed
       MAX_WAIT=120
       count=0
-      until curl -sf "${cfg.connectHost}/health" > /dev/null 2>&1; do
+      until curl -sf "${cfg.connectHost}/v1/vaults" \
+        -H "Authorization: Bearer $(cat "${cfg.tokenFile}")" > /dev/null 2>&1; do
         if [ "$count" -ge "$MAX_WAIT" ]; then
           echo "ERROR: 1Password Connect API not ready after ''${MAX_WAIT}s"
           exit 1
         fi
-        echo "Waiting for Connect API... (''${count}s)"
+        echo "Waiting for Connect API syncer... (''${count}s)"
         sleep 1
         count=$((count + 1))
       done
-      echo "Connect API is healthy"
+      echo "Connect API is ready"
 
       OP_CONNECT_TOKEN=$(cat "${cfg.tokenFile}")
       export OP_CONNECT_TOKEN
