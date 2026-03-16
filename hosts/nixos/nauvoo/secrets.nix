@@ -214,6 +214,48 @@
         group = "root";
         mode = "0600";
       };
+      traefikForwardAuthClientId = {
+        path = "/run/opnix/traefik-forward-auth-client-id";
+        reference = "op://nix_secrets/traefik/client_id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      traefikForwardAuthClientSecret = {
+        path = "/run/opnix/traefik-forward-auth-client-secret";
+        reference = "op://nix_secrets/traefik/client_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      traefikForwardAuthCookieSecret = {
+        path = "/run/opnix/traefik-forward-auth-cookie-secret";
+        reference = "op://nix_secrets/traefik/cookie_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      monitoringUnpollerUsername = {
+        path = "/run/opnix/monitoring-unpoller-username";
+        reference = "op://nix_secrets/monitoring/unpoller-username";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      monitoringUnpollerPassword = {
+        path = "/run/opnix/monitoring-unpoller-password";
+        reference = "op://nix_secrets/monitoring/unpoller-password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
+      monitoringGrafanaAdminPassword = {
+        path = "/run/opnix/monitoring-grafana-admin-password";
+        reference = "op://nix_secrets/monitoring/grafana-admin_password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
       manyfoldDbPassword = {
         path = "/run/opnix/manyfold-db-password";
         reference = "op://nix_secrets/ManyFold/db_password";

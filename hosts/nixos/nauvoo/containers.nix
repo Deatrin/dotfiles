@@ -24,6 +24,8 @@
     ../../common/optional/containers/syncthing
     ../../common/optional/containers/nextcloud
     ../../common/optional/containers/manyfold
+    ../../common/optional/containers/traefik-forward-auth
+    ../../common/optional/containers/monitoring
     ../../common/optional/containers/netbox
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
