@@ -43,7 +43,7 @@
       Downloads:
         icon: mdi-download-circle
         style: row
-        columns: 4
+        columns: 3
       System:
         icon: mdi-server
         style: row
