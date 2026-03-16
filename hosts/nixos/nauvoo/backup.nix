@@ -84,17 +84,17 @@
 
       # pg_dump helper — $5 is optional path to a file containing the password
       dump_pg() {
-        local name="$1" container="$2" user="$3" dbname="$4" passfile="${5:-}"
+        local name="$1" container="$2" user="$3" dbname="$4" passfile="''${5:-}"
         local extra_env=()
         if [[ -n "$passfile" ]]; then
           extra_env=(-e "PGPASSWORD=$(cat "$passfile")")
         fi
         if podman exec "''${extra_env[@]}" "$container" \
-            pg_dump -U "$user" "$dbname" > "$DUMP_DIR/${name}.sql"; then
+            pg_dump -U "$user" "$dbname" > "$DUMP_DIR/''${name}.sql"; then
           echo "dump ok: $name"
         else
           echo "WARNING: pg_dump failed for $name (container offline?)" >&2
-          rm -f "$DUMP_DIR/${name}.sql"
+          rm -f "$DUMP_DIR/''${name}.sql"
         fi
       }
 
