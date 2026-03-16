@@ -26,7 +26,7 @@
   domain = "netbox.jennex.dev";
   extraPy = pkgs.writeText "netbox-extra.py" ''
     with open('/run/opnix/netbox-api-token-peppers') as f:
-        API_TOKEN_PEPPERS = {"1": f.read().strip()}
+        API_TOKEN_PEPPERS = {1: f.read().strip()}
   '';
 in {
   systemd.tmpfiles.rules = [
