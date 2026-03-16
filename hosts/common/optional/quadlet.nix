@@ -43,7 +43,9 @@
     serviceConfig = {
       Type = "oneshot";
       Environment = "HOME=/root";
-      ExecStart = lib.getExe (pkgs.writeShellApplication {
+      # Empty string clears the stock ExecStart (from the podman package unit),
+      # then our wrapper is the only entry.
+      ExecStart = ["" (lib.getExe (pkgs.writeShellApplication {
         name = "podman-auto-update-wrapper";
         runtimeInputs = [pkgs.podman pkgs.curl pkgs.gawk];
         text = ''
@@ -56,7 +58,9 @@
             https://api.pushover.net/1/messages.json || true
 
           # Run update and capture output
-          UPDATE_OUTPUT=$(podman auto-update 2>&1)
+          # Use || true so set -e doesn't kill the script if podman exits non-zero
+          # (exit 125 happens when some containers fail to restart mid-update)
+          UPDATE_OUTPUT=$(podman auto-update 2>&1) || true
 
           # Parse: count total containers and which were updated
           UPDATED=$(echo "$UPDATE_OUTPUT" | awk 'NR>1 && $NF=="true"  {count++} END {print count+0}')
@@ -79,7 +83,7 @@
             --form-string "message=$MSG" \
             https://api.pushover.net/1/messages.json
         '';
-      });
+      }))];
     };
     after = ["network-online.target" "opnix-secrets.service"];
     wants = ["network-online.target" "opnix-secrets.service"];
