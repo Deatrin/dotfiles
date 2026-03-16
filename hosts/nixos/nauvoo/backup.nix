@@ -13,7 +13,8 @@
 #     snapshots/
 #       YYYY-MM-DD/
 #         podman-volumes/  ← named volume data (/var/lib/containers/storage/volumes/)
-#         var-lib/         ← other /var/lib state (nextcloud, syncthing, etc.)
+#         var-lib/         ← other /var/lib state; includes pgdumps/ subdir
+#           pgdumps/       ← pg_dump / mysqldump output (written before rsync)
 #         storage/         ← /storage/ large media (disabled until podman-volumes verified)
 {pkgs, lib, ...}: let
   truenasUser = "truenas_admin";
@@ -22,7 +23,7 @@
 
   backupScript = pkgs.writeShellApplication {
     name = "nauvoo-backup";
-    runtimeInputs = [pkgs.rsync pkgs.openssh pkgs.curl];
+    runtimeInputs = [pkgs.rsync pkgs.openssh pkgs.curl pkgs.podman];
     text = ''
       TRUENAS_USER="${truenasUser}"
       TRUENAS_HOST="${truenasHost}"
@@ -73,7 +74,50 @@
         exit 1
       fi
 
-      pushover "Backup Starting — nauvoo" "Syncing podman volumes + /var/lib state to TrueNAS ($DATE)"
+      pushover "Backup Starting — nauvoo" "Dumping databases + syncing to TrueNAS ($DATE)"
+
+      # ── Database dumps ────────────────────────────────────────────────────────
+      # Written to /var/lib/pgdumps/ which is picked up by the var-lib rsync.
+      # Non-fatal: warns if a container is offline but does not abort the backup.
+      DUMP_DIR="/var/lib/pgdumps"
+      mkdir -p "$DUMP_DIR"
+
+      # pg_dump helper — $5 is optional path to a file containing the password
+      dump_pg() {
+        local name="$1" container="$2" user="$3" dbname="$4" passfile="${5:-}"
+        local extra_env=()
+        if [[ -n "$passfile" ]]; then
+          extra_env=(-e "PGPASSWORD=$(cat "$passfile")")
+        fi
+        if podman exec "''${extra_env[@]}" "$container" \
+            pg_dump -U "$user" "$dbname" > "$DUMP_DIR/${name}.sql"; then
+          echo "dump ok: $name"
+        else
+          echo "WARNING: pg_dump failed for $name (container offline?)" >&2
+          rm -f "$DUMP_DIR/${name}.sql"
+        fi
+      }
+
+      # Trust-auth Postgres (no password needed — POSTGRES_HOST_AUTH_METHOD=trust)
+      dump_pg forgejo   forgejo-db   forgejo   forgejo
+      dump_pg nextcloud nextcloud-db nextcloud nextcloud
+      dump_pg paperless paperless-db paperless paperless
+      dump_pg immich    immich-db    postgres  immich
+
+      # Password-auth Postgres
+      dump_pg netbox   netbox-postgres   netbox   netbox   /run/opnix/netbox-db-password
+      dump_pg manyfold manyfold-postgres manyfold manyfold /run/opnix/manyfold-db-password
+
+      # MariaDB (romm)
+      if podman exec \
+          -e "MYSQL_PWD=$(cat /run/opnix/romm-db-password)" \
+          romm-db mysqldump -u romm-user romm > "$DUMP_DIR/romm.sql"; then
+        echo "dump ok: romm"
+      else
+        echo "WARNING: mysqldump failed for romm (container offline?)" >&2
+        rm -f "$DUMP_DIR/romm.sql"
+      fi
+      # ─────────────────────────────────────────────────────────────────────────
 
       # Build link-dest args (skip if no previous snapshot exists)
       LINK_VOLUMES=""
@@ -101,11 +145,6 @@
         --exclude='docker/' \
         || fail "/var/lib rsync" $?
 
-      # Ensure all snapshot directories are browsable (rsync preserves source perms)
-      "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
-        "find $SNAPSHOT -type d -exec chmod 755 {} +" \
-        || fail "fixing snapshot directory permissions" $?
-
       # Update latest symlink
       "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
         "ln -sfn $SNAPSHOT $LATEST" \
@@ -115,7 +154,7 @@
       # rsync_to /storage/ storage "$LINK_STORAGE" \
       #   || fail "/storage rsync" $?
 
-      pushover "Backup Finished — nauvoo" "Snapshot $DATE complete. Podman volumes + /var/lib synced to TrueNAS."
+      pushover "Backup Finished — nauvoo" "Snapshot $DATE complete. DB dumps + podman volumes + /var/lib synced to TrueNAS."
     '';
   };
 in {
