@@ -74,7 +74,7 @@
         exit 1
       fi
 
-      pushover "Backup Starting — nauvoo" "Dumping databases + syncing to TrueNAS ($DATE)"
+      pushover "Backup Starting — nauvoo" "Dumping databases + syncing to TrueNAS ($DATE) — /storage will take a while"
 
       # ── Database dumps ────────────────────────────────────────────────────────
       # Written to /var/lib/pgdumps/ which is picked up by the var-lib rsync.
@@ -122,14 +122,16 @@
       # Build link-dest args (skip if no previous snapshot exists)
       LINK_VOLUMES=""
       LINK_VARLIB=""
+      LINK_STORAGE=""
       if "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" "test -e $LATEST" 2>/dev/null; then
         LINK_VOLUMES="--link-dest=$LATEST/podman-volumes"
         LINK_VARLIB="--link-dest=$LATEST/var-lib"
+        LINK_STORAGE="--link-dest=$LATEST/storage"
       fi
 
       # Create snapshot directories on TrueNAS
       "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
-        "mkdir -p $SNAPSHOT/podman-volumes $SNAPSHOT/var-lib" \
+        "mkdir -p $SNAPSHOT/podman-volumes $SNAPSHOT/var-lib $SNAPSHOT/storage" \
         || fail "creating snapshot directories" $?
 
       # Sync named volumes (the actual persistent data — no overlay2 layer cache here)
@@ -145,16 +147,16 @@
         --exclude='docker/' \
         || fail "/var/lib rsync" $?
 
-      # Update latest symlink
+      # Sync /storage (pictures, movies, TV, music, 3D models — 8.3T local disk)
+      rsync_to /storage/ storage "$LINK_STORAGE" \
+        || fail "/storage rsync" $?
+
+      # Update latest symlink (after all rsyncs succeed)
       "''${SSH_CMD[@]}" "$TRUENAS_USER@$TRUENAS_HOST" \
         "ln -sfn $SNAPSHOT $LATEST" \
         || fail "updating latest symlink" $?
 
-      # Sync /storage (disabled — re-enable once podman-volumes verified)
-      # rsync_to /storage/ storage "$LINK_STORAGE" \
-      #   || fail "/storage rsync" $?
-
-      pushover "Backup Finished — nauvoo" "Snapshot $DATE complete. DB dumps + podman volumes + /var/lib synced to TrueNAS."
+      pushover "Backup Finished — nauvoo" "Snapshot $DATE complete. DB dumps + podman volumes + /var/lib + /storage synced to TrueNAS."
     '';
   };
 in {
