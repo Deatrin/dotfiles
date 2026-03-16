@@ -42,46 +42,47 @@
     description = "Podman auto-update service";
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.podman}/bin/podman auto-update";
-      ExecStartPre = "-${lib.getExe (pkgs.writeShellApplication {
-        name = "podman-auto-update-notify-start";
-        runtimeInputs = [pkgs.curl];
+      Environment = "HOME=/root";
+      ExecStart = lib.getExe (pkgs.writeShellApplication {
+        name = "podman-auto-update-wrapper";
+        runtimeInputs = [pkgs.podman pkgs.curl pkgs.gawk];
         text = ''
+          # Send start notification
           curl -sf \
             --form-string "token=$(cat /run/opnix/pushover-podman-token)" \
             --form-string "user=$(cat /run/opnix/pushover-user-token)" \
             --form-string "title=nauvoo: container update starting" \
             --form-string "message=podman auto-update has started" \
             https://api.pushover.net/1/messages.json || true
-        '';
-      })}";
-    };
-    after = ["network-online.target" "opnix-secrets.service"];
-    wants = ["network-online.target" "opnix-secrets.service"];
-  };
 
-  # Send Pushover notification after auto-update completes with the update summary
-  systemd.services.podman-auto-update-notify = {
-    description = "Notify Pushover after podman auto-update";
-    after = ["podman-auto-update.service" "opnix-secrets.service"];
-    wants = ["opnix-secrets.service"];
-    wantedBy = ["podman-auto-update.service"];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = lib.getExe (pkgs.writeShellApplication {
-        name = "podman-auto-update-notify-done";
-        runtimeInputs = [pkgs.curl pkgs.systemd];
-        text = ''
-          OUTPUT=$(journalctl -u podman-auto-update.service -n 50 --no-pager -o cat 2>/dev/null || echo "could not retrieve output")
+          # Run update and capture output
+          UPDATE_OUTPUT=$(podman auto-update 2>&1)
+
+          # Parse: count total containers and which were updated
+          UPDATED=$(echo "$UPDATE_OUTPUT" | awk 'NR>1 && $NF=="true"  {count++} END {print count+0}')
+          TOTAL=$(echo   "$UPDATE_OUTPUT" | awk 'NR>1                  {count++} END {print count+0}')
+
+          if [ "$UPDATED" -gt 0 ]; then
+            UPDATED_LIST=$(echo "$UPDATE_OUTPUT" \
+              | awk 'NR>1 && $NF=="true" {gsub(/\.service$/, "", $1); print "• "$1}')
+            MSG="$UPDATED/$TOTAL containers updated:
+          $UPDATED_LIST"
+          else
+            MSG="All $TOTAL containers up to date"
+          fi
+
+          # Send completion notification
           curl -sf \
             --form-string "token=$(cat /run/opnix/pushover-podman-token)" \
             --form-string "user=$(cat /run/opnix/pushover-user-token)" \
             --form-string "title=nauvoo: container update done" \
-            --form-string "message=''${OUTPUT:-completed with no output}" \
+            --form-string "message=$MSG" \
             https://api.pushover.net/1/messages.json
         '';
       });
     };
+    after = ["network-online.target" "opnix-secrets.service"];
+    wants = ["network-online.target" "opnix-secrets.service"];
   };
 
   environment.systemPackages = with pkgs; [
