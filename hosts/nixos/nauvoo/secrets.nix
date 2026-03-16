@@ -1,7 +1,11 @@
 {...}: {
-  services.onepassword-secrets = {
+  # opnix disabled — nauvoo uses op-connect-secrets (local Connect server) instead
+  services.onepassword-secrets.enable = false;
+
+  services.op-connect-secrets = {
     enable = true;
-    tokenFile = "/etc/opnix-token";
+    connectHost = "http://127.0.0.1:8080";
+    tokenFile = "/etc/op-connect-token";
     users = ["deatrin"];
     secrets = {
       tailscaleKey = {
@@ -326,7 +330,6 @@
         group = "root";
         mode = "0600";
       };
-
       pushoverPodmanToken = {
         path = "/run/opnix/pushover-podman-token";
         reference = "op://nix_secrets/Pushover/podmanToken";
