@@ -284,120 +284,75 @@
       "links": [],
       "panels": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "fieldConfig": {
-            "defaults": {
-              "color": { "mode": "continuous-BlPu" },
-              "unit": "percent",
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 50 },
-                  { "color": "red", "value": 80 }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": { "h": 9, "w": 8, "x": 0, "y": 0 },
-          "id": 1,
-          "options": {
-            "displayMode": "gradient",
-            "orientation": "horizontal",
-            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
-            "text": {}
-          },
-          "targets": [
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "sort_desc(sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100)",
-              "instant": true,
-              "legendFormat": "{{name}}",
-              "refId": "A"
-            }
-          ],
-          "title": "CPU Usage",
-          "type": "bargauge"
-        },
-        {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "fieldConfig": {
-            "defaults": {
-              "color": { "mode": "continuous-BlPu" },
-              "unit": "bytes",
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 536870912 },
-                  { "color": "red", "value": 1073741824 }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": { "h": 9, "w": 8, "x": 0, "y": 9 },
-          "id": 2,
-          "options": {
-            "displayMode": "gradient",
-            "orientation": "horizontal",
-            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
-            "text": {}
-          },
-          "targets": [
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "sort_desc(podman_container_mem_usage_bytes{name=~\"$container\"})",
-              "instant": true,
-              "legendFormat": "{{name}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Memory Usage",
-          "type": "bargauge"
+          "collapsed": false,
+          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+          "id": 10,
+          "repeat": "container",
+          "repeatDirection": "v",
+          "title": "$container",
+          "type": "row"
         },
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
           "fieldConfig": {
             "defaults": {
               "color": { "mode": "palette-classic" },
-              "custom": { "lineWidth": 2, "fillOpacity": 10 },
-              "unit": "percent",
-              "min": 0
+              "custom": { "lineWidth": 2, "fillOpacity": 10 }
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": { "id": "byName", "options": "CPU %" },
+                "properties": [
+                  { "id": "unit", "value": "percent" },
+                  { "id": "min", "value": 0 },
+                  { "id": "custom.axisPlacement", "value": "left" }
+                ]
+              },
+              {
+                "matcher": { "id": "byName", "options": "Memory" },
+                "properties": [
+                  { "id": "unit", "value": "bytes" },
+                  { "id": "custom.axisPlacement", "value": "right" }
+                ]
+              }
+            ]
           },
-          "gridPos": { "h": 10, "w": 8, "x": 0, "y": 18 },
-          "id": 3,
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 1 },
+          "id": 1,
           "options": {
-            "legend": { "calcs": ["mean", "max"], "displayMode": "list", "placement": "bottom" },
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "list", "placement": "bottom" },
             "tooltip": { "mode": "multi" }
           },
           "targets": [
             {
               "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "sum by (name) (rate(podman_container_cpu_seconds_total{name=~\"$container\"}[5m])) * 100",
-              "legendFormat": "{{name}}",
+              "expr": "sum by (name) (rate(podman_container_cpu_seconds_total{name=\"$container\"}[5m])) * 100",
+              "legendFormat": "CPU %",
               "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "prometheus" },
+              "expr": "podman_container_mem_usage_bytes{name=\"$container\"}",
+              "legendFormat": "Memory",
+              "refId": "B"
             }
           ],
-          "title": "CPU Over Time",
+          "title": "Resources",
           "type": "timeseries"
         },
         {
           "datasource": { "type": "loki", "uid": "loki" },
-          "gridPos": { "h": 28, "w": 16, "x": 8, "y": 0 },
-          "id": 4,
+          "gridPos": { "h": 8, "w": 16, "x": 8, "y": 1 },
+          "id": 2,
           "options": {
             "dedupStrategy": "none",
             "enableLogDetails": true,
             "prettifyLogMessage": false,
-            "showLabels": true,
+            "showLabels": false,
             "showCommonLabels": false,
             "showTime": true,
             "sortOrder": "Descending",
-            "wrapLogMessage": false
+            "wrapLogMessage": true
           },
           "targets": [
             {
@@ -406,7 +361,7 @@
               "refId": "A"
             }
           ],
-          "title": "Container Logs",
+          "title": "Logs",
           "type": "logs"
         }
       ],
@@ -416,7 +371,6 @@
       "templating": {
         "list": [
           {
-            "allValue": ".*",
             "current": {},
             "datasource": { "type": "prometheus", "uid": "prometheus" },
             "definition": "label_values(podman_container_cpu_seconds_total, name)",
@@ -431,6 +385,7 @@
               "refId": "StandardVariableQuery"
             },
             "refresh": 2,
+            "sort": 1,
             "type": "query"
           }
         ]
@@ -440,7 +395,7 @@
       "timezone": "browser",
       "title": "Container Resources",
       "uid": "container-overview",
-      "version": 1
+      "version": 3
     }
   '';
 
