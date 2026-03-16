@@ -7,7 +7,6 @@
 }: {
   imports = [
     ../common/global
-    ../common/features/cli/opnix_servers.nix
     ../common/features/kubernetes
     inputs.nix-ld-vscode.nixosModules.default
   ];
