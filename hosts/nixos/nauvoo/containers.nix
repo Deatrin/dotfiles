@@ -29,6 +29,7 @@
     ../../common/optional/containers/monitoring
     ../../common/optional/containers/netbox
     ../../common/optional/containers/drawio
+    ../../common/optional/containers/excalidraw
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
   ];
