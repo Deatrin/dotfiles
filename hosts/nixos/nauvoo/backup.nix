@@ -111,7 +111,7 @@
       # MariaDB (romm)
       if podman exec \
           -e "MYSQL_PWD=$(cat /run/opnix/romm-db-password)" \
-          romm-db mysqldump -u romm-user romm > "$DUMP_DIR/romm.sql"; then
+          romm-db mariadb-dump -u romm-user romm > "$DUMP_DIR/romm.sql"; then
         echo "dump ok: romm"
       else
         echo "WARNING: mysqldump failed for romm (container offline?)" >&2
