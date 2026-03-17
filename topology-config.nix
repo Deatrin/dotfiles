@@ -199,6 +199,10 @@
           network = "wireless";
           type = "wireless";
         };
+        # Wired — normally unplugged at home, connects to secured-wired VLAN when used
+        enp0s31f6 = {
+          network = "secured-wired";
+        };
         tailscale0 = {
           network = "tailscale";
           virtual = true;
