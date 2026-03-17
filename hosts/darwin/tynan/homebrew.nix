@@ -23,6 +23,7 @@
       "rekordbox"
       "vivaldi"
       "wifi-explorer-pro"
+      "zwift"
     ];
     masApps = {
       "Amazon Kindle" = 302584613;
