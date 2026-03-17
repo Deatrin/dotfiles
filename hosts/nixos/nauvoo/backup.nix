@@ -168,6 +168,9 @@ in {
     description = "Nauvoo → TrueNAS rsync backup";
     after = ["network-online.target" "opnix-secrets.service"];
     requires = ["network-online.target" "opnix-secrets.service"];
+    # Never auto-start or restart during NixOS activation/rebuild
+    restartIfChanged = false;
+    stopIfChanged = false;
     serviceConfig = {
       Type = "oneshot";
       ExecStart = lib.getExe backupScript;
