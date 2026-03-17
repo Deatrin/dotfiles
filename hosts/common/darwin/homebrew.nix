@@ -15,6 +15,7 @@
     brews = [
       "aqua" # Declarative cli version management
       "cask"
+      "mas" # Mac App Store CLI (required for masApps)
       "gemini-cli" # you already know gemini
       "jj" # jujutsu
       "pyenv" # Python version management
