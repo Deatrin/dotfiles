@@ -44,6 +44,7 @@
         shift 3
         # shellcheck disable=SC2086
         rsync -az --delete --no-owner --no-group --no-perms --chmod=D755 \
+          --info=progress2 --stats \
           -e "''${SSH_CMD[*]}" \
           $link_dest_arg \
           "$@" \
@@ -135,11 +136,13 @@
         || fail "creating snapshot directories" $?
 
       # Sync named volumes (the actual persistent data — no overlay2 layer cache here)
+      pushover "Backup Progress — nauvoo" "Phase 1/3: syncing podman volumes..."
       rsync_to /var/lib/containers/storage/volumes/ podman-volumes "$LINK_VOLUMES" \
         || fail "podman-volumes rsync" $?
 
       # Sync other /var/lib state (nextcloud, syncthing, netbox tmpfiles, etc.)
       # Excludes container image layers and overlay filesystems — only regular files
+      pushover "Backup Progress — nauvoo" "Phase 2/3: syncing /var/lib state..."
       rsync_to /var/lib/ var-lib "$LINK_VARLIB" \
         --exclude='containers/storage/overlay/' \
         --exclude='containers/storage/overlay-images/' \
@@ -148,6 +151,7 @@
         || fail "/var/lib rsync" $?
 
       # Sync /storage (pictures, movies, TV, music, 3D models — 8.3T local disk)
+      pushover "Backup Progress — nauvoo" "Phase 3/3: syncing /storage (large — follow progress: journalctl -fu nauvoo-backup)"
       rsync_to /storage/ storage "$LINK_STORAGE" \
         || fail "/storage rsync" $?
 

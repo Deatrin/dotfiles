@@ -62,6 +62,9 @@
           # (exit 125 happens when some containers fail to restart mid-update)
           UPDATE_OUTPUT=$(podman auto-update 2>&1) || true
 
+          # Remove stopped containers left behind by auto-update
+          podman container prune -f || true
+
           # Parse: count total containers and which were updated
           UPDATED=$(echo "$UPDATE_OUTPUT" | awk 'NR>1 && $NF=="true"  {count++} END {print count+0}')
           TOTAL=$(echo   "$UPDATE_OUTPUT" | awk 'NR>1                  {count++} END {print count+0}')
