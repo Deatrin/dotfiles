@@ -1,7 +1,15 @@
 # Nauvoo → TrueNAS rsync backup
 #
-# Manually triggered: sudo nauvoo-backup-run
-# (do NOT use systemctl start directly — trigger file must exist first)
+# ── Usage ─────────────────────────────────────────────────────────────────────
+#   Start backup:    sudo nauvoo-backup-run
+#   Watch progress:  journalctl -fu nauvoo-backup
+#   Check status:    systemctl status nauvoo-backup
+#   Stop backup:     sudo systemctl stop nauvoo-backup
+#
+# NOTE: Do NOT use `systemctl start nauvoo-backup` directly — the service
+#       requires a trigger file (/run/nauvoo-backup-trigger) which nauvoo-backup-run
+#       creates automatically. Without it the service exits immediately (no-op).
+# ──────────────────────────────────────────────────────────────────────────────
 #
 # Secrets required:
 #   /run/opnix/truenas-private-key     — SSH private key for truenas_admin
