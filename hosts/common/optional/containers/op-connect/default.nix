@@ -24,9 +24,10 @@ in {
         image = "docker.io/1password/connect-api:latest";
         autoUpdate = "registry";
         networks = [networks.connect_network.ref];
-        # Bind on LAN so other trusted hosts (e.g. tycho) can reach the Connect API.
-        # The API requires a Bearer token for all requests — no additional firewall needed.
-        publishPorts = ["10.1.30.100:8080:8080"];
+        # Bind on all interfaces so nauvoo (127.0.0.1) and LAN clients (e.g. tycho
+        # at 10.1.30.100) can both reach the Connect API. The Bearer token requirement
+        # on all requests provides sufficient access control.
+        publishPorts = ["0.0.0.0:8080:8080"];
         volumes = [
           "/etc/op-connect/1password-credentials.json:/home/opuser/.op/1password-credentials.json:ro"
           "/var/lib/op-connect:/home/opuser/.op/data"
