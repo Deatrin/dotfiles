@@ -115,6 +115,15 @@
             href: https://10.1.20.10
             icon: idrac.png
             description: Proxmox Server iDRAC
+        - TrueNAS:
+            href: https://truenas.jennex.dev
+            icon: truenas.png
+            description: Cold Storage
+            widget:
+              type: truenas
+              url: https://truenas.jennex.dev
+              key: '{{HOMEPAGE_VAR_TRUENAS_API_KEY}}'
+              enablePools: true
         - TrueNAS iDRAC:
             href: https://10.1.20.15
             icon: idrac.png
@@ -227,6 +236,7 @@ in {
             printf 'HOMEPAGE_VAR_PLEX_TOKEN=%s\n'          "$(cat /run/opnix/plex-token)"
             printf 'HOMEPAGE_VAR_PROXMOX_TOKEN_ID=%s\n'     "$(cat /run/opnix/proxmox-token-id)"
             printf 'HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET=%s\n' "$(cat /run/opnix/proxmox-token-secret)"
+            printf 'HOMEPAGE_VAR_TRUENAS_API_KEY=%s\n'      "$(cat /run/opnix/truenas-api-key)"
           } > /run/opnix/homepage-env
           chmod 600 /run/opnix/homepage-env
         '';

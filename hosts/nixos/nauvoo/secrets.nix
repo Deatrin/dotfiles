@@ -358,6 +358,13 @@
         group = "root";
         mode = "0600";
       };
+      truenasApiKey = {
+        path = "/run/opnix/truenas-api-key";
+        reference = "op://nix_secrets/truenas/apikey";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
       truenasPrivateKey = {
         path = "/run/opnix/truenas-private-key";
         reference = "op://nix_secrets/truenas/private key";
