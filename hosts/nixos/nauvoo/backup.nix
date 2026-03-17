@@ -1,6 +1,7 @@
 # Nauvoo → TrueNAS rsync backup
 #
-# Manually triggered: sudo systemctl start nauvoo-backup
+# Manually triggered: sudo nauvoo-backup-run
+# (do NOT use systemctl start directly — trigger file must exist first)
 #
 # Secrets required:
 #   /run/opnix/truenas-private-key     — SSH private key for truenas_admin
@@ -17,6 +18,7 @@
 #           pgdumps/       ← pg_dump / mysqldump output (written before rsync)
 #         storage/         ← /storage/ large media (disabled until podman-volumes verified)
 {pkgs, lib, ...}: let
+  triggerFile = "/run/nauvoo-backup-trigger";
   truenasUser = "truenas_admin";
   truenasHost = "10.1.20.45";
   truenasBase = "/mnt/Behemoth-Pool/Backup/nauvoo";
@@ -163,19 +165,30 @@
       pushover "Backup Finished — nauvoo" "Snapshot $DATE complete. DB dumps + podman volumes + /var/lib + /storage synced to TrueNAS."
     '';
   };
+  # Launcher: creates trigger file, starts service, cleans up on exit
+  launcherScript = pkgs.writeShellScriptBin "nauvoo-backup-run" ''
+    touch ${triggerFile}
+    systemctl start nauvoo-backup
+    rm -f ${triggerFile}
+  '';
 in {
+  environment.systemPackages = [launcherScript];
+
   systemd.services.nauvoo-backup = {
     description = "Nauvoo → TrueNAS rsync backup";
     after = ["network-online.target" "opnix-secrets.service"];
     requires = ["network-online.target" "opnix-secrets.service"];
-    # Never auto-start or restart during NixOS activation/rebuild
     restartIfChanged = false;
     stopIfChanged = false;
+    unitConfig = {
+      # Only runs when trigger file exists — prevents activation from firing this
+      ConditionPathExists = triggerFile;
+    };
     serviceConfig = {
       Type = "oneshot";
       ExecStart = lib.getExe backupScript;
+      ExecStopPost = "${pkgs.coreutils}/bin/rm -f ${triggerFile}";
       User = "root";
-      # Prevent accidental concurrent runs
       RemainAfterExit = false;
     };
   };
