@@ -24,7 +24,9 @@ in {
         image = "docker.io/1password/connect-api:latest";
         autoUpdate = "registry";
         networks = [networks.connect_network.ref];
-        publishPorts = ["127.0.0.1:8080:8080"];
+        # Bind on LAN so other trusted hosts (e.g. tycho) can reach the Connect API.
+        # The API requires a Bearer token for all requests — no additional firewall needed.
+        publishPorts = ["10.1.30.100:8080:8080"];
         volumes = [
           "/etc/op-connect/1password-credentials.json:/home/opuser/.op/1password-credentials.json:ro"
           "/var/lib/op-connect:/home/opuser/.op/data"

@@ -110,6 +110,16 @@ in {
       default = {};
       description = "Secret definitions";
     };
+
+    localApi = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = ''
+        Whether the Connect API runs locally on this host.
+        Set to false when pointing at a remote Connect server — skips the
+        op-connect-api.service dependency so systemd doesn't fail on boot.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -120,9 +130,9 @@ in {
 
     systemd.services.op-connect-secrets = {
       description = "Provision secrets from 1Password Connect";
-      after = ["network-online.target" "op-connect-api.service"];
+      after = ["network-online.target"] ++ lib.optional cfg.localApi "op-connect-api.service";
       wants = ["network-online.target"];
-      requires = ["op-connect-api.service"];
+      requires = lib.optional cfg.localApi "op-connect-api.service";
       wantedBy = ["multi-user.target"];
       serviceConfig = {
         Type = "oneshot";
