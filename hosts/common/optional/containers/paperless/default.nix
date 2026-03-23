@@ -71,6 +71,8 @@ in {
           PAPERLESS_CONSUMER_POLLING = "300";
           PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
           PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS = "true";
+          PAPERLESS_SOCIALACCOUNT_EMAIL_AUTHENTICATION = "true";
+          PAPERLESS_SOCIALACCOUNT_EMAIL_REQUIRED = "true";
           PAPERLESS_CSRF_ALLOWED_ORIGINS = "https://paperless.jennex.dev";
           PAPERLESS_ALLOWED_HOSTS = "paperless.jennex.dev";
           PAPERLESS_USE_X_FORWARDED_HOST = "true";
