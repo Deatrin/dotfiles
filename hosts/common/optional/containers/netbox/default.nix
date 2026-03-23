@@ -25,6 +25,7 @@
   inherit (config.virtualisation.quadlet) networks;
   domain = "netbox.jennex.dev";
   extraPy = pkgs.writeText "netbox-extra.py" ''
+    # Extra NetBox configuration — secrets read from /run/opnix/ at startup
     with open('/run/opnix/netbox-api-token-peppers') as f:
         API_TOKEN_PEPPERS = {1: f.read().strip()}
 
