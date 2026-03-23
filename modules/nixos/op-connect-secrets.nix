@@ -93,7 +93,7 @@
           chmod "${s.value.mode}" "${s.value.path}"
           ${lib.concatMapStrings (svc: ''
             echo "Restarting ${svc} (secret changed)"
-            systemctl try-restart "${svc}" || true
+            systemctl try-restart --no-block "${svc}" || true
           '') s.value.restartServices}
         fi
       '') (lib.attrsToList cfg.secrets)}
@@ -155,7 +155,7 @@ in {
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = false;
-        TimeoutStartSec = "180";
+        TimeoutStartSec = "300";
         ExecStart = lib.getExe fetchScript;
         Environment = "HOME=/root";
       };
