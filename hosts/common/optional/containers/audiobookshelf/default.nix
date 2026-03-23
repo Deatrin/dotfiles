@@ -1,4 +1,9 @@
-{config, ...}: let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (config.virtualisation.quadlet) networks;
 in {
   systemd.tmpfiles.rules = [
@@ -6,8 +11,6 @@ in {
     "d /var/lib/audiobookshelf/metadata 0755 root root -"
   ];
 
-  inherit (config.virtualisation.quadlet) networks;
-in {
   systemd.services.audiobookshelf-env-setup = {
     description = "Build Audiobookshelf OIDC environment file from secrets";
     after = ["opnix-secrets.service"];
