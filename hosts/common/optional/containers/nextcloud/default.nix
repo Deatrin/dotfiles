@@ -3,10 +3,15 @@
 # Secrets required (via opnix):
 #   /run/opnix/nextcloud-env — env file containing:
 #       NEXTCLOUD_ADMIN_PASSWORD=<password>
+#   /run/opnix/nextcloud-oidc-client-id
+#   /run/opnix/nextcloud-oidc-client-secret
 #
 # On first run, log in as admin/admin-password and add External Storage:
 #   Apps → External Storage Support (enable)
 #   Admin → External Storages → Add: Local, /storage/media
+#
+# OIDC: install the nextcloud-oidc-login app from the app store
+#   Pocket ID callback URL: https://nextcloud.jennex.dev/apps/oidc_login/oidc
 {
   config,
   pkgs,
@@ -14,6 +19,22 @@
   ...
 }: let
   inherit (config.virtualisation.quadlet) networks volumes;
+  oidcConfig = pkgs.writeText "nextcloud-oidc.php" ''
+    <?php
+    $CONFIG = [
+      'oidc_login_provider_url'    => 'https://pocket.jennex.dev',
+      'oidc_login_client_id'       => trim(file_get_contents('/run/opnix/nextcloud-oidc-client-id')),
+      'oidc_login_client_secret'   => trim(file_get_contents('/run/opnix/nextcloud-oidc-client-secret')),
+      'oidc_login_auto_redirect'   => false,
+      'oidc_login_button_text'     => 'Sign in with Pocket ID',
+      'oidc_login_scope'           => 'openid profile email',
+      'oidc_login_attributes'      => [
+        'id'   => 'preferred_username',
+        'name' => 'name',
+        'mail' => 'email',
+      ],
+    ];
+  '';
 in {
   systemd.tmpfiles.rules = [
     "d /var/lib/nextcloud 0755 root root -"
@@ -105,6 +126,9 @@ in {
         volumes = [
           "/var/lib/nextcloud:/var/www/html"
           "/storage/media:/storage/media"
+          "${oidcConfig}:/var/www/html/config/oidc.php:ro"
+          "/run/opnix/nextcloud-oidc-client-id:/run/opnix/nextcloud-oidc-client-id:ro"
+          "/run/opnix/nextcloud-oidc-client-secret:/run/opnix/nextcloud-oidc-client-secret:ro"
         ];
         labels = [
           "homepage.group=System"
