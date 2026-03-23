@@ -9,7 +9,6 @@
 }: let
   inherit (config.virtualisation.quadlet) networks volumes;
 in {
-
   virtualisation.quadlet = {
     networks.paperless_network = {};
 
@@ -70,6 +69,8 @@ in {
           PAPERLESS_TIME_ZONE = "America/Los_Angeles";
           PAPERLESS_OCR_LANGUAGE = "eng";
           PAPERLESS_CONSUMER_POLLING = "300";
+          PAPERLESS_APPS = "allauth.socialaccount.providers.openid_connect";
+          PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS = "true";
         };
         environmentFiles = ["/run/opnix/paperless-secret"];
         volumes = [
