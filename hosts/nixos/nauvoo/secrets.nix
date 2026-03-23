@@ -247,7 +247,7 @@
         reference = "op://nix_secrets/Nextcloud/oidc-client-id";
         owner = "root";
         group = "root";
-        mode = "0600";
+        mode = "0644"; # www-data inside container needs read access
         restartServices = ["nextcloud.service"];
       };
       nextcloudOidcClientSecret = {
@@ -255,7 +255,7 @@
         reference = "op://nix_secrets/Nextcloud/oidc-client-secret";
         owner = "root";
         group = "root";
-        mode = "0600";
+        mode = "0644"; # www-data inside container needs read access
         restartServices = ["nextcloud.service"];
       };
       audiobookshelfOidcClientId = {
