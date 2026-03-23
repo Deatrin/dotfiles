@@ -73,6 +73,9 @@ in {
         "traefik.http.routers.audiobookshelf-secure.rule=Host(`audiobookshelf.jennex.dev`)"
         "traefik.http.routers.audiobookshelf-secure.tls=true"
         "traefik.http.services.audiobookshelf.loadbalancer.server.port=80"
+        # Fix for large uploads / Bad Gateway
+        "traefik.http.middlewares.abs-buffering.buffering.retryExpression=IsNetworkError() && Attempts() < 2"
+        "traefik.http.routers.audiobookshelf-secure.middlewares=abs-buffering"
       ];
     };
   };
