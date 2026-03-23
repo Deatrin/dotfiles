@@ -226,6 +226,22 @@
         mode = "0600";
         restartServices = ["nextcloud-env-setup.service" "nextcloud.service"];
       };
+      audiobookshelfOidcClientId = {
+        path = "/run/opnix/audiobookshelf-oidc-client-id";
+        reference = "op://nix_secrets/audiobookshelf/oidc_client_id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["audiobookshelf.service"];
+      };
+      audiobookshelfOidcClientSecret = {
+        path = "/run/opnix/audiobookshelf-oidc-client-secret";
+        reference = "op://nix_secrets/audiobookshelf/oidc_client_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["audiobookshelf.service"];
+      };
       proxmoxTokenId = {
         path = "/run/opnix/proxmox-token-id";
         reference = "op://nix_secrets/homepage/tokenid";

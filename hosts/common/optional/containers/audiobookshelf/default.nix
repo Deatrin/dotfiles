@@ -6,14 +6,47 @@ in {
     "d /var/lib/audiobookshelf/metadata 0755 root root -"
   ];
 
+  inherit (config.virtualisation.quadlet) networks;
+in {
+  systemd.services.audiobookshelf-env-setup = {
+    description = "Build Audiobookshelf OIDC environment file from secrets";
+    after = ["opnix-secrets.service"];
+    requires = ["opnix-secrets.service"];
+    before = ["audiobookshelf.service"];
+    wantedBy = ["audiobookshelf.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = lib.getExe (pkgs.writeShellApplication {
+        name = "audiobookshelf-env-setup";
+        text = ''
+          {
+            printf 'OIDC_CLIENT_ID=%s\n'     "$(cat /run/opnix/audiobookshelf-oidc-client-id)"
+            printf 'OIDC_CLIENT_SECRET=%s\n' "$(cat /run/opnix/audiobookshelf-oidc-client-secret)"
+          } > /run/opnix/audiobookshelf-oidc-env
+          chmod 600 /run/opnix/audiobookshelf-oidc-env
+        '';
+      });
+    };
+  };
+
   virtualisation.quadlet.containers.audiobookshelf = {
+    unitConfig = {
+      After = ["opnix-secrets.service" "audiobookshelf-env-setup.service"];
+      Requires = ["opnix-secrets.service" "audiobookshelf-env-setup.service"];
+    };
     containerConfig = {
       image = "ghcr.io/advplyr/audiobookshelf:latest";
       autoUpdate = "registry";
       networks = [networks.traefik_network.ref];
       environments = {
         TZ = "America/Los_Angeles";
+        OIDC_ISSUER_URL = "https://pocket.jennex.dev";
+        OIDC_CLIENT_NAME = "Pocket ID";
       };
+      environmentFiles = [
+        "/run/opnix/audiobookshelf-oidc-env"
+      ];
       volumes = [
         "/storage/media/audiobooks:/audiobooks"
         "/storage/media/audiobooks:/podcasts"
