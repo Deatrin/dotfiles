@@ -14,6 +14,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["tailscale-autoconnect.service"];
       };
       cfApiToken = {
         path = "/run/opnix/cf-api-token";
@@ -21,6 +22,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["traefik-env-setup.service" "traefik.service"];
       };
       acmeEmail = {
         path = "/run/opnix/acme-email";
@@ -28,6 +30,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["traefik-env-setup.service" "traefik.service"];
       };
       traefikDashboard = {
         path = "/run/opnix/traefik-dashboard-users";
@@ -35,6 +38,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["traefik-env-setup.service" "traefik.service"];
       };
       piholeAdmin = {
         path = "/run/opnix/pihole-env";
@@ -42,6 +46,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["pihole.service"];
       };
       homepageTraefikUsername = {
         path = "/run/opnix/homepage-traefik-username";
@@ -49,6 +54,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       homepageTraefik = {
         path = "/run/opnix/homepage-traefik";
@@ -56,6 +62,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       homepagePihole = {
         path = "/run/opnix/homepage-pihole";
@@ -63,6 +70,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       homepageUnifiUser = {
         path = "/run/opnix/homepage-unifi-user";
@@ -70,6 +78,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       homepageUnifiPass = {
         path = "/run/opnix/homepage-unifi-pass";
@@ -77,6 +86,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       homepageLatitude = {
         path = "/run/opnix/homepage-latitude";
@@ -84,6 +94,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       homepageLongitude = {
         path = "/run/opnix/homepage-longitude";
@@ -91,6 +102,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       immichEnv = {
         path = "/run/opnix/immich-env";
@@ -98,6 +110,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["immich-server.service" "immich-ml.service"];
       };
       paperlessSecret = {
         path = "/run/opnix/paperless-secret";
@@ -105,6 +118,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["paperless.service"];
       };
       rommDbPassword = {
         path = "/run/opnix/romm-db-password";
@@ -112,6 +126,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # used by both db and app env-setup
+        restartServices = ["romm-db-env-setup.service" "romm-db.service" "romm-env-setup.service" "romm.service"];
       };
       rommDbRootPassword = {
         path = "/run/opnix/romm-db-root-password";
@@ -119,6 +135,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-db-env-setup.service" "romm-db.service"];
       };
       rommAuthSecretKey = {
         path = "/run/opnix/romm-auth-secret-key";
@@ -126,6 +143,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
       };
       rommScreenscraperUser = {
         path = "/run/opnix/romm-screenscraper-user";
@@ -133,6 +151,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
       };
       rommScreenscraperPass = {
         path = "/run/opnix/romm-screenscraper-pass";
@@ -140,6 +159,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
       };
       rommRetroachievementsKey = {
         path = "/run/opnix/romm-retroachievements-key";
@@ -147,6 +167,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
       };
       rommSteamgriddbKey = {
         path = "/run/opnix/romm-steamgriddb-key";
@@ -154,6 +175,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
       };
       rommIgdbClientId = {
         path = "/run/opnix/romm-igdb-client-id";
@@ -161,6 +183,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
       };
       rommIgdbClientSecret = {
         path = "/run/opnix/romm-igdb-client-secret";
@@ -168,6 +191,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
       };
       pocketIdEncryptionKey = {
         path = "/run/opnix/pocket-id-encryption-key";
@@ -175,6 +199,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["pocket-id-env-setup.service" "pocket-id.service"];
       };
       pocketIdMaxmindKey = {
         path = "/run/opnix/pocket-id-maxmind-key";
@@ -182,6 +207,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["pocket-id-env-setup.service" "pocket-id.service"];
       };
       forgejoRunnerToken = {
         path = "/run/opnix/forgejo-runner-token";
@@ -189,6 +215,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # no runner service yet — DinD doesn't work in Podman on NixOS
+        restartServices = [];
       };
       nextcloudAdminPassword = {
         path = "/run/opnix/nextcloud-admin-password";
@@ -196,6 +224,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["nextcloud-env-setup.service" "nextcloud.service"];
       };
       proxmoxTokenId = {
         path = "/run/opnix/proxmox-token-id";
@@ -203,6 +232,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       proxmoxTokenSecret = {
         path = "/run/opnix/proxmox-token-secret";
@@ -210,6 +240,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       plexToken = {
         path = "/run/opnix/plex-token";
@@ -217,6 +248,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       traefikForwardAuthClientId = {
         path = "/run/opnix/traefik-forward-auth-client-id";
@@ -224,6 +256,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["traefik-forward-auth-env-setup.service" "traefik-forward-auth.service"];
       };
       traefikForwardAuthClientSecret = {
         path = "/run/opnix/traefik-forward-auth-client-secret";
@@ -231,6 +264,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["traefik-forward-auth-env-setup.service" "traefik-forward-auth.service"];
       };
       traefikForwardAuthCookieSecret = {
         path = "/run/opnix/traefik-forward-auth-cookie-secret";
@@ -238,6 +272,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["traefik-forward-auth-env-setup.service" "traefik-forward-auth.service"];
       };
       monitoringUnpollerUsername = {
         path = "/run/opnix/monitoring-unpoller-username";
@@ -245,6 +280,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["monitoring-env-setup.service" "monitoring-unpoller.service"];
       };
       monitoringUnpollerPassword = {
         path = "/run/opnix/monitoring-unpoller-password";
@@ -252,6 +288,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["monitoring-env-setup.service" "monitoring-unpoller.service"];
       };
       monitoringGrafanaAdminPassword = {
         path = "/run/opnix/monitoring-grafana-admin-password";
@@ -259,6 +296,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["monitoring-env-setup.service" "monitoring-grafana.service"];
       };
       manyfoldDbPassword = {
         path = "/run/opnix/manyfold-db-password";
@@ -266,6 +304,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["manyfold-env-setup.service" "manyfold-postgres.service" "manyfold.service"];
       };
       manyfoldSecretKeyBase = {
         path = "/run/opnix/manyfold-secret-key-base";
@@ -273,6 +312,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["manyfold-env-setup.service" "manyfold.service"];
       };
       netboxSecretKey = {
         path = "/run/opnix/netbox-secret-key";
@@ -280,6 +320,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["netbox-app-env-setup.service" "netbox.service" "netbox-worker.service"];
       };
       netboxDbPassword = {
         path = "/run/opnix/netbox-db-password";
@@ -287,6 +328,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # used by both db env-setup and app env-setup
+        restartServices = ["netbox-db-env-setup.service" "netbox-postgres.service" "netbox-app-env-setup.service" "netbox.service" "netbox-worker.service"];
       };
       netboxRedisPassword = {
         path = "/run/opnix/netbox-redis-password";
@@ -294,6 +337,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # used by redis env-setup and app env-setup
+        restartServices = ["netbox-redis-env-setup.service" "netbox-redis.service" "netbox-app-env-setup.service" "netbox.service" "netbox-worker.service"];
       };
       netboxRedisCachePassword = {
         path = "/run/opnix/netbox-redis-cache-password";
@@ -301,6 +346,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # used by redis-cache env-setup and app env-setup
+        restartServices = ["netbox-redis-cache-env-setup.service" "netbox-redis-cache.service" "netbox-app-env-setup.service" "netbox.service" "netbox-worker.service"];
       };
       netboxSuperuserName = {
         path = "/run/opnix/netbox-superuser-name";
@@ -308,6 +355,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["netbox-app-env-setup.service" "netbox.service"];
       };
       netboxSuperuserPassword = {
         path = "/run/opnix/netbox-superuser-password";
@@ -315,6 +363,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["netbox-app-env-setup.service" "netbox.service"];
       };
       netboxSuperuserEmail = {
         path = "/run/opnix/netbox-superuser-email";
@@ -322,6 +371,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["netbox-app-env-setup.service" "netbox.service"];
       };
       netboxSuperuserApiToken = {
         path = "/run/opnix/netbox-superuser-api-token";
@@ -329,6 +379,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["netbox-app-env-setup.service" "netbox.service"];
       };
       netboxApiTokenPeppers = {
         path = "/run/opnix/netbox-api-token-peppers";
@@ -336,13 +387,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
-      };
-      mealieEnv = {
-        path = "/run/opnix/mealie-env";
-        reference = "op://nix_secrets/mealie/env";
-        owner = "root";
-        group = "root";
-        mode = "0600";
+        # mounted directly into netbox container (not via env-setup)
+        restartServices = ["netbox.service" "netbox-worker.service"];
       };
       pushoverPodmanToken = {
         path = "/run/opnix/pushover-podman-token";
@@ -350,6 +396,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # read at runtime by auto-update wrapper script — no restart needed
+        restartServices = [];
       };
       pushoverUserToken = {
         path = "/run/opnix/pushover-user-token";
@@ -357,6 +405,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # read at runtime by auto-update wrapper script — no restart needed
+        restartServices = [];
       };
       pushoverBackupToken = {
         path = "/run/opnix/pushover-backup-token";
@@ -364,6 +414,8 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # read at runtime by backup script — no restart needed
+        restartServices = [];
       };
       truenasApiKey = {
         path = "/run/opnix/truenas-api-key";
@@ -371,6 +423,7 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        restartServices = ["homepage-env-setup.service" "homepage.service"];
       };
       truenasPrivateKey = {
         path = "/run/opnix/truenas-private-key";
@@ -378,6 +431,16 @@
         owner = "root";
         group = "root";
         mode = "0600";
+        # read at runtime by backup rsync — no restart needed
+        restartServices = [];
+      };
+      mealieEnv = {
+        path = "/run/opnix/mealie-env";
+        reference = "op://nix_secrets/mealie/env";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["mealie.service"];
       };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller

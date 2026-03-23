@@ -44,6 +44,11 @@
         type = lib.types.str;
         default = "0600";
       };
+      restartServices = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        description = "Systemd services to restart only if this secret's content changes";
+      };
     };
   };
 
@@ -75,9 +80,22 @@
       ${lib.concatMapStrings (s: ''
         echo "Fetching: ${s.value.reference} -> ${s.value.path}"
         mkdir -p "$(dirname "${s.value.path}")"
-        op read "${s.value.reference}" --force --out-file "${s.value.path}"
-        chown "${s.value.owner}:${s.value.group}" "${s.value.path}"
-        chmod "${s.value.mode}" "${s.value.path}"
+        _tmpfile=$(mktemp)
+        op read "${s.value.reference}" --force --out-file "$_tmpfile"
+        if cmp -s "$_tmpfile" "${s.value.path}" 2>/dev/null; then
+          echo "Unchanged: ${s.value.path}"
+          rm -f "$_tmpfile"
+        else
+          echo "Updated: ${s.value.path}"
+          cat "$_tmpfile" > "${s.value.path}"
+          rm -f "$_tmpfile"
+          chown "${s.value.owner}:${s.value.group}" "${s.value.path}"
+          chmod "${s.value.mode}" "${s.value.path}"
+          ${lib.concatMapStrings (svc: ''
+            echo "Restarting ${svc} (secret changed)"
+            systemctl try-restart "${svc}" || true
+          '') s.value.restartServices}
+        fi
       '') (lib.attrsToList cfg.secrets)}
 
       echo "All secrets provisioned"
