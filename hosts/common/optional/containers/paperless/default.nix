@@ -73,6 +73,8 @@ in {
           PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS = "true";
           PAPERLESS_CSRF_ALLOWED_ORIGINS = "https://paperless.jennex.dev";
           PAPERLESS_ALLOWED_HOSTS = "paperless.jennex.dev";
+          PAPERLESS_USE_X_FORWARDED_HOST = "true";
+          PAPERLESS_USE_X_FORWARDED_PORT = "true";
         };
         environmentFiles = ["/run/opnix/paperless-secret"];
         volumes = [
