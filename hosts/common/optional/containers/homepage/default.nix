@@ -282,7 +282,7 @@ in {
     containerConfig = {
       image = "ghcr.io/gethomepage/homepage:latest";
       autoUpdate = "registry";
-      noHealthCheck = true;
+      podmanArgs = ["--no-healthcheck"];
       networks = [networks.traefik_network.ref];
       environments = {
         HOMEPAGE_ALLOWED_HOSTS = "homepage.jennex.dev";
