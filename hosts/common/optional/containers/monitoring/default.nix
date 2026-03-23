@@ -84,322 +84,26 @@
           path: /etc/grafana/provisioning/dashboards
   '';
 
-  grafanaDashboardNauvoo = pkgs.writeText "nauvoo-overview.json" ''
-    {
-      "annotations": { "list": [] },
-      "editable": true,
-      "graphTooltip": 1,
-      "links": [],
-      "panels": [
-        {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "fieldConfig": {
-            "defaults": {
-              "color": { "mode": "palette-classic" },
-              "custom": { "lineWidth": 2, "fillOpacity": 10 },
-              "unit": "percent",
-              "min": 0,
-              "max": 100
-            },
-            "overrides": []
-          },
-          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 0 },
-          "id": 1,
-          "options": {
-            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "list", "placement": "bottom" },
-            "tooltip": { "mode": "single" }
-          },
-          "targets": [
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "100 - (avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
-              "legendFormat": "CPU %",
-              "refId": "A"
-            }
-          ],
-          "title": "CPU Usage",
-          "type": "timeseries"
-        },
-        {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "fieldConfig": {
-            "defaults": {
-              "color": { "mode": "palette-classic" },
-              "custom": { "lineWidth": 2, "fillOpacity": 10 },
-              "unit": "percent",
-              "min": 0,
-              "max": 100
-            },
-            "overrides": []
-          },
-          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 8 },
-          "id": 2,
-          "options": {
-            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "list", "placement": "bottom" },
-            "tooltip": { "mode": "single" }
-          },
-          "targets": [
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
-              "legendFormat": "Memory %",
-              "refId": "A"
-            }
-          ],
-          "title": "Memory Usage",
-          "type": "timeseries"
-        },
-        {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "fieldConfig": {
-            "defaults": {
-              "color": { "mode": "palette-classic" },
-              "custom": { "lineWidth": 2, "fillOpacity": 5 },
-              "unit": "binBps"
-            },
-            "overrides": []
-          },
-          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 16 },
-          "id": 3,
-          "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" },
-            "tooltip": { "mode": "multi" }
-          },
-          "targets": [
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "irate(node_network_receive_bytes_total{device!~\"lo|veth.*|br-.*\"}[5m])",
-              "legendFormat": "RX {{device}}",
-              "refId": "A"
-            },
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "irate(node_network_transmit_bytes_total{device!~\"lo|veth.*|br-.*\"}[5m])",
-              "legendFormat": "TX {{device}}",
-              "refId": "B"
-            }
-          ],
-          "title": "Network I/O",
-          "type": "timeseries"
-        },
-        {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "fieldConfig": {
-            "defaults": {
-              "color": { "mode": "palette-classic" },
-              "custom": { "lineWidth": 2, "fillOpacity": 5 },
-              "unit": "binBps"
-            },
-            "overrides": []
-          },
-          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 24 },
-          "id": 4,
-          "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom" },
-            "tooltip": { "mode": "multi" }
-          },
-          "targets": [
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "irate(node_disk_read_bytes_total{device!~\"sr.*|loop.*\"}[5m])",
-              "legendFormat": "Read {{device}}",
-              "refId": "A"
-            },
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "irate(node_disk_written_bytes_total{device!~\"sr.*|loop.*\"}[5m])",
-              "legendFormat": "Write {{device}}",
-              "refId": "B"
-            }
-          ],
-          "title": "Disk I/O",
-          "type": "timeseries"
-        },
-        {
-          "datasource": { "type": "loki", "uid": "loki" },
-          "gridPos": { "h": 32, "w": 16, "x": 8, "y": 0 },
-          "id": 5,
-          "options": {
-            "dedupStrategy": "none",
-            "enableLogDetails": true,
-            "prettifyLogMessage": false,
-            "showLabels": true,
-            "showCommonLabels": false,
-            "showTime": true,
-            "sortOrder": "Descending",
-            "wrapLogMessage": false
-          },
-          "targets": [
-            {
-              "datasource": { "type": "loki", "uid": "loki" },
-              "expr": "{job=\"systemd-journal\",host=\"nauvoo\",unit=~\"$unit\"}",
-              "refId": "A"
-            }
-          ],
-          "title": "Logs",
-          "type": "logs"
-        }
-      ],
-      "refresh": "30s",
-      "schemaVersion": 38,
-      "tags": ["nauvoo", "system"],
-      "templating": {
-        "list": [
-          {
-            "allValue": ".*",
-            "current": {},
-            "datasource": { "type": "loki", "uid": "loki" },
-            "definition": "label_values({job=\"systemd-journal\",host=\"nauvoo\"}, unit)",
-            "hide": 0,
-            "includeAll": true,
-            "label": "Unit",
-            "multi": false,
-            "name": "unit",
-            "options": [],
-            "query": {
-              "label": "unit",
-              "queryType": "labelValues",
-              "refId": "StandardVariableQuery",
-              "stream": "{job=\"systemd-journal\",host=\"nauvoo\"}"
-            },
-            "refresh": 2,
-            "type": "query"
-          }
-        ]
-      },
-      "time": { "from": "now-1h", "to": "now" },
-      "timepicker": {},
-      "timezone": "browser",
-      "title": "Nauvoo Overview",
-      "uid": "nauvoo-overview",
-      "version": 1
-    }
-  '';
+  grafanaDashboardNauvoo = pkgs.writeText "nauvoo-overview.json"
+    (builtins.readFile ./dashboards/nauvoo-overview.json);
 
-  grafanaDashboardContainers = pkgs.writeText "containers-overview.json" ''
-    {
-      "annotations": { "list": [] },
-      "editable": true,
-      "graphTooltip": 1,
-      "links": [],
-      "panels": [
-        {
-          "collapsed": false,
-          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
-          "id": 10,
-          "repeat": "container",
-          "repeatDirection": "v",
-          "title": "$container",
-          "type": "row"
-        },
-        {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "fieldConfig": {
-            "defaults": {
-              "color": { "mode": "palette-classic" },
-              "custom": { "lineWidth": 2, "fillOpacity": 10 }
-            },
-            "overrides": [
-              {
-                "matcher": { "id": "byName", "options": "CPU %" },
-                "properties": [
-                  { "id": "unit", "value": "percent" },
-                  { "id": "min", "value": 0 },
-                  { "id": "custom.axisPlacement", "value": "left" },
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#7aa2f7" } }
-                ]
-              },
-              {
-                "matcher": { "id": "byName", "options": "Memory" },
-                "properties": [
-                  { "id": "unit", "value": "bytes" },
-                  { "id": "custom.axisPlacement", "value": "right" },
-                  { "id": "color", "value": { "mode": "fixed", "fixedColor": "#bb9af7" } }
-                ]
-              }
-            ]
-          },
-          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 1 },
-          "id": 1,
-          "options": {
-            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "list", "placement": "bottom" },
-            "tooltip": { "mode": "multi" }
-          },
-          "targets": [
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "sum by (name) (rate(podman_container_cpu_seconds_total{name=\"$container\"}[5m])) * 100",
-              "legendFormat": "CPU %",
-              "refId": "A"
-            },
-            {
-              "datasource": { "type": "prometheus", "uid": "prometheus" },
-              "expr": "podman_container_mem_usage_bytes{name=\"$container\"}",
-              "legendFormat": "Memory",
-              "refId": "B"
-            }
-          ],
-          "title": "Resources",
-          "type": "timeseries"
-        },
-        {
-          "datasource": { "type": "loki", "uid": "loki" },
-          "gridPos": { "h": 8, "w": 16, "x": 8, "y": 1 },
-          "id": 2,
-          "options": {
-            "dedupStrategy": "none",
-            "enableLogDetails": true,
-            "prettifyLogMessage": false,
-            "showLabels": false,
-            "showCommonLabels": false,
-            "showTime": true,
-            "sortOrder": "Descending",
-            "wrapLogMessage": true
-          },
-          "targets": [
-            {
-              "datasource": { "type": "loki", "uid": "loki" },
-              "expr": "{job=\"systemd-journal\",host=\"nauvoo\",unit=~\"$container.*\"}",
-              "refId": "A"
-            }
-          ],
-          "title": "Logs",
-          "type": "logs"
-        }
-      ],
-      "refresh": "30s",
-      "schemaVersion": 38,
-      "tags": ["nauvoo", "containers"],
-      "templating": {
-        "list": [
-          {
-            "current": {},
-            "datasource": { "type": "prometheus", "uid": "prometheus" },
-            "definition": "label_values(podman_container_cpu_seconds_total, name)",
-            "hide": 0,
-            "includeAll": true,
-            "label": "Container",
-            "multi": true,
-            "name": "container",
-            "options": [],
-            "query": {
-              "query": "label_values(podman_container_cpu_seconds_total, name)",
-              "refId": "StandardVariableQuery"
-            },
-            "refresh": 2,
-            "sort": 1,
-            "type": "query"
-          }
-        ]
-      },
-      "time": { "from": "now-1h", "to": "now" },
-      "timepicker": {},
-      "timezone": "browser",
-      "title": "Container Resources",
-      "uid": "container-overview",
-      "version": 4
-    }
-  '';
+  grafanaDashboardContainers = pkgs.writeText "containers-overview.json"
+    (builtins.readFile ./dashboards/containers-overview.json);
+
+  grafanaDashboardUnifiClients = pkgs.writeText "unifi-client-insights.json"
+    (builtins.readFile ./dashboards/unifi-client-insights.json);
+
+  grafanaDashboardUnifiSites = pkgs.writeText "unifi-network-sites.json"
+    (builtins.readFile ./dashboards/unifi-network-sites.json);
+
+  grafanaDashboardUnifiUap = pkgs.writeText "unifi-uap-insights.json"
+    (builtins.readFile ./dashboards/unifi-uap-insights.json);
+
+  grafanaDashboardUnifiUsg = pkgs.writeText "unifi-usg-insights.json"
+    (builtins.readFile ./dashboards/unifi-usg-insights.json);
+
+  grafanaDashboardUnifiUsw = pkgs.writeText "unifi-usw-insights.json"
+    (builtins.readFile ./dashboards/unifi-usw-insights.json);
 
   grafanaDatasources = pkgs.writeText "datasources.yaml" ''
     apiVersion: 1
@@ -578,6 +282,11 @@ in {
           "${grafanaDashboardProvider}:/etc/grafana/provisioning/dashboards/provider.yaml:ro"
           "${grafanaDashboardNauvoo}:/etc/grafana/provisioning/dashboards/nauvoo-overview.json:ro"
           "${grafanaDashboardContainers}:/etc/grafana/provisioning/dashboards/containers-overview.json:ro"
+          "${grafanaDashboardUnifiClients}:/etc/grafana/provisioning/dashboards/unifi-client-insights.json:ro"
+          "${grafanaDashboardUnifiSites}:/etc/grafana/provisioning/dashboards/unifi-network-sites.json:ro"
+          "${grafanaDashboardUnifiUap}:/etc/grafana/provisioning/dashboards/unifi-uap-insights.json:ro"
+          "${grafanaDashboardUnifiUsg}:/etc/grafana/provisioning/dashboards/unifi-usg-insights.json:ro"
+          "${grafanaDashboardUnifiUsw}:/etc/grafana/provisioning/dashboards/unifi-usw-insights.json:ro"
         ];
         labels = [
           "homepage.group=Network"
