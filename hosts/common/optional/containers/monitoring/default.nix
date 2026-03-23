@@ -564,6 +564,11 @@ in {
           GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_PATH = "email";
           GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH = "name";
           GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN = "true";
+          GF_AUTH_GENERIC_OAUTH_AUTO_SIGN_UP = "true";
+          GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_STRICT = "false";
+          GF_AUTH_GENERIC_OAUTH_USE_PKCE = "true";
+          GF_USERS_AUTO_ASSIGN_ORG = "true";
+          GF_USERS_AUTO_ASSIGN_ORG_ROLE = "Admin";
         };
         environmentFiles = ["/run/opnix/monitoring-grafana-env"];
         volumes = [
