@@ -134,7 +134,7 @@ in {
           OIDC_ENABLED = "true";
           OIDC_PROVIDER = "Pocket ID";
           OIDC_SERVER_APPLICATION_URL = "https://pocket.jennex.dev";
-          OIDC_REDIRECT_URI = "https://romm.jennex.dev/api/oauth/openid/callback";
+          OIDC_REDIRECT_URI = "https://romm.jennex.dev/api/oauth/openid";
         };
         environmentFiles = ["/run/opnix/romm-env"];
         volumes = [
