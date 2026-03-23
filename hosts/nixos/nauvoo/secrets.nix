@@ -290,6 +290,22 @@
         mode = "0600";
         restartServices = ["monitoring-env-setup.service" "monitoring-unpoller.service"];
       };
+      monitoringGrafanaOidcClientId = {
+        path = "/run/opnix/monitoring-grafana-oidc-client-id";
+        reference = "op://nix_secrets/monitoring/grafana-oidc-client-id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["monitoring-env-setup.service" "monitoring-grafana.service"];
+      };
+      monitoringGrafanaOidcClientSecret = {
+        path = "/run/opnix/monitoring-grafana-oidc-client-secret";
+        reference = "op://nix_secrets/monitoring/grafana-oidc-client-secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["monitoring-env-setup.service" "monitoring-grafana.service"];
+      };
       monitoringGrafanaAdminPassword = {
         path = "/run/opnix/monitoring-grafana-admin-password";
         reference = "op://nix_secrets/monitoring/grafana-admin_password";

@@ -154,10 +154,22 @@ in {
       wantedBy = ["multi-user.target"];
       serviceConfig = {
         Type = "oneshot";
-        RemainAfterExit = true;
+        RemainAfterExit = false;
         TimeoutStartSec = "180";
         ExecStart = lib.getExe fetchScript;
         Environment = "HOME=/root";
+      };
+    };
+
+    # Re-check secrets hourly — hash comparison means containers only restart
+    # if a secret's content actually changed in 1Password
+    systemd.timers.op-connect-secrets = {
+      description = "Periodically refresh secrets from 1Password Connect";
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnBootSec = "5min";
+        OnUnitActiveSec = "1h";
+        RandomizedDelaySec = "120";
       };
     };
 

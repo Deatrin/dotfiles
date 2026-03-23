@@ -440,7 +440,9 @@ in {
           chmod 600 /run/opnix/monitoring-unpoller-env
 
           {
-            printf 'GF_SECURITY_ADMIN_PASSWORD=%s\n' "$(cat /run/opnix/monitoring-grafana-admin-password)"
+            printf 'GF_SECURITY_ADMIN_PASSWORD=%s\n'              "$(cat /run/opnix/monitoring-grafana-admin-password)"
+            printf 'GF_AUTH_GENERIC_OAUTH_CLIENT_ID=%s\n'         "$(cat /run/opnix/monitoring-grafana-oidc-client-id)"
+            printf 'GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=%s\n'     "$(cat /run/opnix/monitoring-grafana-oidc-client-secret)"
           } > /run/opnix/monitoring-grafana-env
           chmod 600 /run/opnix/monitoring-grafana-env
         '';
@@ -553,10 +555,15 @@ in {
           GF_PATHS_PROVISIONING = "/etc/grafana/provisioning";
           GF_AUTH_DISABLE_LOGIN_FORM = "true";
           GF_AUTH_BASIC_ENABLED = "false";
-          GF_AUTH_PROXY_ENABLED = "true";
-          GF_AUTH_PROXY_HEADER_NAME = "X-Forwarded-User";
-          GF_AUTH_PROXY_HEADER_PROPERTY = "email";
-          GF_AUTH_PROXY_AUTO_SIGN_UP = "true";
+          GF_AUTH_GENERIC_OAUTH_ENABLED = "true";
+          GF_AUTH_GENERIC_OAUTH_NAME = "Pocket ID";
+          GF_AUTH_GENERIC_OAUTH_SCOPES = "openid email profile";
+          GF_AUTH_GENERIC_OAUTH_AUTH_URL = "https://pocket.jennex.dev/authorize";
+          GF_AUTH_GENERIC_OAUTH_TOKEN_URL = "https://pocket.jennex.dev/api/oidc/token";
+          GF_AUTH_GENERIC_OAUTH_API_URL = "https://pocket.jennex.dev/api/oidc/userinfo";
+          GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_PATH = "email";
+          GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH = "name";
+          GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN = "true";
         };
         environmentFiles = ["/run/opnix/monitoring-grafana-env"];
         volumes = [
@@ -576,7 +583,6 @@ in {
           "traefik.http.routers.grafana-secure.entrypoints=https"
           "traefik.http.routers.grafana-secure.rule=Host(`grafana.jennex.dev`)"
           "traefik.http.routers.grafana-secure.tls=true"
-          "traefik.http.routers.grafana-secure.middlewares=forward-auth"
           "traefik.http.services.monitoring-grafana.loadbalancer.server.port=3000"
         ];
       };
