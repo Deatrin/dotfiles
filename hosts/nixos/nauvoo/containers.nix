@@ -28,6 +28,7 @@
     ../../common/optional/containers/traefik-forward-auth
     ../../common/optional/containers/monitoring
     ../../common/optional/containers/netbox
+    ../../common/optional/containers/mealie
     ../../common/optional/containers/drawio
     ../../common/optional/containers/excalidraw
     # ../../common/optional/containers/ddns

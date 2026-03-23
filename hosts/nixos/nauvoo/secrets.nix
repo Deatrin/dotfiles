@@ -337,6 +337,13 @@
         group = "root";
         mode = "0600";
       };
+      mealieEnv = {
+        path = "/run/opnix/mealie-env";
+        reference = "op://nix_secrets/mealie/env";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+      };
       pushoverPodmanToken = {
         path = "/run/opnix/pushover-podman-token";
         reference = "op://nix_secrets/Pushover/podmanToken";
