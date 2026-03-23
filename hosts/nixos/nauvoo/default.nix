@@ -80,15 +80,6 @@
   hardware.graphics.enable32Bit = true;
   services.xserver.videoDrivers = ["nvidia"];
 
-  fileSystems."/media" = {
-    device = "10.1.10.5:/volume1/Roci/Media_Storage";
-    fsType = "nfs";
-    options = [
-      "rw"
-      "nolock"
-    ];
-  };
-
   # Tailscale exit node + subnet routing
   services.tailscale-autoconnect.exitNode = true;
   services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
