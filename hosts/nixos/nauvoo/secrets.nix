@@ -193,6 +193,22 @@
         mode = "0600";
         restartServices = ["romm-env-setup.service" "romm.service"];
       };
+      rommOidcClientId = {
+        path = "/run/opnix/romm-oidc-client-id";
+        reference = "op://nix_secrets/romm/oidc-client-id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
+      };
+      rommOidcClientSecret = {
+        path = "/run/opnix/romm-oidc-client-secret";
+        reference = "op://nix_secrets/romm/oidc-client-secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["romm-env-setup.service" "romm.service"];
+      };
       pocketIdEncryptionKey = {
         path = "/run/opnix/pocket-id-encryption-key";
         reference = "op://nix_secrets/pocket-id/encryption_key";
@@ -473,22 +489,6 @@
         group = "root";
         mode = "0600";
         restartServices = ["mealie.service"];
-      };
-      navidromeOidcClientId = {
-        path = "/run/opnix/navidrome-oidc-client-id";
-        reference = "op://nix_secrets/navidrome/oidc-client-id";
-        owner = "root";
-        group = "root";
-        mode = "0600";
-        restartServices = ["navidrome-env-setup.service" "navidrome.service"];
-      };
-      navidromeOidcClientSecret = {
-        path = "/run/opnix/navidrome-oidc-client-secret";
-        reference = "op://nix_secrets/navidrome/oidc-client-secret";
-        owner = "root";
-        group = "root";
-        mode = "0600";
-        restartServices = ["navidrome-env-setup.service" "navidrome.service"];
       };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller

@@ -69,6 +69,8 @@ in {
             printf 'STEAMGRIDDB_API_KEY=%s\n'        "$(cat /run/opnix/romm-steamgriddb-key)"
             printf 'IGDB_CLIENT_ID=%s\n'             "$(cat /run/opnix/romm-igdb-client-id)"
             printf 'IGDB_CLIENT_SECRET=%s\n'         "$(cat /run/opnix/romm-igdb-client-secret)"
+            printf 'OIDC_CLIENT_ID=%s\n'             "$(cat /run/opnix/romm-oidc-client-id)"
+            printf 'OIDC_CLIENT_SECRET=%s\n'         "$(cat /run/opnix/romm-oidc-client-secret)"
           } > /run/opnix/romm-env
           chmod 600 /run/opnix/romm-env
         '';
@@ -129,6 +131,10 @@ in {
           PLAYMATCH_API_ENABLED = "true";
           FLASHPOINT_API_ENABLED = "true";
           HLTB_API_ENABLED = "true";
+          OIDC_ENABLED = "true";
+          OIDC_PROVIDER = "Pocket ID";
+          OIDC_SERVER_APPLICATION_URL = "https://pocket.jennex.dev";
+          OIDC_REDIRECT_URI = "https://romm.jennex.dev/api/oauth/openid/callback";
         };
         environmentFiles = ["/run/opnix/romm-env"];
         volumes = [
