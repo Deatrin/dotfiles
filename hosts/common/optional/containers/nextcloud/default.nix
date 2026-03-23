@@ -121,6 +121,9 @@ in {
           PHP_MEMORY_LIMIT = "512M";
           PHP_UPLOAD_LIMIT = "10G";
           TZ = "America/Los_Angeles";
+          OVERWRITEPROTOCOL = "https";
+          OVERWRITECLIURL = "https://nextcloud.jennex.dev";
+          OVERWRITEHOST = "nextcloud.jennex.dev";
         };
         environmentFiles = ["/run/opnix/nextcloud-env"];
         volumes = [
