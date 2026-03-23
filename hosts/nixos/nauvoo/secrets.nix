@@ -474,6 +474,22 @@
         mode = "0600";
         restartServices = ["mealie.service"];
       };
+      navidromeOidcClientId = {
+        path = "/run/opnix/navidrome-oidc-client-id";
+        reference = "op://nix_secrets/navidrome/oidc_client_id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["navidrome-env-setup.service" "navidrome.service"];
+      };
+      navidromeOidcClientSecret = {
+        path = "/run/opnix/navidrome-oidc-client-secret";
+        reference = "op://nix_secrets/navidrome/oidc_client_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["navidrome-env-setup.service" "navidrome.service"];
+      };
 
       # TODO: Fill in correct op:// references before enabling iDRAC fan controller
       # idracIp1 = {
