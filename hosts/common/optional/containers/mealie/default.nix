@@ -18,6 +18,11 @@ in {
         TZ = "America/Los_Angeles";
         BASE_URL = "https://mealie.jennex.dev";
         ALLOW_SIGNUP = "false";
+        OIDC_AUTH_ENABLED = "true";
+        OIDC_SIGNUP_TYPE = "sso";
+        OIDC_CONFIGURATION_URL = "https://pocket.jennex.dev/.well-known/openid-configuration";
+        OIDC_PROVIDER_NAME = "Pocket ID";
+        OIDC_AUTO_REDIRECT = "false";
       };
       environmentFiles = ["/run/opnix/mealie-env"];
       volumes = ["/var/lib/mealie:/app/data"];
