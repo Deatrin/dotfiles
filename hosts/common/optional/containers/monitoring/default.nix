@@ -569,6 +569,8 @@ in {
           GF_AUTH_GENERIC_OAUTH_USE_PKCE = "true";
           GF_USERS_AUTO_ASSIGN_ORG = "true";
           GF_USERS_AUTO_ASSIGN_ORG_ROLE = "Admin";
+          GF_USERS_ALLOW_SIGN_UP = "true";
+          GF_LOG_FILTERS = "oauth.generic_oauth:debug";
         };
         environmentFiles = ["/run/opnix/monitoring-grafana-env"];
         volumes = [
