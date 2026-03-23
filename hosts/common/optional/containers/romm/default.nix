@@ -132,7 +132,7 @@ in {
           FLASHPOINT_API_ENABLED = "true";
           HLTB_API_ENABLED = "true";
           OIDC_ENABLED = "true";
-          OIDC_PROVIDER = "Pocket ID";
+          OIDC_PROVIDER = "pocket-id";
           OIDC_SERVER_APPLICATION_URL = "https://pocket.jennex.dev";
           OIDC_REDIRECT_URI = "https://romm.jennex.dev/api/oauth/openid";
         };
