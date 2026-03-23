@@ -55,6 +55,8 @@ in {
   systemd.tmpfiles.rules = [
     "d /var/lib/netbox 0755 root root -"
     "d /var/lib/netbox/postgres 0700 70 70 -"
+    "d /var/lib/netbox/postgres/18 0700 70 70 -"
+    "d /var/lib/netbox/postgres/18/docker 0700 70 70 -"
     "d /var/lib/netbox/redis 0755 root root -"
     "d /var/lib/netbox/redis-cache 0755 root root -"
     "d /var/lib/netbox/media 0755 root root -"
@@ -174,7 +176,7 @@ in {
         autoUpdate = "registry";
         networks = [networks.netbox_network.ref];
         environmentFiles = ["/run/opnix/netbox-db-env"];
-        volumes = ["/var/lib/netbox/postgres:/var/lib/postgresql/data"];
+        volumes = ["/var/lib/netbox/postgres/18/docker:/var/lib/postgresql/18/docker"];
       };
     };
 
