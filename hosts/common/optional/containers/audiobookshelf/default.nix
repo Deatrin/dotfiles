@@ -44,8 +44,13 @@ in {
       networks = [networks.traefik_network.ref];
       environments = {
         TZ = "America/Los_Angeles";
-        OIDC_ISSUER_URL = "https://pocket.jennex.dev";
+        OIDC_ISSUER = "https://pocket.jennex.dev";
         OIDC_CLIENT_NAME = "Pocket ID";
+        OIDC_JWKS_URL = "https://pocket.jennex.dev/api/oidc/jwks";
+        OIDC_USER_INFO_URL = "https://pocket.jennex.dev/api/oidc/userinfo";
+        OIDC_TOKEN_URL = "https://pocket.jennex.dev/api/oidc/token";
+        OIDC_AUTH_URL = "https://pocket.jennex.dev/authorize";
+        OIDC_LOGOUT_URL = "https://pocket.jennex.dev/api/oidc/logout";
       };
       environmentFiles = [
         "/run/opnix/audiobookshelf-oidc-env"
