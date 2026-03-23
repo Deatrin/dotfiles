@@ -553,8 +553,9 @@ in {
           GF_SERVER_ROOT_URL = "https://grafana.jennex.dev";
           GF_INSTALL_PLUGINS = "grafana-clock-panel,natel-discrete-panel,grafana-piechart-panel";
           GF_PATHS_PROVISIONING = "/etc/grafana/provisioning";
-          GF_AUTH_DISABLE_LOGIN_FORM = "true";
-          GF_AUTH_BASIC_ENABLED = "false";
+          GF_AUTH_DISABLE_LOGIN_FORM = "false";
+          GF_AUTH_BASIC_ENABLED = "true";
+          GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN = "false";
           GF_AUTH_GENERIC_OAUTH_ENABLED = "true";
           GF_AUTH_GENERIC_OAUTH_NAME = "Pocket ID";
           GF_AUTH_GENERIC_OAUTH_SCOPES = "openid email profile";
@@ -563,7 +564,6 @@ in {
           GF_AUTH_GENERIC_OAUTH_API_URL = "https://pocket.jennex.dev/api/oidc/userinfo";
           GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_PATH = "email";
           GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH = "name";
-          GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN = "true";
           GF_AUTH_GENERIC_OAUTH_AUTO_SIGN_UP = "true";
           GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_STRICT = "false";
           GF_AUTH_GENERIC_OAUTH_USE_PKCE = "true";
