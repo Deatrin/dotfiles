@@ -438,6 +438,22 @@
         # mounted directly into netbox container (not via env-setup)
         restartServices = ["netbox.service" "netbox-worker.service"];
       };
+      netboxOidcClientId = {
+        path = "/run/opnix/netbox-oidc-client-id";
+        reference = "op://nix_secrets/netbox/oidc-client-id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["netbox.service" "netbox-worker.service"];
+      };
+      netboxOidcClientSecret = {
+        path = "/run/opnix/netbox-oidc-client-secret";
+        reference = "op://nix_secrets/netbox/oidc-client-secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["netbox.service" "netbox-worker.service"];
+      };
       pushoverPodmanToken = {
         path = "/run/opnix/pushover-podman-token";
         reference = "op://nix_secrets/Pushover/podmanToken";

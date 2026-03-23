@@ -27,6 +27,16 @@
   extraPy = pkgs.writeText "netbox-extra.py" ''
     with open('/run/opnix/netbox-api-token-peppers') as f:
         API_TOKEN_PEPPERS = {1: f.read().strip()}
+
+    with open('/run/opnix/netbox-oidc-client-id') as f:
+        SOCIAL_AUTH_OIDC_KEY = f.read().strip()
+
+    with open('/run/opnix/netbox-oidc-client-secret') as f:
+        SOCIAL_AUTH_OIDC_SECRET = f.read().strip()
+
+    REMOTE_AUTH_ENABLED = True
+    REMOTE_AUTH_BACKEND = 'social_core.backends.open_id_connect.OpenIdConnectAuth'
+    SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = 'https://pocket.jennex.dev'
   '';
 in {
   systemd.tmpfiles.rules = [
@@ -237,6 +247,8 @@ in {
           "${volumes.netbox-scripts.ref}:/opt/netbox/netbox/scripts"
           "${extraPy}:/etc/netbox/config/extra.py:ro"
           "/run/opnix/netbox-api-token-peppers:/run/opnix/netbox-api-token-peppers:ro"
+          "/run/opnix/netbox-oidc-client-id:/run/opnix/netbox-oidc-client-id:ro"
+          "/run/opnix/netbox-oidc-client-secret:/run/opnix/netbox-oidc-client-secret:ro"
         ];
         labels = [
           "homepage.group=Network"
