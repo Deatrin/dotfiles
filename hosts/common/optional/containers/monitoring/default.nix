@@ -7,10 +7,10 @@
 #
 # Pre-requisites:
 #   - Read-only local account on UniFi controller (username: unpoller)
-#   - traefik-forward-auth container deployed (provides forward-auth middleware)
+#   - Pocket ID OIDC client configured (callback: https://grafana.jennex.dev/login/generic_oauth)
 #
 # Routing (via Traefik):
-#   grafana.jennex.dev → monitoring-grafana:3000 (behind Pocket ID forward auth)
+#   grafana.jennex.dev → monitoring-grafana:3000 (native Pocket ID OIDC)
 {
   config,
   pkgs,
@@ -553,9 +553,9 @@ in {
           GF_SERVER_ROOT_URL = "https://grafana.jennex.dev";
           GF_INSTALL_PLUGINS = "grafana-clock-panel,natel-discrete-panel,grafana-piechart-panel";
           GF_PATHS_PROVISIONING = "/etc/grafana/provisioning";
-          GF_AUTH_DISABLE_LOGIN_FORM = "false";
-          GF_AUTH_BASIC_ENABLED = "true";
-          GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN = "false";
+          GF_AUTH_DISABLE_LOGIN_FORM = "true";
+          GF_AUTH_BASIC_ENABLED = "false";
+          GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN = "true";
           GF_AUTH_GENERIC_OAUTH_ENABLED = "true";
           GF_AUTH_GENERIC_OAUTH_NAME = "Pocket ID";
           GF_AUTH_GENERIC_OAUTH_SCOPES = "openid email profile";
@@ -570,7 +570,6 @@ in {
           GF_USERS_AUTO_ASSIGN_ORG = "true";
           GF_USERS_AUTO_ASSIGN_ORG_ROLE = "Admin";
           GF_USERS_ALLOW_SIGN_UP = "true";
-          GF_LOG_FILTERS = "oauth.generic_oauth:debug";
         };
         environmentFiles = ["/run/opnix/monitoring-grafana-env"];
         volumes = [
