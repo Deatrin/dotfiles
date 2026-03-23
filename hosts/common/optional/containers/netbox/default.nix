@@ -22,7 +22,7 @@
   lib,
   ...
 }: let
-  inherit (config.virtualisation.quadlet) networks volumes;
+  inherit (config.virtualisation.quadlet) networks;
   domain = "netbox.jennex.dev";
   extraPy = pkgs.writeText "netbox-extra.py" ''
     with open('/run/opnix/netbox-api-token-peppers') as f:
@@ -37,10 +37,28 @@
     REMOTE_AUTH_ENABLED = True
     REMOTE_AUTH_BACKEND = 'social_core.backends.open_id_connect.OpenIdConnectAuth'
     SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = 'https://pocket.jennex.dev'
+    SOCIAL_AUTH_PIPELINE = (
+        'social_core.pipeline.social_auth.social_details',
+        'social_core.pipeline.social_auth.social_uid',
+        'social_core.pipeline.social_auth.auth_allowed',
+        'social_core.pipeline.social_auth.social_user',
+        'social_core.pipeline.user.get_username',
+        'social_core.pipeline.social_auth.associate_by_email',
+        'social_core.pipeline.user.create_user',
+        'social_core.pipeline.social_auth.associate_user',
+        'social_core.pipeline.social_auth.load_extra_data',
+        'social_core.pipeline.user.user_details',
+    )
   '';
 in {
   systemd.tmpfiles.rules = [
     "d /var/lib/netbox 0755 root root -"
+    "d /var/lib/netbox/postgres 0755 root root -"
+    "d /var/lib/netbox/redis 0755 root root -"
+    "d /var/lib/netbox/redis-cache 0755 root root -"
+    "d /var/lib/netbox/media 0755 root root -"
+    "d /var/lib/netbox/reports 0755 root root -"
+    "d /var/lib/netbox/scripts 0755 root root -"
   ];
 
   # Build PostgreSQL env file
@@ -145,15 +163,6 @@ in {
   virtualisation.quadlet = {
     networks.netbox_network = {};
 
-    volumes = {
-      netbox-postgres = {};
-      netbox-redis = {};
-      netbox-redis-cache = {};
-      netbox-media = {};
-      netbox-reports = {};
-      netbox-scripts = {};
-    };
-
     containers.netbox-postgres = {
       unitConfig = {
         After = ["opnix-secrets.service" "netbox-db-env-setup.service"];
@@ -164,7 +173,7 @@ in {
         autoUpdate = "registry";
         networks = [networks.netbox_network.ref];
         environmentFiles = ["/run/opnix/netbox-db-env"];
-        volumes = ["${volumes.netbox-postgres.ref}:/var/lib/postgresql/data"];
+        volumes = ["/var/lib/netbox/postgres:/var/lib/postgresql/data"];
       };
     };
 
@@ -179,7 +188,7 @@ in {
         networks = [networks.netbox_network.ref];
         exec = "valkey-server /etc/valkey/valkey.conf";
         volumes = [
-          "${volumes.netbox-redis.ref}:/data"
+          "/var/lib/netbox/redis:/data"
           "/run/opnix/netbox-redis.conf:/etc/valkey/valkey.conf:ro"
         ];
       };
@@ -196,7 +205,7 @@ in {
         networks = [networks.netbox_network.ref];
         exec = "valkey-server /etc/valkey/valkey.conf";
         volumes = [
-          "${volumes.netbox-redis-cache.ref}:/data"
+          "/var/lib/netbox/redis-cache:/data"
           "/run/opnix/netbox-redis-cache.conf:/etc/valkey/valkey.conf:ro"
         ];
       };
@@ -242,9 +251,9 @@ in {
         };
         environmentFiles = ["/run/opnix/netbox-app-env"];
         volumes = [
-          "${volumes.netbox-media.ref}:/opt/netbox/netbox/media"
-          "${volumes.netbox-reports.ref}:/opt/netbox/netbox/reports"
-          "${volumes.netbox-scripts.ref}:/opt/netbox/netbox/scripts"
+          "/var/lib/netbox/media:/opt/netbox/netbox/media"
+          "/var/lib/netbox/reports:/opt/netbox/netbox/reports"
+          "/var/lib/netbox/scripts:/opt/netbox/netbox/scripts"
           "${extraPy}:/etc/netbox/config/extra.py:ro"
           "/run/opnix/netbox-api-token-peppers:/run/opnix/netbox-api-token-peppers:ro"
           "/run/opnix/netbox-oidc-client-id:/run/opnix/netbox-oidc-client-id:ro"
@@ -291,9 +300,9 @@ in {
         };
         environmentFiles = ["/run/opnix/netbox-app-env"];
         volumes = [
-          "${volumes.netbox-media.ref}:/opt/netbox/netbox/media"
-          "${volumes.netbox-reports.ref}:/opt/netbox/netbox/reports"
-          "${volumes.netbox-scripts.ref}:/opt/netbox/netbox/scripts"
+          "/var/lib/netbox/media:/opt/netbox/netbox/media"
+          "/var/lib/netbox/reports:/opt/netbox/netbox/reports"
+          "/var/lib/netbox/scripts:/opt/netbox/netbox/scripts"
         ];
       };
     };
