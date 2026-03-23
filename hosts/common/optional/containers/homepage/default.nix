@@ -282,6 +282,7 @@ in {
     containerConfig = {
       image = "ghcr.io/gethomepage/homepage:latest";
       autoUpdate = "registry";
+      noHealthCheck = true;
       networks = [networks.traefik_network.ref];
       environments = {
         HOMEPAGE_ALLOWED_HOSTS = "homepage.jennex.dev";
