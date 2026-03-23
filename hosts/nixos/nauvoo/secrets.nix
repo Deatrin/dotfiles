@@ -476,7 +476,7 @@
       };
       navidromeOidcClientId = {
         path = "/run/opnix/navidrome-oidc-client-id";
-        reference = "op://nix_secrets/navidrome/oidc_client_id";
+        reference = "op://nix_secrets/navidrome/oidc-client-id";
         owner = "root";
         group = "root";
         mode = "0600";
@@ -484,7 +484,7 @@
       };
       navidromeOidcClientSecret = {
         path = "/run/opnix/navidrome-oidc-client-secret";
-        reference = "op://nix_secrets/navidrome/oidc_client_secret";
+        reference = "op://nix_secrets/navidrome/oidc-client-secret";
         owner = "root";
         group = "root";
         mode = "0600";
