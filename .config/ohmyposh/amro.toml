@@ -44,7 +44,7 @@ type = "prompt"
 [transient_prompt]
   foreground = "#0CA0D8"
   background = "transparent"
-  template = "Last: {{ .CurrentDate | date \"15:04:05\" }} "
+  template = "Last: {{ now | date \"15:04:05\" }} "
 
 [[blocks]]
 alignment = "left"
