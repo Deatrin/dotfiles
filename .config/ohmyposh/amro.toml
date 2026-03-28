@@ -31,6 +31,16 @@ type = "prompt"
     [blocks.segments.properties]
     fetch_stash_count = true
     fetch_upstream_icon = true
+[[blocks]]
+alignment = "right"
+type = "prompt"
+
+  [[blocks.segments]]
+  foreground = "#565f89"
+  style = "plain"
+  template = "{{ .CurrentDate | date \"15:04:05\" }} "
+  type = "time"
+
 [transient_prompt]
   foreground = "#0CA0D8"
   background = "transparent"
