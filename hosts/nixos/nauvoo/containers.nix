@@ -31,6 +31,7 @@
     ../../common/optional/containers/mealie
     ../../common/optional/containers/drawio
     ../../common/optional/containers/excalidraw
+    ../../common/optional/containers/netboot
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
   ];

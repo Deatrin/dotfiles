@@ -49,7 +49,7 @@ direnv allow
 ## Secrets
 
 System-level (opnix):
-- `autin` → atuin username
+- `atuin` → atuin username
 
 User-level (opnix home-manager):
 - Shell environment variables (`~/.config/shell-secrets/env`)

@@ -30,7 +30,7 @@ LUKS + LVM + BTRFS:
 | Hyprlock / Hypridle | [home-manager/common/features/desktop](../../../home-manager/common/features/desktop/) |
 | Tailscale | [hosts/common/nixos/tailscale.nix](../../common/nixos/tailscale.nix) |
 | OpenSSH | [hosts/common/nixos/openssh.nix](../../common/nixos/openssh.nix) |
-| Opnix secrets | [hosts/nixos/tycho/secrets.nix](secrets.nix) |
+| op-connect-secrets | [hosts/nixos/tycho/secrets.nix](secrets.nix) |
 | YubiKey | [hosts/common/nixos/default.nix](../../common/nixos/default.nix) |
 
 ### Desktop
@@ -52,11 +52,14 @@ LUKS + LVM + BTRFS:
 
 ## Secrets
 
-System-level (opnix):
+System-level (op-connect-secrets, fetched from nauvoo's Connect server at `10.1.30.100:8080`):
 - `tailscaleKey` → `/run/opnix/tailscale-key`
 
 User-level (opnix home-manager):
 - Shell environment variables (`~/.config/shell-secrets/env`)
+
+Bootstrap token (manually placed, never managed by Nix):
+- `/etc/op-connect-token` — Connect server access token (see Bootstrap step 4)
 
 ## Build
 
@@ -92,11 +95,19 @@ sudo chown -R deatrin:users .
 nh os switch
 ```
 
-### 4. Opnix setup
+### 4. Place op-connect token
+
+tycho fetches secrets from nauvoo's 1Password Connect server — no local opnix needed.
+Place the Connect token manually (nauvoo must be reachable at `10.1.30.100:8080`):
 
 ```bash
-sudo opnix token set
-# paste service account token when prompted
+sudo install -m600 /dev/stdin /etc/op-connect-token
+# paste the Connect token, then Ctrl+D
+```
+
+Then rebuild to provision secrets:
+
+```bash
 nh os switch
 ```
 
@@ -126,10 +137,17 @@ gpg-connect-agent updatestartuptty /bye
 
 ### Secrets not provisioning
 
+tycho uses `op-connect-secrets` pointing to nauvoo. `opnix-secrets.service` is a compatibility shim that delegates to it.
+
 ```bash
-sudo systemctl status opnix-secrets.service
+sudo systemctl status op-connect-secrets.service
+sudo journalctl -u op-connect-secrets.service -n 30 --no-pager
 sudo ls -la /run/opnix/
 ```
+
+Common causes:
+- `/etc/op-connect-token` missing — see Bootstrap step 4
+- nauvoo not reachable at `10.1.30.100:8080` — check network/Tailscale
 
 ### Remote install (nixos-anywhere)
 

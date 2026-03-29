@@ -16,16 +16,16 @@ This directory contains per-machine system-level configurations for both NixOS a
 
 ### NixOS (Linux)
 
-- **[nauvoo](nixos/nauvoo/README.md)**: Production homelab server (Proxmox VM)
+- **[nauvoo](nixos/nauvoo/README.md)**: Production homelab server (physical)
   - x86_64-linux, AMD CPU, NVIDIA GPU
   - Podman Quadlet containers, all services on *.jennex.dev
-  - NFS mount for media storage
+  - Internal `/storage` for media, `/ssdstorage` for fast data
 
 - **[tycho](nixos/tycho/README.md)**: Lenovo T14 G3 laptop with Hyprland
   - x86_64-linux, Intel CPU, Thunderbolt
   - Hyprland + greetd + hyprlock desktop
   - LUKS + LVM + BTRFS storage
-  - Opnix secrets management
+  - op-connect-secrets (fetches from nauvoo's Connect server)
 
 ### Darwin (macOS)
 

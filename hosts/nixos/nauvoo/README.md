@@ -4,13 +4,13 @@ Production homelab server running all self-hosted services via Podman Quadlet co
 
 ## Hardware
 
-- **Platform**: x86_64-linux (Proxmox VM)
-- **CPU**: AMD with KVM support
+- **Platform**: x86_64-linux (physical server)
+- **CPU**: AMD
 - **GPU**: NVIDIA (proprietary drivers + container toolkit)
 - **Network**: Static IP `10.1.30.100/24`, SSH port `2222`
 - **Storage**:
   - SSD: `/ssdstorage/` (Forgejo data, fast storage)
-  - NFS: `/storage/media/` → `10.1.10.5:/volume1/Roci/Media_Storage`
+  - HDD: `/storage/` (media, immich library, backups)
 
 ## Running Containers
 
@@ -30,18 +30,20 @@ All containers managed via Podman Quadlet. Modules in `hosts/common/optional/con
 | navidrome | Music streaming | navidrome.jennex.dev |
 | audiobookshelf | Audiobook server | audiobookshelf.jennex.dev |
 | calibre | Ebook library | calibre.jennex.dev |
-| arr-stack | Lidarr, Radarr, Sonarr, Prowlarr, SABnzbd, Whisparr | *.jennex.dev |
+| arr-stack | Lidarr, Radarr, Sonarr, Prowlarr, SABnzbd | *.jennex.dev |
 | seerr | Overseerr media requests | seerr.jennex.dev |
 | romm | ROM manager | romm.jennex.dev |
 | grocy | Grocery/household | grocy.jennex.dev |
 | homebox | Home inventory | homebox.jennex.dev |
 | manyfold | 3D model manager | manyfold.jennex.dev |
+| mealie | Recipe manager | mealie.jennex.dev |
 | syncthing | File sync | syncthing.jennex.dev |
 | netbox | Network documentation | netbox.jennex.dev |
 | it-tools | Developer utilities | it-tools.jennex.dev |
 | drawio | Diagramming | drawio.jennex.dev |
 | excalidraw | Virtual whiteboard | excalidraw.jennex.dev |
-| monitoring | Prometheus + Grafana + Loki + UnPoller | grafana.jennex.dev |
+| monitoring | Prometheus, Grafana, Loki, Promtail, UnPoller, podman-exporter | grafana.jennex.dev |
+| netboot | PXE network boot manager | netboot.jennex.dev |
 | op-connect | 1Password Connect server | localhost:8080 only |
 
 **External services** (proxied through Traefik, not containers):
@@ -119,9 +121,9 @@ sudo podman ps
 ## Post-Install Notes
 
 - **Forgejo data** lives at `/ssdstorage/forgejo` — restore from backup if rebuilding
-- **Immich library** at `/storage/media/pictures/immich/library` (on NFS)
-- **NFS mount** requires `10.1.10.5` to be reachable; check `mount | grep storage`
-- **Tailscale** auto-connects on boot via opnix secret; verify with `tailscale status`
+- **Immich library** at `/storage/media/pictures/immich/library`
+- **Media storage** is internal at `/storage` — verify disk is mounted with `mount | grep storage`
+- **Tailscale** auto-connects on boot via op-connect secret; verify with `tailscale status`
 - **Pi-hole** is the Tailscale DNS nameserver — if it's down, DNS resolution fails for all Tailscale devices
 
 ## Updating
@@ -150,14 +152,6 @@ Common causes:
 # System quadlet containers don't show in plain podman ps — use sudo
 sudo podman ps -a | grep <name>
 sudo journalctl -u <container-name>.service -n 30 --no-pager
-```
-
-### NFS mount not working
-
-```bash
-ping 10.1.10.5
-showmount -e 10.1.10.5
-sudo mount -t nfs 10.1.10.5:/volume1/Roci/Media_Storage /storage/media
 ```
 
 ### NVIDIA GPU not detected
