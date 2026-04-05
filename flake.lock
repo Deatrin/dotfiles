@@ -300,11 +300,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1774467531,
-        "narHash": "sha256-a+rwJiaKOQsYkSSI6igOx1aYpjN/UtOTxcyhpBZk+h0=",
+        "lastModified": 1775369497,
+        "narHash": "sha256-ZFBi4N3PNHvxAjfqUS7ENQk17N4uFAb6sgVIsxgV8GA=",
         "owner": "acropolis914",
         "repo": "hyprsettings",
-        "rev": "486067d7efbf26055dd4d8aaf73a04b8babfeecd",
+        "rev": "e2d5784ba6fb538dc0c930829783f5b286f333fd",
         "type": "github"
       },
       "original": {
