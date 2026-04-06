@@ -1,10 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
-  imports = [inputs.hyprpanel.homeManagerModules.hyprpanel];
-
+{pkgs, ...}: {
   home.packages = with pkgs; [
     brightnessctl
     pavucontrol
@@ -12,8 +6,6 @@
 
   programs.hyprpanel = {
     enable = true;
-    overlay.enable = true;
-    overwrite.enable = true;
 
     settings = {
       # Bar layout — mirrors existing waybar setup
