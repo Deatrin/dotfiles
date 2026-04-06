@@ -17,6 +17,11 @@
     # nodejs = prev.nodejs_22;
     # nodejs-slim = prev.nodejs-slim_22;
 
+    # Fix direnv fish test getting SIGKILL'd in the macOS Nix sandbox
+    direnv = prev.direnv.overrideAttrs (_oldAttrs: {
+      doCheck = false;
+    });
+
     # Fix inetutils build on macOS with newer clang
     # https://github.com/NixOS/nixpkgs/issues/XXX
     inetutils = prev.inetutils.overrideAttrs (oldAttrs: {

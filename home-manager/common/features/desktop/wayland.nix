@@ -40,6 +40,7 @@
         #cpu,
         #battery,
         #pulseaudio,
+        #backlight,
 
         #tray {
           margin-right: 16px;
@@ -78,6 +79,7 @@
           "group/tray-expander"
           "bluetooth"
           "network"
+          "backlight"
           "pulseaudio"
           "cpu"
           "battery"
@@ -86,7 +88,7 @@
           on-click = "activate";
           format = "{icon}";
           format-icons = {
-            "default" = "";
+            "default" = "";
             "1" = "1";
             "2" = "2";
             "3" = "3";
@@ -144,7 +146,7 @@
           format = "{capacity}% {icon}";
           format-discharging = "{icon}";
           format-charging = "{icon}";
-          format-plugged = "";
+          format-plugged = "";
           format-icons = {
             charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
             default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
@@ -160,21 +162,33 @@
         };
 
         bluetooth = {
-          format = "";
+          format = "";
           format-disabled = "󰂲";
           format-connected = "󰂱";
           format-no-controller = "";
           tooltip-format = "Devices connected: {num_connections}";
         };
 
+        backlight = {
+          format = "{icon} {percent}%";
+          format-icons = ["󰃚" "󰃛" "󰃜" "󰃝" "󰃞" "󰃟" "󰃠"];
+          on-scroll-up = "brightnessctl set +5%";
+          on-scroll-down = "brightnessctl set 5%-";
+          tooltip = false;
+        };
+
         pulseaudio = {
-          format = "{icon}";
-          tooltip-format = "Playing at {volume}%";
-          scroll-step = 5;
-          format-muted = "";
+          format = "{icon} {volume}%";
+          format-muted = " muted";
           format-icons = {
-            default = ["" "" ""];
+            default = ["" "" ""];
           };
+          on-click = "pavucontrol";
+          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          on-scroll-up = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+          on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+          scroll-step = 5;
+          tooltip = false;
         };
 
         "group/tray-expander" = {
@@ -187,7 +201,7 @@
         };
 
         "custom/expand-icon" = {
-          format = "";
+          format = "";
           tooltip = false;
         };
 
@@ -200,6 +214,7 @@
   };
 
   home.packages = with pkgs; [
+    brightnessctl
     grim
     hyprcursor
     hyprpaper
