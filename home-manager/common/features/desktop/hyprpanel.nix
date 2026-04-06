@@ -48,8 +48,8 @@
       bar.network.label = true;
 
       # Tokyo Night Dark theme
-      theme.bar.transparent = false;
-      theme.bar.floating = false;
+      theme.bar.transparent = true;
+      theme.bar.floating = true;
 
       theme.font = {
         name = "JetBrainsMono Nerd Font";
