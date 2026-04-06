@@ -113,20 +113,13 @@
         enableExtraDiagnostics = true;
 
         nix.enable = true;
-        markdown.enable = false;
+        markdown.enable = true;
         bash.enable = true;
         go.enable = true;
         html.enable = false;
         helm.enable = true;
-        # TODO: Re-enable Python support once macOS build issues are resolved
-        # Currently disabled due to:
-        # - setproctitle (Black dependency) has failing segfault tests on Darwin with Python 3.13
-        # - LLVM 20.1.8 has failing getMacOSHostVersion test on newer macOS versions
-        # - These cause builds from source that fail, blocking the entire system rebuild
-        python.enable = false;
-        # TODO: Re-enable SQL support once Python build issues are resolved
-        # sqlfluff (SQL formatter) is a Python tool that depends on setproctitle
-        sql.enable = false;
+        python.enable = true;
+        sql.enable = true;
         terraform.enable = true;
         yaml.enable = true;
       };
@@ -212,6 +205,21 @@
         breadcrumbs = {
           enable = true;
           navbuddy.enable = true;
+        };
+      };
+
+      extraPlugins = with pkgs.unstable.vimPlugins; {
+        render-markdown = {
+          package = render-markdown-nvim;
+          setup = ''
+            require('render-markdown').setup({
+              heading = { enabled = true },
+              code = { enabled = true, style = "full" },
+              bullet = { enabled = true },
+              checkbox = { enabled = true },
+              table = { enabled = true },
+            })
+          '';
         };
       };
 

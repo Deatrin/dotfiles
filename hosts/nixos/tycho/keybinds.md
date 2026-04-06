@@ -95,6 +95,34 @@
 
 > Tip: press `<leader>` and wait — **which-key** will show available bindings. `:Cheatsheet` opens the full built-in cheatsheet.
 
+### Navigation
+| Keybind | Action |
+|---|---|
+| `h/j/k/l` | Left/down/up/right |
+| `w/W` | Next word/WORD |
+| `b/B` | Previous word/WORD |
+| `e/E` | End of word/WORD |
+| `0` | Start of line |
+| `^` | First non-blank character |
+| `$` | End of line |
+| `gg` | Top of file |
+| `G` | Bottom of file |
+| `{` / `}` | Previous/next empty line (paragraph) |
+| `Ctrl + d` | Half page down |
+| `Ctrl + u` | Half page up |
+| `Ctrl + f` | Full page down |
+| `Ctrl + b` | Full page up |
+| `%` | Jump to matching bracket |
+| `*` / `#` | Search word under cursor forward/backward |
+| `n` / `N` | Next/previous search result |
+| `''` | Jump back to last position |
+| `Ctrl + o` | Jump to older position in jumplist |
+| `Ctrl + i` | Jump to newer position in jumplist |
+| `zz` | Center cursor on screen |
+| `zt` / `zb` | Cursor to top/bottom of screen |
+| `H/M/L` | Jump to top/middle/bottom of screen |
+| `<number>G` | Jump to line number |
+
 ### File Tree (neo-tree)
 | Keybind | Action |
 |---|---|

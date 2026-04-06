@@ -6,15 +6,15 @@ alignment = "left"
 type = "prompt"
 
   [[blocks.segments]]
-  foreground = "#7dcfff"
+  foreground = "#bb9af7"
   style = "plain"
-  template = " {{ .UserName }} on"
+  template = " {{ .UserName }} on "
   type = "session"
 
   [[blocks.segments]]
   foreground = "#7aa2f7"
   style = "plain"
-  template = "  {{ .Path }} "
+  template = "󰉋  {{ .Path }} "
   type = "path"
 
     [blocks.segments.properties]
@@ -23,14 +23,14 @@ type = "prompt"
 
   [[blocks.segments]]
   foreground = "#7dcfff"
-  powerline_symbol = ""
   style = "plain"
-  template = "{{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} "
+  template = " {{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} "
   type = "git"
 
     [blocks.segments.properties]
     fetch_stash_count = true
     fetch_upstream_icon = true
+
 [[blocks]]
 alignment = "right"
 type = "prompt"
@@ -54,11 +54,11 @@ type = "prompt"
   [[blocks.segments]]
   foreground = "#f7768e"
   style = "plain"
-  template = " "
+  template = "󰓾 "
   type = "root"
 
   [[blocks.segments]]
   foreground = "#bb9af7"
   style = "plain"
-  template = "# "
+  template = "❯ "
   type = "text"
