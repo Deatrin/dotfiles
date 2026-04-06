@@ -1,4 +1,19 @@
-{lib, ...}: {
+{lib, pkgs, ...}: {
+  home.packages = with pkgs; [
+    grim
+    hyprcursor
+    hyprpaper
+    qt6.qtwayland
+    slurp
+    waypipe
+    wf-recorder
+    wl-mirror
+    wl-clipboard
+    wlogout
+    wtype
+    ydotool
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
@@ -8,7 +23,7 @@
       };
 
       exec-once = [
-        "waybar"
+        "hyprpanel"
         "hyprpaper"
         "hypridle"
         "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""

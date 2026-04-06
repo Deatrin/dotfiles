@@ -5,6 +5,7 @@
 }: {
   programs.jujutsu = {
     enable = true;
+    package = pkgs.unstable.jujutsu;
     settings = {
       user.name = "Deatrin";
       user.email = "jennexa@gmail.com";

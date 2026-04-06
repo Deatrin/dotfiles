@@ -3,10 +3,10 @@
     ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
-    #    ./hyprpanel.nix
+    ./hyprpanel.nix
     ./rofi.nix
     # ./theme.nix
-    ./wayland.nix
+    # ./waybar.nix
   ];
   home.packages = with pkgs; [
     brave

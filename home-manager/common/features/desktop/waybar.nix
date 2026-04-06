@@ -215,17 +215,5 @@
 
   home.packages = with pkgs; [
     brightnessctl
-    grim
-    hyprcursor
-    hyprpaper
-    qt6.qtwayland
-    slurp
-    waypipe
-    wf-recorder
-    wl-mirror
-    wl-clipboard
-    wlogout
-    wtype
-    ydotool
   ];
 }
