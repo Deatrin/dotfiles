@@ -514,6 +514,30 @@
         # read at runtime by backup rsync — no restart needed
         restartServices = [];
       };
+      openwebuiOidcClientId = {
+        path = "/run/opnix/open-webui-oidc-client-id";
+        reference = "op://nix_secrets/open-webui/oidc-client-id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["open-webui-env-setup.service" "open-webui.service"];
+      };
+      openwebuiOidcClientSecret = {
+        path = "/run/opnix/open-webui-oidc-client-secret";
+        reference = "op://nix_secrets/open-webui/oidc-client-secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["open-webui-env-setup.service" "open-webui.service"];
+      };
+      openwebuiSecretKey = {
+        path = "/run/opnix/open-webui-secret-key";
+        reference = "op://nix_secrets/open-webui/secret-key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["open-webui-env-setup.service" "open-webui.service"];
+      };
       mealieEnv = {
         path = "/run/opnix/mealie-env";
         reference = "op://nix_secrets/mealie/env";

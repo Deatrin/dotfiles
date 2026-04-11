@@ -32,6 +32,8 @@
     ../../common/optional/containers/drawio
     ../../common/optional/containers/excalidraw
     ../../common/optional/containers/netboot
+    ../../common/optional/containers/ollama
+    ../../common/optional/containers/open-webui
     # ../../common/optional/containers/ddns
     # ../../common/optional/containers/idrac
   ];
