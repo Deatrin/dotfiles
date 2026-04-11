@@ -51,4 +51,8 @@ in {
     "$HOME/.local/bin"
     "$HOME/.cargo/bin"
   ];
+
+  home.sessionVariables = {
+    OLLAMA_HOST = "https://ollama.jennex.dev";
+  };
 }

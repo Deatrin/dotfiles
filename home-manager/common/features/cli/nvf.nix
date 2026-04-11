@@ -96,6 +96,28 @@
           action = ":Telescope help_tags<Cr>";
           desc = "[S]earch [H]elp";
         }
+        # CodeCompanion (Ollama)
+        {
+          key = "<leader>ac";
+          mode = "n";
+          silent = true;
+          action = ":CodeCompanionChat<CR>";
+          desc = "[A]I [C]hat";
+        }
+        {
+          key = "<leader>ac";
+          mode = "v";
+          silent = true;
+          action = ":CodeCompanionChat Add<CR>";
+          desc = "[A]I [C]hat add selection";
+        }
+        {
+          key = "<leader>aa";
+          mode = ["n" "v"];
+          silent = true;
+          action = ":CodeCompanionActions<CR>";
+          desc = "[A]I [A]ctions";
+        }
       ];
       viAlias = false;
       vimAlias = true;
@@ -218,6 +240,18 @@
               bullet = { enabled = true },
               checkbox = { enabled = true },
               table = { enabled = true },
+            })
+          '';
+        };
+
+        codecompanion = {
+          package = codecompanion-nvim;
+          setup = ''
+            require('codecompanion').setup({
+              strategies = {
+                chat   = { adapter = 'ollama' },
+                inline = { adapter = 'ollama' },
+              },
             })
           '';
         };

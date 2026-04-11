@@ -10,6 +10,7 @@
       "mise"
       "age"
       "cloudflared"
+      "opencode"
     ];
     casks = [
       "airtool"
