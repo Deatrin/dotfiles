@@ -40,7 +40,7 @@
         Requires = ["idrac-env-setup.service"];
       };
       containerConfig = {
-        image = "tigerblue77/dell_idrac_fan_controller:latest";
+        image = "docker.io/tigerblue77/dell_idrac_fan_controller:latest";
         autoUpdate = "registry";
         environmentFiles = ["/run/idrac/controller-1.env"];
         environments = {
@@ -58,7 +58,7 @@
         Requires = ["idrac-env-setup.service"];
       };
       containerConfig = {
-        image = "tigerblue77/dell_idrac_fan_controller:latest";
+        image = "docker.io/tigerblue77/dell_idrac_fan_controller:latest";
         autoUpdate = "registry";
         environmentFiles = ["/run/idrac/controller-2.env"];
         environments = {
