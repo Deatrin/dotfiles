@@ -547,21 +547,38 @@
         restartServices = ["mealie.service"];
       };
 
-      # TODO: Fill in correct op:// references before enabling iDRAC fan controller
-      # idracIp1 = {
-      #   path = "/run/opnix/idrac-ip-1";
-      #   reference = "op://nix_secrets/idrac/<field>";
-      #   owner = "root";
-      #   group = "root";
-      #   mode = "0600";
-      # };
-      # idracIp2 = {
-      #   path = "/run/opnix/idrac-ip-2";
-      #   reference = "op://nix_secrets/idrac/<field>";
-      #   owner = "root";
-      #   group = "root";
-      #   mode = "0600";
-      # };
+      idracHost1 = {
+        path = "/run/opnix/idrac-host-1";
+        reference = "op://nix_secrets/idrac/IDRAC_HOST_1";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["idrac-env-setup.service" "idrac-controller-1.service" "idrac-controller-2.service"];
+      };
+      idracHost2 = {
+        path = "/run/opnix/idrac-host-2";
+        reference = "op://nix_secrets/idrac/IDRAC_HOST_2";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["idrac-env-setup.service" "idrac-controller-1.service" "idrac-controller-2.service"];
+      };
+      idracUsername = {
+        path = "/run/opnix/idrac-username";
+        reference = "op://nix_secrets/idrac/IDRAC_USERNAME";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["idrac-env-setup.service" "idrac-controller-1.service" "idrac-controller-2.service"];
+      };
+      idracPassword = {
+        path = "/run/opnix/idrac-password";
+        reference = "op://nix_secrets/idrac/IDRAC_PASSWORD";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["idrac-env-setup.service" "idrac-controller-1.service" "idrac-controller-2.service"];
+      };
 
       # TODO: Fill in correct op:// references before enabling DDNS
       # ddnsApiKey = {

@@ -44,7 +44,7 @@
         autoUpdate = "registry";
         environmentFiles = ["/run/idrac/controller-1.env"];
         environments = {
-          FAN_SPEED = "50";
+          FAN_SPEED = "40";
           CPU_TEMPERATURE_THRESHOLD = "70";
           CHECK_INTERVAL = "60";
           DISABLE_THIRD_PARTY_PCIE_CARD_DELL_DEFAULT_COOLING_RESPONSE = "true";
@@ -62,7 +62,7 @@
         autoUpdate = "registry";
         environmentFiles = ["/run/idrac/controller-2.env"];
         environments = {
-          FAN_SPEED = "50";
+          FAN_SPEED = "40";
           CPU_TEMPERATURE_THRESHOLD = "70";
           CHECK_INTERVAL = "60";
           DISABLE_THIRD_PARTY_PCIE_CARD_DELL_DEFAULT_COOLING_RESPONSE = "true";

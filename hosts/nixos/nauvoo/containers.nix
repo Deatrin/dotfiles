@@ -34,8 +34,9 @@
     ../../common/optional/containers/netboot
     ../../common/optional/containers/ollama
     ../../common/optional/containers/open-webui
+    ../../common/optional/containers/kavita
     # ../../common/optional/containers/ddns
-    # ../../common/optional/containers/idrac
+    ../../common/optional/containers/idrac
   ];
 
   # Nauvoo-specific container settings
