@@ -8,6 +8,7 @@
 in {
   systemd.tmpfiles.rules = [
     "d /var/lib/syncthing 0755 1000 1000 -"
+    "d /storage/syncthing 0755 1000 1000 -"
   ];
 
   # Open sync port in firewall (TCP + UDP)
@@ -30,6 +31,7 @@ in {
       };
       volumes = [
         "/var/lib/syncthing:/var/syncthing"
+        "/storage/syncthing:/storage/syncthing"
         "/storage/media:/storage/media"
       ];
       labels = [

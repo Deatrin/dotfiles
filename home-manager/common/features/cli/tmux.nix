@@ -14,7 +14,7 @@
     baseIndex = 1;
     historyLimit = 100000;
     keyMode = "vi";
-    mouse = false;
+    mouse = true;
     newSession = true;
     shortcut = "a";
 

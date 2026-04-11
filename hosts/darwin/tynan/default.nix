@@ -18,6 +18,21 @@
 
   networking.hostName = "tynan";
 
+  launchd.user.agents.syncthing = {
+    serviceConfig = {
+      ProgramArguments = [
+        "${pkgs.syncthing}/bin/syncthing"
+        "--no-browser"
+        "--no-restart"
+        "--logflags=0"
+      ];
+      KeepAlive = true;
+      RunAtLoad = true;
+      StandardOutPath = "/Users/deatrin/Library/Logs/syncthing.log";
+      StandardErrorPath = "/Users/deatrin/Library/Logs/syncthing-err.log";
+    };
+  };
+
   system.primaryUser = "deatrin";
 
   users.users.deatrin = {
