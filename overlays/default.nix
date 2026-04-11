@@ -6,7 +6,15 @@
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
-  modifications = final: prev: {
+  modifications = final: prev: prev.lib.optionalAttrs prev.stdenv.hostPlatform.isLinux {
+    plexRaw = prev.plexRaw.overrideAttrs (_old: rec {
+      version = "1.43.1.10611-1e34174b1";
+      src = prev.fetchurl {
+        url = "https://downloads.plex.tv/plex-media-server-new/${version}/debian/plexmediaserver_${version}_amd64.deb";
+        sha256 = "sha256-pr1+VSObX0sBl/AddeG/+2dIbNdc+EtnvCzy4nTXVn8=";
+      };
+    });
+  } // {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
