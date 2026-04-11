@@ -131,7 +131,7 @@ in {
         volumes = [
           "/var/lib/nextcloud:/var/www/html"
           "/storage/nextcloud/data:/storage/nextcloud/data"
-          "/storage/media:/storage/media"
+          "/storage:/storage"
           "${oidcConfig}:/var/www/html/config/oidc.config.php:ro"
           "/run/opnix/nextcloud-oidc-client-id:/run/opnix/nextcloud-oidc-client-id:ro"
           "/run/opnix/nextcloud-oidc-client-secret:/run/opnix/nextcloud-oidc-client-secret:ro"
