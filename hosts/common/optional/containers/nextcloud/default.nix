@@ -38,6 +38,7 @@
 in {
   systemd.tmpfiles.rules = [
     "d /var/lib/nextcloud 0755 root root -"
+    "d /storage/nextcloud/data 0755 root root -"
   ];
 
   systemd.services.nextcloud-env-setup = {
@@ -121,6 +122,7 @@ in {
           PHP_MEMORY_LIMIT = "512M";
           PHP_UPLOAD_LIMIT = "10G";
           TZ = "America/Los_Angeles";
+          NEXTCLOUD_DATA_DIR = "/storage/nextcloud/data";
           OVERWRITEPROTOCOL = "https";
           OVERWRITECLIURL = "https://nextcloud.jennex.dev";
           OVERWRITEHOST = "nextcloud.jennex.dev";
@@ -128,6 +130,7 @@ in {
         environmentFiles = ["/run/opnix/nextcloud-env"];
         volumes = [
           "/var/lib/nextcloud:/var/www/html"
+          "/storage/nextcloud/data:/storage/nextcloud/data"
           "/storage/media:/storage/media"
           "${oidcConfig}:/var/www/html/config/oidc.config.php:ro"
           "/run/opnix/nextcloud-oidc-client-id:/run/opnix/nextcloud-oidc-client-id:ro"

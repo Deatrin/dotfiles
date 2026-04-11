@@ -4,6 +4,8 @@
   config,
   ...
 }: {
+  home.packages = [ pkgs.unstable.sesh ];
+
   programs.tmux = {
     enable = true;
     package = pkgs.unstable.tmux;
@@ -26,6 +28,24 @@
         extraConfig = ''
           set -g @continuum-restore 'on'
           set -g @continuum-save-interval '10'
+        '';
+      }
+      {
+        plugin = pkgs.unstable.tmuxPlugins.tmux-sessionx;
+        extraConfig = ''
+          set -g @sessionx-bind 's'
+          set -g @sessionx-zoxide-mode 'off'
+          set -g @sessionx-bind-kill-session 'ctrl-x'
+          set -g @sessionx-bind-configuration-path 'ctrl-g'
+          set -g @sessionx-fzf-builtin-tmux 'off'
+          set -g @sessionx-window-height '50%'
+          set -g @sessionx-window-width '60%'
+          set -g @sessionx-preview-enabled 'true'
+          set -g @sessionx-prompt ' '
+          set -g @sessionx-pointer '▶ '
+          # Tokyo Night Dark colors
+          set -g @sessionx-input-prompt-color '#bb9af7'
+          set -g @sessionx-border-label-color '#7aa2f7'
         '';
       }
     ];
