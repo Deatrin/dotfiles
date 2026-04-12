@@ -179,8 +179,11 @@
     extra-platforms = aarch64-darwin x86_64-darwin
   '';
 
-  # Use touch ID for sudo auth
-  security.pam.services.sudo_local.touchIdAuth = true;
+  # Use touch ID for sudo auth (reattach enables it in tmux sessions)
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
+  };
 
   # Set sudo timestamp timeout
   security.sudo.extraConfig = ''

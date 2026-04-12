@@ -55,6 +55,7 @@
       # GENERAL SETTINGS
       #
       set -sa terminal-features ",*256col*:RGB"
+      set -g extended-keys on
       set -s buffer-limit 20
       set -g display-time 1500
       set -g repeat-time 500
