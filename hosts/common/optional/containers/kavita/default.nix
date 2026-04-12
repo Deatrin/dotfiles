@@ -13,6 +13,7 @@ in {
       volumes = [
         "/var/lib/kavita:/kavita/config"
         "/storage/media/books:/books:ro"
+        "/storage/media/manga:/manga:ro"
       ];
       labels = [
         "homepage.group=Media"
