@@ -300,11 +300,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1775976139,
-        "narHash": "sha256-HNbgpprnCbMUjmHoHIabjl8KlJVBkpew9S1XUgcPzBI=",
+        "lastModified": 1776021304,
+        "narHash": "sha256-jmYFpmIUe7l8G4m+sVCIUgtCwaQdPPgFlQX+qJ9ZctU=",
         "owner": "acropolis914",
         "repo": "hyprsettings",
-        "rev": "620119242c2f14e24bb5617b616df1286719dac1",
+        "rev": "033d420bab01dc16b396082e8df7477e3d9b72e7",
         "type": "github"
       },
       "original": {
@@ -762,11 +762,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1775971258,
-        "narHash": "sha256-jw7DZnapR1PuNnrD4t/NaNHLKfualtLG3nK1vzbX+5Y=",
+        "lastModified": 1776043245,
+        "narHash": "sha256-7e3r/1of/NCKAusdoGgu9h6+b1xIF0aV3+5y+VT7NiI=",
         "owner": "budimanjojo",
         "repo": "talhelper",
-        "rev": "61ac2e6b0c14c0decab24e2681fa6793ed5a5fb3",
+        "rev": "69da33400629d99a887f65807c3cf8de1dda8ec1",
         "type": "github"
       },
       "original": {
