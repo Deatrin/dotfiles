@@ -70,7 +70,7 @@
           passes = 3;
         };
         active_opacity = 1.0;
-        inactive_opacity = 0.5;
+        inactive_opacity = 1.0;
       };
 
       animations = {
