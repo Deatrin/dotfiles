@@ -75,7 +75,7 @@
     heroic
     protonup-qt
     discord
-    teamspeak_client
+    teamspeak3
     rclone
     rclone-browser
     alsa-scarlett-gui
