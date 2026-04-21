@@ -28,7 +28,7 @@
       # Adjust if the partition number differs after manual partitioning.
       nixos = {
         type = "disk";
-        device = "/dev/nvme0n1p3";
+        device = "/dev/nvme0n1p5";
         content = {
           type = "luks";
           name = "luks_nixos";
