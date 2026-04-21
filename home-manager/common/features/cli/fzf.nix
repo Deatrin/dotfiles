@@ -4,10 +4,11 @@
   pkgs,
   ...
 }: {
+
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
-    tmux.enableShellIntegration = true;
+    tmux.enableShellIntegration = false;
 
     colors = {
       "fg" = "#c0caf5";

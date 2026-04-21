@@ -42,26 +42,19 @@
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
 
-      # disable sort when completing `git checkout`
-      zstyle ':completion:*:git-checkout:*' sort false
+      # Empty trigger means plain Tab activates fzf completion (not just **)
+      export FZF_COMPLETION_TRIGGER=""
 
-      # set descriptions format to enable group support
-      # NOTE: don't use escape sequences here, fzf-tab will ignore them
-      zstyle ':completion:*:descriptions' format '[%d]'
+      # Non-recursive completion — only show immediate children
+      _fzf_compgen_path() {
+        fd --hidden --follow --exclude .git --max-depth 1 . "$1"
+      }
+      _fzf_compgen_dir() {
+        fd --type d --hidden --follow --exclude .git --max-depth 1 . "$1"
+      }
 
       # set list-colors to enable filename colorizing
       zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
-
-      # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-      zstyle ':completion:*' menu no
-
-      # preview directory's content with eza when completing cd
-      zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always $realpath'
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-      zstyle ':fzf-tab:complete:ls:*' fzf-preview 'cat $realpath'
-
-      # switch group using `<` and `>`
-      zstyle ':fzf-tab:*' switch-group '<' '>'
 
       # Keybindings
       bindkey '^p' history-search-backward
@@ -77,10 +70,6 @@
       setopt hist_save_no_dups
       setopt hist_ignore_dups
       setopt hist_find_no_dups
-
-      # fzf --zsh runs after fzf-tab and rebinds ^I to fzf-completion.
-      # Re-run enable-fzf-tab last so fzf-tab wins.
-      enable-fzf-tab
     '' + lib.optionalString pkgs.stdenv.isDarwin ''
       export PATH="/opt/homebrew/bin:$PATH"
       export PATH="/opt/homebrew/sbin:$PATH"
@@ -118,11 +107,6 @@
         name = "zsh-syntax-highlighting";
         src = pkgs.unstable.zsh-syntax-highlighting;
         file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
-      }
-      {
-        name = "fzf-tab";
-        src = pkgs.zsh-fzf-tab;
-        file = "share/fzf-tab/fzf-tab.plugin.zsh";
       }
     ];
   };
