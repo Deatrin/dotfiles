@@ -31,7 +31,7 @@
         device = "/dev/nvme0n1p5";
         content = {
           type = "luks";
-          name = "luks_nixos";
+          name = "cryptroot";
           passwordFile = "/tmp/secret.key";
           settings = {
             allowDiscards = true;

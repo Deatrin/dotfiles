@@ -27,9 +27,9 @@
     # 3-monitor layout — confirm DP-X names via `hyprctl monitors` after first boot.
     # Positions: left(2560x1440) | ultrawide center(5120x2160) | portrait right(1920x1080)
     monitor = [
-      "DP-1,2560x1440,0x0,1"
-      "DP-2,5120x2160,2560x0,1"
-      "DP-3,1920x1080,7680x0,1,transform,1"
+      "DP-5,2560x1440@165,0x0,1"
+      "DP-3,5120x2160@165,2560x0,1"
+      "DP-4,1920x1080@60,7680x0,1,transform,1"
     ];
 
     # Cursor glitches on NVIDIA — disable hardware cursors if needed.
