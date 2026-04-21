@@ -73,9 +73,7 @@
     gamescope
     lutris
     heroic
-    protonup-qt
     discord
-    teamspeak3
     rclone
     alsa-scarlett-gui
     input-leap
