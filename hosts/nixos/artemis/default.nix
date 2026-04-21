@@ -77,7 +77,6 @@
     discord
     teamspeak3
     rclone
-    rclone-browser
     alsa-scarlett-gui
     input-leap
   ];
