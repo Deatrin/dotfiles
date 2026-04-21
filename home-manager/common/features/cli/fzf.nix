@@ -24,8 +24,10 @@
       "header" = "#444b6a";
     };
     defaultOptions = [
-      "--preview='bat --color=always -n {}'"
       "--bind 'ctrl-/:toggle-preview'"
+    ];
+    fileWidgetOptions = [
+      "--preview 'bat --color=always -n {}'"
     ];
     defaultCommand = "fd --type f --exclude .git --follow --hidden";
     changeDirWidgetCommand = "fd --type d --exclude .git --follow --hidden";

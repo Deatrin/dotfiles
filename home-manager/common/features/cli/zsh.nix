@@ -38,20 +38,9 @@
         source ${config.home.homeDirectory}/.config/shell-secrets/env
       fi
 
-      export PATH="/opt/homebrew/bin:$PATH"
-      export PATH="/opt/homebrew/sbin:$PATH"
-
-      eval "$(mise activate zsh)"
-
-      export PYENV_ROOT="$HOME/.pyenv"
-      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init - zsh)"
-
       # # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
-
-      bindkey -e
 
       # disable sort when completing `git checkout`
       zstyle ':completion:*:git-checkout:*' sort false
@@ -75,7 +64,6 @@
       zstyle ':fzf-tab:*' switch-group '<' '>'
 
       # Keybindings
-      bindkey -e
       bindkey '^p' history-search-backward
       bindkey '^n' history-search-forward
       bindkey '^[w' kill-region
@@ -89,6 +77,19 @@
       setopt hist_save_no_dups
       setopt hist_ignore_dups
       setopt hist_find_no_dups
+
+      # fzf --zsh runs after fzf-tab and rebinds ^I to fzf-completion.
+      # Re-run enable-fzf-tab last so fzf-tab wins.
+      enable-fzf-tab
+    '' + lib.optionalString pkgs.stdenv.isDarwin ''
+      export PATH="/opt/homebrew/bin:$PATH"
+      export PATH="/opt/homebrew/sbin:$PATH"
+
+      eval "$(mise activate zsh)"
+
+      export PYENV_ROOT="$HOME/.pyenv"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - zsh)"
     '';
     oh-my-zsh = {
       enable = true;
@@ -120,13 +121,8 @@
       }
       {
         name = "fzf-tab";
-        src = pkgs.fetchFromGitHub {
-          owner = "Aloxaf";
-          repo = "fzf-tab";
-          rev = "747c15de85a38748b28c29ac65616137dbb4c8b6";
-          sha256 = "sha256-gatFp2kjyqaqi8hu0UWPDtQAy+X2VmyYNPP4aiNDdHg=";
-        };
-        file = "fzf-tab.plugin.zsh";
+        src = pkgs.zsh-fzf-tab;
+        file = "share/fzf-tab/fzf-tab.plugin.zsh";
       }
     ];
   };
