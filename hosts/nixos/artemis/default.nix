@@ -20,6 +20,11 @@
     ../../common/optional/greetd.nix
   ];
 
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
+
   networking = {
     hostName = "artemis";
     networkmanager.enable = true;
