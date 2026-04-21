@@ -7,7 +7,7 @@
 in {
   users.mutableUsers = true;
   users.users.deatrin = {
-    initialHashedPassword = "$y$j9T$ubrmfsxzOK4EuYl7KTdp81$ac./pAT.2yhEIrLNU.FNzlNeRdxX8DPPcyvCGHtooaC";
+    initialHashedPassword = "$y$j9T$5khUNNGcMTWA9gJnUx8TY1$RU0z95MoMNEqqV747pR4jUKHH7P4iblh16VUciNEex/";
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups =
