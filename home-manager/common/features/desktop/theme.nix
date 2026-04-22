@@ -1,4 +1,12 @@
 {pkgs, ...}: {
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    name = "capitaine-cursors";
+    package = pkgs.capitaine-cursors;
+    size = 32;
+  };
+
   qt = {
     enable = true;
     platformTheme.name = "gtk";

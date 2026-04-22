@@ -5,7 +5,7 @@
     ./hyprlock.nix
     ./hyprpanel.nix
     ./rofi.nix
-    # ./theme.nix
+    ./theme.nix
     # ./waybar.nix
   ];
   home.packages = with pkgs; [

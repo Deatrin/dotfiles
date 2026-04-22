@@ -39,7 +39,10 @@
   # open = true is recommended for Turing+ (Blackwell qualifies).
   # If the stable driver doesn't support Blackwell yet, try .beta or switch
   # the overlay to pull from nixpkgs-unstable.
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   services.xserver.videoDrivers = ["nvidia"];
   hardware.nvidia = {
     modesetting.enable = true;
