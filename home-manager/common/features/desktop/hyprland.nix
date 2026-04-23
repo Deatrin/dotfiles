@@ -162,9 +162,9 @@
         "$mainMod, l, movefocus, r"
         "$mainMod, k, movefocus, u"
         "$mainMod, j, movefocus, d"
-        # Screenshots: Print = region select, SUPER+Print = full screen
-        ", Print, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
-        "$mainMod, Print, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
+        # Screenshots: SUPER+CTRL+3 = fullscreen, SUPER+CTRL+4 = region select
+        "$mainMod CTRL, 3, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
+        "$mainMod CTRL, 4, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
         # Window resize with keyboard: SUPER+CTRL+hjkl
         "$mainMod CTRL, h, resizeactive, -20 0"
         "$mainMod CTRL, l, resizeactive, 20 0"

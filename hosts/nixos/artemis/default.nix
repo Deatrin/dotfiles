@@ -76,6 +76,12 @@
 
   services.mullvad-vpn.enable = true;
 
+  services.flatpak.overrides = {
+    "com.bambulab.BambuStudio".Environment = {
+      GTK_THEME = "Adwaita:dark";
+    };
+  };
+
   services.flatpak = {
     enable = true;
     remotes = [{
@@ -84,6 +90,7 @@
     }];
     packages = [
       "com.usebottles.bottles"
+      "com.bambulab.BambuStudio"
     ];
   };
   xdg.portal = {
@@ -107,6 +114,7 @@
     rclone
     alsa-scarlett-gui
     input-leap
+    unstable.obsidian
     unstable.davinci-resolve
     wineWowPackages.staging
     winetricks
