@@ -1,4 +1,18 @@
-# Tycho Keybind Cheat Sheet
+# Artemis Keybind Cheat Sheet
+
+## Monitor Layout
+
+```
+┌─────────────┬──────────────────────────┬──────────┐
+│   DP-5      │         DP-3             │  DP-4    │
+│  2560x1440  │      5120x2160           │ 1920x1080│
+│   @165Hz    │       @165Hz             │  @60Hz   │
+│   (left)    │   (center, ultrawide)    │ (portrait│
+│             │                          │  right)  │
+└─────────────┴──────────────────────────┴──────────┘
+```
+
+---
 
 ## Hyprland — `SUPER` = Windows key
 
@@ -12,6 +26,12 @@
 | `SUPER + V` | Clipboard history (clipman) |
 | `SUPER + SHIFT + S` | Emoji picker (bemoji) |
 | `SUPER + P` | Password manager (1Password quick access) |
+
+### Screenshots
+| Keybind | Action |
+|---|---|
+| `Print` | Region select → `~/Pictures/Screenshots/` |
+| `SUPER + Print` | Full screenshot → `~/Pictures/Screenshots/` |
 
 ### Windows
 | Keybind | Action |
@@ -29,13 +49,7 @@
 |---|---|
 | `SUPER + 1-0` | Switch to workspace 1-10 |
 | `SUPER + SHIFT + 1-0` | Move window to workspace 1-10 |
-| `SUPER + Scroll Up/Down` | Switch workspace +1/-1 |
-
-### Screenshots
-| Keybind | Action |
-|---|---|
-| `Print` | Region select → `~/Pictures/Screenshots/` |
-| `SUPER + Print` | Full screenshot → `~/Pictures/Screenshots/` |
+| `SUPER + Scroll Up/Down` | Cycle workspaces |
 
 ### Layout (dwindle)
 | Keybind | Action |

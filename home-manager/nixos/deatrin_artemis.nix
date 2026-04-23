@@ -17,6 +17,15 @@
 
   # NVIDIA RTX 5080 — Hyprland env vars for Wayland/NVIDIA.
   # Add to the common env list via mkAfter so they don't clobber existing vars.
+  # No battery on a desktop
+  programs.hyprpanel.settings.bar.layouts = {
+    "0" = {
+      left = ["dashboard" "workspaces" "windowtitle"];
+      middle = ["clock"];
+      right = ["volume" "network" "bluetooth" "systray" "notifications"];
+    };
+  };
+
   wayland.windowManager.hyprland.settings = {
     env = lib.mkAfter [
       "LIBVA_DRIVER_NAME,nvidia"
@@ -79,8 +88,6 @@
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "25.11";
     packages = with pkgs; [
-      _1password-gui
-      _1password-cli
       yubioath-flutter
       yubikey-manager
     ];

@@ -48,7 +48,7 @@
       general = {
         gaps_in = 2;
         gaps_out = 2;
-        border_size = 1;
+        border_size = 2;
         "col.active_border" = "rgba(9742b5ee) rgba(9742b5ee) 45deg";
         "col.inactive_border" = "rgba(595959aa)";
         layout = "dwindle";
@@ -149,19 +149,27 @@
         "$mainMod, Escape, exec, wlogout -p layer-shell"
         "$mainMod, Space, togglefloating"
         "$mainMod, q, killactive"
-        "$mainMod, M, exit"
+        "$mainMod SHIFT, M, exit"
         "$mainMod SHIFT, l, exec, hyprlock"
         "$mainMod, F, fullscreen"
-        "$mainMod, V, togglefloating"
+        "$mainMod, V, exec, clipman pick --tool=rofi"
         "$mainMod, D, exec, rofi -show"
         "$mainMod SHIFT, S, exec, bemoji"
-        "$mainMod, P, exec, rofi-pass"
+        "$mainMod, P, exec, 1password --quick-access"
         "$mainMod SHIFT, P, pseudo"
-        "$mainMod, J, togglesplit"
+        "$mainMod, backslash, togglesplit"
         "$mainMod, h, movefocus, l"
         "$mainMod, l, movefocus, r"
         "$mainMod, k, movefocus, u"
         "$mainMod, j, movefocus, d"
+        # Screenshots: Print = region select, SUPER+Print = full screen
+        ", Print, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
+        "$mainMod, Print, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
+        # Window resize with keyboard: SUPER+CTRL+hjkl
+        "$mainMod CTRL, h, resizeactive, -20 0"
+        "$mainMod CTRL, l, resizeactive, 20 0"
+        "$mainMod CTRL, k, resizeactive, 0 -20"
+        "$mainMod CTRL, j, resizeactive, 0 20"
         "$mainMod, 1, workspace, 1"
         "$mainMod, 2, workspace, 2"
         "$mainMod, 3, workspace, 3"
