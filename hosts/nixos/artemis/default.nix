@@ -74,6 +74,8 @@
     polkitPolicyOwners = ["deatrin"];
   };
 
+  programs.kdeconnect.enable = true;
+
   services.mullvad-vpn.enable = true;
 
   services.flatpak.overrides = {
