@@ -390,6 +390,21 @@
         "type": "github"
       }
     },
+    "nix-flatpak": {
+      "locked": {
+        "lastModified": 1776625032,
+        "narHash": "sha256-edvwHiFhgOiwywt6/Iwe+sSn6ybhU3WZGnIoiGcKjfQ=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "479e19f1decb390aa5b75cae13ddf87d763c74cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
     "nix-ld-vscode": {
       "inputs": {
         "nixpkgs": [
@@ -686,6 +701,7 @@
         "hyprsettings": "hyprsettings",
         "nix-colors": "nix-colors",
         "nix-darwin": "nix-darwin",
+        "nix-flatpak": "nix-flatpak",
         "nix-ld-vscode": "nix-ld-vscode",
         "nix-topology": "nix-topology",
         "nixpkgs": "nixpkgs_4",
