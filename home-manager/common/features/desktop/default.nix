@@ -12,6 +12,7 @@
     brave
     devpod-desktop
     vivaldi
+    wlopm
     wttrbar
   ];
 }

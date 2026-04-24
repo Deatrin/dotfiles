@@ -18,13 +18,36 @@
   # NVIDIA RTX 5080 — Hyprland env vars for Wayland/NVIDIA.
   # Add to the common env list via mkAfter so they don't clobber existing vars.
   # No battery on a desktop
-  programs.hyprpanel.settings.bar.layouts = {
+  programs.hyprpanel.settings.bar.layouts = lib.mkForce {
     "0" = {
-      left = ["dashboard" "workspaces" "windowtitle"];
+      left = ["dashboard" "workspaces" "windowtitle" "media"];
+      middle = ["clock"];
+      right = ["volume" "network" "bluetooth" "systray" "notifications"];
+    };
+    "1" = {
+      left = ["dashboard" "workspaces" "windowtitle" "media"];
+      middle = ["clock"];
+      right = ["volume" "network" "bluetooth" "systray" "notifications"];
+    };
+    "2" = {
+      left = ["dashboard" "workspaces" "windowtitle" "media"];
       middle = ["clock"];
       right = ["volume" "network" "bluetooth" "systray" "notifications"];
     };
   };
+
+  # Desktop has no backlight — drop brightnessctl listener, keep lock + dpms listeners.
+  services.hypridle.settings.listener = lib.mkForce [
+    {
+      timeout = 300;
+      on-timeout = "loginctl lock-session";
+    }
+    {
+      timeout = 330;
+      on-timeout = "wlopm --off '*'";
+      on-resume = "wlopm --on '*'";
+    }
+  ];
 
   wayland.windowManager.hyprland.settings = {
     env = lib.mkAfter [

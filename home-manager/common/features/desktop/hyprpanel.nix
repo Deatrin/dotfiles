@@ -6,6 +6,7 @@
 
   programs.hyprpanel = {
     enable = true;
+    systemd.enable = false;
 
     settings = {
       # Bar layout — mirrors existing waybar setup
