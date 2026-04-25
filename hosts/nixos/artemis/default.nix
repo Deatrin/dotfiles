@@ -93,6 +93,7 @@
     packages = [
       "com.usebottles.bottles"
       "com.bambulab.BambuStudio"
+      "eu.betterbird.Betterbird"
     ];
   };
   xdg.portal = {

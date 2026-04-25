@@ -11,7 +11,7 @@
   home.packages = with pkgs; [
     brave
     devpod-desktop
-    vivaldi
+vivaldi
     wlopm
     wttrbar
   ];
