@@ -304,3 +304,56 @@ If Windows isn't listed, check that the EFI partition is mounted and intact:
 ```bash
 ls /boot/EFI/Microsoft/
 ```
+
+### EFI entries wiped by Windows update
+
+Windows updates occasionally nuke the NVRAM boot entries or EFI partition contents,
+leaving systemd-boot installed but no NixOS entry in the menu. Boot from a NixOS ISO
+and follow these steps.
+
+#### 1. Unlock LUKS and mount
+
+```bash
+sudo cryptsetup open /dev/nvme0n1p5 cryptroot
+sudo mkdir -p /mnt/nix /mnt/boot
+sudo mount -o subvol=nix,compress=zstd,noatime /dev/mapper/cryptroot /mnt/nix
+sudo mount /dev/nvme0n1p1 /mnt/boot
+```
+
+#### 2. Check what systemd-boot sees
+
+```bash
+ls /mnt/boot/loader/entries/
+cat /mnt/boot/loader/entries/nixos-generation-*.conf
+ls /mnt/boot/EFI/nixos/
+```
+
+Compare the `linux` line in the conf against the files present in `EFI/nixos/`.
+If the bzImage hash is missing, the entry will be silently hidden.
+
+#### 3a. Reinstall systemd-boot (NVRAM entry missing)
+
+If the EFI files are intact but the boot entry is gone from NVRAM:
+
+```bash
+sudo bootctl install --esp-path=/mnt/boot
+```
+
+#### 3b. Restore missing kernel (bzImage absent from EFI partition)
+
+If the conf references a bzImage that isn't in `EFI/nixos/`, find it in the Nix store
+and copy it over. Replace the hash with the one from your conf's `linux` line:
+
+```bash
+HASH="7s2n1z08cmiysmbka7ydn601grivksx4"
+VER="6.12.84"
+
+find /mnt/nix/store -maxdepth 1 -name "${HASH}-linux-${VER}" -type d
+
+sudo cp /mnt/nix/store/${HASH}-linux-${VER}/bzImage \
+  /mnt/boot/EFI/nixos/${HASH}-linux-${VER}-bzImage.efi
+```
+
+#### 4. Reboot
+
+Remove the ISO and reboot. systemd-boot should show the NixOS generation entry.
