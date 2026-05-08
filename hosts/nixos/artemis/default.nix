@@ -55,7 +55,7 @@
     modesetting.enable = true;
     open = true;
     nvidiaSettings = true;
-    package = (pkgs.unstable.linuxKernel.packagesFor config.boot.kernelPackages.kernel).nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   # Gaming
