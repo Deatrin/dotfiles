@@ -38,6 +38,7 @@
       "google-chrome" # le chrome
       "logi-options+" # mouse stuff
       "microsoft-office" # Office just in case
+      "nvidia-geforce-now" # this is a lil self explanatory
       "obsidian" # note taking app
       "OrbStack" # docker and linux virt
       "qlmarkdown" # markdown preview in quicklook
