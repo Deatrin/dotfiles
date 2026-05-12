@@ -112,7 +112,7 @@
     gamescope
     unstable.lutris
     heroic
-    discord
+    unstable.vesktop
     spotify
     rclone
     alsa-scarlett-gui
