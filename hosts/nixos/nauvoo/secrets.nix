@@ -470,6 +470,22 @@
         mode = "0600";
         restartServices = ["netbox.service" "netbox-worker.service"];
       };
+      dotfilesSyncPushoverToken = {
+        path = "/run/opnix/dotfiles-sync-pushover-token";
+        reference = "op://nix_secrets/dotfiles-sync/pushoverToken";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["dotfiles-approve.service"];
+      };
+      dotfilesApproveToken = {
+        path = "/run/opnix/dotfiles-approve-token";
+        reference = "op://nix_secrets/dotfiles-sync/approveToken";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["dotfiles-approve.service"];
+      };
       pushoverPodmanToken = {
         path = "/run/opnix/pushover-podman-token";
         reference = "op://nix_secrets/Pushover/podmanToken";

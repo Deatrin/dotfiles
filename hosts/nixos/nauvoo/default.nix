@@ -17,6 +17,7 @@
     ./containers.nix
     ../../common/optional/jellyfin.nix
     ../../common/optional/plex.nix
+    ../../common/optional/dotfiles-sync.nix
     ../../common/optional/reboot-required.nix
     ../../common/optional/salt.nix
     ../../common/optional/vscode-server.nix
@@ -86,6 +87,11 @@
   # Tailscale exit node + subnet routing
   services.tailscale-autoconnect.exitNode = true;
   services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
+
+  services.dotfiles-sync = {
+    enable = true;
+    flakeAttr = "nauvoo";
+  };
 
   # Auto-reboot if kernel freezes (sp5100-tco hardware watchdog)
   systemd.settings.Manager = {
