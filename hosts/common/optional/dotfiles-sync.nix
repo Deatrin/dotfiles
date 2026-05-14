@@ -166,7 +166,7 @@ in {
 
     approvePort = lib.mkOption {
       type = lib.types.port;
-      default = 9876;
+      default = 45923;
     };
 
     pushoverAppTokenFile = lib.mkOption {
@@ -218,7 +218,7 @@ in {
     systemd.services.dotfiles-approve = {
       description = "Dotfiles reboot approval listener";
       wantedBy = ["multi-user.target"];
-      after = ["network-online.target" "op-connect-secrets.service"];
+      after = ["op-connect-secrets.service"];
       serviceConfig = {
         Type = "simple";
         User = "root";
