@@ -69,7 +69,7 @@
     # supported GPUs is at:
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
-    open = true;
+    open = false; # RTX 2080 Turing only has beta support in open driver — proprietary is more stable
 
     # Enable the Nvidia settings menu,
     # accessible via `nvidia-settings`.
@@ -86,6 +86,12 @@
   # Tailscale exit node + subnet routing
   services.tailscale-autoconnect.exitNode = true;
   services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
+
+  # Auto-reboot if kernel freezes (sp5100-tco hardware watchdog)
+  systemd.watchdog = {
+    runtimeTime = "30s";
+    rebootTime = "10m";
+  };
 
   # Enable IP forwarding for Tailscale exit node
   boot.kernel.sysctl = {
