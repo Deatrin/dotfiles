@@ -2,6 +2,47 @@
 let
   cfg = config.services.dotfiles-sync;
 
+  # Runs nixos-rebuild switch in a detached transient systemd unit so it survives
+  # switch-to-configuration restarting dotfiles-sync.service when the unit file changes.
+  applyScript = pkgs.writeShellScript "dotfiles-apply" ''
+    set -euo pipefail
+
+    PUSHOVER_APP=$(cat "$PUSHOVER_APP_FILE")
+    PUSHOVER_USER=$(cat "$PUSHOVER_USER_FILE")
+    APPROVE_TOKEN=$(cat "$APPROVE_TOKEN_FILE")
+
+    pushover() {
+      local title=$1 msg=$2 url=''${3:-} url_title=''${4:-}
+      local args=(
+        --form-string "token=$PUSHOVER_APP"
+        --form-string "user=$PUSHOVER_USER"
+        --form-string "title=$title"
+        --form-string "message=$msg"
+      )
+      [[ -n "$url" ]] && args+=(--form-string "url=$url" --form-string "url_title=$url_title")
+      curl -sf "''${args[@]}" https://api.pushover.net/1/messages.json || true
+    }
+
+    SWITCH_LOG=$(nixos-rebuild switch --flake "$FLAKE_REF#$FLAKE_ATTR" 2>&1) || {
+      pushover "nauvoo: switch failed ✗" "Switch failed for $COMMIT_SHORT.\n$(echo "$SWITCH_LOG" | tail -10)"
+      exit 1
+    }
+
+    if [[ "$(readlink /run/booted-system/{initrd,kernel,kernel-modules})" \
+       == "$(readlink /run/current-system/{initrd,kernel,kernel-modules})" ]]; then
+      pushover "nauvoo: rebuilt ✓" "Commit $COMMIT_SHORT applied, no reboot needed."
+    else
+      touch "$STATE_DIR/pending-reboot"
+      TAILSCALE_IP=$(ip -4 addr show tailscale0 2>/dev/null \
+        | awk '/inet / {print $2}' | cut -d/ -f1 \
+        || echo "nauvoo")
+      APPROVE_URL="http://$TAILSCALE_IP:$PORT/approve?token=$APPROVE_TOKEN"
+      pushover "nauvoo: reboot required" \
+        "Commit $COMMIT_SHORT applied. Kernel updated — tap to approve reboot." \
+        "$APPROVE_URL" "Approve Reboot"
+    fi
+  '';
+
   syncScript = pkgs.writeShellScript "dotfiles-sync" ''
     set -euo pipefail
 
@@ -47,34 +88,38 @@ let
     COMMIT_SHORT=''${REMOTE_REV:0:8}
     FLAKE_REF="github:$OWNER/$REPO/$REMOTE_REV"
 
-    # Build test — revert-safe since we haven't touched local state
+    # Build test — dry-activate is safe, switch-to-configuration dry-activate
+    # does not restart services
     BUILD_LOG=$(nixos-rebuild dry-activate --flake "$FLAKE_REF#$FLAKE_ATTR" 2>&1) || {
       pushover "nauvoo: build failed ✗" "Commit $COMMIT_SHORT failed:\n$(echo "$BUILD_LOG" | tail -15)"
       exit 1
     }
 
-    # Apply
-    SWITCH_LOG=$(nixos-rebuild switch --flake "$FLAKE_REF#$FLAKE_ATTR" 2>&1) || {
-      pushover "nauvoo: switch failed ✗" "Build passed but switch failed.\n$(echo "$SWITCH_LOG" | tail -10)"
-      exit 1
-    }
-
+    # Save rev before launching apply so re-runs are idempotent if we get restarted
     echo "$REMOTE_REV" > "$LAST_APPLIED"
 
-    # Check if reboot needed by comparing booted vs current kernel/initrd/modules
-    if [[ "$(readlink /run/booted-system/{initrd,kernel,kernel-modules})" \
-       == "$(readlink /run/current-system/{initrd,kernel,kernel-modules})" ]]; then
-      pushover "nauvoo: rebuilt ✓" "Commit $COMMIT_SHORT applied, no reboot needed.\n$COMMIT_MSG"
-    else
-      touch "$STATE_DIR/pending-reboot"
-      TAILSCALE_IP=$(ip -4 addr show tailscale0 2>/dev/null \
-        | awk '/inet / {print $2}' | cut -d/ -f1 \
-        || echo "nauvoo")
-      APPROVE_URL="http://$TAILSCALE_IP:$PORT/approve?token=$APPROVE_TOKEN"
-      pushover "nauvoo: reboot required" \
-        "Commit $COMMIT_SHORT applied. Kernel updated — tap to approve reboot.\n$COMMIT_MSG" \
-        "$APPROVE_URL" "Approve Reboot"
-    fi
+    # Launch the switch in a detached transient unit. switch-to-configuration will
+    # restart dotfiles-sync.service when it sees the unit file changed, which kills
+    # us — but the transient apply unit is outside our cgroup and runs to completion.
+    systemd-run \
+      --no-block \
+      --unit="dotfiles-apply-$COMMIT_SHORT" \
+      --description="Dotfiles switch $COMMIT_SHORT" \
+      --property=Type=oneshot \
+      --property="Environment=HOME=/root" \
+      --property="Environment=NIX_REMOTE=daemon" \
+      --property="Environment=PATH=${lib.makeBinPath (with pkgs; [curl jq iproute2])}:/run/current-system/sw/bin" \
+      --property="Environment=FLAKE_REF=$FLAKE_REF" \
+      --property="Environment=FLAKE_ATTR=${cfg.flakeAttr}" \
+      --property="Environment=COMMIT_SHORT=$COMMIT_SHORT" \
+      --property="Environment=STATE_DIR=$STATE_DIR" \
+      --property="Environment=PORT=$PORT" \
+      --property="Environment=PUSHOVER_APP_FILE=${cfg.pushoverAppTokenFile}" \
+      --property="Environment=PUSHOVER_USER_FILE=${cfg.pushoverUserTokenFile}" \
+      --property="Environment=APPROVE_TOKEN_FILE=${cfg.approveTokenFile}" \
+      ${applyScript}
+
+    pushover "nauvoo: applying" "Build test passed for $COMMIT_SHORT. Applying...\n$COMMIT_MSG"
   '';
 
   approveServerPy = pkgs.writeText "dotfiles-approve-server.py" ''
