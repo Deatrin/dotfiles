@@ -88,9 +88,9 @@
   services.tailscale-autoconnect.advertiseRoutes = ["10.1.0.0/16"];
 
   # Auto-reboot if kernel freezes (sp5100-tco hardware watchdog)
-  systemd.watchdog = {
-    runtimeTime = "30s";
-    rebootTime = "10m";
+  systemd.settings.Manager = {
+    RuntimeWatchdogSec = "30s";
+    RebootWatchdogSec = "10m";
   };
 
   # Enable IP forwarding for Tailscale exit node
