@@ -28,7 +28,7 @@
     btop
     # curl # get things from URLs
     dig # DNS lookups
-    dogdns # DNS lookups "WRITTEN IN RUST"
+    doggo # DNS lookups "WRITTEN IN RUST"
     duf # better 'df' "WRITTEN IN RUST"
     unstable.fastfetch # fetch system info
     fd # better find "WRITTEN IN RUST""

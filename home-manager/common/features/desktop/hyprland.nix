@@ -21,6 +21,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
+    configType = "hyprlang";
     settings = {
       xwayland = {
         force_zero_scaling = true;
