@@ -18,6 +18,14 @@
   # NVIDIA RTX 5080 — Hyprland env vars for Wayland/NVIDIA.
   # Add to the common env list via mkAfter so they don't clobber existing vars.
   # No battery on a desktop
+  services.hyprpaper.settings.wallpaper = let
+    wallpaper = ../../wallpapers/stary_firewatch.png;
+  in lib.mkForce [
+    "DP-3,${wallpaper}"
+    "DP-4,${wallpaper}"
+    "DP-5,${wallpaper}"
+  ];
+
   programs.hyprpanel.settings.bar.layouts = lib.mkForce {
     "0" = {
       left = ["dashboard" "workspaces" "windowtitle" "media"];

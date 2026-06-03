@@ -92,7 +92,6 @@
       };
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
       };
 
@@ -121,26 +120,25 @@
       #   }
       # ];
       windowrule = [
-        "float, class:file_progress"
-        "float, class:confirm"
-        "float, class:dialog"
-        "float, class:download"
-        "float, class:notification"
-        "float, class:error"
-        "float, class:splash"
-        "float, class:confirmreset"
-        "float, title:Open File"
-        "float, title:branchdialog"
-        "float, class:pavucontrol-qt"
-        "float, class:pavucontrol"
-        "fullscreen, class:wlogout"
-        "float, title:wlogout"
-        "fullscreen, title:wlogout"
-        "idleinhibit focus, class:mpv"
-        "opacity 1.0 override, class:mpv"
-        "float, title:^(Media viewer)$"
-        "float, title:^(Volume Control)$"
-        "float, title:^(Picture-in-Picture)$"
+        { name = "float-file-progress";    "match:class" = "file_progress";           float = 1; }
+        { name = "float-confirm";          "match:class" = "confirm";                 float = 1; }
+        { name = "float-dialog";           "match:class" = "dialog";                  float = 1; }
+        { name = "float-download";         "match:class" = "download";                float = 1; }
+        { name = "float-notification";     "match:class" = "notification";            float = 1; }
+        { name = "float-error";            "match:class" = "error";                   float = 1; }
+        { name = "float-splash";           "match:class" = "splash";                  float = 1; }
+        { name = "float-confirmreset";     "match:class" = "confirmreset";            float = 1; }
+        { name = "float-open-file";        "match:title" = "Open File";               float = 1; }
+        { name = "float-branchdialog";     "match:title" = "branchdialog";            float = 1; }
+        { name = "float-pavucontrol-qt";   "match:class" = "pavucontrol-qt";          float = 1; }
+        { name = "float-pavucontrol";      "match:class" = "pavucontrol";             float = 1; }
+        { name = "fullscreen-wlogout-class"; "match:class" = "wlogout";             fullscreen = 1; }
+        { name = "float-wlogout-title";    "match:title" = "wlogout";                 float = 1; }
+        { name = "fullscreen-wlogout-title"; "match:title" = "wlogout";             fullscreen = 1; }
+        { name = "mpv-rules";              "match:class" = "mpv";    idle_inhibit = "focus"; opacity = "1.0 override"; }
+        { name = "float-media-viewer";     "match:title" = "^(Media viewer)$";        float = 1; }
+        { name = "float-volume-control";   "match:title" = "^(Volume Control)$";      float = 1; }
+        { name = "float-pip";              "match:title" = "^(Picture-in-Picture)$";  float = 1; }
       ];
 
       "$mainMod" = "SUPER";
@@ -162,7 +160,7 @@
         "$mainMod SHIFT, S, exec, bemoji"
         "$mainMod, P, exec, 1password --quick-access"
         "$mainMod SHIFT, P, pseudo"
-        "$mainMod, backslash, togglesplit"
+        "$mainMod, backslash, layoutmsg, togglesplit"
         "$mainMod, h, movefocus, l"
         "$mainMod, l, movefocus, r"
         "$mainMod, k, movefocus, u"
