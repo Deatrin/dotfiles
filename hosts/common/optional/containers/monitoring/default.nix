@@ -1,4 +1,4 @@
-# Monitoring stack — Prometheus + Grafana + Loki + Promtail + UnPoller
+# Monitoring stack — Prometheus + Grafana + Loki + Alloy + UnPoller
 #
 # Secrets required (via opnix):
 #   /run/opnix/monitoring-unpoller-username      — UniFi read-only account username
@@ -71,6 +71,43 @@
       reject_old_samples_max_age: 168h
   '';
 
+  alloyConfig = pkgs.writeText "config.alloy" ''
+    loki.source.journal "read" {
+      max_age       = "12h"
+      relabel_rules = loki.relabel.journal.rules
+      forward_to    = [loki.write.local.receiver]
+      labels = {
+        job  = "systemd-journal",
+        host = "nauvoo",
+      }
+    }
+
+    loki.relabel "journal" {
+      forward_to = []
+      rule {
+        source_labels = ["__journal__systemd_unit"]
+        target_label  = "unit"
+      }
+      rule {
+        source_labels = ["__journal__hostname"]
+        target_label  = "hostname"
+      }
+      rule {
+        source_labels = ["__journal__container_name"]
+        target_label  = "container"
+      }
+      rule {
+        source_labels = ["__journal__image_name"]
+        target_label  = "image"
+      }
+    }
+
+    loki.write "local" {
+      endpoint {
+        url = "http://127.0.0.1:3100/loki/api/v1/push"
+      }
+    }
+  '';
 
   grafanaDashboardProvider = pkgs.writeText "dashboards-provider.yaml" ''
     apiVersion: 1
@@ -311,42 +348,13 @@ in {
     openFirewall = true;
   };
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/promtail 0750 promtail promtail -"
-  ];
-
-  # Promtail runs as a NixOS service — the Docker image lacks systemd journal support
-  services.promtail = {
+  # Alloy runs as a NixOS service — reads the systemd journal and ships to Loki
+  services.alloy = {
     enable = true;
-    configuration = {
-      server = {
-        http_listen_port = 9080;
-        grpc_listen_port = 0;
-      };
-      positions.filename = "/var/lib/promtail/positions.yaml";
-      clients = [{url = "http://127.0.0.1:3100/loki/api/v1/push";}];
-      scrape_configs = [
-        {
-          job_name = "journal";
-          journal = {
-            max_age = "12h";
-            labels = {
-              job = "systemd-journal";
-              host = "nauvoo";
-            };
-          };
-          relabel_configs = [
-            {source_labels = ["__journal__systemd_unit"]; target_label = "unit";}
-            {source_labels = ["__journal__hostname"]; target_label = "hostname";}
-            {source_labels = ["__journal__container_name"]; target_label = "container";}
-            {source_labels = ["__journal__image_name"]; target_label = "image";}
-          ];
-        }
-      ];
-    };
+    configPath = alloyConfig;
   };
 
-  systemd.services.promtail = {
+  systemd.services.alloy = {
     after = ["monitoring-loki.service"];
     wants = ["monitoring-loki.service"];
   };

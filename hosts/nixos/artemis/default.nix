@@ -104,7 +104,7 @@
   zramSwap.enable = true;
 
   # Wine for Lutris/Battle.net (WoW, etc.)
-  # wineWowPackages.staging = both 32+64-bit Wine with staging patches
+  # wineWow64Packages.staging = both 32+64-bit Wine with staging patches
   programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -119,7 +119,7 @@
     input-leap
     unstable.obsidian
     unstable.davinci-resolve
-    wineWowPackages.staging
+    wineWow64Packages.staging
     winetricks
   ];
 

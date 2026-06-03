@@ -42,7 +42,7 @@
     jwt-cli # JWT tool
     lazygit
     nixd # nix daemon
-    nixfmt-rfc-style # nix formatter
+    nixfmt # nix formatter
     nvd # nix version diff
     ouch # better unzip "WRITTEN IN RUST"
     procs # better ps "WRITTEN IN RUST"
