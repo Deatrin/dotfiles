@@ -72,10 +72,11 @@ in {
     ];
 
     # 3-monitor layout — confirm DP-X names via `hyprctl monitors` after first boot.
-    # Positions: left(2560x1440) | ultrawide center(5120x2160) | portrait right(1920x1080)
+    # Positions: left(2560x1440) | ultrawide center(5120x2160, HDR) | portrait right(1920x1080)
+    # To disable HDR on DP-3, swap back to: "DP-3,5120x2160@165,2560x0,1"
     monitor = [
       "DP-5,2560x1440@165,0x0,1"
-      "DP-3,5120x2160@165,2560x0,1"
+      "DP-3,5120x2160@165,2560x0,1,bitdepth,10,cm,hdr"
       "DP-4,1920x1080@60,7680x0,1,transform,1"
     ];
 
