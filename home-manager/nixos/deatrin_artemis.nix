@@ -4,7 +4,9 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  wallpaper = ../../wallpapers/stary_firewatch.png;
+in {
   imports = [
     ../common/global
     ../common/features/cli/claude.nix
@@ -18,13 +20,18 @@
   # NVIDIA RTX 5080 — Hyprland env vars for Wayland/NVIDIA.
   # Add to the common env list via mkAfter so they don't clobber existing vars.
   # No battery on a desktop
-  services.hyprpaper.settings.wallpaper = let
-    wallpaper = ../../wallpapers/stary_firewatch.png;
-  in lib.mkForce [
+  services.hyprpaper.settings.wallpaper = lib.mkForce [
     "DP-3,${wallpaper}"
     "DP-4,${wallpaper}"
     "DP-5,${wallpaper}"
   ];
+
+  # NVIDIA enumerates monitors slowly — poll until all 3 are registered before hyprpaper starts.
+  # Without this, the systemd service races ahead and sees 0 monitors → "no target" for all.
+  # NOTE: home-manager systemd uses Service (not serviceConfig) for [Service] section entries.
+  systemd.user.services.hyprpaper.Service.ExecStartPre = let
+    hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+  in "/bin/sh -c 'n=0; while [ $n -lt 120 ] && [ \"$(${hyprctl} monitors 2>/dev/null | grep -c ^Monitor)\" -lt 3 ]; do sleep 0.5; n=$((n+1)); done'";
 
   programs.hyprpanel.settings.bar.layouts = lib.mkForce {
     "0" = {
@@ -74,6 +81,12 @@
 
     # Cursor glitches on NVIDIA — disable hardware cursors if needed.
     cursor.no_hardware_cursors = true;
+
+    # hyprpaper config applies to DP-3 only on NVIDIA 3-monitor setups; use IPC for the rest.
+    # Runs 5s after Hyprland start to ensure hyprpaper has preloaded the image.
+    exec-once = [
+      "sleep 5; hyprctl hyprpaper wallpaper 'DP-3,${wallpaper}'; hyprctl hyprpaper wallpaper 'DP-4,${wallpaper}'; hyprctl hyprpaper wallpaper 'DP-5,${wallpaper}'"
+    ];
   };
 
   # rclone bisync timers — run after rclone config OAuth flow (run once manually):

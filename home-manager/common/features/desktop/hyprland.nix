@@ -28,7 +28,6 @@
       };
 
       exec-once = [
-        "sleep 1 && hyprpaper"
         "hypridle"
         "hyprpanel"
         "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
