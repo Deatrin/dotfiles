@@ -79,7 +79,7 @@
               - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
               - 06d66ab109d4d2eddb2794d21526d140 # Retags
               - 1b3994c551cbb92a2c781af061f4ab44 # Scene
-            quality_profiles:
+            assign_scores_to:
               - name: WEB-1080p
               - name: WEB-2160p
           - trash_ids:
@@ -92,7 +92,7 @@
               - 2016d1676f5ee13a5b7257ff86ac9a93 # SDR
               - 83304f261cf516bb208c18c54c0adf97 # SDR (no WEBDL)
               - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
-            quality_profiles:
+            assign_scores_to:
               - name: WEB-2160p
 
     radarr:
@@ -164,7 +164,7 @@
               - 0a3f082873eb454bde444150b70253cc # Extras
               - 712d74cd88bceb883ee32f773656b1f5 # Sing-Along Versions
               - cae4ca30163749b891686f95532519bd # AV1
-            quality_profiles:
+            assign_scores_to:
               - name: Remux + WEB 1080p
               - name: Remux + WEB 2160p
           - trash_ids:
@@ -177,7 +177,7 @@
               - 9c38ebb7384dada637be8899efa68e6f # SDR
               - 25c12f78430a3a23413652cbd1d48d77 # SDR (no WEBDL)
               - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
-            quality_profiles:
+            assign_scores_to:
               - name: Remux + WEB 2160p
   '';
 in {
