@@ -27,8 +27,7 @@
         base_url: http://sonarr:8989
         api_key: !env_var SONARR_API_KEY
         quality_definition:
-          trash_ids:
-            - bef99584217af744e404ed44a33af589  # Series
+          type: series
         quality_profiles:
           - trash_ids:
               - 72dae194fc92bf828f32cde7744e51a1  # WEB-1080p
@@ -42,8 +41,7 @@
         base_url: http://radarr:7878
         api_key: !env_var RADARR_API_KEY
         quality_definition:
-          trash_ids:
-            - aed34b9f60ee115dfa7918b742336277  # Movie
+          type: movie
         quality_profiles:
           - trash_ids:
               - d1d67249d3890e49bc12e275d989a7e9  # HD Bluray + WEB
