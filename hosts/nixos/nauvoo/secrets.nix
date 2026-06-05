@@ -596,6 +596,23 @@
         restartServices = ["idrac-env-setup.service" "idrac-controller-1.service" "idrac-controller-2.service"];
       };
 
+      recyclarrSonarrApiKey = {
+        path = "/run/opnix/recyclarr-sonarr-api-key";
+        reference = "op://nix_secrets/recyclarr/sonarr_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["recyclarr-env-setup.service" "recyclarr.service"];
+      };
+      recyclarrRadarrApiKey = {
+        path = "/run/opnix/recyclarr-radarr-api-key";
+        reference = "op://nix_secrets/recyclarr/radarr_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["recyclarr-env-setup.service" "recyclarr.service"];
+      };
+
       # TODO: Fill in correct op:// references before enabling DDNS
       # ddnsApiKey = {
       #   path = "/run/opnix/ddns-api-key";

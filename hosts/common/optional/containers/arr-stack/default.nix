@@ -1,10 +1,18 @@
 # Arr-stack — media management suite
 #
-# No secrets required — all configuration stored in volumes.
+# Secrets required (via op-connect-secrets):
+#   /run/opnix/recyclarr-sonarr-api-key  — Sonarr API key
+#   /run/opnix/recyclarr-radarr-api-key  — Radarr API key
+#   1Password: op://nix_secrets/recyclarr/{sonarr_api_key,radarr_api_key}
 #
 # Media paths (/storage/media/*) are commented out — only available on nauvoo.
 # All arr services share the sabnzbd downloads path for cross-service hardlinking.
-{config, ...}: let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (config.virtualisation.quadlet) networks volumes;
 
   commonEnv = {
@@ -12,6 +20,30 @@
     PGID = "1000";
     TZ = "America/Los_Angeles";
   };
+
+  recyclarrConfig = pkgs.writeText "recyclarr.yml" ''
+    sonarr:
+      main:
+        base_url: http://sonarr:8989
+        api_key: !env_var SONARR_API_KEY
+        include:
+          - template: sonarr-quality-definition-series
+          - template: sonarr-v4-quality-profile-web-1080p
+          - template: sonarr-v4-quality-profile-web-2160p
+          - template: sonarr-v4-custom-formats-web-1080p
+          - template: sonarr-v4-custom-formats-web-2160p
+
+    radarr:
+      main:
+        base_url: http://radarr:7878
+        api_key: !env_var RADARR_API_KEY
+        include:
+          - template: radarr-quality-definition-movie
+          - template: radarr-quality-profile-hd-bluray-web
+          - template: radarr-quality-profile-uhd-bluray-web
+          - template: radarr-custom-formats-hd-bluray-web
+          - template: radarr-custom-formats-uhd-bluray-web
+  '';
 in {
   systemd.tmpfiles.rules = [
     "d /var/lib/arr-stack/sabnzbd   0755 root root -"
@@ -181,14 +213,45 @@ in {
     };
 
     containers.recyclarr = {
+      unitConfig = {
+        After = ["opnix-secrets.service" "recyclarr-env-setup.service"];
+        Requires = ["opnix-secrets.service" "recyclarr-env-setup.service"];
+      };
       containerConfig = {
         image = "ghcr.io/recyclarr/recyclarr:latest";
         autoUpdate = "registry";
         networks = [networks.traefik_network.ref];
         user = "1000:1000";
+        exec = "daemon";
         environments = {TZ = "America/Los_Angeles";};
-        volumes = ["/var/lib/arr-stack/recyclarr:/config"];
+        environmentFiles = ["/run/opnix/recyclarr-env"];
+        volumes = [
+          "/var/lib/arr-stack/recyclarr:/config"
+          "${recyclarrConfig}:/config/recyclarr.yml:ro"
+        ];
       };
+    };
+  };
+
+  systemd.services.recyclarr-env-setup = {
+    description = "Build recyclarr environment file from secrets";
+    after = ["opnix-secrets.service"];
+    requires = ["opnix-secrets.service"];
+    before = ["recyclarr.service"];
+    wantedBy = ["recyclarr.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = lib.getExe (pkgs.writeShellApplication {
+        name = "recyclarr-env-setup";
+        text = ''
+          {
+            printf 'SONARR_API_KEY=%s\n' "$(cat /run/opnix/recyclarr-sonarr-api-key)"
+            printf 'RADARR_API_KEY=%s\n' "$(cat /run/opnix/recyclarr-radarr-api-key)"
+          } > /run/opnix/recyclarr-env
+          chmod 600 /run/opnix/recyclarr-env
+        '';
+      });
     };
   };
 }
