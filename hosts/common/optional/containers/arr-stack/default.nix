@@ -29,11 +29,9 @@
         quality_definition:
           type: series
         quality_profiles:
-          - trash_ids:
-              - 72dae194fc92bf828f32cde7744e51a1  # WEB-1080p
+          - name: WEB-1080p
             score_set: default
-          - trash_ids:
-              - d1498e7d189fbe6c7110ceaabb7473e6  # WEB-2160p
+          - name: WEB-2160p
             score_set: default
 
     radarr:
@@ -43,11 +41,9 @@
         quality_definition:
           type: movie
         quality_profiles:
-          - trash_ids:
-              - d1d67249d3890e49bc12e275d989a7e9  # HD Bluray + WEB
+          - name: HD Bluray + WEB
             score_set: default
-          - trash_ids:
-              - 64fb5f9858489bdac2af690e27c8f42f  # UHD Bluray + WEB
+          - name: UHD Bluray + WEB
             score_set: default
   '';
 in {
