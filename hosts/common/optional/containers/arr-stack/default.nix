@@ -23,7 +23,7 @@
 
   recyclarrConfig = pkgs.writeText "recyclarr.yml" ''
     sonarr:
-      main:
+      sonarr:
         base_url: http://sonarr:8989
         api_key: !env_var SONARR_API_KEY
         quality_definition:
@@ -35,7 +35,7 @@
             score_set: default
 
     radarr:
-      main:
+      radarr:
         base_url: http://radarr:7878
         api_key: !env_var RADARR_API_KEY
         quality_definition:
