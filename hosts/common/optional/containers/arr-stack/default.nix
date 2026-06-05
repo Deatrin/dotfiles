@@ -217,12 +217,15 @@ in {
         After = ["opnix-secrets.service" "recyclarr-env-setup.service"];
         Requires = ["opnix-secrets.service" "recyclarr-env-setup.service"];
       };
+      serviceConfig = {
+        Restart = "no";
+      };
       containerConfig = {
         image = "ghcr.io/recyclarr/recyclarr:latest";
         autoUpdate = "registry";
         networks = [networks.traefik_network.ref];
         user = "1000:1000";
-        exec = "daemon";
+        exec = "sync";
         environments = {TZ = "America/Los_Angeles";};
         environmentFiles = ["/run/opnix/recyclarr-env"];
         volumes = [
@@ -230,6 +233,16 @@ in {
           "${recyclarrConfig}:/config/recyclarr.yml:ro"
         ];
       };
+    };
+  };
+
+  systemd.timers.recyclarr = {
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnBootSec = "5min";
+      OnUnitActiveSec = "6h";
+      RandomizedDelaySec = "5min";
+      Unit = "recyclarr.service";
     };
   };
 
