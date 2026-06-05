@@ -47,7 +47,7 @@
 in {
   systemd.tmpfiles.rules = [
     "d /var/lib/arr-stack/sabnzbd   0755 root root -"
-    "d /var/lib/arr-stack/recyclarr 0755 root root -"
+    "d /var/lib/arr-stack/recyclarr 0755 1000 1000 -"
   ];
 
   virtualisation.quadlet = {
