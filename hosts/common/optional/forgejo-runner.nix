@@ -32,7 +32,9 @@
   };
 
   # Runner user needs access to the Podman Docker-compat socket.
-  # The NixOS module creates this user; we extend it with the docker group.
+  # Declare user/group explicitly so NixOS validation passes alongside the
+  # gitea-actions-runner module's own definitions.
+  users.groups.gitea-runner-nauvoo = {};
   users.users."gitea-runner-nauvoo" = {
     isSystemUser = true;
     group = "gitea-runner-nauvoo";
