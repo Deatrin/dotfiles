@@ -8,7 +8,7 @@
     enable = true;
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
-    onActivation.cleanup = "zap";
+    onActivation.cleanup = "none"; # brew bundle --cleanup now requires --force-cleanup; nix-darwin hasn't added the flag yet
     taps = [
       "nikitabobko/tap"
     ];
