@@ -21,6 +21,7 @@
     ../../common/optional/reboot-required.nix
     ../../common/optional/salt.nix
     ../../common/optional/vscode-server.nix
+    ../../common/optional/forgejo-runner.nix
   ];
 
   networking = {

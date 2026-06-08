@@ -228,11 +228,10 @@
       forgejoRunnerToken = {
         path = "/run/opnix/forgejo-runner-token";
         reference = "op://nix_secrets/forgejo/runner_token";
-        owner = "root";
-        group = "root";
-        mode = "0600";
-        # no runner service yet — DinD doesn't work in Podman on NixOS
-        restartServices = [];
+        owner = "gitea-runner-nauvoo";
+        group = "gitea-runner-nauvoo";
+        mode = "0400";
+        restartServices = ["gitea-runner-nauvoo.service"];
       };
       nextcloudAdminPassword = {
         path = "/run/opnix/nextcloud-admin-password";
