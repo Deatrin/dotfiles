@@ -11,7 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: cachix/install-nix-action@v27
+      - name: Install Nix
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix \
+            | sh -s -- install linux --no-confirm --init none
+          echo "/nix/var/nix/profiles/default/bin" >> $GITHUB_PATH
 
       - run: nix flake update
 
