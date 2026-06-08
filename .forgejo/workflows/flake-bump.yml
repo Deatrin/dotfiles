@@ -21,8 +21,14 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          git config user.name "Forgejo Actions"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_SIGNING_KEY }}" > ~/.ssh/signing_key
+          chmod 600 ~/.ssh/signing_key
+          git config user.name "nauvoo-actions"
           git config user.email "actions@forgejo.jennex.dev"
+          git config gpg.format ssh
+          git config user.signingkey ~/.ssh/signing_key
+          git config commit.gpgsign true
           if ! git diff --quiet flake.lock; then
             git add flake.lock
             git commit -m "Bump flake.lock"
