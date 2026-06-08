@@ -40,7 +40,7 @@ in {
       "d ${config.services.forgejo-quadlet.dataPath}/runner 0755 root root -"
     ];
 
-virtualisation.quadlet = {
+    virtualisation.quadlet = {
       networks.forgejo_network = {};
 
       volumes.forgejo-pgdata = {};
@@ -101,11 +101,7 @@ virtualisation.quadlet = {
         };
       };
 
-      # TODO: Forgejo runner — DinD doesn't work inside Podman on NixOS.
-      # Need to investigate: Podman-in-Podman, or NixOS systemd service running
       # forgejo-runner directly on the host instead of in a container.
-      # containers.forgejo-dind = { ... };
-      # containers.forgejo-runner = { ... };
     };
   };
 }
