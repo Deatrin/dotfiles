@@ -67,7 +67,7 @@ in {
           Requires = ["forgejo-db.service"];
         };
         containerConfig = {
-          image = "codeberg.org/forgejo/forgejo:14";
+          image = "codeberg.org/forgejo/forgejo:15";
           autoUpdate = "registry";
           networks = [networks.traefik_network.ref networks.forgejo_network.ref];
           publishPorts = [
