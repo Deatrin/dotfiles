@@ -228,9 +228,9 @@
       forgejoRunnerToken = {
         path = "/run/opnix/forgejo-runner-token";
         reference = "op://nix_secrets/forgejo/runner_token";
-        owner = "gitea-runner-nauvoo";
-        group = "gitea-runner-nauvoo";
-        mode = "0400";
+        owner = "root";
+        group = "root";
+        mode = "0640";
         restartServices = ["gitea-runner-nauvoo.service"];
       };
       nextcloudAdminPassword = {

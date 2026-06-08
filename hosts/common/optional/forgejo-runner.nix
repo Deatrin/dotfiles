@@ -14,6 +14,7 @@
       enable = true;
       name = "nauvoo";
       url = "https://forgejo.jennex.dev";
+      # File must contain "TOKEN=<value>" format (used as EnvironmentFile by the module).
       tokenFile = "/run/opnix/forgejo-runner-token";
       # Labels map `runs-on:` values in workflows to container images.
       labels = [
@@ -31,17 +32,8 @@
     };
   };
 
-  # Runner user needs access to the Podman Docker-compat socket.
-  # Declare user/group explicitly so NixOS validation passes alongside the
-  # gitea-actions-runner module's own definitions.
-  users.groups.gitea-runner-nauvoo = {};
-  users.users."gitea-runner-nauvoo" = {
-    isSystemUser = true;
-    group = "gitea-runner-nauvoo";
-    extraGroups = ["docker"];
-  };
-
   # Ensure the runner waits for opnix to provision the token file before starting.
+  # The module uses DynamicUser=true and SupplementaryGroups=podman itself.
   systemd.services."gitea-runner-nauvoo" = {
     after = ["opnix-secrets.service"];
     requires = ["opnix-secrets.service"];
