@@ -86,7 +86,7 @@ in {
     # Redis cache
     containers.nextcloud-redis = {
       containerConfig = {
-        image = "docker.io/library/redis:7-alpine";
+        image = "docker.io/library/redis:8-alpine";
         autoUpdate = "registry";
         networks = [networks.nextcloud_network.ref];
       };

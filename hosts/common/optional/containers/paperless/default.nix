@@ -20,7 +20,7 @@ in {
     # Redis broker
     containers.paperless-broker = {
       containerConfig = {
-        image = "docker.io/library/redis:7";
+        image = "docker.io/library/redis:8";
         autoUpdate = "registry";
         networks = [networks.paperless_network.ref];
         volumes = ["${volumes.paperless-redis.ref}:/data"];

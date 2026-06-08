@@ -58,7 +58,7 @@ in {
         ];
       };
       containerConfig = {
-        image = "ghcr.io/open-webui/open-webui:main";
+        image = "ghcr.io/open-webui/open-webui:latest";
         autoUpdate = "registry";
         networks = [networks.traefik_network.ref networks.ollama_network.ref];
         environments = {

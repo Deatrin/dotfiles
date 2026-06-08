@@ -60,7 +60,7 @@ in {
         Requires = ["opnix-secrets.service" "manyfold-env-setup.service"];
       };
       containerConfig = {
-        image = "docker.io/library/postgres:15";
+        image = "docker.io/library/postgres:17";
         autoUpdate = "registry";
         networks = [networks.manyfold_network.ref];
         environments = {
@@ -74,7 +74,7 @@ in {
 
     containers.manyfold-redis = {
       containerConfig = {
-        image = "docker.io/library/redis:7";
+        image = "docker.io/library/redis:8";
         autoUpdate = "registry";
         networks = [networks.manyfold_network.ref];
       };
