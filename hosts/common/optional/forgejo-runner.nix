@@ -32,8 +32,12 @@
   };
 
   # Runner user needs access to the Podman Docker-compat socket.
-  # The NixOS module creates user/group "gitea-runner-<instance-name>".
-  users.users."gitea-runner-nauvoo".extraGroups = ["docker"];
+  # The NixOS module creates this user; we extend it with the docker group.
+  users.users."gitea-runner-nauvoo" = {
+    isSystemUser = true;
+    group = "gitea-runner-nauvoo";
+    extraGroups = ["docker"];
+  };
 
   # Ensure the runner waits for opnix to provision the token file before starting.
   systemd.services."gitea-runner-nauvoo" = {
