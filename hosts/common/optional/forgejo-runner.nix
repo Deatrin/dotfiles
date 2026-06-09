@@ -34,8 +34,14 @@
 
   # Ensure the runner waits for opnix to provision the token file before starting.
   # The module uses DynamicUser=true and SupplementaryGroups=podman itself.
+  #
+  # Also wait for forgejo-server.service (Quadlet container) so the runner doesn't
+  # race against Traefik/DNS on boot. StartLimitIntervalSec=0 prevents the service
+  # from entering a terminal failed state if Forgejo isn't fully reachable yet.
   systemd.services."gitea-runner-nauvoo" = {
-    after = ["opnix-secrets.service"];
+    after = ["opnix-secrets.service" "forgejo-server.service"];
     requires = ["opnix-secrets.service"];
+    wants = ["forgejo-server.service"];
+    startLimitIntervalSec = 0;
   };
 }
