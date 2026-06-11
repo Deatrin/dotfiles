@@ -110,6 +110,10 @@
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
+  # Pin to 6.12 LTS — kernel 6.18 introduced overnight lockups under heavy
+  # Podman container churn (podman-auto-update restarts 60+ containers at midnight).
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
 }
