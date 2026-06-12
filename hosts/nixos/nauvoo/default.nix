@@ -110,9 +110,27 @@
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
-  # Pin to 6.12 LTS — kernel 6.18 introduced overnight lockups under heavy
-  # Podman container churn (podman-auto-update restarts 60+ containers at midnight).
+  # Pin to 6.12 LTS while testing NIC fix.
   boot.kernelPackages = pkgs.linuxPackages_6_12;
+
+  # RTL8125 2.5GbE fix — r8169 driver has a TX queue deadlock under sustained
+  # high-packet-count load (60+ containers generate constant inter-container
+  # traffic). Symptoms: complete network freeze, no ping, kernel stays alive,
+  # 48-minute log gap before lockup, no kernel error messages.
+  # Fix: disable TSO/GSO offloading and increase TX/RX ring buffers.
+  systemd.services.rtl8125-offload-fix = {
+    description = "Disable RTL8125 TSO/GSO offloading to prevent TX queue deadlock";
+    after = ["sys-subsystem-net-devices-enp38s0.device"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = toString (pkgs.writeShellScript "rtl8125-fix" ''
+        ${pkgs.ethtool}/bin/ethtool -K enp38s0 tso off gso off gro off || true
+        ${pkgs.ethtool}/bin/ethtool -G enp38s0 tx 4096 rx 4096 || true
+      '');
+    };
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
