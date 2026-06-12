@@ -113,20 +113,25 @@
   # Pin to 6.12 LTS while testing NIC fix.
   boot.kernelPackages = pkgs.linuxPackages_6_12;
 
-  # RTL8125 2.5GbE fix — r8169 driver has a TX queue deadlock under sustained
-  # high-packet-count load (60+ containers generate constant inter-container
-  # traffic). Symptoms: complete network freeze, no ping, kernel stays alive,
-  # 48-minute log gap before lockup, no kernel error messages.
-  # Fix: disable TSO/GSO offloading and increase TX/RX ring buffers.
+  # RTL8125 2.5GbE (r8169 driver) — known to freeze under sustained load.
+  # Symptoms: complete network freeze, no ping, kernel stays alive, no kernel
+  # error messages. TSO/GSO/GRO are already off by default on this chip.
+  #
+  # pcie_aspm=off: Realtek NICs don't reliably wake from PCIe low-power states,
+  # causing silent TX freeze. This is the most common RTL8125 hang fix.
+  #
+  # rtl8125-offload-fix service: increase TX/RX ring buffers to reduce overflow
+  # risk under 60+ container packet load.
+  boot.kernelParams = ["pcie_aspm=off"];
+
   systemd.services.rtl8125-offload-fix = {
-    description = "Disable RTL8125 TSO/GSO offloading to prevent TX queue deadlock";
+    description = "Increase RTL8125 ring buffers to reduce TX overflow under container load";
     after = ["sys-subsystem-net-devices-enp38s0.device"];
     wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = toString (pkgs.writeShellScript "rtl8125-fix" ''
-        ${pkgs.ethtool}/bin/ethtool -K enp38s0 tso off gso off gro off || true
         ${pkgs.ethtool}/bin/ethtool -G enp38s0 tx 4096 rx 4096 || true
       '');
     };
