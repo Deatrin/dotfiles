@@ -485,6 +485,24 @@
         mode = "0600";
         restartServices = ["dotfiles-approve.service"];
       };
+      forgejoApiToken = {
+        path = "/run/opnix/forgejo-api-token";
+        reference = "op://nix_secrets/forgejo/api_token";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        # read at runtime by dotfiles-sync script — no restart needed
+        restartServices = [];
+      };
+      forgejoDeployKey = {
+        path = "/run/opnix/forgejo-deploy-key";
+        reference = "op://nix_secrets/forgejo_deploy/private key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        # read at runtime by dotfiles-sync script — no restart needed
+        restartServices = [];
+      };
       pushoverPodmanToken = {
         path = "/run/opnix/pushover-podman-token";
         reference = "op://nix_secrets/Pushover/podmanToken";

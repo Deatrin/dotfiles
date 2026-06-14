@@ -11,6 +11,8 @@ let
     PUSHOVER_USER=$(cat "$PUSHOVER_USER_FILE")
     APPROVE_TOKEN=$(cat "$APPROVE_TOKEN_FILE")
 
+    export GIT_SSH_COMMAND="ssh -i $FORGEJO_DEPLOY_KEY_FILE -o UserKnownHostsFile=$STATE_DIR/known_hosts -o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes"
+
     pushover() {
       local title=$1 msg=$2 url=''${3:-} url_title=''${4:-}
       local args=(
@@ -46,17 +48,22 @@ let
   syncScript = pkgs.writeShellScript "dotfiles-sync" ''
     set -euo pipefail
 
-    OWNER="Deatrin"
+    FORGEJO_HOST="forgejo.jennex.dev"
+    OWNER="deatrin"
     REPO="dotfiles"
     BRANCH="${cfg.branch}"
     FLAKE_ATTR="${cfg.flakeAttr}"
     STATE_DIR="/var/lib/dotfiles-sync"
     PORT="${toString cfg.approvePort}"
     LAST_APPLIED="$STATE_DIR/last-applied-rev"
+    FORGEJO_DEPLOY_KEY_FILE="${cfg.forgejoDeployKeyFile}"
 
     PUSHOVER_APP=$(cat "${cfg.pushoverAppTokenFile}")
     PUSHOVER_USER=$(cat "${cfg.pushoverUserTokenFile}")
     APPROVE_TOKEN=$(cat "${cfg.approveTokenFile}")
+    FORGEJO_TOKEN=$(cat "${cfg.forgejoApiTokenFile}")
+
+    export GIT_SSH_COMMAND="ssh -i $FORGEJO_DEPLOY_KEY_FILE -o UserKnownHostsFile=$STATE_DIR/known_hosts -o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes"
 
     pushover() {
       local title=$1 msg=$2 url=''${3:-} url_title=''${4:-}
@@ -72,9 +79,10 @@ let
 
     mkdir -p "$STATE_DIR"
 
-    # Check for new commits via GitHub API (public repo, no auth needed)
-    API_RESPONSE=$(curl -sf "https://api.github.com/repos/$OWNER/$REPO/commits/$BRANCH")
-    REMOTE_REV=$(echo "$API_RESPONSE" | jq -r .sha)
+    # Check for new commits via Forgejo API (private repo, token auth required)
+    API_RESPONSE=$(curl -sf -H "Authorization: token $FORGEJO_TOKEN" \
+      "https://$FORGEJO_HOST/api/v1/repos/$OWNER/$REPO/commits?sha=$BRANCH&limit=1")
+    REMOTE_REV=$(echo "$API_RESPONSE" | jq -r '.[0].sha')
     [[ "$REMOTE_REV" == "null" || -z "$REMOTE_REV" ]] && exit 0
 
     LOCAL_REV=""
@@ -84,9 +92,9 @@ let
     # Already waiting for reboot approval from a previous rebuild
     [[ -f "$STATE_DIR/pending-reboot" ]] && exit 0
 
-    COMMIT_MSG=$(echo "$API_RESPONSE" | jq -r '.commit.message' | head -3)
+    COMMIT_MSG=$(echo "$API_RESPONSE" | jq -r '.[0].commit.message' | head -3)
     COMMIT_SHORT=''${REMOTE_REV:0:8}
-    FLAKE_REF="github:$OWNER/$REPO/$REMOTE_REV"
+    FLAKE_REF="git+ssh://git@$FORGEJO_HOST/$OWNER/$REPO.git?ref=$BRANCH&rev=$REMOTE_REV"
 
     # Build test — dry-activate is safe, switch-to-configuration dry-activate
     # does not restart services
@@ -108,7 +116,7 @@ let
       --property=Type=oneshot \
       --property="Environment=HOME=/root" \
       --property="Environment=NIX_REMOTE=daemon" \
-      --property="Environment=PATH=${lib.makeBinPath (with pkgs; [curl jq iproute2])}:/run/current-system/sw/bin" \
+      --property="Environment=PATH=${lib.makeBinPath (with pkgs; [curl jq iproute2 openssh])}:/run/current-system/sw/bin" \
       --property="Environment=FLAKE_REF=$FLAKE_REF" \
       --property="Environment=FLAKE_ATTR=${cfg.flakeAttr}" \
       --property="Environment=COMMIT_SHORT=$COMMIT_SHORT" \
@@ -117,6 +125,7 @@ let
       --property="Environment=PUSHOVER_APP_FILE=${cfg.pushoverAppTokenFile}" \
       --property="Environment=PUSHOVER_USER_FILE=${cfg.pushoverUserTokenFile}" \
       --property="Environment=APPROVE_TOKEN_FILE=${cfg.approveTokenFile}" \
+      --property="Environment=FORGEJO_DEPLOY_KEY_FILE=${cfg.forgejoDeployKeyFile}" \
       ${applyScript}
 
     pushover "nauvoo: applying" "Build test passed for $COMMIT_SHORT. Applying...\n$COMMIT_MSG"
@@ -197,7 +206,7 @@ let
 
 in {
   options.services.dotfiles-sync = {
-    enable = lib.mkEnableOption "dotfiles auto-sync from GitHub with Pushover notifications and approval-gated reboot";
+    enable = lib.mkEnableOption "dotfiles auto-sync from Forgejo with Pushover notifications and approval-gated reboot";
 
     branch = lib.mkOption {
       type = lib.types.str;
@@ -228,6 +237,16 @@ in {
       type = lib.types.str;
       default = "/run/opnix/dotfiles-approve-token";
     };
+
+    forgejoApiTokenFile = lib.mkOption {
+      type = lib.types.str;
+      default = "/run/opnix/forgejo-api-token";
+    };
+
+    forgejoDeployKeyFile = lib.mkOption {
+      type = lib.types.str;
+      default = "/run/opnix/forgejo-deploy-key";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -244,7 +263,7 @@ in {
     };
 
     systemd.services.dotfiles-sync = {
-      description = "Dotfiles auto-sync from GitHub";
+      description = "Dotfiles auto-sync from Forgejo";
       after = ["network-online.target" "op-connect-secrets.service"];
       wants = ["network-online.target"];
       serviceConfig = {
@@ -252,7 +271,7 @@ in {
         User = "root";
         ExecStart = syncScript;
         Environment = [
-          "PATH=${lib.makeBinPath (with pkgs; [curl jq iproute2])}:/run/current-system/sw/bin"
+          "PATH=${lib.makeBinPath (with pkgs; [curl jq iproute2 openssh])}:/run/current-system/sw/bin"
           "HOME=/root"
           "NIX_REMOTE=daemon"
         ];
