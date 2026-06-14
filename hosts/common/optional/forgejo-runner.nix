@@ -43,5 +43,19 @@
     requires = ["opnix-secrets.service"];
     wants = ["forgejo-server.service"];
     startLimitIntervalSec = 0;
+    serviceConfig.ExecStartPre = [
+      # On nixos-rebuild switch, all podman quadlet containers (including forgejo
+      # itself) get restarted, leaving forgejo.jennex.dev briefly unreachable. The
+      # runner's startup "Declare" call fails hard in that window, marking the unit
+      # failed (which switch-to-configuration then reports as a switch failure).
+      # Wait (best-effort) for forgejo to come back before launching the runner.
+      "-${pkgs.writeShellScript "wait-for-forgejo" ''
+        for i in $(seq 1 60); do
+          ${pkgs.curl}/bin/curl -s -o /dev/null --max-time 5 https://forgejo.jennex.dev/ && exit 0
+          sleep 2
+        done
+        exit 0
+      ''}"
+    ];
   };
 }
