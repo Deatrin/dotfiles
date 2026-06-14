@@ -110,10 +110,29 @@
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
-  # RTL8125B 2.5GbE (r8169 driver) deadlocks under sustained load without this.
-  # PCIe ASPM puts the NIC into a low-power state it can't reliably wake from,
-  # causing a silent TX queue freeze. Confirmed fix as of 2026-06-13.
+  # RTL8125B 2.5GbE (r8169 driver) stability fixes.
+  # (2026-06-13) PCIe ASPM puts the NIC into a low-power state it can't wake from → TX queue freeze.
+  # (2026-06-14) Kernel 6.18 r8169 enters a periodic admin-down/up reset loop every ~414s after
+  #              heavy veth churn (e.g. podman auto-update). 18 cycles → hard lockup. Pin to 6.12.
   boot.kernelParams = ["pcie_aspm=off"];
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
+
+  # Disable Energy Efficient Ethernet (EEE) on RTL8125B at boot.
+  # EEE's LPI wake-up handling in r8169 6.18 triggers the periodic reset cycle under load.
+  # Disabling it here ensures the setting survives across link events, not just initial boot.
+  systemd.services.disable-eee-enp38s0 = {
+    description = "Disable EEE on enp38s0 (RTL8125B r8169)";
+    after = ["sys-subsystem-net-devices-enp38s0.device"];
+    bindsTo = ["sys-subsystem-net-devices-enp38s0.device"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.ethtool}/bin/ethtool --set-eee enp38s0 eee off";
+    };
+  };
+
+  environment.systemPackages = [pkgs.ethtool];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
