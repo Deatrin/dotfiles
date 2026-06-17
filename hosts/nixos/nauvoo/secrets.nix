@@ -571,6 +571,14 @@
         mode = "0600";
         restartServices = ["open-webui-env-setup.service" "open-webui.service"];
       };
+      homeboxApiKeyPepper = {
+        path = "/run/opnix/homebox-api-key-pepper";
+        reference = "op://nix_secrets/homebox/api_key_pepper";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["homebox-env-setup.service" "homebox.service"];
+      };
       mealieEnv = {
         path = "/run/opnix/mealie-env";
         reference = "op://nix_secrets/mealie/env";
