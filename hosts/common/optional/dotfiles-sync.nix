@@ -26,7 +26,7 @@ let
     }
 
     SWITCH_LOG=$(nixos-rebuild switch --flake "$FLAKE_REF#$FLAKE_ATTR" 2>&1) || {
-      pushover "nauvoo: switch failed ✗" "Switch failed for $COMMIT_SHORT.\n$(echo "$SWITCH_LOG" | tail -10)"
+      pushover "nauvoo: switch failed ✗" "Switch failed for $COMMIT_SHORT."$'\n'"$(echo "$SWITCH_LOG" | tail -10)"
       exit 1
     }
 
@@ -99,7 +99,7 @@ let
     # Build test — dry-activate is safe, switch-to-configuration dry-activate
     # does not restart services
     BUILD_LOG=$(nixos-rebuild dry-activate --flake "$FLAKE_REF#$FLAKE_ATTR" 2>&1) || {
-      pushover "nauvoo: build failed ✗" "Commit $COMMIT_SHORT failed:\n$(echo "$BUILD_LOG" | tail -15)"
+      pushover "nauvoo: build failed ✗" "Commit $COMMIT_SHORT failed:"$'\n'"$(echo "$BUILD_LOG" | tail -15)"
       exit 1
     }
 
@@ -128,7 +128,7 @@ let
       --property="Environment=FORGEJO_DEPLOY_KEY_FILE=${cfg.forgejoDeployKeyFile}" \
       ${applyScript}
 
-    pushover "nauvoo: applying" "Build test passed for $COMMIT_SHORT. Applying...\n$COMMIT_MSG"
+    pushover "nauvoo: applying" "Build test passed for $COMMIT_SHORT. Applying..."$'\n'"$COMMIT_MSG"
   '';
 
   approveServerPy = pkgs.writeText "dotfiles-approve-server.py" ''
