@@ -77,6 +77,8 @@
       export OP_CONNECT_TOKEN
       export OP_CONNECT_HOST="${cfg.connectHost}"
 
+      _restart_list=$(mktemp)
+
       ${lib.concatMapStrings (s: ''
         echo "Fetching: ${s.value.reference} -> ${s.value.path}"
         mkdir -p "$(dirname "${s.value.path}")"
@@ -92,11 +94,19 @@
           chown "${s.value.owner}:${s.value.group}" "${s.value.path}"
           chmod "${s.value.mode}" "${s.value.path}"
           ${lib.concatMapStrings (svc: ''
-            echo "Restarting ${svc} (secret changed)"
-            systemctl try-restart --no-block "${svc}" || true
+            echo "${svc}" >> "$_restart_list"
           '') s.value.restartServices}
         fi
       '') (lib.attrsToList cfg.secrets)}
+
+      # Restart each affected service exactly once, regardless of how many of
+      # its secrets changed this run.
+      sort -u "$_restart_list" | while IFS= read -r _svc; do
+        [ -n "$_svc" ] || continue
+        echo "Restarting $_svc (secret changed)"
+        systemctl try-restart --no-block "$_svc" || true
+      done
+      rm -f "$_restart_list"
 
       echo "All secrets provisioned"
     '';
