@@ -93,9 +93,9 @@
           rm -f "$_tmpfile"
           chown "${s.value.owner}:${s.value.group}" "${s.value.path}"
           chmod "${s.value.mode}" "${s.value.path}"
-          ${lib.concatMapStrings (svc: ''
-            echo "${svc}" >> "$_restart_list"
-          '') s.value.restartServices}
+          ${lib.optionalString (s.value.restartServices != []) ''
+            printf '%s\n' ${lib.escapeShellArgs s.value.restartServices} >> "$_restart_list"
+          ''}
         fi
       '') (lib.attrsToList cfg.secrets)}
 
