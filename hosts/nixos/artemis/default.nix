@@ -74,6 +74,9 @@
     polkitPolicyOwners = ["deatrin"];
   };
 
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+
   programs.kdeconnect.enable = true;
 
   services.mullvad-vpn.enable = true;
@@ -108,6 +111,7 @@
   programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
+    gnumake
     mangohud
     gamescope
     unstable.lutris
