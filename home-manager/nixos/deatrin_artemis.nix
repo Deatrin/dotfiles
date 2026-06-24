@@ -33,6 +33,14 @@ in {
     hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   in "/bin/sh -c 'n=0; while [ $n -lt 120 ] && [ \"$(${hyprctl} monitors 2>/dev/null | grep -c ^Monitor)\" -lt 3 ]; do sleep 0.5; n=$((n+1)); done'";
 
+  # Apply wallpapers via IPC on every start/restart (not just Hyprland's initial exec-once).
+  # sd-switch restarts hyprpaper when its unit changes (e.g. nixpkgs bump); without this the
+  # IPC assignment for DP-4/DP-5 never re-runs and those monitors stay blank.
+  systemd.user.services.hyprpaper.Service.ExecStartPost = let
+    hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+    w = "${wallpaper}";
+  in "/bin/sh -c 'sleep 1; ${hyprctl} hyprpaper wallpaper \"DP-3,${w}\"; ${hyprctl} hyprpaper wallpaper \"DP-4,${w}\"; ${hyprctl} hyprpaper wallpaper \"DP-5,${w}\"'";
+
   programs.hyprpanel.settings.bar.layouts = lib.mkForce {
     "0" = {
       left = ["dashboard" "workspaces" "windowtitle" "media"];
@@ -83,11 +91,6 @@ in {
     # Cursor glitches on NVIDIA — disable hardware cursors if needed.
     cursor.no_hardware_cursors = true;
 
-    # hyprpaper config applies to DP-3 only on NVIDIA 3-monitor setups; use IPC for the rest.
-    # Runs 5s after Hyprland start to ensure hyprpaper has preloaded the image.
-    exec-once = [
-      "sleep 5; hyprctl hyprpaper wallpaper 'DP-3,${wallpaper}'; hyprctl hyprpaper wallpaper 'DP-4,${wallpaper}'; hyprctl hyprpaper wallpaper 'DP-5,${wallpaper}'"
-    ];
   };
 
   # rclone bisync timers — run after rclone config OAuth flow (run once manually):
