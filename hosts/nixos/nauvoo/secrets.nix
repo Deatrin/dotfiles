@@ -638,6 +638,23 @@
         restartServices = ["recyclarr-env-setup.service" "recyclarr.service"];
       };
 
+      ouroEnv = {
+        path = "/run/opnix/ouro-env";
+        reference = "op://nix_secrets/ourobantz/env";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["ouro.service"];
+      };
+      forgejoRegistryPullToken = {
+        path = "/run/opnix/forgejo-registry-pull-token";
+        reference = "op://nix_secrets/forgejo/registry_pull_token";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = [];
+      };
+
       # TODO: Fill in correct op:// references before enabling DDNS
       # ddnsApiKey = {
       #   path = "/run/opnix/ddns-api-key";

@@ -14,6 +14,7 @@
     ./homepage
     ./immich
     ./it-tools
+    ./ouro-go
     ./navidrome
     ./paperless
     ./pihole
