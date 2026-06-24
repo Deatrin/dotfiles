@@ -35,6 +35,7 @@
     ../../common/optional/containers/ollama
     ../../common/optional/containers/open-webui
     ../../common/optional/containers/kavita
+    ../../common/optional/containers/ouro-go
     # ../../common/optional/containers/ddns
     ../../common/optional/containers/idrac
   ];
