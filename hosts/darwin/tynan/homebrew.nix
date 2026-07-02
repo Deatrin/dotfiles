@@ -21,6 +21,7 @@
       "devpod"
       "goland"
       "mixed-in-key"
+      "proton-drive"
       "pycharm"
       "rekordbox"
       "vivaldi"

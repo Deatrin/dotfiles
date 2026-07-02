@@ -48,7 +48,7 @@
   # Per system dock
   system.defaults.dock.persistent-apps = [
     "/Applications/Obsidian.app"
-    "/Applications/Spark.app"
+    "/Applications/Spark Desktop.app"
     "/Applications/Brave Browser.app"
     "/System/Applications/Messages.app"
     "/Applications/Raindrop.io.app"
