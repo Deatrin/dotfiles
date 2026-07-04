@@ -14,6 +14,7 @@
     ];
     casks = [
       "airtool"
+      "android-studio"
       "claude"
       "claude-code"
       "datagrip"

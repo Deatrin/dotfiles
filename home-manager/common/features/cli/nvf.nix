@@ -140,6 +140,7 @@
         go.enable = true;
         html.enable = false;
         helm.enable = true;
+        kotlin.enable = true;
         python.enable = true;
         sql.enable = true;
         terraform.enable = true;
