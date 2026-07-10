@@ -10,7 +10,10 @@
     onActivation.upgrade = true;
     onActivation.cleanup = "none"; # brew bundle --cleanup now requires --force-cleanup; nix-darwin hasn't added the flag yet
     taps = [
-      "nikitabobko/tap"
+      {
+        name = "nikitabobko/tap"; # aerospace lives here; Homebrew 6.0 requires explicit trust
+        trusted = true;
+      }
     ];
     brews = [
       "aqua" # Declarative cli version management
@@ -25,6 +28,7 @@
     casks = [
       "1password" # GUI 1pass
       "1password-cli" # need to install CLI via brew to make biometric unlock work with GUI app
+      "aerospace" # i3 like window manager
       "bambu-studio" # silcer for 3d printer
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser
@@ -47,6 +51,7 @@
       "rectangle-pro" # key controlled snap feature
       "remote-desktop-manager" # devolutions rdm
       "sanesidebuttons" # enable side buttons on mouse
+      "steam" # you already know yo
       "serial" # serial connection application
       "spotify" # music
       "visual-studio-code" # code editor
