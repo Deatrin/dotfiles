@@ -27,6 +27,9 @@
           nixos-rebuild
           home-manager
           nh
+
+          # Secrets for local dev (see secretspec.toml)
+          secretspec
         ];
 
         shellHook = ''
@@ -36,6 +39,7 @@
           if [[ "$OSTYPE" == "darwin"* ]]; then
             echo "   darwin-rebuild available via nix-darwin"
           fi
+          echo "   Secrets: secretspec run -- <cmd> (see secretspec.toml)"
           echo ""
         '';
       };
@@ -43,18 +47,20 @@
       # Go development environment
       go = pkgs.mkShell {
         name = "go-dev";
-        packages = with pkgs-unstable; [
-          go
-          gopls
-          gotools
-          go-task
-          golangci-lint
-          delve
-          gomodifytags
-          gotests
-          golines
-          gofumpt
-        ];
+        packages = with pkgs-unstable;
+          [
+            go
+            gopls
+            gotools
+            go-task
+            golangci-lint
+            delve
+            gomodifytags
+            gotests
+            golines
+            gofumpt
+          ]
+          ++ [pkgs.secretspec];
 
         shellHook = ''
           echo "🐹 Go Development Environment"
@@ -62,6 +68,7 @@
           export PATH="$GOPATH/bin:$PATH"
           echo "   GOPATH=$GOPATH"
           echo "   Go version: $(go version)"
+          echo "   Secrets: secretspec run -- <cmd> (see secretspec.toml)"
           echo ""
         '';
       };
@@ -97,6 +104,7 @@
           ]
           ++ [
             pkgs.kubectl-browse-pvc # Custom package from stable
+            pkgs.secretspec
           ];
 
         shellHook = ''
@@ -106,6 +114,7 @@
           if command -v kubectl &>/dev/null; then
             echo "   kubectl version: $(kubectl version --client --short 2>/dev/null || echo 'N/A')"
           fi
+          echo "   Secrets: secretspec run -- <cmd> (see secretspec.toml)"
           echo ""
         '';
       };
@@ -128,7 +137,8 @@
             wheel
             pytest
             ipython
-          ]);
+          ])
+          ++ [pkgs.secretspec];
 
         shellHook = ''
           echo "🐍 Python Development Environment"
@@ -137,6 +147,7 @@
           if command -v poetry &>/dev/null; then
             echo "   Poetry: $(poetry --version 2>/dev/null || echo 'N/A')"
           fi
+          echo "   Secrets: secretspec run -- <cmd> (see secretspec.toml)"
           echo ""
         '';
       };
@@ -157,13 +168,15 @@
           # Container debugging tools
           ctop
           lazydocker
-        ];
+        ]
+        ++ [pkgs.secretspec];
 
         shellHook = ''
           echo "🐳 Container Development Environment"
           echo "   Tools: docker-compose, buildah, podman, hadolint, dive"
           echo "   Linting: hadolint <Dockerfile>"
           echo "   Analysis: dive <image>"
+          echo "   Secrets: secretspec run -- <cmd> (see secretspec.toml)"
           echo ""
         '';
       };
@@ -186,6 +199,9 @@
 
           # Testing
           bats
+
+          # Secrets for local dev (see secretspec.toml)
+          secretspec
         ];
 
         shellHook = ''
@@ -193,6 +209,7 @@
           echo "   Linting: shellcheck <script.sh>"
           echo "   Format: shfmt -w <script.sh>"
           echo "   LSP: bash-language-server"
+          echo "   Secrets: secretspec run -- <cmd> (see secretspec.toml)"
           echo ""
         '';
       };
