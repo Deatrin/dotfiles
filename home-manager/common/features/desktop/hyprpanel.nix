@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  config = lib.mkIf config.dotfiles.desktop.enable {
   home.packages = with pkgs; [
     brightnessctl
     pavucontrol
@@ -133,5 +139,6 @@
         "labelicon" = "#bb9af7";
       };
     };
+  };
   };
 }

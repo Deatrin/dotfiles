@@ -12,17 +12,18 @@
     ./secrets.nix
     ../../common/nixos
     ../../common/nixos/users/deatrin
-    # ../../common/optional/docker.nix  # removed — replaced by quadlet
     ./backup.nix
     ./containers.nix
-    ../../common/optional/jellyfin.nix
-    ../../common/optional/plex.nix
-    ../../common/optional/dotfiles-sync.nix
-    ../../common/optional/reboot-required.nix
-    ../../common/optional/salt.nix
-    ../../common/optional/vscode-server.nix
-    ../../common/optional/forgejo-runner.nix
   ];
+
+  dotfiles = {
+    jellyfin.enable = true;
+    plex.enable = true;
+    reboot-required.enable = true;
+    salt.enable = true;
+    vscode-server.enable = true;
+    forgejo-runner.enable = true;
+  };
 
   networking = {
     hostName = "nauvoo";

@@ -655,6 +655,39 @@
         restartServices = [];
       };
 
+      karakeepNextauthSecret = {
+        path = "/run/opnix/karakeep-nextauth-secret";
+        reference = "op://nix_secrets/karakeep/nextauth_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["karakeep-env-setup.service" "karakeep.service"];
+      };
+      karakeepMeiliMasterKey = {
+        path = "/run/opnix/karakeep-meili-master-key";
+        reference = "op://nix_secrets/karakeep/meili_master_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["karakeep-env-setup.service" "karakeep-meilisearch.service" "karakeep.service"];
+      };
+      karakeepOidcClientId = {
+        path = "/run/opnix/karakeep-oidc-client-id";
+        reference = "op://nix_secrets/karakeep/oidc_client_id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["karakeep-env-setup.service" "karakeep.service"];
+      };
+      karakeepOidcClientSecret = {
+        path = "/run/opnix/karakeep-oidc-client-secret";
+        reference = "op://nix_secrets/karakeep/oidc_client_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["karakeep-env-setup.service" "karakeep.service"];
+      };
+
       # TODO: Fill in correct op:// references before enabling DDNS
       # ddnsApiKey = {
       #   path = "/run/opnix/ddns-api-key";

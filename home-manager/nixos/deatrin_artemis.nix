@@ -9,13 +9,16 @@
 in {
   imports = [
     ../common/global
-    ../common/features/cli/claude.nix
-    ../common/features/cli/ghostty.nix
-    ../common/features/cli/opnix_personal.nix
-    ../common/features/dev
-    ../common/features/desktop
     inputs.nix-ld-vscode.nixosModules.default
   ];
+
+  dotfiles = {
+    claude.enable = true;
+    ghostty.enable = true;
+    opnix-personal.enable = true;
+    dev.enable = true;
+    desktop.enable = true;
+  };
 
   # NVIDIA RTX 5080 — Hyprland env vars for Wayland/NVIDIA.
   # Add to the common env list via mkAfter so they don't clobber existing vars.

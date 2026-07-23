@@ -1,8 +1,10 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
+  config = lib.mkIf config.dotfiles.desktop.enable {
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -59,5 +61,6 @@
         }
       ];
     };
+  };
   };
 }

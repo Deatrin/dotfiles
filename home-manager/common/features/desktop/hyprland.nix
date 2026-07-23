@@ -1,8 +1,10 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }: {
+  config = lib.mkIf config.dotfiles.desktop.enable {
   home.packages = with pkgs; [
     grim
     hyprcursor
@@ -201,5 +203,6 @@
         "$mainMod, mouse:273, resizewindow"
       ];
     };
+  };
   };
 }

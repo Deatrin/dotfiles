@@ -8,10 +8,13 @@
 }: {
   imports = [
     ../common/global
-    ../common/features/cli/ghostty.nix
-    ../common/features/dev
-    ../common/features/kubernetes
   ];
+
+  dotfiles = {
+    ghostty.enable = true;
+    dev.enable = true;
+    kubernetes.enable = true;
+  };
 
   home = {
     username = lib.mkDefault "ajennex";

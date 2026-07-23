@@ -7,14 +7,17 @@
 }: {
   imports = [
     ../common/global
-    ../common/features/cli/claude.nix
-    ../common/features/cli/ghostty.nix
-    ../common/features/cli/opnix_personal.nix
-    ../common/features/dev
-    ../common/features/desktop
-    ../common/features/kubernetes
     inputs.nix-ld-vscode.nixosModules.default
   ];
+
+  dotfiles = {
+    claude.enable = true;
+    ghostty.enable = true;
+    opnix-personal.enable = true;
+    dev.enable = true;
+    desktop.enable = true;
+    kubernetes.enable = true;
+  };
 
   #programs.onepassword-secrets = {
   #enable = true;

@@ -15,7 +15,8 @@ in {
       inputs.nvf.homeManagerModules.default
       ../features/cli
     ]
-    ++ (builtins.attrValues outputs.homeManagerModules);
+    ++ (builtins.attrValues outputs.homeManagerModules)
+    ++ (builtins.attrValues (outputs.modules.homeManager or {}));
 
   nixpkgs = {
     overlays = builtins.attrValues outputs.overlays;

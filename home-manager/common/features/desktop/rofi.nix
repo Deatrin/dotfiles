@@ -4,6 +4,7 @@
   lib,
   ...
 }: {
+  config = lib.mkIf config.dotfiles.desktop.enable {
   home.file.".config/rofi/themes/tokyo-night.rasi".text = ''
     /*Tokyo Night theme based on the Purple official rofi theme*/
 
@@ -163,5 +164,6 @@
       kb-secondary-paste = "Control+v,Insert";
     };
     theme = "tokyo-night";
+  };
   };
 }

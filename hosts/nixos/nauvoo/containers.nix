@@ -1,44 +1,48 @@
-# Nauvoo container imports — uncomment services one at a time as they're migrated.
-#
-# When enabling forgejo, also uncomment its settings below.
+# Nauvoo container config — every container is a toggle under `dotfiles.<name>.enable`
+# (see aspects/nixos/containers/). Only foundational, always-on infra is imported
+# directly below; everything else is enabled via the dotfiles block.
 { ... }: {
   imports = [
     ../../common/optional/quadlet.nix
     ../../common/optional/containers/networks.nix
     ../../common/optional/containers/op-connect
     ../../common/optional/containers/traefik
-    ../../common/optional/containers/pihole
-    ../../common/optional/containers/homepage
-    ../../common/optional/containers/it-tools
-    ../../common/optional/containers/grocy
-    ../../common/optional/containers/homebox
-    ../../common/optional/containers/navidrome
-    ../../common/optional/containers/audiobookshelf
-    ../../common/optional/containers/calibre
-    ../../common/optional/containers/pocket-id
-    ../../common/optional/containers/romm
-    ../../common/optional/containers/paperless
-    ../../common/optional/containers/immich
-    ../../common/optional/containers/forgejo  # also uncomment forgejo settings below
-    ../../common/optional/containers/arr-stack
-    ../../common/optional/containers/seerr
-    ../../common/optional/containers/syncthing
-    ../../common/optional/containers/nextcloud
-    ../../common/optional/containers/manyfold
-    ../../common/optional/containers/traefik-forward-auth
-    ../../common/optional/containers/monitoring
-    ../../common/optional/containers/netbox
-    ../../common/optional/containers/mealie
-    ../../common/optional/containers/drawio
-    ../../common/optional/containers/excalidraw
-    ../../common/optional/containers/netboot
-    ../../common/optional/containers/ollama
-    ../../common/optional/containers/open-webui
-    ../../common/optional/containers/kavita
-    ../../common/optional/containers/ouro-go
-    # ../../common/optional/containers/ddns
-    ../../common/optional/containers/idrac
   ];
+
+  dotfiles = {
+    it-tools.enable = true;
+    drawio.enable = true;
+    excalidraw.enable = true;
+    kavita.enable = true;
+    pihole.enable = true;
+    homepage.enable = true;
+    grocy.enable = true;
+    homebox.enable = true;
+    navidrome.enable = true;
+    audiobookshelf.enable = true;
+    calibre.enable = true;
+    pocket-id.enable = true;
+    romm.enable = true;
+    paperless.enable = true;
+    immich.enable = true;
+    forgejo.enable = true;
+    arr-stack.enable = true;
+    seerr.enable = true;
+    syncthing.enable = true;
+    nextcloud.enable = true;
+    manyfold.enable = true;
+    traefik-forward-auth.enable = true;
+    monitoring.enable = true;
+    netbox.enable = true;
+    mealie.enable = true;
+    netboot.enable = true;
+    ollama.enable = true;
+    open-webui.enable = true;
+    ouro-go.enable = true;
+    idrac.enable = true;
+    karakeep.enable = true;
+    # ddns.enable stays false — secrets not wired up yet (see aspects/nixos/containers/ddns.nix)
+  };
 
   # Nauvoo-specific container settings
   services.pihole-quadlet.dnsListenIP = "10.1.30.100";
@@ -53,7 +57,7 @@
   ];
 
 
-  # Forgejo settings — uncomment alongside the forgejo import above
+  # Forgejo settings
   services.forgejo-quadlet.sshPort = 22;
   services.forgejo-quadlet.dataPath = "/ssdstorage/forgejo";
 }

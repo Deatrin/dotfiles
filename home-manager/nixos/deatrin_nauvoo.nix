@@ -7,9 +7,10 @@
 }: {
   imports = [
     ../common/global
-    ../common/features/kubernetes
     inputs.nix-ld-vscode.nixosModules.default
   ];
+
+  dotfiles.kubernetes.enable = true;
 
   home = {
     username = lib.mkDefault "deatrin";

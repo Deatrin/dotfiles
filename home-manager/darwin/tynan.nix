@@ -8,11 +8,14 @@
 }: {
   imports = [
     ../common/global
-    ../common/features/cli/ghostty.nix
-    ../common/features/cli/opnix_personal.nix
-    ../common/features/dev
-    ../common/features/kubernetes
   ];
+
+  dotfiles = {
+    ghostty.enable = true;
+    opnix-personal.enable = true;
+    dev.enable = true;
+    kubernetes.enable = true;
+  };
 
   home = {
     username = lib.mkDefault "deatrin";

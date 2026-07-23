@@ -14,12 +14,15 @@
     ./secrets.nix
     ../../common/nixos
     ../../common/nixos/users/deatrin
-    ../../common/optional/font.nix
-    ../../common/optional/podman.nix
-    ../../common/optional/reboot-required.nix
-    ../../common/optional/xwayland.nix
-    ../../common/optional/greetd.nix
   ];
+
+  dotfiles = {
+    font.enable = true;
+    podman.enable = true;
+    reboot-required.enable = true;
+    xwayland.enable = true;
+    greetd.enable = true;
+  };
 
   boot.loader = {
     systemd-boot.enable = true;

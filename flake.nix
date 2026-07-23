@@ -6,6 +6,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -42,16 +43,19 @@
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [
-        ./flake/lib.nix
-        ./flake/overlays.nix
-        ./flake/packages.nix
-        ./flake/devshells.nix
-        ./flake/nixos.nix
-        ./flake/darwin.nix
-        ./flake/home-manager.nix
-        ./flake/topology.nix
-      ];
+      imports =
+        [
+          ./flake/lib.nix
+          ./flake/aspects.nix
+          ./flake/overlays.nix
+          ./flake/packages.nix
+          ./flake/devshells.nix
+          ./flake/nixos.nix
+          ./flake/darwin.nix
+          ./flake/home-manager.nix
+          ./flake/topology.nix
+        ]
+        ++ (inputs.import-tree ./aspects).imports;
 
       systems = [
         "x86_64-linux"

@@ -11,13 +11,16 @@
     ./hardware-configuration.nix
     ../common/nixos
     ../common/nixos/users/deatrin
-    ../common/optional/docker.nix
-    ../common/optional/jellyseerr.nix
-    ../common/optional/plex.nix
-    ../common/optional/reboot-required.nix
-    ../common/optional/salt.nix
-    ../common/optional/vscode-server.nix
   ];
+
+  dotfiles = {
+    docker.enable = true;
+    jellyfin.enable = true; # was pointing at a nonexistent jellyseerr.nix
+    plex.enable = true;
+    reboot-required.enable = true;
+    salt.enable = true;
+    vscode-server.enable = true;
+  };
 
   networking = {
     hostName = "nauvoo";
