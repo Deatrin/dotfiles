@@ -15,9 +15,10 @@
 #   OIDC client callback URL: https://karakeep.jennex.dev/api/auth/callback/custom
 #
 # AI tagging: points at nauvoo's existing Ollama container (see ollama.nix) —
-# joins ollama_network, so dotfiles.ollama.enable must also be true. Set
-# INFERENCE_TEXT_MODEL / INFERENCE_IMAGE_MODEL below to a model you've pulled
-# into Ollama (the defaults are OpenAI model names and won't exist there).
+# joins ollama_network, so dotfiles.ollama.enable must also be true. Uses
+# gemma4:e4b (already pulled, chat model) for text and moondream (small
+# vision model) for images — pull moondream before switching:
+#   sudo podman exec -it ollama ollama pull moondream
 {
   flake.modules.nixos.karakeep = {
     config,
@@ -122,10 +123,11 @@
               OAUTH_WELLKNOWN_URL = "https://pocket.jennex.dev/.well-known/openid-configuration";
               OAUTH_PROVIDER_NAME = "Pocket ID";
               OLLAMA_BASE_URL = "http://ollama:11434";
-              # These default to OpenAI model names — point them at a model
-              # you've pulled into Ollama (e.g. `ollama pull llama3.1`).
-              # INFERENCE_TEXT_MODEL = "llama3.1";
-              # INFERENCE_IMAGE_MODEL = "llama3.1";
+              # Text tagging reuses the model already pulled for chat/Open WebUI.
+              # Image tagging uses moondream — small vision model, low VRAM
+              # overhead alongside gemma4:e4b on the 2080's 8GB.
+              INFERENCE_TEXT_MODEL = "gemma4:e4b";
+              INFERENCE_IMAGE_MODEL = "moondream";
             };
             environmentFiles = ["/run/opnix/karakeep-env"];
             volumes = ["${volumes.karakeep-data.ref}:/data"];
