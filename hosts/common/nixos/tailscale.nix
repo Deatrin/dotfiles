@@ -24,6 +24,9 @@
     # We'll install the package to the system, enable the service, and set up some networking rules
     environment.systemPackages = with pkgs.unstable; [tailscale];
     services.tailscale.enable = true;
+    # Stable nixpkgs (nixos-26.05, locked 2026-01-08) has a broken vendorHash for
+    # tailscale-1.98.9's go-modules FOD; pkgs.unstable.tailscale builds fine.
+    services.tailscale.package = pkgs.unstable.tailscale;
     networking = {
       firewall = {
         checkReversePath = "loose";
@@ -51,7 +54,8 @@
       };
 
       # Run the following shell script for the job, passing the opnix-managed secret for the tailscale connection
-      script = with pkgs; ''
+      # tailscale bound to the same package as services.tailscale.package (see above) so this doesn't drift back to the broken stable build
+      script = let tailscale = config.services.tailscale.package; in with pkgs; ''
         set -eu
 
         # wait for tailscaled to settle
