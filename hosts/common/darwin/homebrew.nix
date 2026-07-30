@@ -60,7 +60,6 @@
     ];
     masApps = {
       "GrandPerspective" = 1111570163;
-      "Paprika Recipe Manager 3 " = 1303222628;
       "Spark Mail - AI Email & Inbox" = 6445813049;
       "Tailscale" = 1475387142;
       "Termius" = 1176074088;
