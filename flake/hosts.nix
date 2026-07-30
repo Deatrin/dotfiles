@@ -28,6 +28,11 @@
       user = "deatrin";
       modules = [../hosts/darwin/tynan];
     };
+    scirocco = {
+      system = "aarch64-darwin";
+      user = "deatrin";
+      modules = [../hosts/darwin/scirocco];
+    };
   };
 
   homeConfigs = {
@@ -50,6 +55,10 @@
     "deatrin@tynan" = {
       system = "aarch64-darwin";
       modules = [../home-manager/darwin/tynan.nix];
+    };
+    "deatrin@scirocco" = {
+      system = "aarch64-darwin";
+      modules = [../home-manager/darwin/scirocco.nix];
     };
   };
 }
