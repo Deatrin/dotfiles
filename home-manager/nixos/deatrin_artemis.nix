@@ -138,9 +138,5 @@ in {
     username = lib.mkDefault "deatrin";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "25.11";
-    packages = with pkgs; [
-      yubioath-flutter
-      yubikey-manager
-    ];
   };
 }

@@ -11,6 +11,7 @@
       user.email = "jennexa@gmail.com";
       pull.rebase = true;
       init.defaultBranch = "main";
+      gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
     };
 
     signing = {
@@ -23,4 +24,6 @@
         else "${pkgs._1password-gui}/bin/op-ssh-sign";
     };
   };
+
+  home.file.".ssh/allowed_signers".text = "jennexa@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdV7xPZWsMYD/bPGyrN+o+/5Fs72LmezBHnkenkYD5i\n";
 }

@@ -16,6 +16,7 @@
         if pkgs.stdenv.isDarwin
         then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
         else "${pkgs._1password-gui}/bin/op-ssh-sign";
+      signing.backends.ssh.allowed-signers = "~/.ssh/allowed_signers";
       git.sign-on-push = true;
     };
   };

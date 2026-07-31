@@ -96,7 +96,6 @@ All hosts automatically inherit common configurations:
 - Tailscale VPN
 - OpenSSH server
 - NFS client support
-- YubiKey/U2F support
 - Bluetooth and power management
 - Automatic system updates (optional per-host)
 

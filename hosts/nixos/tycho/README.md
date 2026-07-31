@@ -31,7 +31,7 @@ LUKS + LVM + BTRFS:
 | Tailscale | [hosts/common/nixos/tailscale.nix](../../common/nixos/tailscale.nix) |
 | OpenSSH | [hosts/common/nixos/openssh.nix](../../common/nixos/openssh.nix) |
 | op-connect-secrets | [hosts/nixos/tycho/secrets.nix](secrets.nix) |
-| YubiKey | [hosts/common/nixos/default.nix](../../common/nixos/default.nix) |
+| 1Password SSH agent | [home-manager/common/features/cli/git.nix](../../../home-manager/common/features/cli/git.nix) |
 
 ### Desktop
 
@@ -46,8 +46,7 @@ LUKS + LVM + BTRFS:
 
 - Kubernetes: k9s, kubectl
 - nix-ld-vscode for VS Code compatibility
-- YubiKey tools: yubioath-flutter, yubikey-manager
-- 1Password GUI + CLI
+- 1Password GUI + CLI (SSH agent for auth + commit signing)
 - Claude Code
 
 ## Secrets
@@ -128,12 +127,6 @@ op document get --vault kubernetes 'k3s.yaml' --out-file ~/.kube/config
 ```
 
 ## Troubleshooting
-
-### YubiKey GPG issues
-
-```bash
-gpg-connect-agent updatestartuptty /bye
-```
 
 ### Secrets not provisioning
 
