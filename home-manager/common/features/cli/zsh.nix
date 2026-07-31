@@ -38,9 +38,17 @@
         source ${config.home.homeDirectory}/.config/shell-secrets/env
       fi
 
-      # # SSH_AUTH_SOCK set to GPG to enable using gpgagent as the ssh agent.
-      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-      gpgconf --launch gpg-agent
+      # SSH_AUTH_SOCK: use 1Password's SSH agent if it's running on this host
+      # (macOS path checked first, falls back to the Linux path); left unset
+      # on hosts without the 1Password agent (e.g. headless servers).
+      _1p_ssh_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      if [ ! -S "$_1p_ssh_sock" ]; then
+        _1p_ssh_sock="$HOME/.1password/agent.sock"
+      fi
+      if [ -S "$_1p_ssh_sock" ]; then
+        export SSH_AUTH_SOCK="$_1p_ssh_sock"
+      fi
+      unset _1p_ssh_sock
 
       # Empty trigger means plain Tab activates fzf completion (not just **)
       export FZF_COMPLETION_TRIGGER=""

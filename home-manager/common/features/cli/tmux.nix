@@ -63,7 +63,6 @@
       setw -g automatic-rename-format '#{pane_current_command}'
       setw -g allow-rename off
       setw -g xterm-keys on
-      setenv -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
       set -g update-environment -r
       setw -g monitor-activity on
       set -g visual-activity off

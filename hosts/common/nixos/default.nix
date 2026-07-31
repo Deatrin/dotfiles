@@ -75,11 +75,6 @@
       value = "1048576";
     }
   ];
-  security.pam.services = {
-    sudo = {
-      u2fAuth = true;
-    };
-  };
 
   # Enable printing changes on nix build etc with nvd
   #system.activationScripts.report-changes = ''
@@ -98,20 +93,14 @@
     pkgs.unstable.gemini-cli
     pkgs.htop
     pkgs.toybox
-    pkgs.pam_u2f
     pkgs.pciutils
     pkgs.unstable.nh
     pkgs.unstable.cifs-utils
     pkgs.unstable.alacritty
     pkgs.unstable.koreader
   ];
-  services.pcscd.enable = true;
-  services.yubikey-agent.enable = true;
   programs.ssh.startAgent = false;
 
-  services.udev.packages = with pkgs; [
-    yubikey-personalization
-  ];
   services.upower.enable = true;
   services.blueman.enable = true;
   services.libinput.enable = true;

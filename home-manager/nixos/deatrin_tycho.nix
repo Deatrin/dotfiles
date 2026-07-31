@@ -40,8 +40,6 @@
     stateVersion = lib.mkDefault "23.11";
     packages = with pkgs; [
       nfs-utils
-      yubioath-flutter
-      yubikey-manager
     ];
   };
 }

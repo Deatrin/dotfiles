@@ -10,7 +10,6 @@
     ./eza.nix
     ./fzf.nix
     ./git.nix
-    ./gpg.nix
     ./jj.nix
     ./nh.nix
     ./nvf.nix
