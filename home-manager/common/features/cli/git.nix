@@ -25,5 +25,8 @@
     };
   };
 
-  home.file.".ssh/allowed_signers".text = "jennexa@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdV7xPZWsMYD/bPGyrN+o+/5Fs72LmezBHnkenkYD5i\n";
+  home.file.".ssh/allowed_signers".text = ''
+    jennexa@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdV7xPZWsMYD/bPGyrN+o+/5Fs72LmezBHnkenkYD5i
+    jennexa@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7UrapQ7YzEmhaI1pMWaqKMY8tAsX1z4a858Gn4/v+V
+  '';
 }

@@ -25,6 +25,12 @@
     forgejo-runner.enable = true;
   };
 
+  # Dedicated key for remote dev (tablet SSH client + headless commit signing) — see
+  # home-manager/nixos/deatrin_nauvoo.nix for the matching signing setup.
+  users.users.deatrin.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7UrapQ7YzEmhaI1pMWaqKMY8tAsX1z4a858Gn4/v+V nauvoo-remote"
+  ];
+
   networking = {
     hostName = "nauvoo";
     networkmanager.enable = true; # Easiest to use and most distros use this by default.
