@@ -22,8 +22,14 @@
     reboot-required.enable = true;
     salt.enable = true;
     vscode-server.enable = true;
+    code-server.enable = true;
     forgejo-runner.enable = true;
   };
+
+  # Fallback auth layer for code-server, in case a Tailscale peer reaches it
+  # directly rather than through Traefik. Generate with:
+  #   echo -n 'yourpassword' | nix run nixpkgs#libargon2 -- "$(head -c 20 /dev/random | base64)" -e
+  services.code-server.hashedPassword = "$argon2i$v=19$m=4096,t=3,p=1$bzUwTjA0d3pWaW1uZHBtRy9DZXhHbmo0ZTZVPQ$nZJF3QZyMQQy3/NnI76AX4IchpgARmaG8j0GtX8s2+E";
 
   # Dedicated key for remote dev (tablet SSH client + headless commit signing) — see
   # home-manager/nixos/deatrin_nauvoo.nix for the matching signing setup.

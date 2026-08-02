@@ -54,6 +54,15 @@
       hostname = "plex.jennex.dev";
       url = "http://10.1.30.100:32400";
     }
+    {
+      name = "code-server";
+      hostname = "code.jennex.dev";
+      url = "http://10.1.30.100:4444";
+      # Restricted to Tailscale peers, then gated by Pocket ID SSO on top —
+      # entrypoints 80/443 are open on the WAN like every other service, so
+      # both layers are needed to actually keep this off the public internet.
+      middlewares = ["tailscale-only" "forward-auth@docker"];
+    }
   ];
 
 

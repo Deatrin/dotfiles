@@ -77,14 +77,25 @@
       + "      entrypoints:\n"
       + "        - https\n"
       + "      tls: {}\n"
-      + "      service: ${svc.name}\n") svcs
+      + "      service: ${svc.name}\n"
+      + lib.optionalString (svc.middlewares != []) (
+        "      middlewares:\n"
+        + lib.concatMapStrings (m: "        - ${m}\n") svc.middlewares
+      )) svcs
     + "  services:\n"
     + lib.concatMapStrings (svc:
       "    ${svc.name}:\n"
       + "      loadBalancer:\n"
       + "        passHostHeader: false\n"
       + "        servers:\n"
-      + "          - url: \"${svc.url}\"\n") svcs;
+      + "          - url: \"${svc.url}\"\n") svcs
+    # Reusable middleware — restricts a router to Tailscale's CGNAT range (100.64.0.0/10),
+    # so a router can be gated to Tailscale even though entrypoints 80/443 are open on the WAN.
+    + "  middlewares:\n"
+    + "    tailscale-only:\n"
+    + "      ipAllowList:\n"
+    + "        sourceRange:\n"
+    + "          - \"100.64.0.0/10\"\n";
 
   # Always generate the file — empty when no external services, avoids missing file error
   externalServicesFile = pkgs.writeText "traefik-external.yml" (
@@ -107,6 +118,17 @@ in {
         url = lib.mkOption {
           type = lib.types.str;
           description = "Backend URL, e.g. https://10.1.20.10";
+        };
+        middlewares = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [];
+          description = ''
+            Traefik middleware references to gate this router, e.g.
+            [ "tailscale-only" "forward-auth@docker" ]. "tailscale-only" is a
+            built-in IPAllowList restricting to Tailscale's CGNAT range;
+            middlewares from the Docker provider (e.g. forward-auth) need the
+            "@docker" suffix.
+          '';
         };
       };
     });
