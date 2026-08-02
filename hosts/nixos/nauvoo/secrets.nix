@@ -8,6 +8,13 @@
     tokenFile = "/etc/op-connect-token";
     users = ["deatrin"];
     secrets = {
+      nauvooRemoteKey = {
+        path = "/home/deatrin/.ssh/nauvoo_remote_ed25519";
+        reference = "op://nix_secrets/nauvoo_key/private key";
+        owner = "deatrin";
+        group = "users";
+        mode = "0600";
+      };
       tailscaleKey = {
         path = "/run/opnix/tailscale-key";
         reference = "op://nix_secrets/tailscale-key/key";

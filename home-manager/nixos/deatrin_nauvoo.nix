@@ -24,21 +24,13 @@
 
   # nauvoo is headless, so there's no 1Password GUI/agent to sign commits or
   # authenticate with — a dedicated key (not the shared 1Password-vaulted
-  # identity key) is delivered here instead, held in a plain ssh-agent.
+  # identity key) is held in a plain ssh-agent instead. The private key itself
+  # is delivered via services.op-connect-secrets in hosts/nixos/nauvoo/secrets.nix —
+  # nauvoo doesn't run the real opnix (it talks to a local Connect server via a
+  # custom module instead), so home-manager's programs.onepassword-secrets
+  # (the real opnix client) can't fetch it; only the system-level module can.
   # Public half lives in hosts/nixos/nauvoo/default.nix (authorizedKeys) and
   # home-manager/common/features/cli/git.nix (allowed_signers).
-  programs.onepassword-secrets = {
-    enable = true;
-    # Matches services.onepassword-secrets.tokenFile in hosts/nixos/nauvoo/secrets.nix —
-    # nauvoo's system token isn't at the module's default of /etc/opnix-token.
-    tokenFile = "/etc/op-connect-token";
-    secrets.nauvooRemoteKey = {
-      path = ".ssh/nauvoo_remote_ed25519";
-      reference = "op://nix_secrets/nauvoo_key/private key";
-      mode = "0600";
-    };
-  };
-
   services.ssh-agent.enable = true;
 
   programs.git.signing = {
