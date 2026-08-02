@@ -58,10 +58,13 @@
       name = "code-server";
       hostname = "code.jennex.dev";
       url = "http://10.1.30.100:4444";
-      # Restricted to Tailscale peers, then gated by Pocket ID SSO on top —
-      # entrypoints 80/443 are open on the WAN like every other service, so
-      # both layers are needed to actually keep this off the public internet.
-      middlewares = ["tailscale-only" "forward-auth@docker"];
+      # "tailscale-only" IPAllowList dropped 2026-08-02 — Podman's netavark bridge
+      # doesn't preserve the real client source IP on published ports, so Traefik
+      # never actually saw a genuine Tailscale-range address and rejected everything
+      # unconditionally, LAN and Tailscale clients alike. Gated by Pocket ID instead;
+      # code.jennex.dev already only resolves to nauvoo's private LAN IP like every
+      # other service here, so it isn't reachable from the public internet anyway.
+      middlewares = ["forward-auth@docker"];
     }
   ];
 
