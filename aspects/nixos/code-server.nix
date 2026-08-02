@@ -1,8 +1,8 @@
 # Browser-based VS Code, running as the deatrin user so it sees the real
-# home directory, dotfiles, and dev environment. Not routed to the internet —
-# see hosts/nixos/nauvoo/containers.nix for the Traefik wiring (Tailscale-only
-# IP allowlist + Pocket ID forward-auth), and services.code-server.hashedPassword
-# set per-host as a fallback layer for anyone already inside the Tailscale range.
+# home directory, dotfiles, and dev environment. See hosts/nixos/nauvoo/containers.nix
+# for the Traefik wiring (Pocket ID forward-auth), and services.code-server.hashedPassword
+# set per-host as a fallback auth layer for anyone reaching the port directly.
+# *.jennex.dev only resolves to nauvoo's private LAN IP, same as every other service.
 {
   flake.modules.nixos.code-server = {
     config,
@@ -33,6 +33,12 @@
       # override on environment.PATH conflicts with NixOS's own systemd default, so
       # extend it via the mergeable `path` list instead.
       systemd.services.code-server.path = ["/home/deatrin/.nix-profile/bin"];
+
+      # code-server's module has no openFirewall option (unlike services.plex, which
+      # is why Plex's identical externalServices setup already worked) — without this,
+      # the Traefik container's connection to the host's own LAN IP gets silently
+      # dropped, producing a Gateway Timeout rather than reaching code-server at all.
+      networking.firewall.allowedTCPPorts = [4444];
     };
   };
 }
