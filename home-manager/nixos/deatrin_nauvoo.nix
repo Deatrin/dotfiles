@@ -29,6 +29,9 @@
   # home-manager/common/features/cli/git.nix (allowed_signers).
   programs.onepassword-secrets = {
     enable = true;
+    # Matches services.onepassword-secrets.tokenFile in hosts/nixos/nauvoo/secrets.nix —
+    # nauvoo's system token isn't at the module's default of /etc/opnix-token.
+    tokenFile = "/etc/op-connect-token";
     secrets.nauvooRemoteKey = {
       path = ".ssh/nauvoo_remote_ed25519";
       reference = "op://nix_secrets/nauvoo_key/private key";
