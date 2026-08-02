@@ -130,6 +130,11 @@
               href: https://10.1.20.15
               icon: idrac.png
               description: TrueNAS Server iDRAC
+      - Dev & Games:
+          - Code Server:
+              href: https://code.jennex.dev
+              icon: code-server.png
+              description: Browser-based VS Code (Tailscale + SSO only)
     '';
 
     dockerYaml = pkgs.writeText "homepage-docker.yaml" ''
