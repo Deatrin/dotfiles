@@ -119,6 +119,8 @@
     gamescope
     unstable.lutris
     heroic
+    unstable.clonehero
+    unstable.yarg
     unstable.vesktop
     spotify
     rclone
