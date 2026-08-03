@@ -41,6 +41,7 @@
     ouro-go.enable = true;
     idrac.enable = true;
     karakeep.enable = true;
+    trek.enable = true;
     # ddns.enable stays false — secrets not wired up yet (see aspects/nixos/containers/ddns.nix)
   };
 

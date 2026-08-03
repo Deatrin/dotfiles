@@ -594,6 +594,14 @@
         mode = "0600";
         restartServices = ["mealie.service"];
       };
+      trekEnv = {
+        path = "/run/opnix/trek-env";
+        reference = "op://nix_secrets/trek/env";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["trek.service"];
+      };
 
       idracHost1 = {
         path = "/run/opnix/idrac-host-1";
