@@ -24,6 +24,8 @@
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
+          Restart = "on-failure";
+          RestartSec = "5s";
           ExecStart = pkgs.writeShellScript "forgejo-registry-login" ''
             ${pkgs.podman}/bin/podman login forgejo.jennex.dev \
               -u deatrin \
@@ -34,8 +36,12 @@
 
       virtualisation.quadlet.containers.ouro = {
         unitConfig = {
+          # Registry login is only needed to pull the image (autoUpdate handles that
+          # separately) - the container starts fine from the local cached image even
+          # if the login races DNS/network at boot, so only order after it, don't
+          # hard-require it.
           After = ["opnix-secrets.service" "ouro-registry-login.service"];
-          Requires = ["opnix-secrets.service" "ouro-registry-login.service"];
+          Requires = ["opnix-secrets.service"];
         };
         containerConfig = {
           image = "forgejo.jennex.dev/deatrin/ouro:latest";
