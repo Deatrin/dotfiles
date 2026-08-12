@@ -210,6 +210,7 @@
               "${volumes.arr-lidarr.ref}:/config"
               "/storage/media/music/lidarr:/music"
               "/storage/media/downloads/sabnzbd:/downloads"
+              "/storage/media/downloads/qbittorrent:/downloads/qbittorrent"
             ];
             labels = [
               "homepage.group=Downloads"
@@ -237,6 +238,7 @@
               "${volumes.arr-radarr.ref}:/config"
               "/storage/media/movies:/movies"
               "/storage/media/downloads/sabnzbd:/downloads"
+              "/storage/media/downloads/qbittorrent:/downloads/qbittorrent"
             ];
             labels = [
               "homepage.group=Downloads"
@@ -264,6 +266,7 @@
               "${volumes.arr-sonarr.ref}:/config"
               "/storage/media/tv:/tv"
               "/storage/media/downloads/sabnzbd:/downloads"
+              "/storage/media/downloads/qbittorrent:/downloads/qbittorrent"
             ];
             labels = [
               "homepage.group=Downloads"

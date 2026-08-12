@@ -653,6 +653,15 @@
         restartServices = ["recyclarr-env-setup.service" "recyclarr.service"];
       };
 
+      seedboxWireguardConf = {
+        path = "/run/opnix/seedbox-wireguard-conf";
+        reference = "op://nix_secrets/seedbox/conf";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["seedbox-env-setup.service" "gluetun.service"];
+      };
+
       ouroEnv = {
         path = "/run/opnix/ouro-env";
         reference = "op://nix_secrets/ourobantz/env";

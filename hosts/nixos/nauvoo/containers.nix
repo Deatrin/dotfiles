@@ -43,6 +43,7 @@
     karakeep.enable = true;
     trek.enable = true;
     kubekosh.enable = true;
+    seedbox.enable = true;
     # ddns.enable stays false — secrets not wired up yet (see aspects/nixos/containers/ddns.nix)
   };
 
