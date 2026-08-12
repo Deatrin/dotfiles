@@ -50,8 +50,8 @@
             name = "seedbox-env-setup";
             text = ''
               conf=/run/opnix/seedbox-wireguard-conf
-              private_key=$(grep -m1 '^PrivateKey' "$conf" | sed -E 's/^PrivateKey\s*=\s*//')
-              address=$(grep -m1 '^Address' "$conf" | sed -E 's/^Address\s*=\s*//' | tr -d '[:space:]')
+              private_key=$(grep -m1 -E '^[[:space:]]*PrivateKey' "$conf" | sed -E 's/^[[:space:]]*PrivateKey[[:space:]]*=[[:space:]]*//' | tr -d '[:space:]')
+              address=$(grep -m1 -E '^[[:space:]]*Address' "$conf" | sed -E 's/^[[:space:]]*Address[[:space:]]*=[[:space:]]*//' | tr -d '[:space:]')
               {
                 printf 'WIREGUARD_PRIVATE_KEY=%s\n' "$private_key"
                 printf 'WIREGUARD_ADDRESSES=%s\n'   "$address"
