@@ -19,7 +19,6 @@
       "aqua" # Declarative cli version management
       "cask"
       "mas" # Mac App Store CLI (required for masApps)
-      "gemini-cli" # you already know gemini
       "jj" # jujutsu
       "pyenv" # Python version management
       "sops" # Secrets
@@ -29,6 +28,7 @@
       "1password" # GUI 1pass
       "1password-cli" # need to install CLI via brew to make biometric unlock work with GUI app
       "aerospace" # i3 like window manager
+      "antigravity-cli" # gemini-cli's replacement
       "bambu-studio" # silcer for 3d printer
       "bartender" # cleans up menu bar
       "brave-browser" # perfered browser

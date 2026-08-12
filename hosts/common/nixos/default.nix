@@ -90,7 +90,7 @@
   # always install these for all users on nixos systems
   environment.systemPackages = [
     pkgs.git
-    pkgs.unstable.gemini-cli
+    pkgs.unstable.antigravity-cli
     pkgs.htop
     pkgs.toybox
     pkgs.pciutils

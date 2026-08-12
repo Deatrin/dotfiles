@@ -661,6 +661,14 @@
         mode = "0600";
         restartServices = ["seedbox-env-setup.service" "gluetun.service"];
       };
+      seedboxMouseholePassword = {
+        path = "/run/opnix/seedbox-mousehole-password";
+        reference = "op://nix_secrets/seedbox/mousehole_password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["seedbox-env-setup.service" "mousehole.service"];
+      };
 
       ouroEnv = {
         path = "/run/opnix/ouro-env";
