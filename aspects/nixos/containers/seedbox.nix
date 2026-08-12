@@ -17,8 +17,9 @@
 # Mullvad VPN gateway and kill switch. qbittorrent and mousehole have no
 # network of their own: they ride gluetun's network namespace
 # (--network=container:gluetun), so if the tunnel drops, both lose all
-# connectivity outright. Because of that, Traefik routing labels live on
-# gluetun (pointing at qbittorrent's WebUI port), not on qbittorrent itself.
+# connectivity outright. Because of that, Traefik routing labels for both
+# live on gluetun (pointing at their respective WebUI ports), not on
+# qbittorrent/mousehole themselves.
 #
 # qBittorrent is not auto-registered as a download client — add it manually
 # in each *arr's Settings > Download Clients (host: qbittorrent, port: 8080).
@@ -109,6 +110,11 @@
               "traefik.http.routers.qbittorrent-secure.rule=Host(`qbittorrent.jennex.dev`)"
               "traefik.http.routers.qbittorrent-secure.tls=true"
               "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
+              "traefik.http.routers.mousehole.rule=Host(`mousehole.jennex.dev`)"
+              "traefik.http.routers.mousehole-secure.entrypoints=https"
+              "traefik.http.routers.mousehole-secure.rule=Host(`mousehole.jennex.dev`)"
+              "traefik.http.routers.mousehole-secure.tls=true"
+              "traefik.http.services.mousehole.loadbalancer.server.port=5010"
             ];
           };
         };
