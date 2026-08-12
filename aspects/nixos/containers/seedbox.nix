@@ -112,8 +112,8 @@
             environments = {
               VPN_SERVICE_PROVIDER = "protonvpn";
               VPN_TYPE = "wireguard";
-              # Adjust to taste — see https://protonvpn.com/vpn-servers
-              SERVER_COUNTRIES = "USA";
+              # Adjust to taste — see https://protonvpn.com/vpn-servers (full country names, not codes)
+              SERVER_COUNTRIES = "United States";
               # Requires "NAT-PMP (Port Forwarding)" enabled when the .conf was generated
               VPN_PORT_FORWARDING = "on";
               VPN_PORT_FORWARDING_UP_COMMAND = "/bin/sh /scripts/qbt-port-sync.sh {{PORT}} {{VPN_INTERFACE}}";
@@ -151,7 +151,10 @@
         containers.qbittorrent = {
           unitConfig = {
             After = ["gluetun.service"];
-            Requires = ["gluetun.service"];
+            # BindsTo (not just Requires): qbittorrent rides gluetun's netns, so it
+            # must be torn down whenever gluetun stops/restarts, or podman refuses
+            # to recreate gluetun with "dependent containers must be removed first"
+            BindsTo = ["gluetun.service"];
           };
           containerConfig = {
             image = "lscr.io/linuxserver/qbittorrent:latest";
@@ -173,7 +176,9 @@
         containers.mousehole = {
           unitConfig = {
             After = ["gluetun.service" "seedbox-env-setup.service"];
-            Requires = ["gluetun.service" "seedbox-env-setup.service"];
+            Requires = ["seedbox-env-setup.service"];
+            # BindsTo, not Requires, for gluetun — see qbittorrent for why
+            BindsTo = ["gluetun.service"];
           };
           containerConfig = {
             image = "docker.io/tmmrtn/mousehole:latest";
