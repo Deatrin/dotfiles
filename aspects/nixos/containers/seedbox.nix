@@ -78,8 +78,8 @@
             # nauvoo's LAN IP for inbound peer connections. Must match the
             # port configured in qBittorrent's own Connection settings.
             publishPorts = [
-              "0.0.0.0:52966:52966/tcp"
-              "0.0.0.0:52966:52966/udp"
+              "0.0.0.0:3880:3880/tcp"
+              "0.0.0.0:3880:3880/udp"
             ];
             volumes = [
               "${volumes.seedbox-qbittorrent.ref}:/config"

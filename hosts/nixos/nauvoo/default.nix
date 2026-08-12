@@ -52,8 +52,8 @@
 
   # Open TFTP port for netboot.xyz PXE booting, plus qBittorrent's peer port
   # (see aspects/nixos/containers/seedbox.nix publishPorts)
-  networking.firewall.allowedTCPPorts = [52966];
-  networking.firewall.allowedUDPPorts = [69 52966];
+  networking.firewall.allowedTCPPorts = [3880];
+  networking.firewall.allowedUDPPorts = [69 3880];
 
   # Change up the ssh port to make room for forgejo
   services.openssh = {
