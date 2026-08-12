@@ -134,15 +134,22 @@
               "homepage.href=https://qbittorrent.jennex.dev"
               "homepage.description=Torrent client (Proton VPN)"
               "traefik.enable=true"
+              # gluetun backs two services (qbittorrent, mousehole), so every
+              # router needs an explicit .service= label — Traefik can't
+              # auto-link a router when a container exposes more than one
               "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.jennex.dev`)"
+              "traefik.http.routers.qbittorrent.service=qbittorrent"
               "traefik.http.routers.qbittorrent-secure.entrypoints=https"
               "traefik.http.routers.qbittorrent-secure.rule=Host(`qbittorrent.jennex.dev`)"
               "traefik.http.routers.qbittorrent-secure.tls=true"
+              "traefik.http.routers.qbittorrent-secure.service=qbittorrent"
               "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
               "traefik.http.routers.mousehole.rule=Host(`mousehole.jennex.dev`)"
+              "traefik.http.routers.mousehole.service=mousehole"
               "traefik.http.routers.mousehole-secure.entrypoints=https"
               "traefik.http.routers.mousehole-secure.rule=Host(`mousehole.jennex.dev`)"
               "traefik.http.routers.mousehole-secure.tls=true"
+              "traefik.http.routers.mousehole-secure.service=mousehole"
               "traefik.http.services.mousehole.loadbalancer.server.port=5010"
             ];
           };
