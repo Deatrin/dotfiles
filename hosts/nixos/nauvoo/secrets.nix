@@ -653,14 +653,17 @@
         restartServices = ["recyclarr-env-setup.service" "recyclarr.service"];
       };
 
-      seedboxWireguardConf = {
-        path = "/run/opnix/seedbox-wireguard-conf";
-        reference = "op://nix_secrets/seedbox/conf";
-        owner = "root";
-        group = "root";
-        mode = "0600";
-        restartServices = ["seedbox-env-setup.service" "gluetun.service"];
-      };
+      # seedboxWireguardConf disabled — VPN pulled out of seedbox.nix for now
+      # (2026-08-12, port-forwarding still showed firewalled). Re-enable if
+      # resuming the gluetun/Proton VPN setup:
+      # seedboxWireguardConf = {
+      #   path = "/run/opnix/seedbox-wireguard-conf";
+      #   reference = "op://nix_secrets/seedbox/conf";
+      #   owner = "root";
+      #   group = "root";
+      #   mode = "0600";
+      #   restartServices = ["seedbox-env-setup.service" "gluetun.service"];
+      # };
       seedboxMouseholePassword = {
         path = "/run/opnix/seedbox-mousehole-password";
         reference = "op://nix_secrets/seedbox/mousehole_password";
