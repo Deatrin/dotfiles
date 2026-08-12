@@ -180,6 +180,10 @@
             autoUpdate = "registry";
             environments = {
               TZ = "America/Los_Angeles";
+              # Traefik forwards Host/Origin as mousehole.jennex.dev — mousehole
+              # 404s reverse-proxied requests unless both are explicitly allowed
+              MOUSEHOLE_ALLOWED_HOSTS = "localhost,127.0.0.1,mousehole.jennex.dev";
+              MOUSEHOLE_ALLOWED_ORIGINS = "http://localhost:5010,http://127.0.0.1:5010,https://mousehole.jennex.dev";
             };
             environmentFiles = ["/run/opnix/seedbox-mousehole-env"];
             volumes = ["${volumes.seedbox-mousehole.ref}:/var/lib/mousehole"];
