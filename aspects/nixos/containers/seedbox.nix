@@ -74,6 +74,13 @@
               TZ = "America/Los_Angeles";
               WEBUI_PORT = "8080";
             };
+            # BitTorrent peer port — forward this on your router (TCP+UDP) to
+            # nauvoo's LAN IP for inbound peer connections. Must match the
+            # port configured in qBittorrent's own Connection settings.
+            publishPorts = [
+              "0.0.0.0:52966:52966/tcp"
+              "0.0.0.0:52966:52966/udp"
+            ];
             volumes = [
               "${volumes.seedbox-qbittorrent.ref}:/config"
               "/storage/media/downloads/qbittorrent:/downloads"
