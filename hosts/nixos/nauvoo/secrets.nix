@@ -673,6 +673,15 @@
         restartServices = ["seedbox-env-setup.service" "mousehole.service"];
       };
 
+      filebrowserAdminPassword = {
+        path = "/run/opnix/filebrowser-admin-password";
+        reference = "op://nix_secrets/filebrowser/admin_password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["filebrowser-config-setup.service" "filebrowser.service"];
+      };
+
       ouroEnv = {
         path = "/run/opnix/ouro-env";
         reference = "op://nix_secrets/ourobantz/env";
