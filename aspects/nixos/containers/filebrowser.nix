@@ -23,13 +23,12 @@
 
     configYaml = pkgs.writeText "filebrowser-config.yaml" ''
       server:
+        port: 8080
         sources:
           - path: "/music"
             name: "Music"
             config:
               defaultEnabled: true
-      http:
-        port: 8080
       auth:
         adminUsername: "admin"
         adminPassword: "__ADMIN_PASSWORD__"
