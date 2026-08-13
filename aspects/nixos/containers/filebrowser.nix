@@ -30,6 +30,8 @@
           environments = {
             FB_DATABASE = "/config/database.db";
             FB_ROOT = "/srv";
+            # Non-root (user = 1000:1000 below) can't bind port 80.
+            FB_PORT = "8080";
           };
           volumes = [
             "/var/lib/filebrowser:/config"
@@ -46,7 +48,7 @@
             "traefik.http.routers.filebrowser-secure.entrypoints=https"
             "traefik.http.routers.filebrowser-secure.rule=Host(`filebrowser.jennex.dev`)"
             "traefik.http.routers.filebrowser-secure.tls=true"
-            "traefik.http.services.filebrowser.loadbalancer.server.port=80"
+            "traefik.http.services.filebrowser.loadbalancer.server.port=8080"
           ];
         };
       };
