@@ -1,7 +1,7 @@
 # Nauvoo container config — every container is a toggle under `dotfiles.<name>.enable`
 # (see aspects/nixos/containers/). Only foundational, always-on infra is imported
 # directly below; everything else is enabled via the dotfiles block.
-{ ... }: {
+{...}: {
   imports = [
     ../../common/optional/quadlet.nix
     ../../common/optional/containers/networks.nix
@@ -44,7 +44,7 @@
     trek.enable = true;
     kubekosh.enable = true;
     seedbox.enable = true;
-    filebrowser.enable = true;
+    filebrowser.enable = false; # only really need this on ocassion so turning off until needed again
     # ddns.enable stays false — secrets not wired up yet (see aspects/nixos/containers/ddns.nix)
   };
 
@@ -71,7 +71,6 @@
       middlewares = ["forward-auth@docker"];
     }
   ];
-
 
   # Forgejo settings
   services.forgejo-quadlet.sshPort = 22;
