@@ -209,6 +209,7 @@
             volumes = [
               "${volumes.arr-lidarr.ref}:/config"
               "/storage/media/music/lidarr:/music"
+              "/storage/media/music/music:main_music"
               "/storage/media/downloads/sabnzbd:/downloads"
               "/storage/media/downloads/qbittorrent:/downloads/qbittorrent"
             ];
