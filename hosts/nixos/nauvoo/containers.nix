@@ -44,7 +44,7 @@
     trek.enable = true;
     kubekosh.enable = true;
     seedbox.enable = true;
-    filebrowser.enable = false; # only really need this on ocassion so turning off until needed again
+    filebrowser.enable = true; # only really need this on ocassion so turning off until needed again
     # ddns.enable stays false — secrets not wired up yet (see aspects/nixos/containers/ddns.nix)
   };
 
