@@ -111,6 +111,18 @@
         exit 1
       }
 
+      # Skip the switch if this exact config is already running — e.g. someone
+      # ran `nh os switch` manually for this commit. last-applied-rev only gets
+      # written by this script, so without this check a manual switch would go
+      # unnoticed and get redundantly re-applied on the next poll. The dry-activate
+      # above already built the toplevel, so this is just a cached path lookup.
+      NEW_SYSTEM=$(nix path-info "$FLAKE_REF#nixosConfigurations.$FLAKE_ATTR.config.system.build.toplevel" 2>/dev/null || true)
+      CURRENT_SYSTEM=$(readlink -f /run/current-system)
+      if [[ -n "$NEW_SYSTEM" && "$NEW_SYSTEM" == "$CURRENT_SYSTEM" ]]; then
+        echo "$REMOTE_REV" > "$LAST_APPLIED"
+        exit 0
+      fi
+
       # Save rev before launching apply so re-runs are idempotent if we get restarted
       echo "$REMOTE_REV" > "$LAST_APPLIED"
 

@@ -76,7 +76,7 @@
           user = "1000:1000";
           volumes = [
             "/var/lib/filebrowser/data:/home/filebrowser/data"
-            "/storage/media/music:/music"
+            "/storage:/music"
           ];
           labels = [
             "homepage.group=Media"
