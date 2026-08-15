@@ -10,8 +10,8 @@
     options.dotfiles.moonlight-qt.enable = lib.mkEnableOption "Moonlight game streaming client";
 
     config = lib.mkIf cfg.enable {
-      environment.systemPackages = with pkgs.unstable; [
-        moonlight-qt
+      environment.systemPackages = [
+        (pkgs.unstable.moonlight-qt.override { ffmpeg = pkgs.unstable.ffmpeg_7; })
       ];
     };
   };
