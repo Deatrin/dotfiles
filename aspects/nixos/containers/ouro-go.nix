@@ -41,6 +41,7 @@
           # if the login races DNS/network at boot, so only order after it, don't
           # hard-require it.
           After = ["opnix-secrets.service" "ouro-registry-login.service"];
+          Wants = ["ouro-registry-login.service"];
           Requires = ["opnix-secrets.service"];
         };
         containerConfig = {
