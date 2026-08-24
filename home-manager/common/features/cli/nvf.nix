@@ -160,6 +160,10 @@
         lualine = {
           enable = true;
           theme = "tokyonight";
+          integrations.breadcrumbs = {
+            nvim-navic.enable = true;
+            navbuddy.enable = true;
+          };
         };
       };
 
@@ -225,10 +229,6 @@
         noice.enable = true;
         colorizer.enable = true;
         illuminate.enable = true;
-        breadcrumbs = {
-          enable = true;
-          navbuddy.enable = true;
-        };
       };
 
       extraPlugins = with pkgs.unstable.vimPlugins; {
