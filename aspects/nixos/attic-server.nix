@@ -131,6 +131,7 @@
         text = ''
           set -f # disable globbing
           export IFS=' '
+          # shellcheck disable=SC2086 # intentional word-splitting of OUT_PATHS
           exec attic push nauvoo-cache $OUT_PATHS
         '';
       });
