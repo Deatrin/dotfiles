@@ -131,8 +131,10 @@
         text = ''
           set -f # disable globbing
           export IFS=' '
+          # post-build-hook runs with a minimal PATH, so call attic by its full
+          # store path rather than relying on it being findable.
           # shellcheck disable=SC2086 # intentional word-splitting of OUT_PATHS
-          exec attic push nauvoo-cache $OUT_PATHS
+          exec ${lib.getExe inputs.attic.packages.${pkgs.system}.attic-client} push nauvoo-cache $OUT_PATHS
         '';
       });
     };
