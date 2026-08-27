@@ -22,6 +22,7 @@
     xwayland.enable = true;
     greetd.enable = true;
     moonlight-qt.enable = true;
+    attic-client.enable = true;
   };
 
   networking = {

@@ -740,6 +740,14 @@
         mode = "0600";
         restartServices = ["attic-server-env-setup.service" "atticd.service"];
       };
+      atticToken = {
+        path = "/run/opnix/attic-token";
+        reference = "op://nix_secrets/attic/nauvoo_token";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-netrc-setup.service"];
+      };
 
       # TODO: Fill in correct op:// references before enabling DDNS
       # ddnsApiKey = {

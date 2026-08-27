@@ -37,6 +37,14 @@
         group = "root";
         mode = "0600";
       };
+      atticToken = {
+        path = "/run/opnix/attic-token";
+        reference = "op://nix_secrets/attic/tycho_token";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-netrc-setup.service"];
+      };
     };
   };
 }

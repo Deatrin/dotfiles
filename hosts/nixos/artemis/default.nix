@@ -22,6 +22,7 @@
     reboot-required.enable = true;
     xwayland.enable = true;
     greetd.enable = true;
+    attic-client.enable = true;
   };
 
   boot.loader = {

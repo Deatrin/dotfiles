@@ -1,7 +1,6 @@
-# Self-hosted Nix binary cache (Attic). nauvoo runs the server and is the only
-# pusher; other machines are pull-only substituter clients once wired up in
-# hosts/common/nixos/nix.nix (added after the first deploy, once the real
-# trusted-public-key and per-machine pull tokens exist).
+# Self-hosted Nix binary cache (Attic). nauvoo runs the server, pushes its own
+# builds to it (post-build-hook below), and is otherwise the only pusher —
+# other machines just pull, via the attic-client.nix aspect.
 {
   flake.modules.nixos.attic-server = {
     config,
@@ -11,6 +10,15 @@
     ...
   }: let
     cfg = config.dotfiles.attic-server;
+    # Not secret — only references the opnix-delivered token *path* (the
+    # attic-client aspect's atticToken secret), not the token itself.
+    pushConfigToml = pkgs.writeText "attic-client-config.toml" ''
+      default-server = "nauvoo"
+
+      [servers.nauvoo]
+      endpoint = "https://cache.jennex.dev/"
+      token-file = "/run/opnix/attic-token"
+    '';
   in {
     options.dotfiles.attic-server.enable = lib.mkEnableOption "self-hosted Attic Nix binary cache server";
 
@@ -25,14 +33,6 @@
         group = "atticd";
       };
       users.groups.atticd = {};
-
-      # Only one level under /ssdstorage — systemd-tmpfiles refuses to walk a
-      # second level deeper (/ssdstorage/attic/storage) because /ssdstorage
-      # itself is owned by deatrin, not root, and it treats the deatrin→atticd
-      # ownership change as an unsafe path transition once you nest past it.
-      systemd.tmpfiles.rules = [
-        "d /ssdstorage/attic 0750 atticd atticd -"
-      ];
 
       systemd.services.atticd.serviceConfig.DynamicUser = lib.mkForce false;
 
@@ -106,6 +106,34 @@
         inputs.attic.packages.${pkgs.system}.attic-client
         inputs.attic.packages.${pkgs.system}.attic-server
       ];
+
+      # Auto-push every local build to the cache. post-build-hook runs as the
+      # nix-daemon's own user (root) — pin HOME so the attic CLI's XDG config
+      # lookup (~/.config/attic/config.toml) resolves deterministically rather
+      # than depending on whatever environment nix-daemon.service happens to have.
+      systemd.services.nix-daemon.environment.HOME = "/root";
+
+      # /ssdstorage/attic is only one level under /ssdstorage — systemd-tmpfiles
+      # refuses to walk a second level deeper (e.g. /ssdstorage/attic/storage)
+      # because /ssdstorage itself is owned by deatrin, not root, and it treats
+      # the deatrin→atticd ownership change as an unsafe path transition once
+      # you nest past it. That's also why storage.path above is /ssdstorage/attic
+      # directly rather than a storage/ subdirectory under it.
+      systemd.tmpfiles.rules = [
+        "d /ssdstorage/attic 0750 atticd atticd -"
+        "d /root/.config 0700 root root -"
+        "d /root/.config/attic 0700 root root -"
+        "L+ /root/.config/attic/config.toml - - - - ${pushConfigToml}"
+      ];
+
+      nix.settings.post-build-hook = lib.getExe (pkgs.writeShellApplication {
+        name = "attic-post-build-hook";
+        text = ''
+          set -f # disable globbing
+          export IFS=' '
+          exec attic push nauvoo-cache $OUT_PATHS
+        '';
+      });
     };
   };
 }
