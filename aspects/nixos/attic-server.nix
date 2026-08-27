@@ -99,6 +99,13 @@
       };
 
       networking.firewall.allowedTCPPorts = [8081];
+
+      # attic (client CLI, for login/push/cache admin) and atticd-atticadm
+      # (token minting) — the atticd module doesn't put either on PATH itself.
+      environment.systemPackages = [
+        inputs.attic.packages.${pkgs.system}.attic-client
+        inputs.attic.packages.${pkgs.system}.attic-server
+      ];
     };
   };
 }
