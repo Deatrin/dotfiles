@@ -20,6 +20,10 @@
         reference = "op://nix_secrets/atuin/username";
         mode = "0600";
       };
+      atticNetrc = {
+        reference = "op://nix_secrets/attic/tynan_netrc";
+        mode = "0600";
+      };
     };
   };
 }

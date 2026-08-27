@@ -159,7 +159,7 @@
       statusline = {
         lualine = {
           enable = true;
-          theme = "tokyonight";
+          setupOpts.options.theme = "tokyonight";
           integrations.breadcrumbs = {
             nvim-navic.enable = true;
             navbuddy.enable = true;

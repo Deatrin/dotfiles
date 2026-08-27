@@ -58,8 +58,8 @@
           ./flake/darwin.nix
           ./flake/home-manager.nix
           ./flake/topology.nix
-        ]
-        ++ (inputs.import-tree ./aspects).imports;
+          (inputs.import-tree ./aspects)
+        ];
 
       systems = [
         "x86_64-linux"
