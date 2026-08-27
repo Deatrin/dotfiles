@@ -70,6 +70,13 @@
       # other service here, so it isn't reachable from the public internet anyway.
       middlewares = ["forward-auth@docker"];
     }
+    {
+      # No Pocket ID gating — the Nix protocol can't do a browser OAuth flow.
+      # Security comes from Attic's own bearer tokens (see attic-server.nix).
+      name = "attic";
+      hostname = "cache.jennex.dev";
+      url = "http://10.1.30.100:8081";
+    }
   ];
 
   # Forgejo settings

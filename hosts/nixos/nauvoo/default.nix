@@ -24,6 +24,7 @@
     vscode-server.enable = true;
     code-server.enable = true;
     forgejo-runner.enable = true;
+    attic-server.enable = true;
   };
 
   # Fallback auth layer for code-server, in case a Tailscale peer reaches it

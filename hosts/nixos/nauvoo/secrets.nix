@@ -732,6 +732,15 @@
         restartServices = ["karakeep-env-setup.service" "karakeep.service"];
       };
 
+      atticServerTokenSecret = {
+        path = "/run/opnix/attic-server-secret";
+        reference = "op://nix_secrets/attic/ATTIC_SERVER_TOKEN_RS256_SECRET_BASE64";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-server-env-setup.service" "atticd.service"];
+      };
+
       # TODO: Fill in correct op:// references before enabling DDNS
       # ddnsApiKey = {
       #   path = "/run/opnix/ddns-api-key";

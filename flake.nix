@@ -34,6 +34,10 @@
     nvf.url = "github:notashelf/nvf";
     nix-topology.url = "github:oddlama/nix-topology";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+    attic = {
+      url = "github:zhaofengli/attic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     apple-silicon = {
       url = "github:nix-community/nixos-apple-silicon";
