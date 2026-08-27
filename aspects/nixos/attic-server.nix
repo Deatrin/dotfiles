@@ -26,9 +26,12 @@
       };
       users.groups.atticd = {};
 
+      # Only one level under /ssdstorage — systemd-tmpfiles refuses to walk a
+      # second level deeper (/ssdstorage/attic/storage) because /ssdstorage
+      # itself is owned by deatrin, not root, and it treats the deatrin→atticd
+      # ownership change as an unsafe path transition once you nest past it.
       systemd.tmpfiles.rules = [
         "d /ssdstorage/attic 0750 atticd atticd -"
-        "d /ssdstorage/attic/storage 0750 atticd atticd -"
       ];
 
       systemd.services.atticd.serviceConfig.DynamicUser = lib.mkForce false;
@@ -76,7 +79,7 @@
 
           storage = {
             type = "local";
-            path = "/ssdstorage/attic/storage";
+            path = "/ssdstorage/attic";
           };
 
           chunking = {
