@@ -12,7 +12,7 @@
 
   programs.hyprpanel = {
     enable = true;
-    systemd.enable = false;
+    systemd.enable = true;
 
     settings = {
       # Bar layout — mirrors existing waybar setup
