@@ -128,7 +128,6 @@
     alsa-scarlett-gui
     input-leap
     unstable.obsidian
-    unstable.davinci-resolve
     unstable.android-studio
     android-tools
     wineWow64Packages.staging
