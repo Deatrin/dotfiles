@@ -24,6 +24,7 @@
     greetd.enable = true;
     attic-client.enable = true;
     syncthing-client.enable = true;
+    claude-memory-refresh.enable = true;
   };
 
   boot.loader = {
