@@ -21,6 +21,7 @@
       "devpod"
       "goland"
       "mixed-in-key"
+      "prismlauncher"
       "proton-drive"
       "pycharm"
       "rekordbox"
