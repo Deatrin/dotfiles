@@ -11,6 +11,8 @@
   ];
 
   dotfiles.kubernetes.enable = true;
+  dotfiles.claude.enable = true;
+  dotfiles.claude.memorySync.enable = true;
 
   home = {
     username = lib.mkDefault "deatrin";

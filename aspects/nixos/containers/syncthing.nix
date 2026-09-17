@@ -18,6 +18,7 @@
       systemd.tmpfiles.rules = [
         "d /var/lib/syncthing 0755 1000 1000 -"
         "d /storage/syncthing 0755 1000 1000 -"
+        "d /home/deatrin/Sync 0755 1000 1000 -"
       ];
 
       # Open sync port in firewall (TCP + UDP)
@@ -42,6 +43,10 @@
             "/var/lib/syncthing:/var/syncthing"
             "/storage/syncthing:/storage/syncthing"
             "/storage/media:/storage/media"
+            # Same host path on both sides so it lines up with the symlink the
+            # claude.memorySync home-manager activation script creates at
+            # ~/Sync/claude-memory-dotfiles (see aspects/homeManager/claude.nix).
+            "/home/deatrin/Sync:/home/deatrin/Sync"
           ];
           labels = [
             "homepage.group=System"
