@@ -16,6 +16,7 @@
     opnix-personal.enable = true;
     dev.enable = true;
     kubernetes.enable = true;
+    claude.memorySync.enable = true;
   };
 
   home = {

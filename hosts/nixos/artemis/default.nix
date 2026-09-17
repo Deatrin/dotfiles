@@ -23,6 +23,7 @@
     xwayland.enable = true;
     greetd.enable = true;
     attic-client.enable = true;
+    syncthing-client.enable = true;
   };
 
   boot.loader = {

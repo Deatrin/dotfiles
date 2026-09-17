@@ -14,6 +14,7 @@ in {
 
   dotfiles = {
     claude.enable = true;
+    claude.memorySync.enable = true;
     ghostty.enable = true;
     opnix-personal.enable = true;
     dev.enable = true;
