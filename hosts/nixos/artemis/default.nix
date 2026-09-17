@@ -120,6 +120,7 @@
     gamescope
     unstable.lutris
     heroic
+    unstable.prismlauncher
     unstable.clonehero
     unstable.yarg
     unstable.vesktop
