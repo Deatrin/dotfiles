@@ -14,6 +14,10 @@
         reference = "op://nix_secrets/attic/scirocco_netrc";
         mode = "0600";
       };
+      atticPushToken = {
+        reference = "op://nix_secrets/attic/scirocco_push_token";
+        mode = "0600";
+      };
     };
   };
 }

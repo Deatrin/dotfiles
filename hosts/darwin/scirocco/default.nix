@@ -9,6 +9,7 @@
   imports = [
     ../../common/darwin/defaults.nix
     ../../common/darwin/attic-client.nix
+    ../../common/darwin/attic-push-client.nix
     ./homebrew.nix
     ./secrets.nix
   ];
