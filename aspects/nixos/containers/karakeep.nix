@@ -69,7 +69,11 @@
             image = "ghcr.io/karakeep-app/karakeep-chrome:release";
             autoUpdate = "registry";
             networks = [networks.karakeep_network.ref];
-            exec = "--no-sandbox --disable-gpu --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --hide-scrollbars --disable-blink-features=AutomationControlled --window-size=1440,900";
+            # Matches upstream's docker-compose. The image (chromedp/headless-shell
+            # based) already runs Chrome's DevTools on 9223 behind its own socat
+            # proxy on 9222 — passing --remote-debugging-port=9222 here makes
+            # Chrome collide with socat and the crawler can never connect.
+            exec = "--disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-blink-features=AutomationControlled --window-size=1440,900";
           };
         };
 
