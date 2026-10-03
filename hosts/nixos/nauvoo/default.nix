@@ -99,6 +99,12 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
+  # Podman 5.8.7+ broke CopyToContainer for paths crossing an absolute symlink
+  # (e.g. /var/run -> /run in Debian/Ubuntu-based images), which breaks the
+  # Forgejo Actions runner's actions/checkout copy step on every job. Pin
+  # back to 5.8.6 until nixpkgs ships a podman with the buildah copier fix.
+  virtualisation.podman.package = inputs.nixpkgs-podman-5-8-6.legacyPackages.${pkgs.stdenv.hostPlatform.system}.podman;
+
   hardware.nvidia-container-toolkit.enable = true;
   hardware.graphics.enable32Bit = true;
   services.xserver.videoDrivers = ["nvidia"];

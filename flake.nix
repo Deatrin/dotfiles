@@ -4,6 +4,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # Pinned to the last nixpkgs rev shipping podman 5.8.6 — 5.8.7+ broke
+    # CopyToContainer archive extraction for paths crossing an absolute
+    # symlink (e.g. /var/run -> /run), which breaks the Forgejo Actions
+    # runner on nauvoo (every job fails at actions/checkout). Drop once
+    # nixpkgs picks up a podman release with the buildah copier fix.
+    nixpkgs-podman-5-8-6.url = "github:nixos/nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";

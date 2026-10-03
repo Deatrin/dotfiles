@@ -591,6 +591,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-podman-5-8-6": {
+      "locked": {
+        "lastModified": 1787814960,
+        "narHash": "sha256-PYZq1qzCJXC2zGI0mH07vrZBsw6DRBAOX0jN1pPtqOQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c27cdad491a991b11ed731760aa2ef8db0cb0410",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c27cdad491a991b11ed731760aa2ef8db0cb0410",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1782116945,
@@ -803,6 +819,7 @@
         "nix-ld-vscode": "nix-ld-vscode",
         "nix-topology": "nix-topology",
         "nixpkgs": "nixpkgs_5",
+        "nixpkgs-podman-5-8-6": "nixpkgs-podman-5-8-6",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvf": "nvf",
         "opnix": "opnix",
