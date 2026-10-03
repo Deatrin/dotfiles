@@ -4,4 +4,5 @@
   # example = pkgs.callPackage ./example { };
   kubectl-browse-pvc = pkgs.callPackage ./kubectl-browse-pvc.nix {};
   claude-memory-sync = pkgs.callPackage ./claude-memory-sync.nix {};
+  claude-statusline = pkgs.callPackage ./claude-statusline.nix {};
 }

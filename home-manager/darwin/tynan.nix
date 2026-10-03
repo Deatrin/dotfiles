@@ -17,6 +17,7 @@
     dev.enable = true;
     kubernetes.enable = true;
     claude.memorySync.enable = true;
+    claude.statusLine.enable = true;
   };
 
   home = {
