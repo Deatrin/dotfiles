@@ -56,6 +56,7 @@
     "/Applications/Raindrop.io.app"
     "/Applications/1Password.app"
     "/Applications/Discord.app"
+    "/Applications/GeForceNOW.app"
     "/Applications/Visual Studio Code.app"
     "/Applications/OrbStack.app"
     "/Applications/Termius.app"

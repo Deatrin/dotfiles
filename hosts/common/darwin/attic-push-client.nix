@@ -29,14 +29,27 @@
     chmod 600 /var/root/.config/attic/config.toml
   '';
 
+  # Retries + swallows failure: tynan/scirocco often reach nauvoo over a
+  # lossy Tailscale path (not the home LAN directly), and a single dropped
+  # TCP upload mid-push was enough to abort the whole darwin-rebuild switch.
+  # Caching is best-effort — it should never block the actual rebuild.
   nix.settings.post-build-hook = lib.getExe (pkgs.writeShellApplication {
     name = "attic-post-build-hook";
     text = ''
       export HOME=/var/root
       set -f # disable globbing
       export IFS=' '
+      attempt=1
+      max_attempts=3
       # shellcheck disable=SC2086 # intentional word-splitting of OUT_PATHS
-      exec ${lib.getExe inputs.attic.packages.${pkgs.system}.attic-client} push nauvoo-cache $OUT_PATHS
+      until ${lib.getExe inputs.attic.packages.${pkgs.system}.attic-client} push nauvoo-cache $OUT_PATHS; do
+        if [ "$attempt" -ge "$max_attempts" ]; then
+          echo "attic-post-build-hook: push failed after $max_attempts attempts, continuing without caching" >&2
+          exit 0
+        fi
+        sleep $((attempt * 5))
+        attempt=$((attempt + 1))
+      done
     '';
   });
 }
