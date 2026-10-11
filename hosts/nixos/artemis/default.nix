@@ -70,6 +70,7 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
+    extraCompatPackages = [pkgs.unstable.proton-ge-bin];
   };
 
   hardware.xpadneo.enable = true;
