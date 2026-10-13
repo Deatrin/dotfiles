@@ -85,7 +85,7 @@ nix flake check
   - [common/optional/containers/](hosts/common/optional/containers/) - Podman Quadlet container definitions
   - [darwin/](hosts/darwin/) - Per-host macOS configurations (tynan, scirocco)
   - [nixos/](hosts/nixos/) - Per-host NixOS configurations (nauvoo, tycho)
-  - [VMtemplate/](hosts/VMtemplate/) - Template for quick VM deployment
+  - [nixos/VMtemplate/](hosts/nixos/VMtemplate/) - Template for new NixOS hosts
 - **[modules/](modules/)** - Custom NixOS and home-manager modules
 - **[overlays/](overlays/)** - Custom package overlays including unstable packages
 - **[pkgs/](pkgs/)** - Custom packages not available in nixpkgs

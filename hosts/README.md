@@ -10,7 +10,7 @@ This directory contains per-machine system-level configurations for both NixOS a
 - **common/optional/containers/**: Podman Quadlet container definitions (nauvoo)
 - **darwin/**: Per-host macOS configurations
 - **nixos/**: Per-host NixOS configurations
-- **VMtemplate/**: Template for VM setup
+- **nixos/VMtemplate/**: Template for new NixOS hosts
 
 ## Active Hosts
 
