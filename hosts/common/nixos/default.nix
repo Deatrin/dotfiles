@@ -39,9 +39,6 @@
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
-      # pnpm-10.29.2 CVEs are in package installation behavior, not build artifacts
-      # hyprpanel pulls it in as a build dep; safe to permit until nixpkgs bumps it
-      permittedInsecurePackages = ["pnpm-10.29.2"];
     };
   };
 

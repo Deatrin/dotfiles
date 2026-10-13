@@ -18,29 +18,6 @@
     # # https://github.com/NixOS/nixpkgs/issues/402079
     # nodejs = prev.nodejs_22;
     # nodejs-slim = prev.nodejs-slim_22;
-
-    # Fix direnv fish test getting SIGKILL'd in the macOS Nix sandbox
-    direnv = prev.direnv.overrideAttrs (_oldAttrs: {
-      doCheck = false;
-    });
-
-    # openldap test017-syncreplication-refresh is a flaky timing-dependent test
-    # that fails in the Nix sandbox on i686-linux (triggered by lutris dep chain).
-    # Must override both the top-level attr and pkgsi686Linux (separate sub-pkgset).
-    openldap = prev.openldap.overrideAttrs (_oldAttrs: {
-      doCheck = false;
-    });
-    pkgsi686Linux = prev.pkgsi686Linux.extend (_: prev686: {
-      openldap = prev686.openldap.overrideAttrs (_: { doCheck = false; });
-    });
-
-    # Fix inetutils build on macOS with newer clang
-    # https://github.com/NixOS/nixpkgs/issues/XXX
-    inetutils = prev.inetutils.overrideAttrs (oldAttrs: {
-      env = (oldAttrs.env or {}) // {
-        NIX_CFLAGS_COMPILE = (oldAttrs.env.NIX_CFLAGS_COMPILE or "") + " -Wno-error=format-security";
-      };
-    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
@@ -49,14 +26,6 @@
     unstable = import inputs.nixpkgs-unstable {
       system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
-      overlays = [
-        # Propagate the pkgsi686Linux openldap fix so unstable.lutris builds cleanly
-        (_: uprev: {
-          pkgsi686Linux = uprev.pkgsi686Linux.extend (_: prev686: {
-            openldap = prev686.openldap.overrideAttrs (_: { doCheck = false; });
-          });
-        })
-      ];
     };
   };
 
