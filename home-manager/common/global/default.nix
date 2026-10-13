@@ -18,13 +18,8 @@ in {
     ++ (builtins.attrValues outputs.homeManagerModules)
     ++ (builtins.attrValues (outputs.modules.homeManager or {}));
 
-  nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays;
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
-  };
+  # No nixpkgs block: every host sets home-manager.useGlobalPkgs, so pkgs
+  # (overlays + config) comes from the host's own nixpkgs settings.
 
   nix = {
     package = lib.mkDefault pkgs.nix;

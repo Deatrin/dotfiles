@@ -11,17 +11,21 @@
     ./homebrew.nix
   ];
 
-  home-manager.extraSpecialArgs = {
-    inherit inputs outputs;
+  home-manager = {
+    # home-manager reuses this host's pkgs (overlays + config below) instead
+    # of building its own nixpkgs instance, and installs home.packages into
+    # /etc/profiles/per-user/<user> as part of the system closure.
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = {
+      inherit inputs outputs;
+    };
   };
   #package config
   nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-      outputs.overlays.talhelper-overlay
-    ];
+    # Every overlay this flake exports — shared with home-manager via
+    # useGlobalPkgs, so system and home config see the same pkgs.
+    overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;

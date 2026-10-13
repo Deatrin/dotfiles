@@ -21,31 +21,20 @@
     ++ (builtins.attrValues outputs.nixosModules);
 
   home-manager = {
+    # home-manager reuses this host's pkgs (overlays + config below) instead
+    # of building its own nixpkgs instance, and installs home.packages into
+    # /etc/profiles/per-user/<user> as part of the system closure.
+    useGlobalPkgs = true;
+    useUserPackages = true;
     extraSpecialArgs = {
       inherit inputs outputs;
     };
   };
 
   nixpkgs = {
-    # You can add overlays here
-    # overlays = builtins.attrValues outputs.overlays;
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-      outputs.overlays.plex
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
+    # Every overlay this flake exports — shared with home-manager via
+    # useGlobalPkgs, so system and home config see the same pkgs.
+    overlays = builtins.attrValues outputs.overlays;
     # Configure your nixpkgs instance
     config = {
       # Disable if you don't want unfree packages
