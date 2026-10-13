@@ -42,7 +42,7 @@
       attempt=1
       max_attempts=3
       # shellcheck disable=SC2086 # intentional word-splitting of OUT_PATHS
-      until ${lib.getExe inputs.attic.packages.${pkgs.system}.attic-client} push nauvoo-cache $OUT_PATHS; do
+      until ${lib.getExe inputs.attic.packages.${pkgs.stdenv.hostPlatform.system}.attic-client} push nauvoo-cache $OUT_PATHS; do
         if [ "$attempt" -ge "$max_attempts" ]; then
           echo "attic-post-build-hook: push failed after $max_attempts attempts, continuing without caching" >&2
           exit 0

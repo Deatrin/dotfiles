@@ -103,8 +103,8 @@
       # attic (client CLI, for login/push/cache admin) and atticd-atticadm
       # (token minting) — the atticd module doesn't put either on PATH itself.
       environment.systemPackages = [
-        inputs.attic.packages.${pkgs.system}.attic-client
-        inputs.attic.packages.${pkgs.system}.attic-server
+        inputs.attic.packages.${pkgs.stdenv.hostPlatform.system}.attic-client
+        inputs.attic.packages.${pkgs.stdenv.hostPlatform.system}.attic-server
       ];
 
       # Auto-push every local build to the cache. post-build-hook runs as the
@@ -140,7 +140,7 @@
           # post-build-hook runs with a minimal PATH, so call attic by its full
           # store path rather than relying on it being findable.
           # shellcheck disable=SC2086 # intentional word-splitting of OUT_PATHS
-          until ${lib.getExe inputs.attic.packages.${pkgs.system}.attic-client} push nauvoo-cache $OUT_PATHS; do
+          until ${lib.getExe inputs.attic.packages.${pkgs.stdenv.hostPlatform.system}.attic-client} push nauvoo-cache $OUT_PATHS; do
             if [ "$attempt" -ge "$max_attempts" ]; then
               echo "attic-post-build-hook: push failed after $max_attempts attempts, continuing without caching" >&2
               exit 0
