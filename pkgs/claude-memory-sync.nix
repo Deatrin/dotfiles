@@ -1,7 +1,8 @@
 # Migrates each local Claude Code project's memory/ into the shared
 # Syncthing folder (~/Sync/claude-memory-dotfiles) and symlinks it back,
 # plus creates a placeholder for any project already synced in from
-# another host. See aspects/homeManager/claude.nix (calls this as a
+# another host, and symlinks the dotfiles repo's (gitignored) CLAUDE.md into
+# the same shared folder so it follows the memory to every synced host. See aspects/homeManager/claude.nix (calls this as a
 # home.activation step) and aspects/nixos/claude-memory-refresh.nix (calls
 # it directly from a systemd timer, bypassing home-manager activation
 # entirely so it never touches sd-switch/hyprpanel/hyprpaper on a live
@@ -12,11 +13,12 @@
 {
   writeShellApplication,
   coreutils,
+  diffutils,
   findutils,
 }:
 writeShellApplication {
   name = "claude-memory-sync";
-  runtimeInputs = [coreutils findutils];
+  runtimeInputs = [coreutils diffutils findutils];
   text = ''
     projects_dir="$HOME/.claude/projects"
     shared_dir="$HOME/Sync/claude-memory-dotfiles"
@@ -92,6 +94,38 @@ writeShellApplication {
         : # already linked (pass 1) or real content left alone above
       else
         ln -s "$dest" "$memory_dir"
+      fi
+    done
+
+    # Pass 3: the dotfiles repo's CLAUDE.md is gitignored (the GitHub mirror
+    # is public), so it rides along in the shared folder instead. It lives
+    # in "_dotfiles-project/" -- not "-"-prefixed, so pass 2 never mistakes
+    # it for a project slug. Same rules as memory/ above: migrate a lone
+    # local file, re-link an identical one, and never overwrite a local
+    # copy that differs from the shared one.
+    claude_md_dir="$shared_dir/_dotfiles-project"
+    shared_claude_md="$claude_md_dir/CLAUDE.md"
+    for repo in "$HOME/src/dotfiles" /etc/nixos; do
+      [ -f "$repo/flake.nix" ] && [ -w "$repo" ] || continue
+      local_claude_md="$repo/CLAUDE.md"
+
+      if [ -L "$local_claude_md" ]; then
+        : # already linked
+      elif [ -f "$local_claude_md" ]; then
+        if [ ! -e "$shared_claude_md" ]; then
+          echo "claude-memory-sync: migrating $local_claude_md into $claude_md_dir"
+          mkdir -p "$claude_md_dir"
+          cp -p "$local_claude_md" "$shared_claude_md"
+          rm "$local_claude_md"
+          ln -s "$shared_claude_md" "$local_claude_md"
+        elif cmp -s "$local_claude_md" "$shared_claude_md"; then
+          rm "$local_claude_md"
+          ln -s "$shared_claude_md" "$local_claude_md"
+        else
+          echo "claude-memory-sync: $local_claude_md differs from $shared_claude_md -- leaving it as a real file, not symlinking. Merge anything worth keeping into the shared copy, then remove $local_claude_md so the next run can symlink it." >&2
+        fi
+      elif [ -e "$shared_claude_md" ]; then
+        ln -s "$shared_claude_md" "$local_claude_md"
       fi
     done
   '';
