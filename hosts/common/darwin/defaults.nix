@@ -178,9 +178,8 @@
     };
   };
 
-  # Add flake support and apple silicon stuff
+  # Let Apple Silicon Macs build x86_64-darwin too (via Rosetta)
   nix.extraOptions = ''
-    experimental-features = nix-command flakes
     extra-platforms = aarch64-darwin x86_64-darwin
   '';
 
