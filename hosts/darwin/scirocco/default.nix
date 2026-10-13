@@ -8,8 +8,6 @@
 }: {
   imports = [
     ../../common/darwin/defaults.nix
-    ../../common/darwin/attic-client.nix
-    ../../common/darwin/attic-push-client.nix
     ./homebrew.nix
     ./secrets.nix
   ];
@@ -20,19 +18,10 @@
 
   networking.hostName = "scirocco";
 
-  launchd.user.agents.syncthing = {
-    serviceConfig = {
-      ProgramArguments = [
-        "${pkgs.syncthing}/bin/syncthing"
-        "--no-browser"
-        "--no-restart"
-        "--logflags=0"
-      ];
-      KeepAlive = true;
-      RunAtLoad = true;
-      StandardOutPath = "/Users/deatrin/Library/Logs/syncthing.log";
-      StandardErrorPath = "/Users/deatrin/Library/Logs/syncthing-err.log";
-    };
+  dotfiles = {
+    attic-client.enable = true;
+    attic-push-client.enable = true;
+    syncthing-client.enable = true;
   };
 
   system.primaryUser = "deatrin";

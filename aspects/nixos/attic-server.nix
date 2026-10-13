@@ -126,7 +126,7 @@
         "L+ /root/.config/attic/config.toml - - - - ${pushConfigToml}"
       ];
 
-      # Retries + swallows failure, same as hosts/common/darwin/attic-push-client.nix:
+      # Retries + swallows failure, same as aspects/darwin/attic-push-client.nix:
       # a non-zero exit from post-build-hook fails the whole build, so a single
       # failed push was enough to abort an `nh os switch`. Caching is
       # best-effort — it should never block the actual rebuild.
