@@ -18,6 +18,7 @@
     dev.enable = true;
     kubernetes.enable = true;
     opencode.enable = true;
+    claude.memorySync.enable = true;
   };
 
   home = {
