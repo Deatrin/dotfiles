@@ -54,7 +54,10 @@
 
   fetchScript = pkgs.writeShellApplication {
     name = "op-connect-secrets-fetch";
-    runtimeInputs = [pkgs._1password-cli pkgs.curl pkgs.coreutils];
+    # diffutils provides cmp for the changed-secret check below — without it,
+    # cmp is "command not found" (hidden by 2>/dev/null), every secret looks
+    # changed, and every restartServices unit gets bounced on every run.
+    runtimeInputs = [pkgs._1password-cli pkgs.curl pkgs.coreutils pkgs.diffutils];
     text = ''
       # Wait for Connect API to be healthy AND syncer to be ready
       # /health returns 200 before the syncer is ready — poll a real vault

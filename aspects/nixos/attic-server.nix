@@ -12,11 +12,14 @@
     cfg = config.dotfiles.attic-server;
     # Not secret — only references the opnix-delivered token *path* (the
     # attic-client aspect's atticToken secret), not the token itself.
+    # Pushes go straight to the local atticd rather than through Traefik at
+    # cache.jennex.dev: large NARs (e.g. nvidia-x11) take longer to upload than
+    # Traefik's default 60s read timeout and fail with 504 Gateway Timeout.
     pushConfigToml = pkgs.writeText "attic-client-config.toml" ''
       default-server = "nauvoo"
 
       [servers.nauvoo]
-      endpoint = "https://cache.jennex.dev/"
+      endpoint = "http://127.0.0.1:8081/"
       token-file = "/run/opnix/attic-token"
     '';
   in {
@@ -126,15 +129,28 @@
         "L+ /root/.config/attic/config.toml - - - - ${pushConfigToml}"
       ];
 
+      # Retries + swallows failure, same as hosts/common/darwin/attic-push-client.nix:
+      # a non-zero exit from post-build-hook fails the whole build, so a single
+      # failed push was enough to abort an `nh os switch`. Caching is
+      # best-effort — it should never block the actual rebuild.
       nix.settings.post-build-hook = lib.getExe (pkgs.writeShellApplication {
         name = "attic-post-build-hook";
         text = ''
           set -f # disable globbing
           export IFS=' '
+          attempt=1
+          max_attempts=3
           # post-build-hook runs with a minimal PATH, so call attic by its full
           # store path rather than relying on it being findable.
           # shellcheck disable=SC2086 # intentional word-splitting of OUT_PATHS
-          exec ${lib.getExe inputs.attic.packages.${pkgs.system}.attic-client} push nauvoo-cache $OUT_PATHS
+          until ${lib.getExe inputs.attic.packages.${pkgs.system}.attic-client} push nauvoo-cache $OUT_PATHS; do
+            if [ "$attempt" -ge "$max_attempts" ]; then
+              echo "attic-post-build-hook: push failed after $max_attempts attempts, continuing without caching" >&2
+              exit 0
+            fi
+            sleep $((attempt * 5))
+            attempt=$((attempt + 1))
+          done
         '';
       });
     };
