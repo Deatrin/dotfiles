@@ -269,8 +269,6 @@
     };
 
     config = lib.mkIf cfg.enable {
-      # We manage rebuilds; disable the built-in hourly auto-upgrade
-      system.autoUpgrade.enable = lib.mkForce false;
 
       systemd.timers.dotfiles-sync = {
         wantedBy = ["timers.target"];

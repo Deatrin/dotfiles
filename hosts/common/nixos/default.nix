@@ -11,7 +11,6 @@
       inputs.home-manager.nixosModules.home-manager
       inputs.opnix.nixosModules.default
       inputs.nix-topology.nixosModules.default
-      ./auto-upgrade.nix
       ./locale.nix
       ./nfs.nix
       ./nix.nix
@@ -94,12 +93,24 @@
     pkgs.htop
     pkgs.toybox
     pkgs.pciutils
-    pkgs.unstable.nh
     pkgs.unstable.cifs-utils
     pkgs.unstable.alacritty
     pkgs.unstable.koreader
   ];
   programs.ssh.startAgent = false;
+
+  # System-wide GC via `nh clean all` (system generations + every user's
+  # profiles). home-manager's programs.nh.clean only runs `nh clean user`, so
+  # it can't replace this. NH_FLAKE stays set per-user by home-manager.
+  programs.nh = {
+    enable = true;
+    package = pkgs.unstable.nh;
+    clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep 5 --keep-since 7d";
+    };
+  };
 
   services.upower.enable = true;
   services.blueman.enable = true;

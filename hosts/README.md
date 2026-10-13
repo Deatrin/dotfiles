@@ -29,7 +29,6 @@ This directory contains per-machine system-level configurations for both NixOS a
 
 ### Darwin (macOS)
 
-- **[donnager](darwin/donnager/README.md)**: iMac Pro (ajennex)
   - x86_64-darwin
   - Standard configuration with Homebrew integration
 

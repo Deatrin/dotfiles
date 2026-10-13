@@ -11,7 +11,7 @@
 
     config = lib.mkIf cfg.enable {
       environment.systemPackages = [
-        (pkgs.unstable.moonlight-qt.override { ffmpeg = pkgs.unstable.ffmpeg_7; })
+        (pkgs.unstable.moonlight-qt.override { ffmpeg_8 = pkgs.unstable.ffmpeg_8; })
       ];
     };
   };

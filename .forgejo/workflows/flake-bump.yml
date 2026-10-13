@@ -19,6 +19,28 @@ jobs:
 
       - run: nix flake update
 
+      # Gate the push on every host still evaluating against the new lock —
+      # unattended bumps have broken hosts before (import-tree API change,
+      # nvf option rename), and nauvoo's dotfiles-sync pulls whatever lands.
+      # Evaluates each host separately: a single `nix eval --apply mapAttrs`
+      # prints per-host errors inline but still exits 0.
+      - name: Evaluate all hosts
+        run: |
+          failed=""
+          for kind in nixosConfigurations darwinConfigurations; do
+            for host in $(nix eval --raw ".#$kind" --apply 'cs: builtins.concatStringsSep " " (builtins.attrNames cs)'); do
+              echo "--- $kind.$host"
+              if ! nix eval --raw ".#$kind.$host.config.system.build.toplevel.drvPath"; then
+                failed="$failed $host"
+              fi
+              echo
+            done
+          done
+          if [ -n "$failed" ]; then
+            echo "Evaluation failed for:$failed — not pushing the flake.lock bump"
+            exit 1
+          fi
+
       - name: Commit and push if changed
         run: |
           mkdir -p ~/.ssh

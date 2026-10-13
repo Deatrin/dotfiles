@@ -18,11 +18,6 @@
   };
 
   darwinHosts = {
-    donnager = {
-      system = "x86_64-darwin";
-      user = "ajennex";
-      modules = [../hosts/darwin/donnager];
-    };
     tynan = {
       system = "aarch64-darwin";
       user = "deatrin";
@@ -47,10 +42,6 @@
     "deatrin@artemis" = {
       system = "x86_64-linux";
       modules = [../home-manager/nixos/deatrin_artemis.nix];
-    };
-    "ajennex@donnager" = {
-      system = "x86_64-darwin";
-      modules = [../home-manager/darwin/donnager.nix];
     };
     "deatrin@tynan" = {
       system = "aarch64-darwin";

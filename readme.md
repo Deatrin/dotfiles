@@ -54,7 +54,6 @@ nix flake check
 |------|----------|------|------|--------|
 | nauvoo | NixOS (x86_64) | Proxmox VM | deatrin | [README](hosts/nixos/nauvoo/README.md) |
 | tycho | NixOS (x86_64) | Laptop | deatrin | [README](hosts/nixos/tycho/README.md) |
-| donnager | macOS (x86_64) | iMac Pro | ajennex | [README](hosts/darwin/donnager/README.md) |
 | tynan | macOS (aarch64) | MacBook Pro | deatrin | [README](hosts/darwin/tynan/README.md) |
 
 ## Structure
@@ -78,14 +77,14 @@ nix flake check
     - [desktop/](home-manager/common/features/desktop/) - Desktop environment (Hyprland, rofi, theming)
     - [dev/](home-manager/common/features/dev/) - Development environment configurations
     - [kubernetes/](home-manager/common/features/kubernetes/) - Kubernetes tooling (k9s, kubectl)
-  - [darwin/](home-manager/darwin/) - macOS user configurations (donnager.nix, tynan.nix)
+  - [darwin/](home-manager/darwin/) - macOS user configurations (tynan.nix, scirocco.nix)
   - [nixos/](home-manager/nixos/) - NixOS user configurations (deatrin_nauvoo.nix, deatrin_tycho.nix)
 - **[hosts/](hosts/README.md)** - Machine-level configuration
   - [common/darwin/](hosts/common/darwin/) - Shared macOS configuration (defaults, homebrew)
   - [common/nixos/](hosts/common/nixos/) - Shared NixOS configuration (locale, nix, openssh, tailscale)
   - [common/optional/](hosts/common/optional/) - Optional modules (podman, quadlet, fonts, greetd, etc.)
   - [common/optional/containers/](hosts/common/optional/containers/) - Podman Quadlet container definitions
-  - [darwin/](hosts/darwin/) - Per-host macOS configurations (donnager, tynan)
+  - [darwin/](hosts/darwin/) - Per-host macOS configurations (tynan, scirocco)
   - [nixos/](hosts/nixos/) - Per-host NixOS configurations (nauvoo, tycho)
   - [VMtemplate/](hosts/VMtemplate/) - Template for quick VM deployment
 - **[modules/](modules/)** - Custom NixOS and home-manager modules
