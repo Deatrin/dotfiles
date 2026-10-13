@@ -99,7 +99,7 @@
           macos-icon-screen-color = #7aa2f7
           macos-option-as-alt = true
           macos-secure-input-indication = true
-          macos-titlebar-style = tabs
+          macos-titlebar-style = native
 
           background-opacity = 0.8
           background-blur = true

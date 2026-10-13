@@ -2,7 +2,7 @@
 # aspects/nixos/attic-server.nix / attic-client.nix). Darwin has no dendritic
 # aspect class yet (per CLAUDE.md), so this is a plain shared module — import
 # it explicitly per-host rather than via hosts/common/darwin/defaults.nix, so
-# hosts without an atticNetrc secret configured (e.g. donnager) aren't affected.
+# hosts without an atticNetrc secret configured aren't affected.
 #
 # Unlike the NixOS client aspect, this needs no wrapper script: the
 # atticNetrc opnix secret is expected to already contain the fully-formatted
