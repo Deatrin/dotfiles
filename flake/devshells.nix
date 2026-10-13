@@ -16,7 +16,7 @@
         packages = with pkgs; [
           # Nix development tools (stable)
           nixd
-          nixfmt
+          alejandra
           nix-tree
           nvd
           statix
@@ -34,7 +34,7 @@
 
         shellHook = ''
           echo "🔧 Dotfiles Development Environment"
-          echo "   Nix tools: nixd, nixfmt, statix, deadnix"
+          echo "   Nix tools: nixd, alejandra, statix, deadnix"
           echo "   Build: nixos-rebuild, home-manager, nh"
           if [[ "$OSTYPE" == "darwin"* ]]; then
             echo "   darwin-rebuild available via nix-darwin"

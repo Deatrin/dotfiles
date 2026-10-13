@@ -134,7 +134,12 @@
         enableTreesitter = true;
         enableExtraDiagnostics = true;
 
-        nix.enable = true;
+        nix = {
+          enable = true;
+          # Pinned rather than relying on nvf's default, so format-on-save
+          # always matches `nix fmt` (flake/packages.nix).
+          format.type = ["alejandra"];
+        };
         markdown.enable = true;
         bash.enable = true;
         go.enable = true;

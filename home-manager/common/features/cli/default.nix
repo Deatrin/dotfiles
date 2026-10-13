@@ -41,7 +41,7 @@
     jwt-cli # JWT tool
     lazygit
     nixd # nix daemon
-    nixfmt # nix formatter
+    alejandra # nix formatter (same as `nix fmt`)
     nvd # nix version diff
     ouch # better unzip "WRITTEN IN RUST"
     procs # better ps "WRITTEN IN RUST"
