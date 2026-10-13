@@ -35,6 +35,14 @@
               scheme: https
       https:
         address: ":443"
+        # Traefik's default 60s read timeout cuts off long request bodies with
+        # a 504 — e.g. Attic pushes of large NARs (nvidia-x11) to
+        # cache.jennex.dev. attic push always uploads via the server's
+        # api-endpoint (this URL), even from nauvoo itself, so this can't be
+        # sidestepped client-side. 10m still bounds slow/idle clients.
+        transport:
+          respondingTimeouts:
+            readTimeout: 10m
         http:
           tls:
             certResolver: cloudflare

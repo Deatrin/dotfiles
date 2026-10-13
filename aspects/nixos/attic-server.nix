@@ -12,14 +12,11 @@
     cfg = config.dotfiles.attic-server;
     # Not secret — only references the opnix-delivered token *path* (the
     # attic-client aspect's atticToken secret), not the token itself.
-    # Pushes go straight to the local atticd rather than through Traefik at
-    # cache.jennex.dev: large NARs (e.g. nvidia-x11) take longer to upload than
-    # Traefik's default 60s read timeout and fail with 504 Gateway Timeout.
     pushConfigToml = pkgs.writeText "attic-client-config.toml" ''
       default-server = "nauvoo"
 
       [servers.nauvoo]
-      endpoint = "http://127.0.0.1:8081/"
+      endpoint = "https://cache.jennex.dev/"
       token-file = "/run/opnix/attic-token"
     '';
   in {
