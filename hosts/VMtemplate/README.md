@@ -20,7 +20,6 @@ cp -r hosts/VMtemplate hosts/nixos/<new-hostname>
 nixosHosts = {
   myNewVm = {
     system = "x86_64-linux";
-    user = "deatrin";
     modules = [../hosts/nixos/myNewVm];
   };
 };
@@ -46,12 +45,16 @@ sudo chown -R deatrin:users .
 nh os switch
 ```
 
-### 5. Opnix setup
+### 5. Secrets (op-connect)
+
+Secrets are fetched from nauvoo's 1Password Connect server (see `secrets.nix`). Place the Connect token, then switch again:
 
 ```bash
-sudo opnix token set
+sudo install -m600 /dev/stdin /etc/op-connect-token   # paste the token, then Ctrl+D
 nh os switch
 ```
+
+Add any per-host secrets (e.g. an Attic pull token) to `secrets.nix` with camelCase names.
 
 ## Notes
 
