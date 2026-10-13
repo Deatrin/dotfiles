@@ -59,11 +59,11 @@
         (inputs.import-tree ./aspects)
       ];
 
+      # Only the systems real hosts use (nauvoo/tycho/artemis, tynan/scirocco).
+      # Extra systems only add unused per-system outputs that can't all
+      # evaluate (e.g. podman's criu has no i686 build).
       systems = [
         "x86_64-linux"
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-darwin"
         "aarch64-darwin"
       ];
 

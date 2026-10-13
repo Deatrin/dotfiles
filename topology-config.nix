@@ -226,8 +226,5 @@
         };
       };
     };
-
-    # TODO: add donnager (iMac Pro, x86_64-darwin, user ajennex) when it moves
-    # back into active use — currently inactive
   };
 }
