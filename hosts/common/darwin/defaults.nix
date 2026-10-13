@@ -59,7 +59,6 @@
 
   environment = {
     systemPackages = [
-      pkgs.alejandra
       pkgs.git
       pkgs.home-manager
       pkgs.unstable.nh
