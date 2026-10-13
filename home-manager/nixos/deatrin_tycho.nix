@@ -14,7 +14,6 @@
     claude.enable = true;
     claude.statusLine.enable = true;
     ghostty.enable = true;
-    opnix-personal.enable = true;
     dev.enable = true;
     desktop.enable = true;
     kubernetes.enable = true;
