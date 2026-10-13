@@ -19,7 +19,7 @@
 
   config = {
     # the nix expression enabling tailscale packages and service, networking rules, and the systemd autoconnect unit file
-    # tailscale-key secret is managed by opnix (see opnix-system.nix)
+    # tailscale-key secret comes from each host's secrets.nix (op-connect-secrets, /run/opnix/tailscale-key)
 
     # We'll install the package to the system, enable the service, and set up some networking rules
     environment.systemPackages = with pkgs.unstable; [tailscale];
