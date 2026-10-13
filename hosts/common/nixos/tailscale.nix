@@ -55,40 +55,47 @@
 
       # Run the following shell script for the job, passing the opnix-managed secret for the tailscale connection
       # tailscale bound to the same package as services.tailscale.package (see above) so this doesn't drift back to the broken stable build
-      script = let tailscale = config.services.tailscale.package; in with pkgs; ''
-        set -eu
+      script = let
+        tailscale = config.services.tailscale.package;
+      in
+        with pkgs; ''
+          set -eu
 
-        # wait for tailscaled to settle
-        echo "Waiting for tailscaled to be ready..."
-        sleep 5
+          # wait for tailscaled to settle
+          echo "Waiting for tailscaled to be ready..."
+          sleep 5
 
-        # check if we are already authenticated to tailscale
-        echo "Checking Tailscale status..."
-        status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
-        echo "Current status: $status"
+          # check if we are already authenticated to tailscale
+          echo "Checking Tailscale status..."
+          status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
+          echo "Current status: $status"
 
-        if [ "$status" = "Running" ]; then
-            echo "Already connected, applying settings..."
-            ${tailscale}/bin/tailscale set \
-              --accept-dns=false \
-              --advertise-exit-node=${if config.services.tailscale-autoconnect.exitNode then "true" else "false"} \
-              ${lib.optionalString (config.services.tailscale-autoconnect.advertiseRoutes != []) "--advertise-routes=${lib.concatStringsSep "," config.services.tailscale-autoconnect.advertiseRoutes}"}
-            exit 0
-        fi
+          if [ "$status" = "Running" ]; then
+              echo "Already connected, applying settings..."
+              ${tailscale}/bin/tailscale set \
+                --accept-dns=false \
+                --advertise-exit-node=${
+            if config.services.tailscale-autoconnect.exitNode
+            then "true"
+            else "false"
+          } \
+                ${lib.optionalString (config.services.tailscale-autoconnect.advertiseRoutes != []) "--advertise-routes=${lib.concatStringsSep "," config.services.tailscale-autoconnect.advertiseRoutes}"}
+              exit 0
+          fi
 
-        # verify secret file exists
-        if [ ! -f "/run/opnix/tailscale-key" ]; then
-            echo "ERROR: Tailscale key file not found at /run/opnix/tailscale-key"
-            exit 1
-        fi
+          # verify secret file exists
+          if [ ! -f "/run/opnix/tailscale-key" ]; then
+              echo "ERROR: Tailscale key file not found at /run/opnix/tailscale-key"
+              exit 1
+          fi
 
-        # authenticate and apply settings
-        echo "Connecting to Tailscale..."
-        ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false \
-          ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"} \
-          ${lib.optionalString (config.services.tailscale-autoconnect.advertiseRoutes != []) "--advertise-routes=${lib.concatStringsSep "," config.services.tailscale-autoconnect.advertiseRoutes}"}
-        echo "Successfully connected to Tailscale"
-      '';
+          # authenticate and apply settings
+          echo "Connecting to Tailscale..."
+          ${tailscale}/bin/tailscale up --reset --authkey "file:/run/opnix/tailscale-key" --accept-dns=false \
+            ${lib.optionalString config.services.tailscale-autoconnect.exitNode "--advertise-exit-node"} \
+            ${lib.optionalString (config.services.tailscale-autoconnect.advertiseRoutes != []) "--advertise-routes=${lib.concatStringsSep "," config.services.tailscale-autoconnect.advertiseRoutes}"}
+          echo "Successfully connected to Tailscale"
+        '';
     };
   };
 }

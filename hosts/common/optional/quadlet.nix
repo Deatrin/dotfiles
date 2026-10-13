@@ -45,48 +45,51 @@
       Environment = "HOME=/root";
       # Empty string clears the stock ExecStart (from the podman package unit),
       # then our wrapper is the only entry.
-      ExecStart = ["" (lib.getExe (pkgs.writeShellApplication {
-        name = "podman-auto-update-wrapper";
-        runtimeInputs = [pkgs.podman pkgs.curl pkgs.gawk];
-        text = ''
-          # Send start notification
-          curl -sf \
-            --form-string "token=$(cat /run/opnix/pushover-podman-token)" \
-            --form-string "user=$(cat /run/opnix/pushover-user-token)" \
-            --form-string "title=nauvoo: container update starting" \
-            --form-string "message=podman auto-update has started" \
-            https://api.pushover.net/1/messages.json || true
+      ExecStart = [
+        ""
+        (lib.getExe (pkgs.writeShellApplication {
+          name = "podman-auto-update-wrapper";
+          runtimeInputs = [pkgs.podman pkgs.curl pkgs.gawk];
+          text = ''
+            # Send start notification
+            curl -sf \
+              --form-string "token=$(cat /run/opnix/pushover-podman-token)" \
+              --form-string "user=$(cat /run/opnix/pushover-user-token)" \
+              --form-string "title=nauvoo: container update starting" \
+              --form-string "message=podman auto-update has started" \
+              https://api.pushover.net/1/messages.json || true
 
-          # Run update and capture output
-          # Use || true so set -e doesn't kill the script if podman exits non-zero
-          # (exit 125 happens when some containers fail to restart mid-update)
-          UPDATE_OUTPUT=$(podman auto-update 2>&1) || true
+            # Run update and capture output
+            # Use || true so set -e doesn't kill the script if podman exits non-zero
+            # (exit 125 happens when some containers fail to restart mid-update)
+            UPDATE_OUTPUT=$(podman auto-update 2>&1) || true
 
-          # Remove stopped containers left behind by auto-update
-          podman container prune -f || true
+            # Remove stopped containers left behind by auto-update
+            podman container prune -f || true
 
-          # Parse: count total containers and which were updated
-          UPDATED=$(echo "$UPDATE_OUTPUT" | awk 'NR>1 && $NF=="true"  {count++} END {print count+0}')
-          TOTAL=$(echo   "$UPDATE_OUTPUT" | awk 'NR>1                  {count++} END {print count+0}')
+            # Parse: count total containers and which were updated
+            UPDATED=$(echo "$UPDATE_OUTPUT" | awk 'NR>1 && $NF=="true"  {count++} END {print count+0}')
+            TOTAL=$(echo   "$UPDATE_OUTPUT" | awk 'NR>1                  {count++} END {print count+0}')
 
-          if [ "$UPDATED" -gt 0 ]; then
-            UPDATED_LIST=$(echo "$UPDATE_OUTPUT" \
-              | awk 'NR>1 && $NF=="true" {gsub(/\.service$/, "", $1); print "• "$1}')
-            MSG="$UPDATED/$TOTAL containers updated:
-          $UPDATED_LIST"
-          else
-            MSG="All $TOTAL containers up to date"
-          fi
+            if [ "$UPDATED" -gt 0 ]; then
+              UPDATED_LIST=$(echo "$UPDATE_OUTPUT" \
+                | awk 'NR>1 && $NF=="true" {gsub(/\.service$/, "", $1); print "• "$1}')
+              MSG="$UPDATED/$TOTAL containers updated:
+            $UPDATED_LIST"
+            else
+              MSG="All $TOTAL containers up to date"
+            fi
 
-          # Send completion notification
-          curl -sf \
-            --form-string "token=$(cat /run/opnix/pushover-podman-token)" \
-            --form-string "user=$(cat /run/opnix/pushover-user-token)" \
-            --form-string "title=nauvoo: container update done" \
-            --form-string "message=$MSG" \
-            https://api.pushover.net/1/messages.json
-        '';
-      }))];
+            # Send completion notification
+            curl -sf \
+              --form-string "token=$(cat /run/opnix/pushover-podman-token)" \
+              --form-string "user=$(cat /run/opnix/pushover-user-token)" \
+              --form-string "title=nauvoo: container update done" \
+              --form-string "message=$MSG" \
+              https://api.pushover.net/1/messages.json
+          '';
+        }))
+      ];
     };
     after = ["network-online.target" "opnix-secrets.service"];
     wants = ["network-online.target" "opnix-secrets.service"];

@@ -269,7 +269,6 @@
     };
 
     config = lib.mkIf cfg.enable {
-
       systemd.timers.dotfiles-sync = {
         wantedBy = ["timers.target"];
         timerConfig = {

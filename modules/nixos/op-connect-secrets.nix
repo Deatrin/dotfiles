@@ -97,8 +97,8 @@
           chown "${s.value.owner}:${s.value.group}" "${s.value.path}"
           chmod "${s.value.mode}" "${s.value.path}"
           ${lib.optionalString (s.value.restartServices != []) ''
-            printf '%s\n' ${lib.escapeShellArgs s.value.restartServices} >> "$_restart_list"
-          ''}
+          printf '%s\n' ${lib.escapeShellArgs s.value.restartServices} >> "$_restart_list"
+        ''}
         fi
       '') (lib.attrsToList cfg.secrets)}
 

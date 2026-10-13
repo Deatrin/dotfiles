@@ -89,14 +89,16 @@
       + lib.optionalString (svc.middlewares != []) (
         "      middlewares:\n"
         + lib.concatMapStrings (m: "        - ${m}\n") svc.middlewares
-      )) svcs
+      ))
+    svcs
     + "  services:\n"
     + lib.concatMapStrings (svc:
       "    ${svc.name}:\n"
       + "      loadBalancer:\n"
       + "        passHostHeader: false\n"
       + "        servers:\n"
-      + "          - url: \"${svc.url}\"\n") svcs
+      + "          - url: \"${svc.url}\"\n")
+    svcs
     # Reusable middleware — restricts a router to Tailscale's CGNAT range (100.64.0.0/10),
     # so a router can be gated to Tailscale even though entrypoints 80/443 are open on the WAN.
     + "  middlewares:\n"

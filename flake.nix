@@ -47,18 +47,17 @@
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      imports =
-        [
-          ./flake/lib.nix
-          ./flake/aspects.nix
-          ./flake/overlays.nix
-          ./flake/packages.nix
-          ./flake/devshells.nix
-          ./flake/nixos.nix
-          ./flake/darwin.nix
-          ./flake/topology.nix
-          (inputs.import-tree ./aspects)
-        ];
+      imports = [
+        ./flake/lib.nix
+        ./flake/aspects.nix
+        ./flake/overlays.nix
+        ./flake/packages.nix
+        ./flake/devshells.nix
+        ./flake/nixos.nix
+        ./flake/darwin.nix
+        ./flake/topology.nix
+        (inputs.import-tree ./aspects)
+      ];
 
       systems = [
         "x86_64-linux"

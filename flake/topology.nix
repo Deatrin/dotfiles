@@ -1,4 +1,8 @@
-{inputs, self, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   imports = [inputs.nix-topology.flakeModule];
 
   perSystem = {

@@ -4,7 +4,7 @@
   config,
   ...
 }: {
-  home.packages = [ pkgs.unstable.sesh ];
+  home.packages = [pkgs.unstable.sesh];
 
   programs.tmux = {
     enable = true;

@@ -19,75 +19,77 @@
       ps = "procs";
     };
 
-    initContent = ''
-      ZSH_DISABLE_COMPFIX=true
-      export EDITOR=nvim
-      export PATH=$PATH:$HOME/go/bin
-      if [ -n "$TTY" ]; then
-        export GPG_TTY=$(tty)
-      else
-        export GPG_TTY="$TTY"
-      fi
+    initContent =
+      ''
+        ZSH_DISABLE_COMPFIX=true
+        export EDITOR=nvim
+        export PATH=$PATH:$HOME/go/bin
+        if [ -n "$TTY" ]; then
+          export GPG_TTY=$(tty)
+        else
+          export GPG_TTY="$TTY"
+        fi
 
-      # UWSM auto-start removed - handled by SDDM display manager
-      # Hyprland sessions are now launched via SDDM, not shell startup
-      # To manually start Hyprland from TTY: uwsm start default
+        # UWSM auto-start removed - handled by SDDM display manager
+        # Hyprland sessions are now launched via SDDM, not shell startup
+        # To manually start Hyprland from TTY: uwsm start default
 
-      # Source shell secrets from opnix
-      if [ -f "${config.home.homeDirectory}/.config/shell-secrets/env" ]; then
-        source ${config.home.homeDirectory}/.config/shell-secrets/env
-      fi
+        # Source shell secrets from opnix
+        if [ -f "${config.home.homeDirectory}/.config/shell-secrets/env" ]; then
+          source ${config.home.homeDirectory}/.config/shell-secrets/env
+        fi
 
-      # SSH_AUTH_SOCK: use 1Password's SSH agent if it's running on this host
-      # (macOS path checked first, falls back to the Linux path); left unset
-      # on hosts without the 1Password agent (e.g. headless servers).
-      _1p_ssh_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-      if [ ! -S "$_1p_ssh_sock" ]; then
-        _1p_ssh_sock="$HOME/.1password/agent.sock"
-      fi
-      if [ -S "$_1p_ssh_sock" ]; then
-        export SSH_AUTH_SOCK="$_1p_ssh_sock"
-      fi
-      unset _1p_ssh_sock
+        # SSH_AUTH_SOCK: use 1Password's SSH agent if it's running on this host
+        # (macOS path checked first, falls back to the Linux path); left unset
+        # on hosts without the 1Password agent (e.g. headless servers).
+        _1p_ssh_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+        if [ ! -S "$_1p_ssh_sock" ]; then
+          _1p_ssh_sock="$HOME/.1password/agent.sock"
+        fi
+        if [ -S "$_1p_ssh_sock" ]; then
+          export SSH_AUTH_SOCK="$_1p_ssh_sock"
+        fi
+        unset _1p_ssh_sock
 
-      # Empty trigger means plain Tab activates fzf completion (not just **)
-      export FZF_COMPLETION_TRIGGER=""
+        # Empty trigger means plain Tab activates fzf completion (not just **)
+        export FZF_COMPLETION_TRIGGER=""
 
-      # Non-recursive completion — only show immediate children
-      _fzf_compgen_path() {
-        fd --hidden --follow --exclude .git --max-depth 1 . "$1"
-      }
-      _fzf_compgen_dir() {
-        fd --type d --hidden --follow --exclude .git --max-depth 1 . "$1"
-      }
+        # Non-recursive completion — only show immediate children
+        _fzf_compgen_path() {
+          fd --hidden --follow --exclude .git --max-depth 1 . "$1"
+        }
+        _fzf_compgen_dir() {
+          fd --type d --hidden --follow --exclude .git --max-depth 1 . "$1"
+        }
 
-      # set list-colors to enable filename colorizing
-      zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+        # set list-colors to enable filename colorizing
+        zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
-      # Keybindings
-      bindkey '^p' history-search-backward
-      bindkey '^n' history-search-forward
-      bindkey '^[w' kill-region
+        # Keybindings
+        bindkey '^p' history-search-backward
+        bindkey '^n' history-search-forward
+        bindkey '^[w' kill-region
 
-      zle_highlight+=(paste:none)
+        zle_highlight+=(paste:none)
 
-      setopt appendhistory
-      setopt sharehistory
-      setopt hist_ignore_space
-      setopt hist_ignore_all_dups
-      setopt hist_save_no_dups
-      setopt hist_ignore_dups
-      setopt hist_find_no_dups
-    '' + lib.optionalString pkgs.stdenv.isDarwin ''
-      export PATH="/opt/homebrew/bin:$PATH"
-      export PATH="/opt/homebrew/sbin:$PATH"
+        setopt appendhistory
+        setopt sharehistory
+        setopt hist_ignore_space
+        setopt hist_ignore_all_dups
+        setopt hist_save_no_dups
+        setopt hist_ignore_dups
+        setopt hist_find_no_dups
+      ''
+      + lib.optionalString pkgs.stdenv.isDarwin ''
+        export PATH="/opt/homebrew/bin:$PATH"
+        export PATH="/opt/homebrew/sbin:$PATH"
 
-      eval "$(mise activate zsh)"
+        eval "$(mise activate zsh)"
 
-      export PYENV_ROOT="$HOME/.pyenv"
-      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-      eval "$(pyenv init - zsh)"
-    '';
+        export PYENV_ROOT="$HOME/.pyenv"
+        [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init - zsh)"
+      '';
     oh-my-zsh = {
       enable = true;
       plugins = [

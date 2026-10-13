@@ -155,21 +155,22 @@
       # Container and Docker development
       containers = pkgs.mkShell {
         name = "container-dev";
-        packages = with pkgs-unstable; [
-          docker-compose
-          docker-buildx
-          hadolint
-          dive
-          skopeo
-          buildah
-          podman
-          compose2nix
+        packages = with pkgs-unstable;
+          [
+            docker-compose
+            docker-buildx
+            hadolint
+            dive
+            skopeo
+            buildah
+            podman
+            compose2nix
 
-          # Container debugging tools
-          ctop
-          lazydocker
-        ]
-        ++ [pkgs.secretspec];
+            # Container debugging tools
+            ctop
+            lazydocker
+          ]
+          ++ [pkgs.secretspec];
 
         shellHook = ''
           echo "🐳 Container Development Environment"

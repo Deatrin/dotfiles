@@ -5,203 +5,280 @@
   ...
 }: {
   config = lib.mkIf config.dotfiles.desktop.enable {
-  home.packages = with pkgs; [
-    grim
-    hyprcursor
-    hyprpaper
-    qt6.qtwayland
-    slurp
-    waypipe
-    wf-recorder
-    wl-mirror
-    wl-clipboard
-    wlogout
-    wtype
-    ydotool
-  ];
+    home.packages = with pkgs; [
+      grim
+      hyprcursor
+      hyprpaper
+      qt6.qtwayland
+      slurp
+      waypipe
+      wf-recorder
+      wl-mirror
+      wl-clipboard
+      wlogout
+      wtype
+      ydotool
+    ];
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    systemd.enable = true;
-    configType = "hyprlang";
-    settings = {
-      xwayland = {
-        force_zero_scaling = true;
-      };
-
-      exec-once = [
-        "hypridle"
-        "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
-      ];
-
-      env = [
-        "XCURSOR_THEME,capitaine-cursors"
-        "XCURSOR_SIZE,32"
-        "WLR_NO_HARDWARE_CURSORS,1"
-        "GTK_THEME,Tokyonight-Dark"
-      ];
-
-      input = {
-        kb_layout = "us";
-        kb_variant = "";
-        kb_model = "";
-        kb_rules = "";
-        kb_options = "ctrl:nocaps";
-        follow_mouse = 1;
-      };
-
-      general = {
-        gaps_in = 2;
-        gaps_out = 2;
-        border_size = 2;
-        "col.active_border" = "rgba(9742b5ee) rgba(9742b5ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
-        layout = "dwindle";
-      };
-
-      decoration = {
-        shadow = {
-          enabled = true;
-          range = 60;
-          render_power = 3;
-          color = "rgba(1E202966)";
-          offset = "1 2";
-          scale = 0.97;
+    wayland.windowManager.hyprland = {
+      enable = true;
+      systemd.enable = true;
+      configType = "hyprlang";
+      settings = {
+        xwayland = {
+          force_zero_scaling = true;
         };
-        rounding = 8;
-        blur = {
-          enabled = true;
-          size = 3;
-          passes = 3;
-        };
-        active_opacity = 1.0;
-        inactive_opacity = 1.0;
-      };
 
-      animations = {
-        enabled = true;
-        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-        animation = [
-          "windows, 1, 7, myBezier"
-          "windowsOut, 1, 7, default, popin 80%"
-          "border, 1, 10, default"
-          "borderangle, 1, 8, default"
-          "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
+        exec-once = [
+          "hypridle"
+          "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
+        ];
+
+        env = [
+          "XCURSOR_THEME,capitaine-cursors"
+          "XCURSOR_SIZE,32"
+          "WLR_NO_HARDWARE_CURSORS,1"
+          "GTK_THEME,Tokyonight-Dark"
+        ];
+
+        input = {
+          kb_layout = "us";
+          kb_variant = "";
+          kb_model = "";
+          kb_rules = "";
+          kb_options = "ctrl:nocaps";
+          follow_mouse = 1;
+        };
+
+        general = {
+          gaps_in = 2;
+          gaps_out = 2;
+          border_size = 2;
+          "col.active_border" = "rgba(9742b5ee) rgba(9742b5ee) 45deg";
+          "col.inactive_border" = "rgba(595959aa)";
+          layout = "dwindle";
+        };
+
+        decoration = {
+          shadow = {
+            enabled = true;
+            range = 60;
+            render_power = 3;
+            color = "rgba(1E202966)";
+            offset = "1 2";
+            scale = 0.97;
+          };
+          rounding = 8;
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 3;
+          };
+          active_opacity = 1.0;
+          inactive_opacity = 1.0;
+        };
+
+        animations = {
+          enabled = true;
+          bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+          animation = [
+            "windows, 1, 7, myBezier"
+            "windowsOut, 1, 7, default, popin 80%"
+            "border, 1, 10, default"
+            "borderangle, 1, 8, default"
+            "fade, 1, 7, default"
+            "workspaces, 1, 6, default"
+          ];
+        };
+
+        dwindle = {
+          preserve_split = true;
+        };
+
+        master = {
+          new_status = "master";
+        };
+
+        gestures = {
+          # 3-finger horizontal swipe to switch workspaces
+          gesture = "3, horizontal, workspace";
+        };
+
+        monitor = lib.mkDefault "eDP-1, 1920x1200@59.95, 0x0, 1.2";
+        # device = [
+        #   {
+        #     name = "epic-mouse-v1";
+        #     sensitivity = -0.5;
+        #   }
+        #   {
+        #     name = "zsa-technology-labs-moonlander-mark-i";
+        #     kb_layout = "us";
+        #   }
+        #   {
+        #     name = "keychron-keychron-k7";
+        #     kb_layout = "us";
+        #   }
+        # ];
+        windowrule = [
+          {
+            name = "float-file-progress";
+            "match:class" = "file_progress";
+            float = 1;
+          }
+          {
+            name = "float-confirm";
+            "match:class" = "confirm";
+            float = 1;
+          }
+          {
+            name = "float-dialog";
+            "match:class" = "dialog";
+            float = 1;
+          }
+          {
+            name = "float-download";
+            "match:class" = "download";
+            float = 1;
+          }
+          {
+            name = "float-notification";
+            "match:class" = "notification";
+            float = 1;
+          }
+          {
+            name = "float-error";
+            "match:class" = "error";
+            float = 1;
+          }
+          {
+            name = "float-splash";
+            "match:class" = "splash";
+            float = 1;
+          }
+          {
+            name = "float-confirmreset";
+            "match:class" = "confirmreset";
+            float = 1;
+          }
+          {
+            name = "float-open-file";
+            "match:title" = "Open File";
+            float = 1;
+          }
+          {
+            name = "float-branchdialog";
+            "match:title" = "branchdialog";
+            float = 1;
+          }
+          {
+            name = "float-pavucontrol-qt";
+            "match:class" = "pavucontrol-qt";
+            float = 1;
+          }
+          {
+            name = "float-pavucontrol";
+            "match:class" = "pavucontrol";
+            float = 1;
+          }
+          {
+            name = "fullscreen-wlogout-class";
+            "match:class" = "wlogout";
+            fullscreen = 1;
+          }
+          {
+            name = "float-wlogout-title";
+            "match:title" = "wlogout";
+            float = 1;
+          }
+          {
+            name = "fullscreen-wlogout-title";
+            "match:title" = "wlogout";
+            fullscreen = 1;
+          }
+          {
+            name = "mpv-rules";
+            "match:class" = "mpv";
+            idle_inhibit = "focus";
+            opacity = "1.0 override";
+          }
+          {
+            name = "float-media-viewer";
+            "match:title" = "^(Media viewer)$";
+            float = 1;
+          }
+          {
+            name = "float-volume-control";
+            "match:title" = "^(Volume Control)$";
+            float = 1;
+          }
+          {
+            name = "float-pip";
+            "match:title" = "^(Picture-in-Picture)$";
+            float = 1;
+          }
+        ];
+
+        "$mainMod" = "SUPER";
+
+        bind = [
+          "$mainMod, return, exec, ghostty"
+          "$mainMod, t, exec, ghostty -e zsh -c 'fastfetch; exec zsh'"
+          # "$mainMod SHIFT, e, exec, kitty -e zellij_nvim"
+          "$mainMod, o, exec, hyprctl setprop activewindow opaque toggle"
+          "$mainMod, b, exec, thunar"
+          "$mainMod, Escape, exec, wlogout -p layer-shell"
+          "$mainMod, Space, togglefloating"
+          "$mainMod, q, killactive"
+          "$mainMod SHIFT, M, exit"
+          "$mainMod SHIFT, l, exec, hyprlock"
+          "$mainMod, F, fullscreen"
+          "$mainMod, V, exec, clipman pick --tool=rofi"
+          "$mainMod, D, exec, rofi -show"
+          "$mainMod SHIFT, S, exec, bemoji"
+          "$mainMod, P, exec, 1password --quick-access"
+          "$mainMod SHIFT, P, pseudo"
+          "$mainMod, backslash, layoutmsg, togglesplit"
+          "$mainMod, h, movefocus, l"
+          "$mainMod, l, movefocus, r"
+          "$mainMod, k, movefocus, u"
+          "$mainMod, j, movefocus, d"
+          # Screenshots: SUPER+CTRL+3 = fullscreen, SUPER+CTRL+4 = region select
+          "$mainMod CTRL, 3, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
+          "$mainMod CTRL, 4, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
+          # Window resize with keyboard: SUPER+CTRL+hjkl
+          "$mainMod CTRL, h, resizeactive, -20 0"
+          "$mainMod CTRL, l, resizeactive, 20 0"
+          "$mainMod CTRL, k, resizeactive, 0 -20"
+          "$mainMod CTRL, j, resizeactive, 0 20"
+          "$mainMod, 1, workspace, 1"
+          "$mainMod, 2, workspace, 2"
+          "$mainMod, 3, workspace, 3"
+          "$mainMod, 4, workspace, 4"
+          "$mainMod, 5, workspace, 5"
+          "$mainMod, 6, workspace, 6"
+          "$mainMod, 7, workspace, 7"
+          "$mainMod, 8, workspace, 8"
+          "$mainMod, 9, workspace, 9"
+          "$mainMod, 0, workspace, 10"
+          "$mainMod SHIFT, 1, movetoworkspace, 1"
+          "$mainMod SHIFT, 2, movetoworkspace, 2"
+          "$mainMod SHIFT, 3, movetoworkspace, 3"
+          "$mainMod SHIFT, 4, movetoworkspace, 4"
+          "$mainMod SHIFT, 5, movetoworkspace, 5"
+          "$mainMod SHIFT, 6, movetoworkspace, 6"
+          "$mainMod SHIFT, 7, movetoworkspace, 7"
+          "$mainMod SHIFT, 8, movetoworkspace, 8"
+          "$mainMod SHIFT, 9, movetoworkspace, 9"
+          "$mainMod SHIFT, 0, movetoworkspace, 10"
+          "$mainMod, mouse_down, workspace, e+1"
+          "$mainMod, mouse_up, workspace, e-1"
+        ];
+
+        bindm = [
+          "$mainMod, mouse:272, movewindow"
+          "$mainMod, mouse:273, resizewindow"
         ];
       };
-
-      dwindle = {
-        preserve_split = true;
-      };
-
-      master = {
-        new_status = "master";
-      };
-
-      gestures = {
-        # 3-finger horizontal swipe to switch workspaces
-        gesture = "3, horizontal, workspace";
-      };
-
-      monitor = lib.mkDefault "eDP-1, 1920x1200@59.95, 0x0, 1.2";
-      # device = [
-      #   {
-      #     name = "epic-mouse-v1";
-      #     sensitivity = -0.5;
-      #   }
-      #   {
-      #     name = "zsa-technology-labs-moonlander-mark-i";
-      #     kb_layout = "us";
-      #   }
-      #   {
-      #     name = "keychron-keychron-k7";
-      #     kb_layout = "us";
-      #   }
-      # ];
-      windowrule = [
-        { name = "float-file-progress";    "match:class" = "file_progress";           float = 1; }
-        { name = "float-confirm";          "match:class" = "confirm";                 float = 1; }
-        { name = "float-dialog";           "match:class" = "dialog";                  float = 1; }
-        { name = "float-download";         "match:class" = "download";                float = 1; }
-        { name = "float-notification";     "match:class" = "notification";            float = 1; }
-        { name = "float-error";            "match:class" = "error";                   float = 1; }
-        { name = "float-splash";           "match:class" = "splash";                  float = 1; }
-        { name = "float-confirmreset";     "match:class" = "confirmreset";            float = 1; }
-        { name = "float-open-file";        "match:title" = "Open File";               float = 1; }
-        { name = "float-branchdialog";     "match:title" = "branchdialog";            float = 1; }
-        { name = "float-pavucontrol-qt";   "match:class" = "pavucontrol-qt";          float = 1; }
-        { name = "float-pavucontrol";      "match:class" = "pavucontrol";             float = 1; }
-        { name = "fullscreen-wlogout-class"; "match:class" = "wlogout";             fullscreen = 1; }
-        { name = "float-wlogout-title";    "match:title" = "wlogout";                 float = 1; }
-        { name = "fullscreen-wlogout-title"; "match:title" = "wlogout";             fullscreen = 1; }
-        { name = "mpv-rules";              "match:class" = "mpv";    idle_inhibit = "focus"; opacity = "1.0 override"; }
-        { name = "float-media-viewer";     "match:title" = "^(Media viewer)$";        float = 1; }
-        { name = "float-volume-control";   "match:title" = "^(Volume Control)$";      float = 1; }
-        { name = "float-pip";              "match:title" = "^(Picture-in-Picture)$";  float = 1; }
-      ];
-
-      "$mainMod" = "SUPER";
-
-      bind = [
-        "$mainMod, return, exec, ghostty"
-        "$mainMod, t, exec, ghostty -e zsh -c 'fastfetch; exec zsh'"
-        # "$mainMod SHIFT, e, exec, kitty -e zellij_nvim"
-        "$mainMod, o, exec, hyprctl setprop activewindow opaque toggle"
-        "$mainMod, b, exec, thunar"
-        "$mainMod, Escape, exec, wlogout -p layer-shell"
-        "$mainMod, Space, togglefloating"
-        "$mainMod, q, killactive"
-        "$mainMod SHIFT, M, exit"
-        "$mainMod SHIFT, l, exec, hyprlock"
-        "$mainMod, F, fullscreen"
-        "$mainMod, V, exec, clipman pick --tool=rofi"
-        "$mainMod, D, exec, rofi -show"
-        "$mainMod SHIFT, S, exec, bemoji"
-        "$mainMod, P, exec, 1password --quick-access"
-        "$mainMod SHIFT, P, pseudo"
-        "$mainMod, backslash, layoutmsg, togglesplit"
-        "$mainMod, h, movefocus, l"
-        "$mainMod, l, movefocus, r"
-        "$mainMod, k, movefocus, u"
-        "$mainMod, j, movefocus, d"
-        # Screenshots: SUPER+CTRL+3 = fullscreen, SUPER+CTRL+4 = region select
-        "$mainMod CTRL, 3, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
-        "$mainMod CTRL, 4, exec, bash -c 'mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png'"
-        # Window resize with keyboard: SUPER+CTRL+hjkl
-        "$mainMod CTRL, h, resizeactive, -20 0"
-        "$mainMod CTRL, l, resizeactive, 20 0"
-        "$mainMod CTRL, k, resizeactive, 0 -20"
-        "$mainMod CTRL, j, resizeactive, 0 20"
-        "$mainMod, 1, workspace, 1"
-        "$mainMod, 2, workspace, 2"
-        "$mainMod, 3, workspace, 3"
-        "$mainMod, 4, workspace, 4"
-        "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
-        "$mainMod SHIFT, 1, movetoworkspace, 1"
-        "$mainMod SHIFT, 2, movetoworkspace, 2"
-        "$mainMod SHIFT, 3, movetoworkspace, 3"
-        "$mainMod SHIFT, 4, movetoworkspace, 4"
-        "$mainMod SHIFT, 5, movetoworkspace, 5"
-        "$mainMod SHIFT, 6, movetoworkspace, 6"
-        "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
-        "$mainMod, mouse_down, workspace, e+1"
-        "$mainMod, mouse_up, workspace, e-1"
-      ];
-
-      bindm = [
-        "$mainMod, mouse:272, movewindow"
-        "$mainMod, mouse:273, resizewindow"
-      ];
     };
-  };
   };
 }

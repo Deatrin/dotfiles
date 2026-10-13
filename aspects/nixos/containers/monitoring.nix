@@ -129,25 +129,32 @@
             path: /etc/grafana/provisioning/dashboards
     '';
 
-    grafanaDashboardNauvoo = pkgs.writeText "nauvoo-overview.json"
+    grafanaDashboardNauvoo =
+      pkgs.writeText "nauvoo-overview.json"
       (builtins.readFile (dashboardsDir + "/nauvoo-overview.json"));
 
-    grafanaDashboardContainers = pkgs.writeText "containers-overview.json"
+    grafanaDashboardContainers =
+      pkgs.writeText "containers-overview.json"
       (builtins.readFile (dashboardsDir + "/containers-overview.json"));
 
-    grafanaDashboardUnifiClients = pkgs.writeText "unifi-client-insights.json"
+    grafanaDashboardUnifiClients =
+      pkgs.writeText "unifi-client-insights.json"
       (builtins.readFile (dashboardsDir + "/unifi-client-insights.json"));
 
-    grafanaDashboardUnifiSites = pkgs.writeText "unifi-network-sites.json"
+    grafanaDashboardUnifiSites =
+      pkgs.writeText "unifi-network-sites.json"
       (builtins.readFile (dashboardsDir + "/unifi-network-sites.json"));
 
-    grafanaDashboardUnifiUap = pkgs.writeText "unifi-uap-insights.json"
+    grafanaDashboardUnifiUap =
+      pkgs.writeText "unifi-uap-insights.json"
       (builtins.readFile (dashboardsDir + "/unifi-uap-insights.json"));
 
-    grafanaDashboardUnifiUsg = pkgs.writeText "unifi-usg-insights.json"
+    grafanaDashboardUnifiUsg =
+      pkgs.writeText "unifi-usg-insights.json"
       (builtins.readFile (dashboardsDir + "/unifi-usg-insights.json"));
 
-    grafanaDashboardUnifiUsw = pkgs.writeText "unifi-usw-insights.json"
+    grafanaDashboardUnifiUsw =
+      pkgs.writeText "unifi-usw-insights.json"
       (builtins.readFile (dashboardsDir + "/unifi-usw-insights.json"));
 
     grafanaDatasources = pkgs.writeText "datasources.yaml" ''

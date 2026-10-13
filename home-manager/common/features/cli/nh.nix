@@ -9,14 +9,15 @@
     package = pkgs.unstable.nh;
     # Set flake path based on platform and user
     flake =
-      if pkgs.stdenv.isLinux then
+      if pkgs.stdenv.isLinux
+      then
         # All NixOS users use /etc/nixos
         "/etc/nixos"
-      else if pkgs.stdenv.isDarwin then
+      else if pkgs.stdenv.isDarwin
+      then
         # Darwin: user-specific dotfiles paths
         "/Users/${config.home.username}/src/dotfiles"
-      else
-        null; # Unsupported platform
+      else null; # Unsupported platform
 
     # Enable automatic garbage collection
     clean = {

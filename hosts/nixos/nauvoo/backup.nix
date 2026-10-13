@@ -25,7 +25,11 @@
 #         var-lib/         ← other /var/lib state; includes pgdumps/ subdir
 #           pgdumps/       ← pg_dump / mysqldump output (written before rsync)
 #         storage/         ← /storage/ large media (disabled until podman-volumes verified)
-{pkgs, lib, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   triggerFile = "/run/nauvoo-backup-trigger";
   truenasUser = "truenas_admin";
   truenasHost = "10.1.20.45";

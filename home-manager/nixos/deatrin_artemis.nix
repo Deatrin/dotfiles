@@ -94,7 +94,6 @@ in {
 
     # Cursor glitches on NVIDIA — disable hardware cursors if needed.
     cursor.no_hardware_cursors = true;
-
   };
 
   # rclone bisync timers — run after rclone config OAuth flow (run once manually):

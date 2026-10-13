@@ -4,7 +4,6 @@
   buildGoModule,
   ...
 }:
-
 buildGoModule rec {
   pname = "kubectl-browse-pvc";
   version = "1.4.4";
