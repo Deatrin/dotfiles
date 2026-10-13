@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   outputs,
   pkgs,
@@ -193,4 +194,33 @@
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=30
   '';
+
+  # System-wide GC, matching NixOS's programs.nh.clean (hosts/common/nixos/
+  # default.nix): `nh clean all` as root collects old darwin system
+  # generations plus every user's profiles. home-manager's programs.nh.clean
+  # only runs `nh clean user`, and nix-darwin has no nh module, so this is a
+  # plain launchd daemon. Weekly, Sunday 03:15; if the Mac is asleep then,
+  # launchd runs it on wake.
+  launchd.daemons.nh-clean.serviceConfig = {
+    ProgramArguments = [
+      (lib.getExe pkgs.unstable.nh)
+      "clean"
+      "all"
+      "--keep"
+      "5"
+      "--keep-since"
+      "7d"
+    ];
+    # launchd daemons get a minimal PATH; nh shells out to nix.
+    EnvironmentVariables.PATH = "${config.nix.package}/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    StartCalendarInterval = [
+      {
+        Weekday = 0;
+        Hour = 3;
+        Minute = 15;
+      }
+    ];
+    StandardOutPath = "/var/log/nh-clean.log";
+    StandardErrorPath = "/var/log/nh-clean.log";
+  };
 }
