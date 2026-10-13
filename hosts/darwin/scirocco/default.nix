@@ -22,6 +22,10 @@
     attic-client.enable = true;
     attic-push-client.enable = true;
     syncthing-client.enable = true;
+
+    # Homebrew roles
+    dev-apps.enable = true;
+    jetbrains.enable = true;
   };
 
   system.primaryUser = "deatrin";
