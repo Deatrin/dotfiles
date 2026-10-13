@@ -62,7 +62,6 @@
           ./flake/devshells.nix
           ./flake/nixos.nix
           ./flake/darwin.nix
-          ./flake/home-manager.nix
           ./flake/topology.nix
           (inputs.import-tree ./aspects)
         ];

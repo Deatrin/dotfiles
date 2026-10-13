@@ -64,12 +64,11 @@ nix flake check
   - [CLAUDE.md](CLAUDE.md) - Comprehensive documentation for development and architecture
 - **[flake/](flake/)** - Flake-parts modules for modular flake organization
   - [hosts.nix](flake/hosts.nix) - Single source of truth for all host metadata
-  - [lib.nix](flake/lib.nix) - Helper functions (mkNixos, mkDarwin, mkHome)
+  - [lib.nix](flake/lib.nix) - Helper functions (mkNixos, mkDarwin)
   - [packages.nix](flake/packages.nix) - perSystem packages module
   - [overlays.nix](flake/overlays.nix) - perSystem overlays with pkgs and pkgs-unstable
   - [nixos.nix](flake/nixos.nix) - NixOS configuration factory
   - [darwin.nix](flake/darwin.nix) - Darwin configuration factory
-  - [home-manager.nix](flake/home-manager.nix) - Home-manager configuration factory
 - **[home-manager/](home-manager/)** - User-level configuration
   - [common/global/](home-manager/common/global/) - Universal user configuration imported by all users
   - [common/features/](home-manager/common/features/) - Opt-in feature modules

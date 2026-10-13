@@ -30,23 +30,5 @@
           // extraSpecialArgs;
       };
 
-    mkHome = {
-      system,
-      modules,
-      extraSpecialArgs ? {},
-    }:
-      inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import inputs.nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        inherit modules;
-        extraSpecialArgs =
-          {
-            inherit inputs;
-            outputs = inputs.self.outputs;
-          }
-          // extraSpecialArgs;
-      };
   };
 }

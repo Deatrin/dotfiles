@@ -30,26 +30,4 @@
     };
   };
 
-  homeConfigs = {
-    "deatrin@nauvoo" = {
-      system = "x86_64-linux";
-      modules = [../home-manager/nixos/deatrin_nauvoo.nix];
-    };
-    "deatrin@tycho" = {
-      system = "x86_64-linux";
-      modules = [../home-manager/nixos/deatrin_tycho.nix];
-    };
-    "deatrin@artemis" = {
-      system = "x86_64-linux";
-      modules = [../home-manager/nixos/deatrin_artemis.nix];
-    };
-    "deatrin@tynan" = {
-      system = "aarch64-darwin";
-      modules = [../home-manager/darwin/tynan.nix];
-    };
-    "deatrin@scirocco" = {
-      system = "aarch64-darwin";
-      modules = [../home-manager/darwin/scirocco.nix];
-    };
-  };
 }
