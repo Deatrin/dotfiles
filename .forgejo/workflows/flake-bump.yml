@@ -9,7 +9,19 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Plain git instead of actions/checkout: podman >= 5.8.7 refuses to copy
+      # an action's files into the job container under /var/run/act/actions
+      # ("path escapes from parent", since /var/run is an absolute symlink to
+      # /run in the Ubuntu image), so any `uses:` step fails on nauvoo. The
+      # token is saved in the repo's git config so the push step below works.
+      - name: Checkout
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          auth=$(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)
+          git clone --depth=1 --branch "$GITHUB_REF_NAME" \
+            -c http.extraheader="Authorization: basic $auth" \
+            "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" .
 
       - name: Install Nix
         run: |
