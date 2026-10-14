@@ -1,0 +1,6 @@
+# statix config (see `statix check`, run in CI by .forgejo/workflows/lint.yml).
+# repeated_keys is off on purpose: this repo prefers one dotted setting per
+# line (`claude.enable = true;` / `claude.memorySync.enable = true;`) over
+# nesting them, especially in `dotfiles = { ... }` toggle blocks.
+disabled = ["repeated_keys"]
+ignore = ["hosts/nixos/archive", "hosts/darwin/archive", "hosts/common/optional/containers/archive", "result"]

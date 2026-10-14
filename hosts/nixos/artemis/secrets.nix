@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # Fetch secrets from nauvoo's 1Password Connect server over LAN.
   # Note: nauvoo must be reachable at 10.1.30.100:8080 — works on home LAN.
   # Tailscale re-auth is rare; persisted state in /var/lib/tailscale covers

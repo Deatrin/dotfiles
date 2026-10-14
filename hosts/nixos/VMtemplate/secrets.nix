@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # Secrets come from nauvoo's 1Password Connect server over the LAN, same as
   # tycho/artemis (modules/nixos/op-connect-secrets.nix). Files land in
   # /run/opnix/. Secret names must be camelCase.

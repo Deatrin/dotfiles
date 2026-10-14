@@ -1,4 +1,4 @@
-{...}: {
+_: {
   #homebrew packages
   homebrew = {
     enable = true;

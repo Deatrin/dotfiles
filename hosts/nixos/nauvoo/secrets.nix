@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # opnix disabled — nauvoo uses op-connect-secrets (local Connect server) instead
   services.onepassword-secrets.enable = false;
 
