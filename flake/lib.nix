@@ -34,8 +34,9 @@
     # (aspects/nixos/containers/*.nix). Produces the standard label set in a
     # fixed order:
     #   homepage.{group,name,icon,href,description}   (when `homepage` is set)
-    #   traefik.enable, a plain router (unless secureOnly), the "<router>-secure"
-    #   router on the https entrypoint with TLS, and the service port.
+    #   traefik.enable, the "<router>-secure" router on the https entrypoint
+    #   with TLS, and the service port. Plain http is redirected to https by
+    #   the http entrypoint itself, so no second router is needed.
     # TLS uses the wildcard cert configured on the https entrypoint, and
     # homepage.href defaults to the service's own URL.
     #
@@ -50,7 +51,6 @@
       router,
       port,
       homepage ? null,
-      secureOnly ? false,
     }: let
       inherit (inputs.nixpkgs) lib;
       rule = "Host(`${host}`)";
@@ -62,9 +62,8 @@
         "homepage.href=${homepage.href or "https://${host}"}"
         "homepage.description=${homepage.description}"
       ]
-      ++ ["traefik.enable=true"]
-      ++ lib.optional (!secureOnly) "traefik.http.routers.${router}.rule=${rule}"
       ++ [
+        "traefik.enable=true"
         "traefik.http.routers.${router}-secure.entrypoints=https"
         "traefik.http.routers.${router}-secure.rule=${rule}"
         "traefik.http.routers.${router}-secure.tls=true"

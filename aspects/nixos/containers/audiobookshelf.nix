@@ -73,7 +73,6 @@
             "homepage.href=https://audiobookshelf.jennex.dev"
             "homepage.description=Audiobook player"
             "traefik.enable=true"
-            "traefik.http.routers.audiobookshelf.rule=Host(`audiobookshelf.jennex.dev`)"
             "traefik.http.routers.audiobookshelf-secure.entrypoints=https"
             "traefik.http.routers.audiobookshelf-secure.rule=Host(`audiobookshelf.jennex.dev`)"
             "traefik.http.routers.audiobookshelf-secure.tls=true"

@@ -119,7 +119,6 @@
               host = "${domain}";
               router = "manyfold";
               port = 3214;
-              secureOnly = true;
               homepage = {
                 group = "Home";
                 name = "Manyfold";

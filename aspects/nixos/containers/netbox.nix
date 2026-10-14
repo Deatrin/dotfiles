@@ -271,7 +271,6 @@
               host = "${domain}";
               router = "netbox";
               port = 8080;
-              secureOnly = true;
               homepage = {
                 group = "Network";
                 name = "NetBox";
