@@ -1,0 +1,44 @@
+name: Lint
+
+# Formatting and lint checks on every push to main. Kept separate from
+# flake-bump.yml so a lint failure never blocks the nightly flake.lock bump.
+# deadnix/statix come from the flake's locked nixpkgs (--inputs-from .), so
+# their versions only change when flake.lock does.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Plain git instead of actions/checkout: `uses:` actions fail on nauvoo's
+      # runner under podman >= 5.8.7 (see the comment in flake-bump.yml).
+      - name: Checkout
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          auth=$(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)
+          git clone --depth=1 --branch "$GITHUB_REF_NAME" \
+            -c http.extraheader="Authorization: basic $auth" \
+            "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" .
+
+      - name: Install Nix
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix \
+            | sh -s -- install linux --no-confirm --init none
+          echo "/nix/var/nix/profiles/default/bin" >> $GITHUB_PATH
+
+      - name: Formatting (alejandra)
+        run: nix fmt -- --check
+
+      - name: Dead code (deadnix)
+        run: |
+          find . -name '*.nix' -not -path './.git/*' -not -path '*/archive/*' -print0 \
+            | xargs -0 nix run --inputs-from . nixpkgs#deadnix -- --fail
+
+      # Config (disabled rules, ignored paths) lives in statix.toml.
+      - name: Anti-patterns (statix)
+        run: nix run --inputs-from . nixpkgs#statix -- check
