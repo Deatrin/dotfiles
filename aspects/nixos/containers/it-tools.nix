@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.it-tools = {
     config,
     lib,
@@ -15,19 +15,17 @@
           image = "docker.io/corentinth/it-tools:latest";
           autoUpdate = "registry";
           networks = [networks.traefik_network.ref];
-          labels = [
-            "homepage.group=Dev & Games"
-            "homepage.name=IT Tools"
-            "homepage.icon=it-tools.png"
-            "homepage.href=https://it-tools.jennex.dev"
-            "homepage.description=Helpful Tools"
-            "traefik.enable=true"
-            "traefik.http.routers.it_tools.rule=Host(`it-tools.jennex.dev`)"
-            "traefik.http.routers.it_tools-secure.entrypoints=https"
-            "traefik.http.routers.it_tools-secure.rule=Host(`it-tools.jennex.dev`)"
-            "traefik.http.routers.it_tools-secure.tls=true"
-            "traefik.http.services.it_tools.loadbalancer.server.port=80"
-          ];
+          labels = self.lib.webLabels {
+            host = "it-tools.jennex.dev";
+            router = "it_tools";
+            port = 80;
+            homepage = {
+              group = "Dev & Games";
+              name = "IT Tools";
+              icon = "it-tools.png";
+              description = "Helpful Tools";
+            };
+          };
         };
       };
     };
