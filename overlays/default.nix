@@ -8,7 +8,7 @@
   # https://nixos.wiki/wiki/Overlays
   plex = import ./plex.nix;
 
-  modifications = final: prev: {
+  modifications = _final: _prev: {
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });

@@ -5,9 +5,7 @@
   config,
   outputs,
   ...
-}: let
-  inherit (inputs.nix-colors) colorSchemes;
-in {
+}: {
   imports =
     [
       inputs.nix-colors.homeManagerModules.default

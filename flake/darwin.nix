@@ -10,7 +10,7 @@
     # is gated by its own dotfiles.<name>.enable toggle (same as flake/nixos.nix).
     aspectModules = builtins.attrValues (config.flake.modules.darwin or {});
     mkDarwinConfigurations = hosts:
-      inputs.nixpkgs.lib.mapAttrs (name: host:
+      inputs.nixpkgs.lib.mapAttrs (_name: host:
         self.lib.mkDarwin {
           inherit (host) system;
           modules = host.modules ++ aspectModules;

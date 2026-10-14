@@ -7,7 +7,6 @@
   flake.modules.nixos.code-server = {
     config,
     lib,
-    pkgs,
     ...
   }: let
     cfg = config.dotfiles.code-server;

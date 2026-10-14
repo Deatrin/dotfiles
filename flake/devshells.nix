@@ -1,12 +1,7 @@
-{inputs, ...}: {
+{...}: {
   perSystem = {
-    config,
-    self',
-    inputs',
     pkgs,
     pkgs-unstable,
-    system,
-    lib,
     ...
   }: {
     devShells = {

@@ -11,7 +11,6 @@
 {
   flake.modules.nixos.ddns = {
     config,
-    pkgs,
     lib,
     ...
   }: let

@@ -5,14 +5,7 @@
 }: {
   imports = [inputs.nix-topology.flakeModule];
 
-  perSystem = {
-    config,
-    self',
-    inputs',
-    pkgs,
-    system,
-    ...
-  }: {
+  perSystem = {system, ...}: {
     topology = {
       modules = [
         # Import global topology configuration
@@ -20,9 +13,9 @@
         # Pass NixOS configurations for auto-extraction
         {
           nixosConfigurations =
-            builtins.mapAttrs (name: value: value)
+            builtins.mapAttrs (_name: value: value)
             (inputs.nixpkgs.lib.filterAttrs
-              (n: v: v.config.nixpkgs.hostPlatform.system == system)
+              (_n: v: v.config.nixpkgs.hostPlatform.system == system)
               self.nixosConfigurations);
         }
       ];

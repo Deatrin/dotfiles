@@ -8,7 +8,7 @@
     hostData = import ./hosts.nix;
     aspectModules = builtins.attrValues config.flake.modules.nixos;
     mkNixosConfigurations = hosts:
-      inputs.nixpkgs.lib.mapAttrs (name: host:
+      inputs.nixpkgs.lib.mapAttrs (_name: host:
         self.lib.mkNixos {
           inherit (host) system;
           # quadlet-nix is imported universally (schema only — it declares

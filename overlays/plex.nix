@@ -1,4 +1,4 @@
-final: prev:
+_final: prev:
 prev.lib.optionalAttrs prev.stdenv.hostPlatform.isLinux {
   plexRaw = prev.plexRaw.overrideAttrs (_old: rec {
     version = "1.43.4.10903-e5521bd8c";

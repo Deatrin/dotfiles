@@ -1,12 +1,5 @@
-{inputs, ...}: {
-  perSystem = {
-    config,
-    self',
-    inputs',
-    pkgs,
-    system,
-    ...
-  }: {
+{...}: {
+  perSystem = {pkgs, ...}: {
     packages = import ../pkgs {inherit pkgs;};
 
     # `nix fmt` formats the repo with alejandra (the style most files use).
