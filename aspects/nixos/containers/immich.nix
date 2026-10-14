@@ -3,7 +3,7 @@
 # Secrets required (via opnix):
 #   /run/opnix/immich-env  — env file containing:
 #       DB_PASSWORD=<password>
-{
+{self, ...}: {
   flake.modules.nixos.immich = {
     config,
     lib,
@@ -92,19 +92,17 @@
               "/storage/media/pictures/immich/library:/usr/src/app/upload"
               "/etc/localtime:/etc/localtime:ro"
             ];
-            labels = [
-              "homepage.group=Media"
-              "homepage.name=Immich"
-              "homepage.icon=immich.png"
-              "homepage.href=https://immich.jennex.dev"
-              "homepage.description=Photo Management"
-              "traefik.enable=true"
-              "traefik.http.routers.immich.rule=Host(`immich.jennex.dev`)"
-              "traefik.http.routers.immich-secure.entrypoints=https"
-              "traefik.http.routers.immich-secure.rule=Host(`immich.jennex.dev`)"
-              "traefik.http.routers.immich-secure.tls=true"
-              "traefik.http.services.immich.loadbalancer.server.port=2283"
-            ];
+            labels = self.lib.webLabels {
+              host = "immich.jennex.dev";
+              router = "immich";
+              port = 2283;
+              homepage = {
+                group = "Media";
+                name = "Immich";
+                icon = "immich.png";
+                description = "Photo Management";
+              };
+            };
           };
         };
       };

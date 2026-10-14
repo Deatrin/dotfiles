@@ -16,7 +16,7 @@
 #
 # Routing (via Traefik):
 #   netbox.jennex.dev → netbox:8080
-{
+{self, ...}: {
   flake.modules.nixos.netbox = {
     config,
     pkgs,
@@ -267,18 +267,18 @@
               "/run/opnix/netbox-oidc-client-id:/run/opnix/netbox-oidc-client-id:ro"
               "/run/opnix/netbox-oidc-client-secret:/run/opnix/netbox-oidc-client-secret:ro"
             ];
-            labels = [
-              "homepage.group=Network"
-              "homepage.name=NetBox"
-              "homepage.icon=netbox.png"
-              "homepage.href=https://${domain}"
-              "homepage.description=Network Source of Truth"
-              "traefik.enable=true"
-              "traefik.http.routers.netbox-secure.entrypoints=https"
-              "traefik.http.routers.netbox-secure.rule=Host(`${domain}`)"
-              "traefik.http.routers.netbox-secure.tls=true"
-              "traefik.http.services.netbox.loadbalancer.server.port=8080"
-            ];
+            labels = self.lib.webLabels {
+              host = "${domain}";
+              router = "netbox";
+              port = 8080;
+              secureOnly = true;
+              homepage = {
+                group = "Network";
+                name = "NetBox";
+                icon = "netbox.png";
+                description = "Network Source of Truth";
+              };
+            };
           };
         };
 

@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.calibre = {
     config,
     lib,
@@ -29,19 +29,17 @@
               "${volumes."calibre-data".ref}:/config"
               "/storage/media/books:/books"
             ];
-            labels = [
-              "homepage.group=Media"
-              "homepage.name=Calibre"
-              "homepage.icon=calibre.png"
-              "homepage.href=https://calibre.jennex.dev"
-              "homepage.description=Books"
-              "traefik.enable=true"
-              "traefik.http.routers.calibre.rule=Host(`calibre.jennex.dev`)"
-              "traefik.http.routers.calibre-secure.entrypoints=https"
-              "traefik.http.routers.calibre-secure.rule=Host(`calibre.jennex.dev`)"
-              "traefik.http.routers.calibre-secure.tls=true"
-              "traefik.http.services.calibre.loadbalancer.server.port=8083"
-            ];
+            labels = self.lib.webLabels {
+              host = "calibre.jennex.dev";
+              router = "calibre";
+              port = 8083;
+              homepage = {
+                group = "Media";
+                name = "Calibre";
+                icon = "calibre.png";
+                description = "Books";
+              };
+            };
           };
         };
       };

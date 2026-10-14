@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.trek = {
     config,
     lib,
@@ -30,19 +30,17 @@
             "/var/lib/trek/data:/app/data"
             "/var/lib/trek/uploads:/app/uploads"
           ];
-          labels = [
-            "homepage.group=Home"
-            "homepage.name=TREK"
-            "homepage.icon=trek.png"
-            "homepage.href=https://trek.jennex.dev"
-            "homepage.description=Travel Planner"
-            "traefik.enable=true"
-            "traefik.http.routers.trek.rule=Host(`trek.jennex.dev`)"
-            "traefik.http.routers.trek-secure.entrypoints=https"
-            "traefik.http.routers.trek-secure.rule=Host(`trek.jennex.dev`)"
-            "traefik.http.routers.trek-secure.tls=true"
-            "traefik.http.services.trek.loadbalancer.server.port=3000"
-          ];
+          labels = self.lib.webLabels {
+            host = "trek.jennex.dev";
+            router = "trek";
+            port = 3000;
+            homepage = {
+              group = "Home";
+              name = "TREK";
+              icon = "trek.png";
+              description = "Travel Planner";
+            };
+          };
         };
       };
     };

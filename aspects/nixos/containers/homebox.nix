@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.homebox = {
     config,
     pkgs,
@@ -53,19 +53,17 @@
           };
           environmentFiles = ["/run/opnix/homebox-env"];
           volumes = ["/var/lib/homebox:/data"];
-          labels = [
-            "homepage.group=Home"
-            "homepage.name=homebox"
-            "homepage.icon=homebox.png"
-            "homepage.href=https://homebox.jennex.dev"
-            "homepage.description=Home Inventory"
-            "traefik.enable=true"
-            "traefik.http.routers.homebox.rule=Host(`homebox.jennex.dev`)"
-            "traefik.http.routers.homebox-secure.entrypoints=https"
-            "traefik.http.routers.homebox-secure.rule=Host(`homebox.jennex.dev`)"
-            "traefik.http.routers.homebox-secure.tls=true"
-            "traefik.http.services.homebox.loadbalancer.server.port=7745"
-          ];
+          labels = self.lib.webLabels {
+            host = "homebox.jennex.dev";
+            router = "homebox";
+            port = 7745;
+            homepage = {
+              group = "Home";
+              name = "homebox";
+              icon = "homebox.png";
+              description = "Home Inventory";
+            };
+          };
         };
       };
     };

@@ -12,7 +12,7 @@
 #
 # OIDC: install the nextcloud-oidc-login app from the app store
 #   Pocket ID callback URL: https://nextcloud.jennex.dev/apps/oidc_login/oidc
-{
+{self, ...}: {
   flake.modules.nixos.nextcloud = {
     config,
     pkgs,
@@ -141,19 +141,17 @@
               "/run/opnix/nextcloud-oidc-client-id:/run/opnix/nextcloud-oidc-client-id:ro"
               "/run/opnix/nextcloud-oidc-client-secret:/run/opnix/nextcloud-oidc-client-secret:ro"
             ];
-            labels = [
-              "homepage.group=System"
-              "homepage.name=Nextcloud"
-              "homepage.icon=nextcloud.png"
-              "homepage.href=https://nextcloud.jennex.dev"
-              "homepage.description=File Browser"
-              "traefik.enable=true"
-              "traefik.http.routers.nextcloud.rule=Host(`nextcloud.jennex.dev`)"
-              "traefik.http.routers.nextcloud-secure.entrypoints=https"
-              "traefik.http.routers.nextcloud-secure.rule=Host(`nextcloud.jennex.dev`)"
-              "traefik.http.routers.nextcloud-secure.tls=true"
-              "traefik.http.services.nextcloud.loadbalancer.server.port=80"
-            ];
+            labels = self.lib.webLabels {
+              host = "nextcloud.jennex.dev";
+              router = "nextcloud";
+              port = 80;
+              homepage = {
+                group = "System";
+                name = "Nextcloud";
+                icon = "nextcloud.png";
+                description = "File Browser";
+              };
+            };
           };
         };
       };

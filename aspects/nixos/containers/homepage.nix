@@ -8,7 +8,7 @@
 #   /run/opnix/homepage-unifi-pass
 #   /run/opnix/homepage-latitude
 #   /run/opnix/homepage-longitude
-{
+{self, ...}: {
   flake.modules.nixos.homepage = {
     config,
     pkgs,
@@ -302,14 +302,11 @@
             "/var/lib/homepage/config:/app/config"
             "/run/podman/podman.sock:/var/run/docker.sock:ro"
           ];
-          labels = [
-            "traefik.enable=true"
-            "traefik.http.routers.homepage.rule=Host(`homepage.jennex.dev`)"
-            "traefik.http.routers.homepage-secure.entrypoints=https"
-            "traefik.http.routers.homepage-secure.rule=Host(`homepage.jennex.dev`)"
-            "traefik.http.routers.homepage-secure.tls=true"
-            "traefik.http.services.homepage.loadbalancer.server.port=3000"
-          ];
+          labels = self.lib.webLabels {
+            host = "homepage.jennex.dev";
+            router = "homepage";
+            port = 3000;
+          };
         };
       };
     };

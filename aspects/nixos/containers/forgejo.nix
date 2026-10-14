@@ -14,7 +14,7 @@
 #     2. Add token to opnix: op://nix_secrets/forgejo/runner_token
 #     3. Add runner_token secret to host secrets.nix
 #     4. Uncomment dind and runner containers below
-{
+{self, ...}: {
   flake.modules.nixos.forgejo = {
     config,
     lib,
@@ -89,19 +89,17 @@
             volumes = [
               "${config.services.forgejo-quadlet.dataPath}/data:/data"
             ];
-            labels = [
-              "homepage.group=Dev & Games"
-              "homepage.name=Forgejo"
-              "homepage.icon=forgejo.png"
-              "homepage.href=https://forgejo.jennex.dev"
-              "homepage.description=Git"
-              "traefik.enable=true"
-              "traefik.http.routers.forgejo.rule=Host(`forgejo.jennex.dev`)"
-              "traefik.http.routers.forgejo-secure.entrypoints=https"
-              "traefik.http.routers.forgejo-secure.rule=Host(`forgejo.jennex.dev`)"
-              "traefik.http.routers.forgejo-secure.tls=true"
-              "traefik.http.services.forgejo.loadbalancer.server.port=3000"
-            ];
+            labels = self.lib.webLabels {
+              host = "forgejo.jennex.dev";
+              router = "forgejo";
+              port = 3000;
+              homepage = {
+                group = "Dev & Games";
+                name = "Forgejo";
+                icon = "forgejo.png";
+                description = "Git";
+              };
+            };
           };
         };
 

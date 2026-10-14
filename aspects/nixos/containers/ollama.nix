@@ -5,7 +5,7 @@
 #
 # Routing:
 #   ollama.jennex.dev → Ollama API (port 11434, no auth — internal/Tailscale access)
-{
+{self, ...}: {
   flake.modules.nixos.ollama = {
     config,
     lib,
@@ -34,14 +34,11 @@
               OLLAMA_HOST = "0.0.0.0";
             };
             podmanArgs = ["--device=nvidia.com/gpu=all"];
-            labels = [
-              "traefik.enable=true"
-              "traefik.http.routers.ollama.rule=Host(`ollama.jennex.dev`)"
-              "traefik.http.routers.ollama-secure.entrypoints=https"
-              "traefik.http.routers.ollama-secure.rule=Host(`ollama.jennex.dev`)"
-              "traefik.http.routers.ollama-secure.tls=true"
-              "traefik.http.services.ollama.loadbalancer.server.port=11434"
-            ];
+            labels = self.lib.webLabels {
+              host = "ollama.jennex.dev";
+              router = "ollama";
+              port = 11434;
+            };
           };
         };
       };

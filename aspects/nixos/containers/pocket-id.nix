@@ -3,7 +3,7 @@
 # Secrets required (via opnix):
 #   /run/opnix/pocket-id-encryption-key  — base64 encryption key (openssl rand -base64 32)
 #   /run/opnix/pocket-id-maxmind-key     — MaxMind license key for geolocation
-{
+{self, ...}: {
   flake.modules.nixos.pocket-id = {
     pkgs,
     lib,
@@ -59,19 +59,17 @@
           };
           environmentFiles = ["/run/opnix/pocket-id-env"];
           volumes = ["/var/lib/pocket-id:/app/data"];
-          labels = [
-            "homepage.group=System"
-            "homepage.name=Pocket ID"
-            "homepage.icon=pocket-id.png"
-            "homepage.href=https://pocket.jennex.dev"
-            "homepage.description=OIDC Identity Provider"
-            "traefik.enable=true"
-            "traefik.http.routers.pocket-id.rule=Host(`pocket.jennex.dev`)"
-            "traefik.http.routers.pocket-id-secure.entrypoints=https"
-            "traefik.http.routers.pocket-id-secure.rule=Host(`pocket.jennex.dev`)"
-            "traefik.http.routers.pocket-id-secure.tls=true"
-            "traefik.http.services.pocket-id.loadbalancer.server.port=1411"
-          ];
+          labels = self.lib.webLabels {
+            host = "pocket.jennex.dev";
+            router = "pocket-id";
+            port = 1411;
+            homepage = {
+              group = "System";
+              name = "Pocket ID";
+              icon = "pocket-id.png";
+              description = "OIDC Identity Provider";
+            };
+          };
         };
       };
     };

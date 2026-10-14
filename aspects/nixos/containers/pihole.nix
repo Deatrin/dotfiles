@@ -8,7 +8,7 @@
 # DNS listens on the host's primary IP (set per-host via dnsListenIP option).
 # For Tailscale remote access, testbed advertises subnet routes so Tailscale
 # clients can reach 10.1.40.200:53 directly as a nameserver.
-{
+{self, ...}: {
   flake.modules.nixos.pihole = {
     config,
     pkgs,
@@ -60,14 +60,11 @@
               "${dnsmasqConfig}:/etc/dnsmasq.d/02-deatrin-local.conf:ro"
             ];
             addCapabilities = ["NET_ADMIN" "SYS_TIME" "SYS_NICE"];
-            labels = [
-              "traefik.enable=true"
-              "traefik.http.routers.pihole.rule=Host(`pihole.jennex.dev`)"
-              "traefik.http.routers.pihole-secure.entrypoints=https"
-              "traefik.http.routers.pihole-secure.rule=Host(`pihole.jennex.dev`)"
-              "traefik.http.routers.pihole-secure.tls=true"
-              "traefik.http.services.pihole.loadbalancer.server.port=80"
-            ];
+            labels = self.lib.webLabels {
+              host = "pihole.jennex.dev";
+              router = "pihole";
+              port = 80;
+            };
           };
         };
       };

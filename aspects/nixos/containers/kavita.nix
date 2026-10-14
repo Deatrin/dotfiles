@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.kavita = {
     config,
     lib,
@@ -24,19 +24,17 @@
             "/storage/media/books:/books:ro"
             "/storage/media/manga:/manga:ro"
           ];
-          labels = [
-            "homepage.group=Media"
-            "homepage.name=Kavita"
-            "homepage.icon=kavita.png"
-            "homepage.href=https://kavita.jennex.dev"
-            "homepage.description=Manga, Comics & Books"
-            "traefik.enable=true"
-            "traefik.http.routers.kavita.rule=Host(`kavita.jennex.dev`)"
-            "traefik.http.routers.kavita-secure.entrypoints=https"
-            "traefik.http.routers.kavita-secure.rule=Host(`kavita.jennex.dev`)"
-            "traefik.http.routers.kavita-secure.tls=true"
-            "traefik.http.services.kavita.loadbalancer.server.port=5000"
-          ];
+          labels = self.lib.webLabels {
+            host = "kavita.jennex.dev";
+            router = "kavita";
+            port = 5000;
+            homepage = {
+              group = "Media";
+              name = "Kavita";
+              icon = "kavita.png";
+              description = "Manga, Comics & Books";
+            };
+          };
         };
       };
     };

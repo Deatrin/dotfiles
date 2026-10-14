@@ -3,7 +3,7 @@
 #
 # Runs a real K3s cluster inside the container, so it needs --privileged.
 # No secrets required — progress is stored in a SQLite DB under /data.
-{
+{self, ...}: {
   flake.modules.nixos.kubekosh = {
     config,
     lib,
@@ -26,19 +26,17 @@
           networks = [networks.traefik_network.ref];
           podmanArgs = ["--privileged"];
           volumes = ["/var/lib/kubekosh:/data"];
-          labels = [
-            "homepage.group=Dev"
-            "homepage.name=KubeKosh"
-            "homepage.icon=kubernetes.png"
-            "homepage.href=https://kubekosh.jennex.dev"
-            "homepage.description=K3s Kubernetes learning sandbox"
-            "traefik.enable=true"
-            "traefik.http.routers.kubekosh.rule=Host(`kubekosh.jennex.dev`)"
-            "traefik.http.routers.kubekosh-secure.entrypoints=https"
-            "traefik.http.routers.kubekosh-secure.rule=Host(`kubekosh.jennex.dev`)"
-            "traefik.http.routers.kubekosh-secure.tls=true"
-            "traefik.http.services.kubekosh.loadbalancer.server.port=80"
-          ];
+          labels = self.lib.webLabels {
+            host = "kubekosh.jennex.dev";
+            router = "kubekosh";
+            port = 80;
+            homepage = {
+              group = "Dev";
+              name = "KubeKosh";
+              icon = "kubernetes.png";
+              description = "K3s Kubernetes learning sandbox";
+            };
+          };
         };
       };
     };

@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.grocy = {
     config,
     lib,
@@ -25,19 +25,17 @@
             TZ = "America/Los_Angeles";
           };
           volumes = ["/var/lib/grocy:/config"];
-          labels = [
-            "homepage.group=Home"
-            "homepage.name=grocy"
-            "homepage.icon=grocy.png"
-            "homepage.href=https://grocy.jennex.dev"
-            "homepage.description=Inventory Management"
-            "traefik.enable=true"
-            "traefik.http.routers.grocy.rule=Host(`grocy.jennex.dev`)"
-            "traefik.http.routers.grocy-secure.entrypoints=https"
-            "traefik.http.routers.grocy-secure.rule=Host(`grocy.jennex.dev`)"
-            "traefik.http.routers.grocy-secure.tls=true"
-            "traefik.http.services.grocy.loadbalancer.server.port=80"
-          ];
+          labels = self.lib.webLabels {
+            host = "grocy.jennex.dev";
+            router = "grocy";
+            port = 80;
+            homepage = {
+              group = "Home";
+              name = "grocy";
+              icon = "grocy.png";
+              description = "Inventory Management";
+            };
+          };
         };
       };
     };

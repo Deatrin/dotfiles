@@ -7,7 +7,7 @@
 #
 # Media paths (/storage/media/*) are commented out — only available on nauvoo.
 # All arr services share the sabnzbd downloads path for cross-service hardlinking.
-{
+{self, ...}: {
   flake.modules.nixos.arr-stack = {
     config,
     pkgs,
@@ -213,19 +213,17 @@
               "/storage/media/downloads/sabnzbd:/downloads"
               "/storage/media/downloads/qbittorrent:/downloads/qbittorrent"
             ];
-            labels = [
-              "homepage.group=Downloads"
-              "homepage.name=Lidarr"
-              "homepage.icon=lidarr.png"
-              "homepage.href=https://lidarr.jennex.dev"
-              "homepage.description=Music"
-              "traefik.enable=true"
-              "traefik.http.routers.lidarr.rule=Host(`lidarr.jennex.dev`)"
-              "traefik.http.routers.lidarr-secure.entrypoints=https"
-              "traefik.http.routers.lidarr-secure.rule=Host(`lidarr.jennex.dev`)"
-              "traefik.http.routers.lidarr-secure.tls=true"
-              "traefik.http.services.lidarr.loadbalancer.server.port=8686"
-            ];
+            labels = self.lib.webLabels {
+              host = "lidarr.jennex.dev";
+              router = "lidarr";
+              port = 8686;
+              homepage = {
+                group = "Downloads";
+                name = "Lidarr";
+                icon = "lidarr.png";
+                description = "Music";
+              };
+            };
           };
         };
 
@@ -241,19 +239,17 @@
               "/storage/media/downloads/sabnzbd:/downloads"
               "/storage/media/downloads/qbittorrent:/downloads/qbittorrent"
             ];
-            labels = [
-              "homepage.group=Downloads"
-              "homepage.name=Radarr"
-              "homepage.icon=radarr.png"
-              "homepage.href=https://radarr.jennex.dev"
-              "homepage.description=Movies"
-              "traefik.enable=true"
-              "traefik.http.routers.radarr.rule=Host(`radarr.jennex.dev`)"
-              "traefik.http.routers.radarr-secure.entrypoints=https"
-              "traefik.http.routers.radarr-secure.rule=Host(`radarr.jennex.dev`)"
-              "traefik.http.routers.radarr-secure.tls=true"
-              "traefik.http.services.radarr.loadbalancer.server.port=7878"
-            ];
+            labels = self.lib.webLabels {
+              host = "radarr.jennex.dev";
+              router = "radarr";
+              port = 7878;
+              homepage = {
+                group = "Downloads";
+                name = "Radarr";
+                icon = "radarr.png";
+                description = "Movies";
+              };
+            };
           };
         };
 
@@ -269,19 +265,17 @@
               "/storage/media/downloads/sabnzbd:/downloads"
               "/storage/media/downloads/qbittorrent:/downloads/qbittorrent"
             ];
-            labels = [
-              "homepage.group=Downloads"
-              "homepage.name=Sonarr"
-              "homepage.icon=sonarr.png"
-              "homepage.href=https://sonarr.jennex.dev"
-              "homepage.description=TV Shows"
-              "traefik.enable=true"
-              "traefik.http.routers.sonarr.rule=Host(`sonarr.jennex.dev`)"
-              "traefik.http.routers.sonarr-secure.entrypoints=https"
-              "traefik.http.routers.sonarr-secure.rule=Host(`sonarr.jennex.dev`)"
-              "traefik.http.routers.sonarr-secure.tls=true"
-              "traefik.http.services.sonarr.loadbalancer.server.port=8989"
-            ];
+            labels = self.lib.webLabels {
+              host = "sonarr.jennex.dev";
+              router = "sonarr";
+              port = 8989;
+              homepage = {
+                group = "Downloads";
+                name = "Sonarr";
+                icon = "sonarr.png";
+                description = "TV Shows";
+              };
+            };
           };
         };
 
@@ -296,14 +290,11 @@
               "/storage/media/whisparr/data:/data"
               "/storage/media/downloads/sabnzbd:/downloads"
             ];
-            labels = [
-              "traefik.enable=true"
-              "traefik.http.routers.whisparr.rule=Host(`whisparr.jennex.dev`)"
-              "traefik.http.routers.whisparr-secure.entrypoints=https"
-              "traefik.http.routers.whisparr-secure.rule=Host(`whisparr.jennex.dev`)"
-              "traefik.http.routers.whisparr-secure.tls=true"
-              "traefik.http.services.whisparr.loadbalancer.server.port=6969"
-            ];
+            labels = self.lib.webLabels {
+              host = "whisparr.jennex.dev";
+              router = "whisparr";
+              port = 6969;
+            };
           };
         };
 
@@ -314,19 +305,17 @@
             networks = [networks.traefik_network.ref];
             environments = commonEnv;
             volumes = ["${volumes.arr-prowlarr.ref}:/config"];
-            labels = [
-              "homepage.group=Downloads"
-              "homepage.name=Prowlarr"
-              "homepage.icon=prowlarr.png"
-              "homepage.href=https://prowlarr.jennex.dev"
-              "homepage.description=Usenet Indexer"
-              "traefik.enable=true"
-              "traefik.http.routers.prowlarr.rule=Host(`prowlarr.jennex.dev`)"
-              "traefik.http.routers.prowlarr-secure.entrypoints=https"
-              "traefik.http.routers.prowlarr-secure.rule=Host(`prowlarr.jennex.dev`)"
-              "traefik.http.routers.prowlarr-secure.tls=true"
-              "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
-            ];
+            labels = self.lib.webLabels {
+              host = "prowlarr.jennex.dev";
+              router = "prowlarr";
+              port = 9696;
+              homepage = {
+                group = "Downloads";
+                name = "Prowlarr";
+                icon = "prowlarr.png";
+                description = "Usenet Indexer";
+              };
+            };
           };
         };
 
@@ -341,19 +330,17 @@
               "/storage/media/downloads/sabnzbd/downloads:/downloads"
               "/storage/media/downloads/sabnzbd/incomplete:/incomplete-downloads"
             ];
-            labels = [
-              "homepage.group=Downloads"
-              "homepage.name=SABnzbd"
-              "homepage.icon=sabnzbd.png"
-              "homepage.href=https://sabnzbd.jennex.dev"
-              "homepage.description=Downloader"
-              "traefik.enable=true"
-              "traefik.http.routers.sabnzbd.rule=Host(`sabnzbd.jennex.dev`)"
-              "traefik.http.routers.sabnzbd-secure.entrypoints=https"
-              "traefik.http.routers.sabnzbd-secure.rule=Host(`sabnzbd.jennex.dev`)"
-              "traefik.http.routers.sabnzbd-secure.tls=true"
-              "traefik.http.services.sabnzbd.loadbalancer.server.port=8080"
-            ];
+            labels = self.lib.webLabels {
+              host = "sabnzbd.jennex.dev";
+              router = "sabnzbd";
+              port = 8080;
+              homepage = {
+                group = "Downloads";
+                name = "SABnzbd";
+                icon = "sabnzbd.png";
+                description = "Downloader";
+              };
+            };
           };
         };
 

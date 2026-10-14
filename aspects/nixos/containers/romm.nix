@@ -12,7 +12,7 @@
 #   /run/opnix/romm-igdb-client-secret   — IGDB client secret
 #
 # Media paths (/storage/media/games) are commented out — only available on nauvoo.
-{
+{self, ...}: {
   flake.modules.nixos.romm = {
     pkgs,
     lib,
@@ -149,19 +149,17 @@
               "/storage/media/games/romm/library:/romm/library"
               "/storage/media/games/romm/assets:/romm/assets"
             ];
-            labels = [
-              "homepage.group=Dev & Games"
-              "homepage.name=RoMM"
-              "homepage.icon=romm.png"
-              "homepage.href=https://romm.jennex.dev"
-              "homepage.description=ROM Manager"
-              "traefik.enable=true"
-              "traefik.http.routers.romm.rule=Host(`romm.jennex.dev`)"
-              "traefik.http.routers.romm-secure.entrypoints=https"
-              "traefik.http.routers.romm-secure.rule=Host(`romm.jennex.dev`)"
-              "traefik.http.routers.romm-secure.tls=true"
-              "traefik.http.services.romm.loadbalancer.server.port=8080"
-            ];
+            labels = self.lib.webLabels {
+              host = "romm.jennex.dev";
+              router = "romm";
+              port = 8080;
+              homepage = {
+                group = "Dev & Games";
+                name = "RoMM";
+                icon = "romm.png";
+                description = "ROM Manager";
+              };
+            };
           };
         };
       };

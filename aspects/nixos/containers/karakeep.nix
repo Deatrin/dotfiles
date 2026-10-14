@@ -19,7 +19,7 @@
 # gemma4:e4b (already pulled, chat model) for text and moondream (small
 # vision model) for images — pull moondream before switching:
 #   sudo podman exec -it ollama ollama pull moondream
-{
+{self, ...}: {
   flake.modules.nixos.karakeep = {
     config,
     pkgs,
@@ -135,19 +135,17 @@
             };
             environmentFiles = ["/run/opnix/karakeep-env"];
             volumes = ["${volumes.karakeep-data.ref}:/data"];
-            labels = [
-              "homepage.group=Home"
-              "homepage.name=Karakeep"
-              "homepage.icon=karakeep.png"
-              "homepage.href=https://karakeep.jennex.dev"
-              "homepage.description=Bookmark Manager"
-              "traefik.enable=true"
-              "traefik.http.routers.karakeep.rule=Host(`karakeep.jennex.dev`)"
-              "traefik.http.routers.karakeep-secure.entrypoints=https"
-              "traefik.http.routers.karakeep-secure.rule=Host(`karakeep.jennex.dev`)"
-              "traefik.http.routers.karakeep-secure.tls=true"
-              "traefik.http.services.karakeep.loadbalancer.server.port=3000"
-            ];
+            labels = self.lib.webLabels {
+              host = "karakeep.jennex.dev";
+              router = "karakeep";
+              port = 3000;
+              homepage = {
+                group = "Home";
+                name = "Karakeep";
+                icon = "karakeep.png";
+                description = "Bookmark Manager";
+              };
+            };
           };
         };
       };

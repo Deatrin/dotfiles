@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.excalidraw = {
     config,
     lib,
@@ -15,19 +15,17 @@
           image = "docker.io/excalidraw/excalidraw:latest";
           autoUpdate = "registry";
           networks = [networks.traefik_network.ref];
-          labels = [
-            "homepage.group=Dev & Games"
-            "homepage.name=Excalidraw"
-            "homepage.icon=si-excalidraw"
-            "homepage.href=https://excalidraw.jennex.dev"
-            "homepage.description=Virtual whiteboard for sketching"
-            "traefik.enable=true"
-            "traefik.http.routers.excalidraw.rule=Host(`excalidraw.jennex.dev`)"
-            "traefik.http.routers.excalidraw-secure.entrypoints=https"
-            "traefik.http.routers.excalidraw-secure.rule=Host(`excalidraw.jennex.dev`)"
-            "traefik.http.routers.excalidraw-secure.tls=true"
-            "traefik.http.services.excalidraw.loadbalancer.server.port=80"
-          ];
+          labels = self.lib.webLabels {
+            host = "excalidraw.jennex.dev";
+            router = "excalidraw";
+            port = 80;
+            homepage = {
+              group = "Dev & Games";
+              name = "Excalidraw";
+              icon = "si-excalidraw";
+              description = "Virtual whiteboard for sketching";
+            };
+          };
         };
       };
     };

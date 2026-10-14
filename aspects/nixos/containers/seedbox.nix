@@ -21,7 +21,7 @@
 # in each *arr's Settings > Download Clients (host: qbittorrent, port: 8080).
 # Shares /storage/media/downloads/qbittorrent with sonarr/radarr/lidarr (see
 # arr-stack.nix) so completed torrents can be hardlinked instead of copied.
-{
+{self, ...}: {
   flake.modules.nixos.seedbox = {
     config,
     pkgs,
@@ -85,19 +85,17 @@
               "${volumes.seedbox-qbittorrent.ref}:/config"
               "/storage/media/downloads/qbittorrent:/downloads"
             ];
-            labels = [
-              "homepage.group=Downloads"
-              "homepage.name=qBittorrent"
-              "homepage.icon=qbittorrent.png"
-              "homepage.href=https://qbittorrent.jennex.dev"
-              "homepage.description=Torrent client"
-              "traefik.enable=true"
-              "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.jennex.dev`)"
-              "traefik.http.routers.qbittorrent-secure.entrypoints=https"
-              "traefik.http.routers.qbittorrent-secure.rule=Host(`qbittorrent.jennex.dev`)"
-              "traefik.http.routers.qbittorrent-secure.tls=true"
-              "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
-            ];
+            labels = self.lib.webLabels {
+              host = "qbittorrent.jennex.dev";
+              router = "qbittorrent";
+              port = 8080;
+              homepage = {
+                group = "Downloads";
+                name = "qBittorrent";
+                icon = "qbittorrent.png";
+                description = "Torrent client";
+              };
+            };
           };
         };
 
@@ -119,14 +117,11 @@
             };
             environmentFiles = ["/run/opnix/seedbox-mousehole-env"];
             volumes = ["${volumes.seedbox-mousehole.ref}:/var/lib/mousehole"];
-            labels = [
-              "traefik.enable=true"
-              "traefik.http.routers.mousehole.rule=Host(`mousehole.jennex.dev`)"
-              "traefik.http.routers.mousehole-secure.entrypoints=https"
-              "traefik.http.routers.mousehole-secure.rule=Host(`mousehole.jennex.dev`)"
-              "traefik.http.routers.mousehole-secure.tls=true"
-              "traefik.http.services.mousehole.loadbalancer.server.port=5010"
-            ];
+            labels = self.lib.webLabels {
+              host = "mousehole.jennex.dev";
+              router = "mousehole";
+              port = 5010;
+            };
           };
         };
       };

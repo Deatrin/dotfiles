@@ -3,7 +3,7 @@
 # No secrets required — configure devices/folders via web UI on first run.
 # Sync port 22000 is published directly (not via Traefik).
 # Web UI available at syncthing.jennex.dev via Traefik.
-{
+{self, ...}: {
   flake.modules.nixos.syncthing = {
     config,
     lib,
@@ -48,19 +48,17 @@
             # ~/Sync/claude-memory-dotfiles (see aspects/homeManager/claude.nix).
             "/home/deatrin/Sync:/home/deatrin/Sync"
           ];
-          labels = [
-            "homepage.group=System"
-            "homepage.name=Syncthing"
-            "homepage.icon=syncthing.png"
-            "homepage.href=https://syncthing.jennex.dev"
-            "homepage.description=File Sync"
-            "traefik.enable=true"
-            "traefik.http.routers.syncthing.rule=Host(`syncthing.jennex.dev`)"
-            "traefik.http.routers.syncthing-secure.entrypoints=https"
-            "traefik.http.routers.syncthing-secure.rule=Host(`syncthing.jennex.dev`)"
-            "traefik.http.routers.syncthing-secure.tls=true"
-            "traefik.http.services.syncthing.loadbalancer.server.port=8384"
-          ];
+          labels = self.lib.webLabels {
+            host = "syncthing.jennex.dev";
+            router = "syncthing";
+            port = 8384;
+            homepage = {
+              group = "System";
+              name = "Syncthing";
+              icon = "syncthing.png";
+              description = "File Sync";
+            };
+          };
         };
       };
     };

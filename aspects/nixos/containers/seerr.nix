@@ -1,7 +1,7 @@
 # Seerr — media request management (formerly Jellyseerr)
 #
 # No secrets required — all configuration stored in volume.
-{
+{self, ...}: {
   flake.modules.nixos.seerr = {
     config,
     lib,
@@ -31,19 +31,17 @@
               PORT = "5055";
             };
             volumes = ["${volumes.seerr-config.ref}:/app/config"];
-            labels = [
-              "homepage.group=Downloads"
-              "homepage.name=Seerr"
-              "homepage.icon=jellyseerr.png"
-              "homepage.href=https://seerr.jennex.dev"
-              "homepage.description=Media Requests"
-              "traefik.enable=true"
-              "traefik.http.routers.seerr.rule=Host(`seerr.jennex.dev`)"
-              "traefik.http.routers.seerr-secure.entrypoints=https"
-              "traefik.http.routers.seerr-secure.rule=Host(`seerr.jennex.dev`)"
-              "traefik.http.routers.seerr-secure.tls=true"
-              "traefik.http.services.seerr.loadbalancer.server.port=5055"
-            ];
+            labels = self.lib.webLabels {
+              host = "seerr.jennex.dev";
+              router = "seerr";
+              port = 5055;
+              homepage = {
+                group = "Downloads";
+                name = "Seerr";
+                icon = "jellyseerr.png";
+                description = "Media Requests";
+              };
+            };
           };
         };
       };

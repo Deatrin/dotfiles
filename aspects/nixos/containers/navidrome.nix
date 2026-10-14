@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.navidrome = {
     config,
     lib,
@@ -22,19 +22,17 @@
               "${volumes.navidrome.ref}:/data"
               "/storage/media/music:/music:ro"
             ];
-            labels = [
-              "homepage.group=Media"
-              "homepage.name=Navidrome"
-              "homepage.icon=navidrome.png"
-              "homepage.href=https://navi.jennex.dev"
-              "homepage.description=Music Player"
-              "traefik.enable=true"
-              "traefik.http.routers.navi.rule=Host(`navi.jennex.dev`)"
-              "traefik.http.routers.navi-secure.entrypoints=https"
-              "traefik.http.routers.navi-secure.rule=Host(`navi.jennex.dev`)"
-              "traefik.http.routers.navi-secure.tls=true"
-              "traefik.http.services.navi.loadbalancer.server.port=4533"
-            ];
+            labels = self.lib.webLabels {
+              host = "navi.jennex.dev";
+              router = "navi";
+              port = 4533;
+              homepage = {
+                group = "Media";
+                name = "Navidrome";
+                icon = "navidrome.png";
+                description = "Music Player";
+              };
+            };
           };
         };
       };

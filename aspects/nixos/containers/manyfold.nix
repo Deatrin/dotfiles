@@ -9,7 +9,7 @@
 #
 # Routing (via Traefik):
 #   manyfold.jennex.dev → manyfold:3214
-{
+{self, ...}: {
   flake.modules.nixos.manyfold = {
     config,
     pkgs,
@@ -115,18 +115,18 @@
             };
             environmentFiles = ["/run/opnix/manyfold-env"];
             volumes = ["/storage/media/manyfold/models:/models"];
-            labels = [
-              "homepage.group=Home"
-              "homepage.name=Manyfold"
-              "homepage.icon=manyfold.png"
-              "homepage.href=https://${domain}"
-              "homepage.description=3D Model Manager"
-              "traefik.enable=true"
-              "traefik.http.routers.manyfold-secure.entrypoints=https"
-              "traefik.http.routers.manyfold-secure.rule=Host(`${domain}`)"
-              "traefik.http.routers.manyfold-secure.tls=true"
-              "traefik.http.services.manyfold.loadbalancer.server.port=3214"
-            ];
+            labels = self.lib.webLabels {
+              host = "${domain}";
+              router = "manyfold";
+              port = 3214;
+              secureOnly = true;
+              homepage = {
+                group = "Home";
+                name = "Manyfold";
+                icon = "manyfold.png";
+                description = "3D Model Manager";
+              };
+            };
           };
         };
       };

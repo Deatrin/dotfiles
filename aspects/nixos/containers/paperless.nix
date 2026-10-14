@@ -3,7 +3,7 @@
 # Secrets required (via opnix):
 #   /run/opnix/paperless-secret  — env file containing:
 #       PAPERLESS_SECRET_KEY=<long random string>
-{
+{self, ...}: {
   flake.modules.nixos.paperless = {
     config,
     lib,
@@ -91,19 +91,17 @@
               "/storage/media/documents/paperless/export:/usr/src/paperless/export"
               "/storage/media/documents/paperless/consume:/usr/src/paperless/consume"
             ];
-            labels = [
-              "homepage.group=Home"
-              "homepage.name=Paperless"
-              "homepage.icon=paperless-ngx.png"
-              "homepage.href=https://paperless.jennex.dev"
-              "homepage.description=Documents"
-              "traefik.enable=true"
-              "traefik.http.routers.paperless.rule=Host(`paperless.jennex.dev`)"
-              "traefik.http.routers.paperless-secure.entrypoints=https"
-              "traefik.http.routers.paperless-secure.rule=Host(`paperless.jennex.dev`)"
-              "traefik.http.routers.paperless-secure.tls=true"
-              "traefik.http.services.paperless.loadbalancer.server.port=8000"
-            ];
+            labels = self.lib.webLabels {
+              host = "paperless.jennex.dev";
+              router = "paperless";
+              port = 8000;
+              homepage = {
+                group = "Home";
+                name = "Paperless";
+                icon = "paperless-ngx.png";
+                description = "Documents";
+              };
+            };
           };
         };
       };

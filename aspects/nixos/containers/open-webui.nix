@@ -10,7 +10,7 @@
 #
 # Routing:
 #   ai.jennex.dev → Open WebUI (native Pocket ID OIDC, port 8080)
-{
+{self, ...}: {
   flake.modules.nixos.open-webui = {
     config,
     pkgs,
@@ -77,19 +77,17 @@
             };
             environmentFiles = ["/run/opnix/open-webui-env"];
             volumes = ["${volumes.open-webui.ref}:/app/backend/data"];
-            labels = [
-              "homepage.group=Dev & Games"
-              "homepage.name=Open WebUI"
-              "homepage.icon=open-webui.png"
-              "homepage.href=https://ai.jennex.dev"
-              "homepage.description=LLM Chat Interface"
-              "traefik.enable=true"
-              "traefik.http.routers.open-webui.rule=Host(`ai.jennex.dev`)"
-              "traefik.http.routers.open-webui-secure.entrypoints=https"
-              "traefik.http.routers.open-webui-secure.rule=Host(`ai.jennex.dev`)"
-              "traefik.http.routers.open-webui-secure.tls=true"
-              "traefik.http.services.open-webui.loadbalancer.server.port=8080"
-            ];
+            labels = self.lib.webLabels {
+              host = "ai.jennex.dev";
+              router = "open-webui";
+              port = 8080;
+              homepage = {
+                group = "Dev & Games";
+                name = "Open WebUI";
+                icon = "open-webui.png";
+                description = "LLM Chat Interface";
+              };
+            };
           };
         };
       };

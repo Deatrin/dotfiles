@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.drawio = {
     config,
     lib,
@@ -15,19 +15,17 @@
           image = "docker.io/jgraph/drawio:latest";
           autoUpdate = "registry";
           networks = [networks.traefik_network.ref];
-          labels = [
-            "homepage.group=Dev & Games"
-            "homepage.name=draw.io"
-            "homepage.icon=si-diagramsdotnet"
-            "homepage.href=https://drawio.jennex.dev"
-            "homepage.description=Diagramming and whiteboarding"
-            "traefik.enable=true"
-            "traefik.http.routers.drawio.rule=Host(`drawio.jennex.dev`)"
-            "traefik.http.routers.drawio-secure.entrypoints=https"
-            "traefik.http.routers.drawio-secure.rule=Host(`drawio.jennex.dev`)"
-            "traefik.http.routers.drawio-secure.tls=true"
-            "traefik.http.services.drawio.loadbalancer.server.port=8080"
-          ];
+          labels = self.lib.webLabels {
+            host = "drawio.jennex.dev";
+            router = "drawio";
+            port = 8080;
+            homepage = {
+              group = "Dev & Games";
+              name = "draw.io";
+              icon = "si-diagramsdotnet";
+              description = "Diagramming and whiteboarding";
+            };
+          };
         };
       };
     };

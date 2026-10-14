@@ -1,4 +1,4 @@
-{
+{self, ...}: {
   flake.modules.nixos.mealie = {
     config,
     lib,
@@ -35,19 +35,17 @@
           };
           environmentFiles = ["/run/opnix/mealie-env"];
           volumes = ["/var/lib/mealie:/app/data"];
-          labels = [
-            "homepage.group=Home"
-            "homepage.name=Mealie"
-            "homepage.icon=mealie.png"
-            "homepage.href=https://mealie.jennex.dev"
-            "homepage.description=Recipe Manager"
-            "traefik.enable=true"
-            "traefik.http.routers.mealie.rule=Host(`mealie.jennex.dev`)"
-            "traefik.http.routers.mealie-secure.entrypoints=https"
-            "traefik.http.routers.mealie-secure.rule=Host(`mealie.jennex.dev`)"
-            "traefik.http.routers.mealie-secure.tls=true"
-            "traefik.http.services.mealie.loadbalancer.server.port=9000"
-          ];
+          labels = self.lib.webLabels {
+            host = "mealie.jennex.dev";
+            router = "mealie";
+            port = 9000;
+            homepage = {
+              group = "Home";
+              name = "Mealie";
+              icon = "mealie.png";
+              description = "Recipe Manager";
+            };
+          };
         };
       };
     };
