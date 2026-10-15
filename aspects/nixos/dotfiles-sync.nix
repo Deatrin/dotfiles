@@ -64,6 +64,9 @@
       STATE_DIR="/var/lib/dotfiles-sync"
       PORT="${toString cfg.approvePort}"
       LAST_APPLIED="$STATE_DIR/last-applied-rev"
+      FAILED_REV_FILE="$STATE_DIR/failed-rev"
+      FAILED_COUNT_FILE="$STATE_DIR/failed-count"
+      MAX_ATTEMPTS=${toString cfg.maxBuildAttempts}
       FORGEJO_DEPLOY_KEY_FILE="${cfg.forgejoDeployKeyFile}"
 
       PUSHOVER_APP=$(cat "${cfg.pushoverAppTokenFile}")
@@ -100,6 +103,13 @@
       # Already waiting for reboot approval from a previous rebuild
       [[ -f "$STATE_DIR/pending-reboot" ]] && exit 0
 
+      # Stop retrying a commit whose build keeps failing; a new commit resets this.
+      FAILED_COUNT=0
+      if [[ -f "$FAILED_REV_FILE" && "$(cat "$FAILED_REV_FILE")" == "$REMOTE_REV" ]]; then
+        FAILED_COUNT=$(cat "$FAILED_COUNT_FILE" 2>/dev/null || echo 0)
+      fi
+      ((FAILED_COUNT >= MAX_ATTEMPTS)) && exit 0
+
       COMMIT_MSG=$(echo "$API_RESPONSE" | jq -r '.[0].commit.message' | head -3)
       COMMIT_SHORT=''${REMOTE_REV:0:8}
       FLAKE_REF="git+ssh://git@$FORGEJO_HOST/$OWNER/$REPO.git?ref=$BRANCH&rev=$REMOTE_REV"
@@ -107,9 +117,15 @@
       # Build test — dry-activate is safe, switch-to-configuration dry-activate
       # does not restart services
       BUILD_LOG=$(nixos-rebuild dry-activate --flake "$FLAKE_REF#$FLAKE_ATTR" 2>&1) || {
-        pushover "nauvoo: build failed ✗" "Commit $COMMIT_SHORT failed:"$'\n'"$(echo "$BUILD_LOG" | tail -15)"
+        FAILED_COUNT=$((FAILED_COUNT + 1))
+        echo "$REMOTE_REV" > "$FAILED_REV_FILE"
+        echo "$FAILED_COUNT" > "$FAILED_COUNT_FILE"
+        STATUS="attempt $FAILED_COUNT/$MAX_ATTEMPTS"
+        ((FAILED_COUNT >= MAX_ATTEMPTS)) && STATUS="giving up until the next commit"
+        pushover "nauvoo: build failed ✗" "Commit $COMMIT_SHORT failed ($STATUS):"$'\n'"$(echo "$BUILD_LOG" | tail -15)"
         exit 1
       }
+      rm -f "$FAILED_REV_FILE" "$FAILED_COUNT_FILE"
 
       # Skip the switch if this exact config is already running — e.g. someone
       # ran `nh os switch` manually for this commit. last-applied-rev only gets
@@ -235,6 +251,12 @@
       flakeAttr = lib.mkOption {
         type = lib.types.str;
         description = "NixOS flake attribute to build (e.g. \"nauvoo\")";
+      };
+
+      maxBuildAttempts = lib.mkOption {
+        type = lib.types.ints.positive;
+        default = 3;
+        description = "Build attempts per commit before giving up until a new commit lands on the branch.";
       };
 
       approvePort = lib.mkOption {
