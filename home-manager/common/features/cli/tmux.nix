@@ -1,5 +1,8 @@
 {pkgs, ...}: {
-  home.packages = [pkgs.unstable.sesh];
+  # Stable on purpose: unstable sesh 2.32 builds go-mockery 3.8 with Go 1.27, and
+  # mockery (x/tools v0.49) can't read Go 1.27 export data, so the build fails.
+  # Switch back to pkgs.unstable.sesh once nixpkgs fixes it.
+  home.packages = [pkgs.sesh];
 
   programs.tmux = {
     enable = true;
