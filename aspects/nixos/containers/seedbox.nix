@@ -65,7 +65,10 @@
 
         containers.qbittorrent = {
           containerConfig = {
-            image = "lscr.io/linuxserver/qbittorrent:latest";
+            # Pinned to 5.2.x: a tracker doesn't allow 5.3 clients yet. The
+            # 5.2.4 tag stopped getting rebuilds once 5.3.0 shipped, so
+            # autoUpdate is a no-op until this goes back to :latest.
+            image = "lscr.io/linuxserver/qbittorrent:5.2.4";
             autoUpdate = "registry";
             networks = [networks.traefik_network.ref];
             environments = {
