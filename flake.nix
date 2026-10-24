@@ -43,10 +43,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    apple-silicon = {
-      url = "github:nix-community/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -73,7 +69,6 @@
 
       flake = {
         nixosModules = import ./modules/nixos;
-        homeManagerModules = import ./modules/home-manager;
       };
     };
 }

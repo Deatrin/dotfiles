@@ -24,7 +24,6 @@
         devpod-desktop
         vivaldi
         wlopm
-        wttrbar
       ];
     };
   };

@@ -13,7 +13,6 @@
       inputs.nvf.homeManagerModules.default
       ../features/cli
     ]
-    ++ (builtins.attrValues outputs.homeManagerModules)
     ++ (builtins.attrValues (outputs.modules.homeManager or {}));
 
   # No nixpkgs block: every host sets home-manager.useGlobalPkgs, so pkgs

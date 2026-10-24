@@ -17,7 +17,6 @@
       wl-clipboard
       wlogout
       wtype
-      ydotool
     ];
 
     wayland.windowManager.hyprland = {
@@ -35,14 +34,9 @@
           allow_session_lock_restore = true;
         };
 
-        exec-once = [
-          "hypridle"
-        ];
-
         env = [
           "XCURSOR_THEME,capitaine-cursors"
           "XCURSOR_SIZE,32"
-          "WLR_NO_HARDWARE_CURSORS,1"
           "GTK_THEME,Tokyonight-Dark"
         ];
 
@@ -110,20 +104,6 @@
         };
 
         monitor = lib.mkDefault "eDP-1, 1920x1200@59.95, 0x0, 1.2";
-        # device = [
-        #   {
-        #     name = "epic-mouse-v1";
-        #     sensitivity = -0.5;
-        #   }
-        #   {
-        #     name = "zsa-technology-labs-moonlander-mark-i";
-        #     kb_layout = "us";
-        #   }
-        #   {
-        #     name = "keychron-keychron-k7";
-        #     kb_layout = "us";
-        #   }
-        # ];
         windowrule = [
           {
             name = "float-file-progress";

@@ -50,7 +50,7 @@
           }
           {
             monitor = "";
-            text = "Cmd+Shift+L to lock";
+            text = "Super+Shift+L to lock";
             color = "rgb(202, 211, 245)";
             font_size = 20;
             font_family = "JetBrainsMono Nerd Font";
