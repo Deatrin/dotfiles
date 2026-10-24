@@ -29,6 +29,12 @@
           force_zero_scaling = true;
         };
 
+        # If the lock screen dies, relaunch it from a TTY instead of rebooting:
+        #   hyprctl --instance 0 dispatch exec hyprlock
+        misc = {
+          allow_session_lock_restore = true;
+        };
+
         exec-once = [
           "hypridle"
           "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""

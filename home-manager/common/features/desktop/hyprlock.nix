@@ -8,15 +8,15 @@
       enable = true;
       settings = {
         general = {
-          disable_loading_bar = true;
           hide_cursor = true;
-          no_fade_in = false;
         };
 
         background = [
           {
             monitor = "";
-            path = "screenshot";
+            # Not "screenshot": capturing all three monitors on artemis timed
+            # out, Hyprland dropped the lock, and hyprlock crashed on exit.
+            path = "${../../../../wallpapers/stary_firewatch.png}";
             blur_passes = 3;
             blur_size = 8;
           }
