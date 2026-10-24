@@ -47,6 +47,7 @@ All containers managed via Podman Quadlet. One aspect per app in `aspects/nixos/
 | it-tools | Developer utilities | it-tools.jennex.dev |
 | drawio | Diagramming | drawio.jennex.dev |
 | excalidraw | Virtual whiteboard | excalidraw.jennex.dev |
+| edentext | Word processor (browser-only) | edentext.jennex.dev |
 | kubekosh | K3s learning sandbox | kubekosh.jennex.dev |
 | ollama | LLM inference (NVIDIA GPU) | ollama.jennex.dev |
 | open-webui | Chat UI for Ollama | ai.jennex.dev |

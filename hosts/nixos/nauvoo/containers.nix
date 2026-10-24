@@ -13,6 +13,7 @@
     it-tools.enable = true;
     drawio.enable = true;
     excalidraw.enable = true;
+    edentext.enable = true;
     kavita.enable = true;
     pihole.enable = true;
     homepage.enable = true;
