@@ -13,7 +13,7 @@
       ../../home-manager/common/features/desktop/hypridle.nix
       ../../home-manager/common/features/desktop/hyprland.nix
       ../../home-manager/common/features/desktop/hyprlock.nix
-      ../../home-manager/common/features/desktop/hyprpanel.nix
+      ../../home-manager/common/features/desktop/noctalia.nix
       ../../home-manager/common/features/desktop/hyprpaper.nix
       ../../home-manager/common/features/desktop/rofi.nix
       ../../home-manager/common/features/desktop/theme.nix

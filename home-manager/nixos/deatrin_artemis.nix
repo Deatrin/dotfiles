@@ -45,22 +45,10 @@ in {
     w = "${wallpaper}";
   in "/bin/sh -c 'sleep 1; ${hyprctl} hyprpaper wallpaper \"DP-3,${w}\"; ${hyprctl} hyprpaper wallpaper \"DP-4,${w}\"; ${hyprctl} hyprpaper wallpaper \"DP-5,${w}\"'";
 
-  programs.hyprpanel.settings.bar.layouts = lib.mkForce {
-    "0" = {
-      left = ["dashboard" "workspaces" "windowtitle" "media"];
-      middle = ["clock"];
-      right = ["volume" "network" "bluetooth" "systray" "notifications"];
-    };
-    "1" = {
-      left = ["dashboard" "workspaces" "windowtitle" "media"];
-      middle = ["clock"];
-      right = ["volume" "network" "bluetooth" "systray" "notifications"];
-    };
-    "2" = {
-      left = ["dashboard" "workspaces" "windowtitle" "media"];
-      middle = ["clock"];
-      right = ["volume" "network" "bluetooth" "systray" "notifications"];
-    };
+  # Desktop: add media, drop brightness/battery. The bar shows on every monitor.
+  programs.noctalia.settings.bar.main = {
+    start = lib.mkForce ["control-center" "workspaces" "active-window" "media"];
+    end = lib.mkForce ["volume" "network" "bluetooth" "tray" "notifications"];
   };
 
   # Desktop has no backlight — drop brightnessctl listener, keep lock + dpms listeners.
