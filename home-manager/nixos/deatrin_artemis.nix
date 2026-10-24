@@ -1,5 +1,4 @@
 {
-  inputs,
   lib,
   pkgs,
   config,
@@ -9,7 +8,6 @@
 in {
   imports = [
     ../common/global
-    inputs.nix-ld-vscode.nixosModules.default
   ];
 
   dotfiles = {
