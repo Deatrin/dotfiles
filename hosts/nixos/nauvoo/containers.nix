@@ -11,6 +11,7 @@
 
   dotfiles = {
     it-tools.enable = true;
+    omni-tools.enable = true;
     drawio.enable = true;
     excalidraw.enable = true;
     edentext.enable = true;

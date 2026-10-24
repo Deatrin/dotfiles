@@ -46,6 +46,7 @@ All containers managed via Podman Quadlet. One aspect per app in `aspects/nixos/
 | syncthing | File sync | syncthing.jennex.dev |
 | netbox | Network documentation | netbox.jennex.dev |
 | it-tools | Developer utilities | it-tools.jennex.dev |
+| omni-tools | File/data utilities (browser-side) | omni-tools.jennex.dev |
 | drawio | Diagramming | drawio.jennex.dev |
 | excalidraw | Virtual whiteboard | excalidraw.jennex.dev |
 | edentext | Word processor (browser-only) | edentext.jennex.dev |
