@@ -4,6 +4,7 @@ _: {
   # base list is hosts/common/darwin/homebrew.nix.
   homebrew = {
     casks = [
+      "antigravity"
       "datagrip"
       "prismlauncher"
       "proton-drive"
