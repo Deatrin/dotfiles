@@ -31,6 +31,15 @@ _: {
         mode = "0600";
         restartServices = ["traefik-env-setup.service" "traefik.service"];
       };
+      # DDNS-only token (Zone:DNS:Edit on jennex.dev), separate from Traefik's
+      cloudflareDdnsToken = {
+        path = "/run/opnix/cloudflare-ddns-token";
+        reference = "op://nix_secrets/cloudflareddns/api";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["cloudflare-ddns-env-setup.service" "cloudflare-ddns.service"];
+      };
       acmeEmail = {
         path = "/run/opnix/acme-email";
         reference = "op://nix_secrets/deatrindev/email";

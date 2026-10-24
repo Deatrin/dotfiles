@@ -27,6 +27,7 @@
     attic-server.enable = true;
     attic-client.enable = true;
     claude-memory-refresh.enable = true;
+    ddns.enable = true; # home.jennex.dev → public IPv4
   };
 
   # Fallback auth layer for code-server, in case a Tailscale peer reaches it
