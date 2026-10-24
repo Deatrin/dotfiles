@@ -106,6 +106,8 @@
       "com.usebottles.bottles"
       "com.bambulab.BambuStudio"
       "eu.betterbird.Betterbird"
+      "net.davidotek.pupgui2" # ProtonUp-Qt
+      "com.teamspeak.TeamSpeak3"
     ];
   };
   xdg.portal = {
