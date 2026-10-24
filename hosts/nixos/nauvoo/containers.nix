@@ -19,6 +19,7 @@
     homepage.enable = true;
     grocy.enable = true;
     homebox.enable = true;
+    attic-inventory.enable = true;
     navidrome.enable = true;
     audiobookshelf.enable = true;
     calibre.enable = true;

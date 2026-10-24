@@ -38,6 +38,7 @@ All containers managed via Podman Quadlet. One aspect per app in `aspects/nixos/
 | romm | ROM manager | romm.jennex.dev |
 | grocy | Grocery/household | grocy.jennex.dev |
 | homebox | Home inventory | homebox.jennex.dev |
+| attic-inventory | Attic home inventory + Postgres (not the Nix cache) | attic.jennex.dev |
 | manyfold | 3D model manager | manyfold.jennex.dev |
 | mealie | Recipe manager | mealie.jennex.dev |
 | karakeep | Bookmark manager | karakeep.jennex.dev |

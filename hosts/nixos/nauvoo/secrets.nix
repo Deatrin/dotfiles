@@ -766,6 +766,48 @@ _: {
         restartServices = ["tasterr-env-setup.service" "tasterr.service"];
       };
 
+      atticInventorySessionSecret = {
+        path = "/run/opnix/attic-inventory-session-secret";
+        reference = "op://nix_secrets/attic-inventory/session_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-inventory-env-setup.service" "attic-inventory.service"];
+      };
+      atticInventoryAdminPassword = {
+        path = "/run/opnix/attic-inventory-admin-password";
+        reference = "op://nix_secrets/attic-inventory/admin_password";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-inventory-env-setup.service" "attic-inventory.service"];
+      };
+      atticInventoryOidcClientId = {
+        path = "/run/opnix/attic-inventory-oidc-client-id";
+        reference = "op://nix_secrets/attic-inventory/oidc_client_id";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-inventory-env-setup.service" "attic-inventory.service"];
+      };
+      atticInventoryOidcClientSecret = {
+        path = "/run/opnix/attic-inventory-oidc-client-secret";
+        reference = "op://nix_secrets/attic-inventory/oidc_client_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-inventory-env-setup.service" "attic-inventory.service"];
+      };
+      # Same TMDB key as Tasterr — one 1Password field, two consumers
+      atticInventoryTmdbApiKey = {
+        path = "/run/opnix/attic-inventory-tmdb-api-key";
+        reference = "op://nix_secrets/tasterr/tmdb_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["attic-inventory-env-setup.service" "attic-inventory.service"];
+      };
+
       atticServerTokenSecret = {
         path = "/run/opnix/attic-server-secret";
         reference = "op://nix_secrets/attic/ATTIC_SERVER_TOKEN_RS256_SECRET_BASE64";
