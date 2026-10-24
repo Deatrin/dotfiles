@@ -81,13 +81,22 @@
       export OP_CONNECT_HOST="${cfg.connectHost}"
 
       _restart_list=$(mktemp)
+      _failed_list=$(mktemp)
 
+      # A failed read (missing item, typo'd reference) is logged and skipped
+      # rather than aborting the run: under set -e it used to stop here, so
+      # every later secret went unrefreshed (and was missing after a reboot).
+      # The existing file, if any, is left in place and nothing is restarted.
+      # "<3>" makes journald log the line at error priority.
       ${lib.concatMapStrings (s: ''
         echo "Fetching: ${s.value.reference} -> ${s.value.path}"
         mkdir -p "$(dirname "${s.value.path}")"
         _tmpfile=$(mktemp)
-        op read "${s.value.reference}" --force --out-file "$_tmpfile"
-        if cmp -s "$_tmpfile" "${s.value.path}" 2>/dev/null; then
+        if ! op read "${s.value.reference}" --force --out-file "$_tmpfile"; then
+          echo "<3>FAILED: ${s.value.reference} -> ${s.value.path} (left unchanged)"
+          echo "${s.value.reference}" >> "$_failed_list"
+          rm -f "$_tmpfile"
+        elif cmp -s "$_tmpfile" "${s.value.path}" 2>/dev/null; then
           echo "Unchanged: ${s.value.path}"
           rm -f "$_tmpfile"
         else
@@ -111,7 +120,18 @@
       done
       rm -f "$_restart_list"
 
-      echo "All secrets provisioned"
+      # Exit 0 even with failures: dependents only require opnix-secrets
+      # (which requires this unit), so failing here would take down every
+      # secret consumer over one bad item. Connect being unreachable or the
+      # token being rejected still fails above, before any reads.
+      if [ -s "$_failed_list" ]; then
+        echo "<3>$(wc -l < "$_failed_list") secret(s) could not be fetched:"
+        sed 's/^/<3>  /' "$_failed_list"
+        echo "Remaining secrets provisioned"
+      else
+        echo "All secrets provisioned"
+      fi
+      rm -f "$_failed_list"
     '';
   };
 in {
