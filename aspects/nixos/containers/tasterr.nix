@@ -75,7 +75,7 @@
               router = "tasterr";
               port = 8000;
               homepage = {
-                group = "Media";
+                group = "Downloads";
                 name = "Tasterr";
                 icon = "sh-tasterr.png";
                 description = "Media Discovery";
