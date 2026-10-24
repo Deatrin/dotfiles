@@ -14,40 +14,52 @@ Production homelab server running all self-hosted services via Podman Quadlet co
 
 ## Running Containers
 
-All containers managed via Podman Quadlet. Modules in `hosts/common/optional/containers/`.
+All containers managed via Podman Quadlet. One aspect per app in `aspects/nixos/containers/`, toggled in `containers.nix`; foundational infra (networks, Traefik, op-connect) in `hosts/common/optional/containers/`.
 
 | Stack | Services | Domain |
 |-------|----------|--------|
 | traefik | Reverse proxy + wildcard LE cert | *.jennex.dev |
 | pihole | DNS + ad blocking | pihole.jennex.dev |
-| homepage | Dashboard | home.jennex.dev |
+| homepage | Dashboard | homepage.jennex.dev |
 | pocket-id | OIDC provider | pocket.jennex.dev |
 | traefik-forward-auth | SSO middleware | auth.jennex.dev |
 | immich | Photo management | immich.jennex.dev |
 | nextcloud | File sync | nextcloud.jennex.dev |
-| forgejo | Git hosting | git.jennex.dev |
+| forgejo | Git hosting | forgejo.jennex.dev |
 | paperless | Document management | paperless.jennex.dev |
-| navidrome | Music streaming | navidrome.jennex.dev |
+| navidrome | Music streaming | navi.jennex.dev |
 | audiobookshelf | Audiobook server | audiobookshelf.jennex.dev |
 | calibre | Ebook library | calibre.jennex.dev |
+| kavita | Ebook/comic reader | kavita.jennex.dev |
 | arr-stack | Lidarr, Radarr, Sonarr, Prowlarr, SABnzbd | *.jennex.dev |
-| seerr | Overseerr media requests | seerr.jennex.dev |
+| seedbox | qBittorrent + mousehole (no VPN) | qbittorrent.jennex.dev, mousehole.jennex.dev |
+| seerr | Media requests (formerly Jellyseerr) | seerr.jennex.dev |
+| tasterr | Media discovery, requests via Seerr | tasterr.jennex.dev |
 | romm | ROM manager | romm.jennex.dev |
 | grocy | Grocery/household | grocy.jennex.dev |
 | homebox | Home inventory | homebox.jennex.dev |
 | manyfold | 3D model manager | manyfold.jennex.dev |
 | mealie | Recipe manager | mealie.jennex.dev |
+| karakeep | Bookmark manager | karakeep.jennex.dev |
+| trek | Travel planner | trek.jennex.dev |
 | syncthing | File sync | syncthing.jennex.dev |
 | netbox | Network documentation | netbox.jennex.dev |
 | it-tools | Developer utilities | it-tools.jennex.dev |
 | drawio | Diagramming | drawio.jennex.dev |
 | excalidraw | Virtual whiteboard | excalidraw.jennex.dev |
-| monitoring | Prometheus, Grafana, Loki, Promtail, UnPoller, podman-exporter | grafana.jennex.dev |
+| kubekosh | K3s learning sandbox | kubekosh.jennex.dev |
+| ollama | LLM inference (NVIDIA GPU) | ollama.jennex.dev |
+| open-webui | Chat UI for Ollama | ai.jennex.dev |
+| monitoring | Prometheus, Grafana, Loki, UnPoller, podman-exporter (+ host Alloy) | grafana.jennex.dev |
 | netboot | PXE network boot manager | netboot.jennex.dev |
+| ouro-go | Ouro Discord bot | no web UI |
+| idrac | Dell iDRAC fan controller | no web UI |
 | op-connect | 1Password Connect server | localhost:8080 only |
 
 **External services** (proxied through Traefik, not containers):
 - Plex: `http://10.1.30.100:32400` → `plex.jennex.dev`
+- code-server: `http://10.1.30.100:4444` → `code.jennex.dev` (Pocket ID forward-auth)
+- Attic: `http://10.1.30.100:8081` → `cache.jennex.dev` (no forward-auth; Attic bearer tokens)
 
 ## Secrets Management
 
