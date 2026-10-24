@@ -24,6 +24,8 @@
           # Apps started from the launcher would otherwise die whenever the
           # noctalia user service restarts (e.g. on a config change).
           launch_apps_as_systemd_services = true;
+          # ALT+Tab lists the most recently used window first
+          window_switcher.mru = true;
           # Clipboard history (SUPER+V). Don't resurrect a selection after its
           # app exits: 1Password clears copied secrets that way.
           clipboard_enabled = true;

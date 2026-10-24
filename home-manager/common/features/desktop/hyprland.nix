@@ -201,6 +201,13 @@
             "match:title" = "^(Picture-in-Picture)$";
             float = 1;
           }
+          {
+            name = "float-noctalia-settings";
+            "match:class" = "dev.noctalia.Noctalia";
+            float = 1;
+            size = "1080 920";
+            center = 1;
+          }
         ];
 
         "$mainMod" = "SUPER";

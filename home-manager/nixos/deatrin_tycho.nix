@@ -17,6 +17,9 @@
     kubernetes.enable = true;
   };
 
+  # Keep workspaces 1-5 in the bar even when empty
+  wayland.windowManager.hyprland.settings.workspace = map (n: "${toString n}, monitor:eDP-1, persistent:true") [1 2 3 4 5];
+
   home = {
     username = lib.mkDefault "deatrin";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
