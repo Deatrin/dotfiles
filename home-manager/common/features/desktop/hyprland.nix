@@ -37,7 +37,6 @@
 
         exec-once = [
           "hypridle"
-          "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
         ];
 
         env = [
@@ -243,9 +242,9 @@
           "$mainMod SHIFT, M, exit"
           "$mainMod SHIFT, l, exec, hyprlock"
           "$mainMod, F, fullscreen"
-          "$mainMod, V, exec, clipman pick --tool=rofi"
-          "$mainMod, D, exec, rofi -show"
-          "$mainMod SHIFT, S, exec, bemoji"
+          "$mainMod, V, exec, noctalia msg panel-toggle clipboard"
+          "$mainMod, D, exec, noctalia msg panel-toggle launcher"
+          "$mainMod SHIFT, S, exec, noctalia msg panel-toggle launcher /emo"
           "$mainMod, P, exec, 1password --quick-access"
           "$mainMod SHIFT, P, pseudo"
           "$mainMod, backslash, layoutmsg, togglesplit"

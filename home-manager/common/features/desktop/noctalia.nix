@@ -24,8 +24,10 @@
           # Apps started from the launcher would otherwise die whenever the
           # noctalia user service restarts (e.g. on a config change).
           launch_apps_as_systemd_services = true;
-          # clipman already keeps clipboard history (see hyprland.nix exec-once).
-          clipboard_enabled = false;
+          # Clipboard history (SUPER+V). Don't resurrect a selection after its
+          # app exits: 1Password clears copied secrets that way.
+          clipboard_enabled = true;
+          clipboard_keep_from_closed_apps = false;
 
           # Attached panels copy the bar's background_opacity (0 here), so
           # float them; floating panels use transparency_mode (soft = 80%).

@@ -21,15 +21,15 @@
 |---|---|
 | `SUPER + Enter` | Terminal (ghostty) |
 | `SUPER + T` | Terminal with fastfetch |
-| `SUPER + D` | App launcher (rofi) |
+| `SUPER + D` | Launcher (noctalia, same as SUPER + Space) |
 | `SUPER + Space` | Launcher (noctalia) |
 | `SUPER + S` | Control center (noctalia) |
 | `SUPER + ,` | Noctalia settings |
 | `ALT + Tab` | Window switcher (noctalia; tap = previous window, hold to cycle) |
 | Volume / mute / brightness keys | Adjust via noctalia (shows OSD) |
 | `SUPER + B` | File manager (thunar) |
-| `SUPER + V` | Clipboard history (clipman) |
-| `SUPER + SHIFT + S` | Emoji picker (bemoji) |
+| `SUPER + V` | Clipboard history (noctalia) |
+| `SUPER + SHIFT + S` | Emoji picker (noctalia launcher, `/emo`) |
 | `SUPER + P` | Password manager (1Password quick access) |
 
 ### Screenshots
