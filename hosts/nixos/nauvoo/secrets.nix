@@ -741,6 +741,31 @@ _: {
         restartServices = ["karakeep-env-setup.service" "karakeep.service"];
       };
 
+      tasterrTmdbApiKey = {
+        path = "/run/opnix/tasterr-tmdb-api-key";
+        reference = "op://nix_secrets/tasterr/tmdb_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["tasterr-env-setup.service" "tasterr.service"];
+      };
+      tasterrSecretKey = {
+        path = "/run/opnix/tasterr-secret-key";
+        reference = "op://nix_secrets/tasterr/secret_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["tasterr-env-setup.service" "tasterr.service"];
+      };
+      tasterrSeerrApiKey = {
+        path = "/run/opnix/tasterr-seerr-api-key";
+        reference = "op://nix_secrets/tasterr/seerr_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["tasterr-env-setup.service" "tasterr.service"];
+      };
+
       atticServerTokenSecret = {
         path = "/run/opnix/attic-server-secret";
         reference = "op://nix_secrets/attic/ATTIC_SERVER_TOKEN_RS256_SECRET_BASE64";

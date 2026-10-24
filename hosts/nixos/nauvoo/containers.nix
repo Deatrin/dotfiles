@@ -28,6 +28,7 @@
     forgejo.enable = true;
     arr-stack.enable = true;
     seerr.enable = true;
+    tasterr.enable = true;
     syncthing.enable = true;
     nextcloud.enable = true;
     manyfold.enable = true;
