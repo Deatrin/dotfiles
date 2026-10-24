@@ -26,6 +26,14 @@
           launch_apps_as_systemd_services = true;
           # clipman already keeps clipboard history (see hyprland.nix exec-once).
           clipboard_enabled = false;
+
+          # Attached panels copy the bar's background_opacity (0 here), so
+          # float them; floating panels use transparency_mode (soft = 80%).
+          panel = {
+            transparency_mode = "soft";
+            control_center_placement = "floating";
+            session_placement = "floating";
+          };
         };
 
         theme = {
@@ -41,6 +49,14 @@
 
         bar.main = {
           position = "top";
+          # Transparent bar with each widget on its own pill (hyprpanel's old look)
+          background_opacity = 0.0;
+          compositor_blur = false;
+          shadow = false;
+          capsule = true;
+          # Full-width bar: start/end widgets sit near the screen sides
+          margin_ends = 0;
+          padding = 8;
           start = ["control-center" "workspaces" "active-window"];
           center = ["clock"];
           end = ["volume" "brightness" "battery" "network" "bluetooth" "tray" "notifications"];

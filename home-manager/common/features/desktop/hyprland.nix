@@ -233,7 +233,12 @@
           "$mainMod, o, exec, hyprctl setprop activewindow opaque toggle"
           "$mainMod, b, exec, thunar"
           "$mainMod, Escape, exec, wlogout -p layer-shell"
-          "$mainMod, Space, togglefloating"
+          # Noctalia panels
+          "$mainMod, Space, exec, noctalia msg panel-toggle launcher"
+          "$mainMod, S, exec, noctalia msg panel-toggle control-center"
+          "$mainMod, comma, exec, noctalia msg settings-toggle"
+          # hold: quick tap = previous window; keep ALT held + Tab to cycle
+          "ALT, Tab, exec, noctalia msg window-switcher hold"
           "$mainMod, q, killactive"
           "$mainMod SHIFT, M, exit"
           "$mainMod SHIFT, l, exec, hyprlock"
@@ -278,6 +283,18 @@
           "$mainMod SHIFT, 0, movetoworkspace, 10"
           "$mainMod, mouse_down, workspace, e+1"
           "$mainMod, mouse_up, workspace, e-1"
+        ];
+
+        # Media keys through noctalia so its OSD shows; work while locked, repeat on hold
+        bindel = [
+          ", XF86AudioRaiseVolume, exec, noctalia msg volume-up"
+          ", XF86AudioLowerVolume, exec, noctalia msg volume-down"
+          ", XF86MonBrightnessUp, exec, noctalia msg brightness-up"
+          ", XF86MonBrightnessDown, exec, noctalia msg brightness-down"
+        ];
+
+        bindl = [
+          ", XF86AudioMute, exec, noctalia msg volume-mute"
         ];
 
         bindm = [

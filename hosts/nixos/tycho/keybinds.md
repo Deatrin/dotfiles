@@ -8,6 +8,11 @@
 | `SUPER + Enter` | Terminal (ghostty) |
 | `SUPER + T` | Terminal with fastfetch |
 | `SUPER + D` | App launcher (rofi) |
+| `SUPER + Space` | Launcher (noctalia) |
+| `SUPER + S` | Control center (noctalia) |
+| `SUPER + ,` | Noctalia settings |
+| `ALT + Tab` | Window switcher (noctalia; tap = previous window, hold to cycle) |
+| Volume / mute / brightness keys | Adjust via noctalia (shows OSD) |
 | `SUPER + B` | File manager (thunar) |
 | `SUPER + V` | Clipboard history (clipman) |
 | `SUPER + SHIFT + S` | Emoji picker (bemoji) |
@@ -18,7 +23,6 @@
 |---|---|
 | `SUPER + Q` | Kill active window |
 | `SUPER + F` | Fullscreen |
-| `SUPER + Space` | Toggle floating |
 | `SUPER + O` | Toggle window opacity |
 | `SUPER + H/J/K/L` | Move focus left/down/up/right |
 | `SUPER + CTRL + H/L` | Resize window left/right |
