@@ -9,6 +9,7 @@
     ...
   }: let
     cfg = config.services.dotfiles-sync;
+    lanAddress = (lib.head config.networking.interfaces.${cfg.approveLanInterface}.ipv4.addresses).address;
 
     # Runs nixos-rebuild switch in a detached transient systemd unit so it survives
     # switch-to-configuration restarting dotfiles-sync.service when the unit file changes.
@@ -46,9 +47,12 @@
         TAILSCALE_IP=$(ip -4 addr show tailscale0 2>/dev/null \
           | awk '/inet / {print $2}' | cut -d/ -f1 \
           || echo "nauvoo")
-        APPROVE_URL="http://$TAILSCALE_IP:$PORT/approve?token=$APPROVE_TOKEN"
+        # Pushover allows one button: the LAN address works at home and over the
+        # Tailscale subnet route; the tailnet link covers clients without that route.
+        APPROVE_URL="http://${lanAddress}:$PORT/approve?token=$APPROVE_TOKEN"
+        TAILSCALE_URL="http://$TAILSCALE_IP:$PORT/approve?token=$APPROVE_TOKEN"
         pushover "nauvoo: reboot required" \
-          "Commit $COMMIT_SHORT applied. Kernel updated — tap to approve reboot." \
+          "Commit $COMMIT_SHORT applied. Kernel updated — tap to approve reboot."$'\n'"Tailscale: $TAILSCALE_URL" \
           "$APPROVE_URL" "Approve Reboot"
       fi
     '';
@@ -264,6 +268,11 @@
         default = 45923;
       };
 
+      approveLanInterface = lib.mkOption {
+        type = lib.types.str;
+        description = "LAN interface to expose the approval listener on, alongside Tailscale. Its first static IPv4 address is used in the notification link.";
+      };
+
       pushoverAppTokenFile = lib.mkOption {
         type = lib.types.str;
         default = "/run/opnix/dotfiles-sync-pushover-token";
@@ -331,8 +340,9 @@
         };
       };
 
-      # Only allow connections on the Tailscale interface
+      # Only allow connections on the Tailscale and LAN interfaces
       networking.firewall.interfaces."tailscale0".allowedTCPPorts = [cfg.approvePort];
+      networking.firewall.interfaces.${cfg.approveLanInterface}.allowedTCPPorts = [cfg.approvePort];
     };
   };
 }

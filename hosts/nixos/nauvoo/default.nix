@@ -111,6 +111,7 @@
   services.dotfiles-sync = {
     enable = true;
     flakeAttr = "nauvoo";
+    approveLanInterface = "enp38s0";
   };
 
   # Auto-reboot if kernel freezes (sp5100-tco hardware watchdog)
