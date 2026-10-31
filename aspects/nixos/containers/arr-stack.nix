@@ -196,7 +196,6 @@
           arr-lidarr = {};
           arr-radarr = {};
           arr-sonarr = {};
-          arr-whisparr = {};
           arr-prowlarr = {};
         };
 
@@ -275,25 +274,6 @@
                 icon = "sonarr.png";
                 description = "TV Shows";
               };
-            };
-          };
-        };
-
-        containers.whisparr = {
-          containerConfig = {
-            image = "ghcr.io/hotio/whisparr:nightly";
-            autoUpdate = "registry";
-            networks = [networks.traefik_network.ref];
-            environments = commonEnv;
-            volumes = [
-              "${volumes.arr-whisparr.ref}:/config"
-              "/storage/media/whisparr/data:/data"
-              "/storage/media/downloads/sabnzbd:/downloads"
-            ];
-            labels = self.lib.webLabels {
-              host = "whisparr.jennex.dev";
-              router = "whisparr";
-              port = 6969;
             };
           };
         };
