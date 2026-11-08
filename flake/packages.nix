@@ -1,6 +1,13 @@
 _: {
-  perSystem = {pkgs, ...}: {
-    packages = import ../pkgs {inherit pkgs;};
+  perSystem = {
+    lib,
+    pkgs,
+    ...
+  }: {
+    # Only expose packages that support this system (brave is Linux-only).
+    packages =
+      lib.filterAttrs (_: lib.meta.availableOn pkgs.stdenv.hostPlatform)
+      (import ../pkgs {inherit pkgs;});
 
     # `nix fmt` formats the repo with alejandra (the style most files use).
     # Nix runs the formatter with no arguments, which alejandra treats as

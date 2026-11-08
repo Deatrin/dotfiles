@@ -31,6 +31,20 @@ jobs:
 
       - run: nix flake update
 
+      # pkgs/brave is a vendored upstream .deb (nixpkgs dropped brave), so
+      # nothing else picks up its security releases. The runner has no
+      # nixpkgs channel for update.sh's nix-shell shebang, so supply its
+      # tools with `nix shell`. GITHUB_TOKEN is blanked so a Forgejo token
+      # isn't sent to api.github.com. Non-fatal: a GitHub hiccup shouldn't
+      # block the lock bump; the next night retries.
+      - name: Update Brave
+        run: |
+          if ! GITHUB_TOKEN= nix shell nixpkgs#curl nixpkgs#jq nixpkgs#gnused \
+              -c bash pkgs/brave/update.sh; then
+            echo "::warning::Brave update failed — leaving pkgs/brave as is"
+            git checkout -- pkgs/brave
+          fi
+
       # Gate the push on every host still evaluating against the new lock —
       # unattended bumps have broken hosts before (import-tree API change,
       # nvf option rename), and nauvoo's dotfiles-sync pulls whatever lands.
@@ -63,8 +77,18 @@ jobs:
           git config gpg.format ssh
           git config user.signingkey ~/.ssh/signing_key
           git config commit.gpgsign true
+          msgs=()
           if ! git diff --quiet flake.lock; then
             git add flake.lock
-            git commit -m "Bump flake.lock"
+            msgs+=("Bump flake.lock")
+          fi
+          if ! git diff --quiet pkgs/brave; then
+            git add pkgs/brave
+            msgs+=("brave: $(sed -n 's/^  version = "\(.*\)";$/\1/p' pkgs/brave/default.nix)")
+          fi
+          if [ "${#msgs[@]}" -gt 0 ]; then
+            subject="${msgs[0]}"
+            [ "${#msgs[@]}" -gt 1 ] && subject="${msgs[0]}, ${msgs[1]}"
+            git commit -m "$subject"
             git push
           fi
