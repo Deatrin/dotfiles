@@ -10,7 +10,7 @@
     [
       inputs.nix-colors.homeManagerModules.default
       inputs.opnix.homeManagerModules.default
-      inputs.nvf.homeManagerModules.default
+      inputs.nvf.homeModules.default
       ../features/cli
     ]
     ++ (builtins.attrValues (outputs.modules.homeManager or {}));
