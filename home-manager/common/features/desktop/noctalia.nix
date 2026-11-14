@@ -13,6 +13,12 @@
       pavucontrol
     ];
 
+    # The flake input's HM module (tracking noctalia main, 5.5.0) sets
+    # Type=notify, but pkgs.unstable.noctalia (5.4.1) predates sd_notify
+    # support, so systemd killed it every 90s on start timeout. Drop this
+    # once the package version catches up with the module.
+    systemd.user.services.noctalia.Service.Type = lib.mkForce "simple";
+
     programs.noctalia = {
       enable = true;
       package = pkgs.unstable.noctalia;
