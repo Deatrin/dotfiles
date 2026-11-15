@@ -28,15 +28,15 @@
 #   9. Place the op-connect token before first boot:
 #        sudo install -m600 /dev/stdin /mnt/etc/op-connect-token
 #  10. Reboot. Full guide: hosts/nixos/artemis/REINSTALL.md
+#  11. After first boot: Secure Boot via lanzaboote (REINSTALL.md section 4).
 #
 # Layout:
 #   ESP   2G     vfat  /boot   (NixOS only, no longer shared with Windows)
 #   luks  rest   LUKS "cryptroot" -> BTRFS (/, /nix, /home)
 #
-# Booting Windows: systemd-boot only auto-detects Windows on its own ESP, so
-# Windows on the 1TB needs boot.loader.systemd-boot.windows.<name>.efiDeviceHandle,
-# set after install. Read the handle from the EDK2 shell (map -c). Until then,
-# use the motherboard boot menu.
+# Booting Windows: use the motherboard boot menu (F12). systemd-boot only
+# auto-detects Windows on its own ESP, and the efiDeviceHandle/EDK2-shell
+# workaround doesn't work with lanzaboote + Secure Boot (REINSTALL.md section 5).
 {
   disko.devices = {
     disk = {

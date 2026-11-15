@@ -28,6 +28,9 @@
     attic-client.enable = true;
     syncthing-client.enable = true;
     claude-memory-refresh.enable = true;
+    # Off for nixos-install: lanzaboote needs the keys in /var/lib/sbctl first.
+    # Flip to true after `sudo sbctl create-keys` (REINSTALL.md section 4).
+    secure-boot.enable = false;
   };
 
   boot.loader = {

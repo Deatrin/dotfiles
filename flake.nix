@@ -34,6 +34,11 @@
       url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    # Secure Boot (aspects/nixos/secure-boot.nix). Pinned to a release tag.
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprsettings.url = "github:acropolis914/hyprsettings";
     hardware.url = "github:nixos/nixos-hardware";
     nix-colors.url = "github:misterio77/nix-colors";
