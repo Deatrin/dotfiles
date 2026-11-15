@@ -1,70 +1,93 @@
-# Dual-boot disko config for artemis (Windows + NixOS on a single 2TB NVMe).
+# Whole-disk disko config for artemis: NixOS owns the entire 2TB NVMe.
+# Windows lives on a separate 1TB drive with its own ESP (see "Booting Windows"
+# below).
+#
+# WARNING: until the reinstall, do NOT rebuild artemis with this file. The
+# running system lives on the old layout (shared Windows ESP on p1, LUKS on p5).
+# This config mounts by-partlabel paths that don't exist yet, so a rebuild
+# followed by a reboot would fail to unlock root.
 #
 # Install order:
-#   1. Install Windows — creates EFI (p1) + Windows partition (p2), leaving ~1.5TB unallocated
-#   2. Boot Windows once to finish setup + install Rekordbox
-#   3. Boot NixOS ISO
-#   4. Manually create the NixOS partition in the unallocated space:
-#        parted /dev/nvme0n1 mkpart primary 515GiB 100%
-#        (adjust start offset to be just after the Windows partition)
-#   5. Confirm exact device paths with: lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT
-#   6. Update device paths below if needed, then run disko:
-#        nix run github:nix-community/disko -- --mode format /path/to/disko-config.nix
-#        (--mode format formats only — does NOT recreate the partition table)
-#   7. nixos-install --flake .#artemis
+#   1. Disconnect the 2TB drive (or disable it in BIOS) and install Windows on
+#      the 1TB drive. With the 2TB disconnected, the Windows installer has to
+#      put its own ESP on the 1TB drive.
+#   2. Reconnect the 2TB drive and boot the NixOS ISO.
+#   3. Confirm the target disk: ls -l /dev/disk/by-id/ | grep nvme
+#      (the device path below must be the 990 PRO 2TB, NOT the 1TB)
+#   4. echo -n '<luks passphrase>' > /tmp/secret.key
+#   5. Clone the artemis-reinstall branch (GitHub mirror needs no keys; this
+#      change lives there, not on main, until the reinstall is done):
+#        git clone -b artemis-reinstall https://github.com/Deatrin/dotfiles /tmp/dotfiles
+#   6. Wipe, partition, format and mount at /mnt:
+#        sudo nix --experimental-features 'nix-command flakes' run github:nix-community/disko -- \
+#          --mode destroy,format,mount /tmp/dotfiles/hosts/nixos/artemis/disko-config.nix
+#   7. Copy the checkout onto the new disk (the ISO's /tmp is RAM, gone on reboot):
+#        sudo mkdir -p /mnt/etc && sudo cp -a /tmp/dotfiles /mnt/etc/nixos
+#        sudo chown -R 1000:100 /mnt/etc/nixos
+#   8. sudo nixos-install --flake /mnt/etc/nixos#artemis
+#   9. Place the op-connect token before first boot:
+#        sudo install -m600 /dev/stdin /mnt/etc/op-connect-token
+#  10. Reboot. Full guide: hosts/nixos/artemis/REINSTALL.md
 #
-# Expected partition layout:
-#   /dev/nvme0n1p1 — EFI     (~1GB, vfat, created by Windows — DO NOT FORMAT)
-#   /dev/nvme0n1p2 — Windows (~512GB, ntfs, managed by Windows — DO NOT TOUCH)
-#   /dev/nvme0n1p3 — NixOS   (~1.5TB, LUKS → BTRFS)
+# Layout:
+#   ESP   2G     vfat  /boot   (NixOS only, no longer shared with Windows)
+#   luks  rest   LUKS "cryptroot" -> BTRFS (/, /nix, /home)
 #
-# NOTE: noFormat = true on the EFI filesystem prevents disko from wiping Windows
-# boot files. The Windows partition (p2) is not declared here — disko ignores it.
+# Booting Windows: systemd-boot only auto-detects Windows on its own ESP, so
+# Windows on the 1TB needs boot.loader.systemd-boot.windows.<name>.efiDeviceHandle,
+# set after install. Read the handle from the EDK2 shell (map -c). Until then,
+# use the motherboard boot menu.
 {
   disko.devices = {
     disk = {
-      # Reference the NixOS partition directly (not the whole disk).
-      # Disko treats it as a raw block device and puts LUKS directly on it.
-      # Adjust if the partition number differs after manual partitioning.
-      nixos = {
+      main = {
         type = "disk";
-        device = "/dev/nvme0n1p5";
+        device = "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_2TB_S7KHNU0Y517514Z";
         content = {
-          type = "luks";
-          name = "cryptroot";
-          passwordFile = "/tmp/secret.key";
-          settings = {
-            allowDiscards = true;
-          };
-          content = {
-            type = "btrfs";
-            extraArgs = ["-f"];
-            subvolumes = {
-              "/root" = {
-                mountpoint = "/";
-                mountOptions = ["compress=zstd" "noatime"];
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "2G";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = ["umask=0077"];
               };
-              "/nix" = {
-                mountpoint = "/nix";
-                mountOptions = ["compress=zstd" "noatime"];
-              };
-              "/home" = {
-                mountpoint = "/home";
-                mountOptions = ["compress=zstd" "noatime"];
+            };
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "cryptroot";
+                passwordFile = "/tmp/secret.key";
+                settings = {
+                  allowDiscards = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-f"];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = ["compress=zstd" "noatime"];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = ["compress=zstd" "noatime"];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = ["compress=zstd" "noatime"];
+                    };
+                  };
+                };
               };
             };
           };
         };
       };
     };
-  };
-
-  # Mount the existing Windows EFI partition — created by Windows installer.
-  # Using fileSystems directly (not via disko) so disko never touches this partition.
-  # Adjust device path if the EFI partition number differs.
-  fileSystems."/boot" = {
-    device = "/dev/nvme0n1p1";
-    fsType = "vfat";
-    options = ["umask=0077"];
   };
 }
