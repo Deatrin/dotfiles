@@ -22,6 +22,7 @@
     homebox.enable = true;
     attic-inventory.enable = true;
     navidrome.enable = true;
+    audiomuse.enable = true;
     audiobookshelf.enable = true;
     calibre.enable = true;
     pocket-id.enable = true;

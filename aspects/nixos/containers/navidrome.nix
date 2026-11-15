@@ -19,33 +19,42 @@
         url = "https://github.com/${repo}/releases/download/${tag}/${file}";
         inherit hash;
       };
-    plugins = {
-      # Synced lyrics from LRCLIB/lrcmux/etc. Turn on "Write lyrics to files"
-      # so the web player can show them (it can't show plugin lyrics).
-      nd-lyrics =
-        ghRelease "J0R6IT0/navidrome-lyrics-plugin" "v9.2.0" "nd-lyrics.ndp"
-        "sha256-UmK/7eNwAfoFpjyLvY856YbLrI3NiyV1R26PdRtK1cY=";
-      # Listening-aware playlists (time-of-day, Rediscover, ...). The 0.64
-      # build reads Navidrome's play history; it must be named navibeat-mixes.
-      navibeat-mixes =
-        ghRelease "nenadjokic/navibeat-mixes" "v0.9.30" "navibeat-mixes-navidrome-0.64.ndp"
-        "sha256-yetg4PlQ/Im1tZZT4pKADL9nq72j1jqKg3bU8g2fGeU=";
-      # Artist bios/images/similar artists from Apple Music (metadata agent).
-      apple-music =
-        ghRelease "navidrome/apple-music-plugin" "v0.2.0" "apple-music.ndp"
-        "sha256-NoJ1HnLKpcxGs/ercN5w6gJvCjikf3gLLStJIu0K0VQ=";
-      # ListenBrainz daily/weekly playlists. Per-user config in the UI; Daily
-      # Jams also needs the ListenBrainz account to follow "troi-bot".
-      listenbrainz-daily-playlist =
-        ghRelease "kgarner7/navidrome-listenbrainz-daily-playlist" "v6.0.0" "listenbrainz-daily-playlist.ndp"
-        "sha256-uYNqX0MjO/o/ePokVqwJjLgpBSvv659UfgOBCkHgGEY=";
-      # Album art from MusicBrainz/Cover Art Archive (metadata agent, last in
-      # ND_AGENTS as a fallback). Built in the 0.63 era; if it fails to load
-      # on a newer Navidrome, check `podman logs navidrome | grep coverart`.
-      coverartarchive =
-        ghRelease "sunsetroute1/navidrome-coverartarchive-plugin" "v1.0.0" "coverartarchive.ndp"
-        "sha256-Ow7JBVzngl6+z3DxKeaar8LT8TmDds56fTkOMecgRss=";
-    };
+    plugins =
+      {
+        # Synced lyrics from LRCLIB/lrcmux/etc. Turn on "Write lyrics to files"
+        # so the web player can show them (it can't show plugin lyrics).
+        nd-lyrics =
+          ghRelease "J0R6IT0/navidrome-lyrics-plugin" "v9.2.0" "nd-lyrics.ndp"
+          "sha256-UmK/7eNwAfoFpjyLvY856YbLrI3NiyV1R26PdRtK1cY=";
+        # Listening-aware playlists (time-of-day, Rediscover, ...). The 0.64
+        # build reads Navidrome's play history; it must be named navibeat-mixes.
+        navibeat-mixes =
+          ghRelease "nenadjokic/navibeat-mixes" "v0.9.30" "navibeat-mixes-navidrome-0.64.ndp"
+          "sha256-yetg4PlQ/Im1tZZT4pKADL9nq72j1jqKg3bU8g2fGeU=";
+        # Artist bios/images/similar artists from Apple Music (metadata agent).
+        apple-music =
+          ghRelease "navidrome/apple-music-plugin" "v0.2.0" "apple-music.ndp"
+          "sha256-NoJ1HnLKpcxGs/ercN5w6gJvCjikf3gLLStJIu0K0VQ=";
+        # ListenBrainz daily/weekly playlists. Per-user config in the UI; Daily
+        # Jams also needs the ListenBrainz account to follow "troi-bot".
+        listenbrainz-daily-playlist =
+          ghRelease "kgarner7/navidrome-listenbrainz-daily-playlist" "v6.0.0" "listenbrainz-daily-playlist.ndp"
+          "sha256-uYNqX0MjO/o/ePokVqwJjLgpBSvv659UfgOBCkHgGEY=";
+        # Album art from MusicBrainz/Cover Art Archive (metadata agent, last in
+        # ND_AGENTS as a fallback). Built in the 0.63 era; if it fails to load
+        # on a newer Navidrome, check `podman logs navidrome | grep coverart`.
+        coverartarchive =
+          ghRelease "sunsetroute1/navidrome-coverartarchive-plugin" "v1.0.0" "coverartarchive.ndp"
+          "sha256-Ow7JBVzngl6+z3DxKeaar8LT8TmDds56fTkOMecgRss=";
+      }
+      // lib.optionalAttrs audiomuse {
+        # Sonic similarity for Instant Mix/Radio, backed by the AudioMuse-AI
+        # stack (audiomuse.nix). Pinned in step with its core image there.
+        audiomuseai =
+          ghRelease "NeptuneHub/AudioMuse-AI-NV-plugin" "v12" "audiomuseai.ndp"
+          "sha256-2oUSxPOy06WP6mEeOrNsetU+fdx8nZsWIxEBrpiAntg=";
+      };
+    audiomuse = config.dotfiles.audiomuse.enable or false;
     pluginsDir = "/var/lib/navidrome/plugins";
   in {
     options.dotfiles.navidrome.enable = lib.mkEnableOption "Navidrome music server";
@@ -120,7 +129,12 @@
               ND_LYRICSPRIORITY = ".ttml,.yaml,.yml,.elrc,.lrc,.srt,.txt,embedded,nd-lyrics";
               # Metadata agents, tried in order. Replaces the default
               # "deezer,lastfm,listenbrainz", so those stay listed.
-              ND_AGENTS = "apple-music,deezer,lastfm,listenbrainz,coverartarchive";
+              # audiomuseai must come first: Navidrome uses the first agent
+              # with sonic similarity for Instant Mix.
+              ND_AGENTS = lib.concatStringsSep "," (
+                lib.optional audiomuse "audiomuseai"
+                ++ ["apple-music" "deezer" "lastfm" "listenbrainz" "coverartarchive"]
+              );
             };
             environmentFiles = ["/run/opnix/navidrome-env"];
             volumes = [
