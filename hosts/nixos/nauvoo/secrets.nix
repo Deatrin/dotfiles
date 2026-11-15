@@ -289,6 +289,22 @@ _: {
         mode = "0600";
         restartServices = ["audiobookshelf.service"];
       };
+      navidromeLastfmApiKey = {
+        path = "/run/opnix/navidrome-lastfm-api-key";
+        reference = "op://nix_secrets/navidrome/lastfm_api_key";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["navidrome-env-setup.service" "navidrome.service"];
+      };
+      navidromeLastfmSecret = {
+        path = "/run/opnix/navidrome-lastfm-secret";
+        reference = "op://nix_secrets/navidrome/lastfm_secret";
+        owner = "root";
+        group = "root";
+        mode = "0600";
+        restartServices = ["navidrome-env-setup.service" "navidrome.service"];
+      };
       proxmoxTokenId = {
         path = "/run/opnix/proxmox-token-id";
         reference = "op://nix_secrets/homepage/tokenid";
