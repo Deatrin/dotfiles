@@ -29,6 +29,9 @@
 
   boot.loader = {
     systemd-boot.enable = true;
+    # ESP is only 196M and shared with Windows; unbounded generations filled it
+    # and corrupted the FAT (2026-11-15)
+    systemd-boot.configurationLimit = 5;
     efi.canTouchEfiVariables = true;
   };
 
