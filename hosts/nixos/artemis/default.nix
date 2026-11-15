@@ -21,7 +21,10 @@
     podman.enable = true;
     reboot-required.enable = true;
     xwayland.enable = true;
-    greetd.enable = true;
+    greetd = {
+      enable = true;
+      greeter = "noctalia";
+    };
     attic-client.enable = true;
     syncthing-client.enable = true;
     claude-memory-refresh.enable = true;
