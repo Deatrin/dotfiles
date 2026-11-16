@@ -35,8 +35,9 @@
 
   boot.loader = {
     systemd-boot.enable = true;
-    # ESP is only 196M and shared with Windows; unbounded generations filled it
-    # and corrupted the FAT (2026-11-15)
+    # Keep the boot menu short; the ESP is now a dedicated 2G partition (it was
+    # a 196M Windows-shared one until the 2026-11-15 reinstall). lanzaboote
+    # reads this too once secure-boot is enabled.
     systemd-boot.configurationLimit = 5;
     efi.canTouchEfiVariables = true;
   };
