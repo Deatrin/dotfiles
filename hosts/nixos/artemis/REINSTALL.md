@@ -1,6 +1,7 @@
 # artemis reinstall: Windows → 1TB, NixOS → whole 2TB
 
-Written 2026-11-15. Self-contained. The full disko config is in the appendix in
+Written 2026-11-15, and corrected the same night after following it for the
+real reinstall. Self-contained. The full disko config is in the appendix in
 case the repo copy is missing or wrong.
 
 ## Target layout
@@ -111,6 +112,21 @@ chown -R 1000:100 /mnt/etc/nixos      # deatrin:users
 
 ### 2f. Install
 
+**Turn Secure Boot off in the config first.** Since 2026-11-15 artemis has
+`secure-boot.enable = true;` in `hosts/nixos/artemis/default.nix`. lanzaboote
+can't install until the sbctl keys exist, and on a fresh disk they don't, so
+`nixos-install` fails. Set it to `false` now and turn it back on in 4c:
+
+```sh
+sed -i 's/secure-boot.enable = true;/secure-boot.enable = false;/' \
+  /mnt/etc/nixos/hosts/nixos/artemis/default.nix
+grep -n 'secure-boot.enable' /mnt/etc/nixos/hosts/nixos/artemis/default.nix   # must say false
+```
+
+If the firmware still has your keys enrolled from last time, Secure Boot will
+also block the unsigned systemd-boot this installs. Set Secure Boot →
+Disabled in the BIOS before rebooting in 2h, then redo section 4.
+
 ```sh
 nixos-install --flake /mnt/etc/nixos#artemis
 ```
@@ -150,7 +166,14 @@ LUKS passphrase.
       git remote add forgejo ssh://git@forgejo.jennex.dev/deatrin/dotfiles.git
       jj git init --colocate
       jj git fetch --remote forgejo
+      jj bookmark track main --remote forgejo
+      jj bookmark list --all-remotes main   # local main must match main@forgejo
       ```
+      The `track` step matters: after `jj git init` on a fresh clone, local
+      `main` doesn't follow Forgejo, so fetches never move it and
+      `jj new main` lands on an old commit. If local `main` still differs
+      after tracking, run `jj bookmark set main -r main@forgejo`. Do the same
+      for `origin` after a `jj git fetch --remote origin`.
 - [ ] **Land the branch on main.** Now that artemis runs on the new layout, the
       disko change is safe on main:
       ```sh
@@ -164,10 +187,12 @@ LUKS passphrase.
       jj git push --remote origin -b artemis-reinstall
       jj new main
       ```
-      **If the log shows a conflict:** it will be `flake.lock` in the
-      "secure-boot" commit, because the nightly bumps moved main's lock while
-      the branch added the `lanzaboote` input. Fix it before setting main
-      (jj won't push a conflicted commit):
+      **If the log shows a conflict:** expect it in the "secure-boot" commit,
+      in `flake.nix` and/or `flake.lock`, because main gained inputs while
+      the branch added `lanzaboote`. (On 2026-11-15 it was `flake.nix` only:
+      both sides added an input after `noctalia`; keep both blocks.) Fix it
+      before setting main (jj won't push a conflicted commit). For
+      `flake.lock`:
       ```sh
       jj edit <change id of the conflicted commit>
       jj restore --from main@forgejo flake.lock   # take main's lock
@@ -231,11 +256,16 @@ manage-bde -status C:
 
 ### 4b. Create your keys
 
-Back in NixOS:
+Back in NixOS. `sbctl` isn't installed yet (the aspect only adds it once
+`secure-boot.enable = true`), so run it from nixpkgs. `sudo` resets PATH,
+hence the full path:
 
 ```sh
-sudo sbctl create-keys
-sudo sbctl status
+nix shell nixpkgs#sbctl
+sudo "$(command -v sbctl)" create-keys
+sudo "$(command -v sbctl)" status
+exit
+sudo ls /var/lib/sbctl/keys      # db  KEK  PK
 ```
 
 `Installed: ✓ sbctl is installed`. Setup Mode may say Enabled already, which
@@ -255,8 +285,9 @@ sudo sbctl verify
 ```
 
 Expected output: everything under `/boot/EFI/` is `✓ signed` **except** the
-`/boot/EFI/nixos/*-bzImage.efi` kernel files. That's normal: lanzaboote's
-signed stub checks those itself.
+`/boot/EFI/nixos/kernel-*.efi` files. That's normal: lanzaboote's signed
+stubs (`/boot/EFI/Linux/nixos-generation-*.efi`) check the kernel's hash
+themselves.
 
 **Reboot once now**, with Secure Boot still off, to confirm the lanzaboote
 bootloader works (the boot menu looks the same). Then commit and push the
@@ -303,11 +334,26 @@ sudo sbctl enroll-keys --microsoft
 Expected: `Enrolling keys to EFI variables... With vendor keys from
 microsoft...✓ Enrolled keys to the EFI variables!`
 
-If it refuses with a message about **immutable** efivars files, run
-`sudo chattr -i /sys/firmware/efi/efivars/{PK,KEK,db}-*` and retry.
+If it refuses with `File is immutable: …` (it did on 2026-11-15, for the KEK
+and db files), `chattr -i` exactly the paths it lists and retry:
+
+```sh
+sudo chattr -i /sys/firmware/efi/efivars/KEK-8be4df61-… /sys/firmware/efi/efivars/db-d719b2cb-…
+sudo sbctl enroll-keys --microsoft
+```
+
+Don't use a `{PK,KEK,db}-*` glob: in Setup Mode there's no PK file, so zsh
+fails the whole command with "no matches found".
 
 This writes your PK/KEK/db plus Microsoft's KEK and db certs. dbx is left as is.
-Writing a PK takes the firmware out of Setup Mode.
+
+`sbctl status` will **still say Setup Mode: Enabled** right after this; the
+Gigabyte firmware only updates that flag on reboot. What tells you it worked:
+`Vendor Keys` changes to just `microsoft`, and a PK file now exists:
+
+```sh
+ls -l /sys/firmware/efi/efivars/PK-*     # must exist before you reboot
+```
 
 ### 4f. Reboot and verify
 
