@@ -67,7 +67,12 @@ writeShellApplication {
       if [ -L "$memory_dir" ]; then
         : # already a symlink -- idempotent re-run, nothing to do.
       elif [ -d "$memory_dir" ]; then
-        if [ -z "$(dest_has_content "$dest")" ]; then
+        if [ -z "$(dest_has_content "$memory_dir")" ]; then
+          # Claude Code creates an empty memory/ for a project it hasn't
+          # seen locally yet (e.g. after a reinstall); nothing to migrate.
+          rm -rf "$memory_dir"
+          ln -s "$dest" "$memory_dir"
+        elif [ -z "$(dest_has_content "$dest")" ]; then
           echo "claude-memory-sync: migrating $memory_dir into $dest"
           cp -a "$memory_dir/." "$dest/"
           rm -rf "$memory_dir"
